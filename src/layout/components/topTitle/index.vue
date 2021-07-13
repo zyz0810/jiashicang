@@ -10,48 +10,19 @@
 <!--      </router-link>-->
 <!--    </transition>-->
 <!--  </div>-->
-  <el-header>
+  <el-header class="top">
     <el-row>
-      <el-col :span="5" class="f18">集 据 物 连 </el-col>
-      <el-col :span="14" class="logo text-center">
-        <img src="./../../../assets/image/logo.png"/>
+      <el-col :span="5">
+        <span class="f26 bold m_r30">滨江区</span>
+        <span class="f18 bold m_r30">晴</span>
+        <span class="f18 bold">26~35℃</span>
+      </el-col>
+      <el-col :span="14">a
+<!--        <img src="./../../../assets/image/logo.png"/>-->
       </el-col>
       <el-col :span="5" class="top_right">
         <div class="right-menu">
-          <!--<template v-if="device!=='mobile'">-->
-          <!--<search id="header-search" class="right-menu-item" />-->
-
-          <!--<error-log class="errLog-container right-menu-item hover-effect" />-->
-
-          <!--<screenfull id="screenfull" class="right-menu-item hover-effect" />-->
-
-          <!--<el-tooltip content="Global Size" effect="dark" placement="bottom">-->
-          <!--<size-select id="size-select" class="right-menu-item hover-effect" />-->
-          <!--</el-tooltip>-->
-
-          <!--</template>-->
-<!--          <span class="date">{{$moment().format('YYYY-MM-DD')}}</span>-->
-          <div class="m_r30">
-            <span class="bold" style="margin: 0 5px; font-size: 18px">{{name}}</span>
-            <i class="el-icon-caret-bottom" />
-          </div>
-
-          <div class="m_r30" @click="updatePassword">  <i class="el-icon-menu f20 bold"></i></div>
-<!--          <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">-->
-<!--            <div class="avatar-wrapper">-->
-<!--              &lt;!&ndash;<img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">&ndash;&gt;-->
-<!--&lt;!&ndash;              <img :src="headImg" class="user-avatar">&ndash;&gt;-->
-<!--              <i class="el-icon-menu"></i>-->
-<!--            </div>-->
-<!--            <el-dropdown-menu slot="dropdown" class="text-center">-->
-<!--              <el-dropdown-item divided @click.native="updatePassword">-->
-<!--                <span style="display:block;">修改密码</span>-->
-<!--              </el-dropdown-item>-->
-<!--              <el-dropdown-item divided @click.native="logout">-->
-<!--                <span style="display:block;">退 出</span>-->
-<!--              </el-dropdown-item>-->
-<!--            </el-dropdown-menu>-->
-<!--          </el-dropdown>-->
+          <span class="date f14 bold">{{$moment().format('YYYY-MM-DD hh:mm:ss')}}</span>
           <div class="f16 bold" @click="logout"><i class="el-icon-switch-button"></i>退 出</div>
         </div>
         <my-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="80%">
@@ -260,9 +231,9 @@ export default {
   .el-header{
     color: $txtColor;
     height: 100px !important;
-    line-height: 60px;
     background: url("../../../assets/image/top_bg.png") left top no-repeat;
     background-size: 100% 100%;
+    line-height: 100px;
   }
   .get_code {
     position: relative;
@@ -280,13 +251,13 @@ export default {
 
   }
   .top_right {
-    height: 50px;
+    height: 100px;
     overflow: hidden;
     position: relative;
     box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
     .hamburger-container {
-      line-height: 46px;
+      line-height: 100px;
       height: 100%;
       float: left;
       cursor: pointer;
@@ -307,12 +278,6 @@ export default {
       vertical-align: top;
     }
     .date{
-      font-size: 20px;
-      font-weight: 500;
-      line-height: 50px;
-      display: inline-block;
-      height: 100%;
-      float: left;
       margin-right: 20px;
     }
 

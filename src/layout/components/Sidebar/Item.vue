@@ -16,14 +16,15 @@ export default {
     const { icon, title } = context.props
     const vnodes = []
 
+    const imgPath = './../../../assets/image/'
     if (icon) {
-      console.log(icon)
+      console.log(imgPath)
       // vnodes.push(<svg-icon icon-class={icon}/>)
-      vnodes.push(<i class={icon}></i>)
+      vnodes.push(<image src={imgPath+icon}></image>)
     }
 
     if (title) {
-      vnodes.push(<span slot='title'>{(title)}</span>)
+      vnodes.push(<p slot='title'>{(title)}</p>)
     }
     return vnodes
   }

@@ -1,6 +1,6 @@
 <template>
 
-  <div class="" style="background: #fff;padding: 20px; margin-bottom: 20px;">
+  <div class="">
     <div class="legend_span legend_inline text-center" v-if="BarChartLegend.length>0">
       <div v-for="(item,index) in BarChartLegend" @click="editLegend">
         <label :for="inputName+index">
@@ -92,6 +92,7 @@
       },
     },
     mounted() {
+      console.log(this.BarChartLegend)
       this.$nextTick(() => {
         this.initChart()
       })

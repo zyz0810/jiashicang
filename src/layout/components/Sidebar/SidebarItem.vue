@@ -1,29 +1,19 @@
 <template>
-  <div v-if="!item.hidden">
+  <div>
     <!--    没有下拉箭头-->
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}" :data-id="onlyOneChild.noShowingChildren">
-          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
-        </el-menu-item>
+
+        <div class="nav_li f14 bold text-center" :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}" :data-id="onlyOneChild.noShowingChildren">
+<!--          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />-->
+          <img :src="navList[onlyOneChild.meta.icon||(item.meta&&item.meta.icon)]">
+          <p v-if="onlyOneChild.meta.icon||(item.meta&&item.meta.icon) != 0">{{onlyOneChild.meta.title}}</p>
+        </div>
+
+
       </app-link>
     </template>
 
-
-<!--    有下拉箭头-->
-    <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
-      <template slot="title">
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
-      </template>
-      <sidebar-item
-        v-for="child in item.children"
-        :key="child.path"
-        :is-nest="true"
-        :item="child"
-        :base-path="resolvePath(child.path)"
-        class="nest-menu"
-      />
-    </el-submenu>
   </div>
 </template>
 
@@ -33,6 +23,17 @@ import { isExternal } from '@/utils/validate'
 import Item from './Item'
 import AppLink from './Link'
 import FixiOSBug from './FixiOSBug'
+import nav_01 from '@/assets/image/nav_01.png'
+import nav_02 from '@/assets/image/nav_02.png'
+import nav_03 from '@/assets/image/nav_03.png'
+import nav_04 from '@/assets/image/nav_04.png'
+import nav_05 from '@/assets/image/nav_05.png'
+import nav_06 from '@/assets/image/nav_06.png'
+import nav_07 from '@/assets/image/nav_07.png'
+import nav_08 from '@/assets/image/nav_08.png'
+import nav_09 from '@/assets/image/nav_09.png'
+import nav_10 from '@/assets/image/nav_10.png'
+import nav_11 from '@/assets/image/nav_11.png'
 
 export default {
   name: 'SidebarItem',
@@ -57,17 +58,19 @@ export default {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
     // TODO: refactor with render function
     this.onlyOneChild = null
-    return {}
+    return {
+      navList:[nav_01,nav_02,nav_03,nav_04,nav_05,nav_06,nav_07,nav_08,nav_09,nav_10,nav_11],
+    }
   },
   methods: {
     hasOneShowingChild(children = [], parent) {
-      // if(children.length > 0){
-      //   const arr = children.filter(item=>item.hidden == false)
-      //   if(arr.length>0){
-      //     this.onlyOneChild = null
-      //     return true
-      //   }
-      // }else{
+      if(children.length > 0){
+        const arr = children.filter(item=>item.hidden == false)
+        if(arr.length>0){
+          this.onlyOneChild = null
+          return true
+        }
+      }else{
         const showingChildren = children.filter(item => {
           // console.log(item)
           if (item.hidden) {
@@ -79,9 +82,9 @@ export default {
           }
         })
         // When there is only one child router, the child router is displayed by default
-        // if (showingChildren.length === 1) {
-        //   return true
-        // }
+        if (showingChildren.length === 1) {
+          return true
+        }
 
         // Show parent if there are no child router to display
         if (showingChildren.length === 0) {
@@ -89,7 +92,7 @@ export default {
           return true
         }
         return false
-      // }
+      }
     },
     resolvePath(routePath) {
       if (isExternal(routePath)) {

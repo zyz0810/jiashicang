@@ -1,589 +1,560 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      <el-form :inline="true" :model="listQuery" class="search_form">
-        <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择辖区" @change="handleFilter">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择规模" @change="handleFilter">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择菜系" @change="handleFilter">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="">
-          <el-select v-model="listQuery.status" placeholder="选择检测状态" @change="handleFilter">
-            <el-option label="启用" value="1"></el-option>
-            <el-option label="禁用" value="0"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="" prop="name">
-          <el-input v-model.trim="listQuery.name" placeholder="输入餐企名称或简称" @change="handleFilter" clearable/>
-        </el-form-item>
-        <el-form-item>
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
-        </el-form-item>
-      </el-form>
-      <div>
-        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">新增信息</el-button>
-        <el-button class="filter-item" type="primary" icon="el-icon-notebook-2" @click="handleCreate">导出信息</el-button>
+    <!--创建容器-->
+    <div id='mapDiv' class="mapDiv"></div>
+    <div class="left_content clr_white">
 
-      </div>
-    </div>
-    <el-table v-loading="listLoading" :data="list" :height="tableHeight"
-              element-loading-text="拼命加载中" fit ref="tableList" class="titleBg_table">
-      <el-table-column type="index" width="80" label="序号" align="center"></el-table-column>
-      <el-table-column label="餐企名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="设备名称" align="center" prop="name"></el-table-column>
-      <el-table-column label="所属辖区" align="center" prop="address"></el-table-column>
-      <el-table-column label="监测时间" align="center" width="140">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="油烟浓度（mg/m3）" align="center" prop="num"></el-table-column>
-      <el-table-column label="TVOC（mg/m3）" align="center" prop="num"></el-table-column>
-      <el-table-column label="风机状态" align="center" prop="num">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="净化器" align="center" prop="num">
-        <template slot-scope="scope">
-          <span>{{$moment(scope.row.time).format('YYYY-MM-DD HH:mm:ss')}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="监测状态" align="center">
-        <template slot-scope="scope">
-          <span>{{scope.row.status | filtersStatus}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" min-width="160">
-        <template slot-scope="scope">
-          <el-button class="filter-item" type="primary" @click="handleView">详情</el-button>
-          <el-button class="filter-item" type="primary" @click="handleHistory">历史</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit"
-                @pagination="getList" class="text-right"/>
-    <myDialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-width="120px" style="margin-left:50px;"
-               class="dialog_form">
-        <el-form-item label="参数名称" prop="name">
-          <el-input v-model.trim="temp.name" placeholder="请输入参数名称" autocomplete="off" clearable/>
-          <el-checkbox v-model="temp.isRequired" :true-label="1" :false-label="0">是否必填</el-checkbox>
-        </el-form-item>
-        <el-form-item label="排序值" prop="orders">
-          <el-input v-model.trim="temp.orders" type="number" placeholder="请输入排序值" autocomplete="off" clearable/>
-        </el-form-item>
-        <el-form-item label="操作方式" prop="orders">
-          <el-select v-model="temp.operatingMode" placeholder="请选择操作方式" @change="handleOperating">
-            <el-option v-for="item in operationOption" :key="item.id" :label="item.name" :value="item.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <p v-show="temp.operatingMode != 2">
-          <el-button type="primary" @click="addSpecifications">添加参数值</el-button>
-        </p>
-        <el-form-item label="参数值" prop="parameterValueList" class="drag" v-if="parameterValueList.length>0 && temp.operatingMode != 2">
-          <draggable>
-            <div v-for="(item,i) of parameterValueList" :key="i">
-              <el-input v-model.trim="parameterValueList[i].name" placeholder="请输入规格值" autocomplete="off" @change="handleValue" clearable/>
-              <i class="el-icon-close red01 bold" @click="deleteParam(i)"></i>
+        <div class="title bold">案件归集下派</div>
+        <div class="top clr_white">
+          <p class="f20 bold">案件状况</p>
+          <div class="flex anjian_num">
+            <div class="flex-item">
+              <p class="f16 bold baseColor">今日受理量</p>
+              <div class="num01 flex text-center f26 bold mt_10">
+                <span></span>
+                <span>2</span>
+                <span>2</span>
+                <span>5</span>
+                <span>8</span>
+              </div>
             </div>
-          </draggable>
-        </el-form-item>
-      </el-form>
+            <div class="flex-item">
+              <p class="f16 bold baseColor">今日及时结案量</p>
+              <div class="num02 flex text-center f26 bold mt_10">
+                <span></span>
+                <span>2</span>
+                <span>8</span>
+                <span>9</span>
+                <span>8</span>
+              </div>
+            </div>
+            <div class="flex-item">
+              <p class="f16 bold baseColor">今日结案量</p>
+              <div class="num03 flex text-center f26 bold mt_10">
+                <span></span>
+                <span>1</span>
+                <span>2</span>
+                <span>6</span>
+                <span>8</span>
+              </div>
+            </div>
+          </div>
+          <el-row :gutter="20" class="pie_chart">
+            <el-col :span="12">
+              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+            </el-col>
+            <el-col :span="12">
+              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+            </el-col>
+          </el-row>
 
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData(updateId)" :loading="paraLoading">确 定</el-button>
+        </div>
+
+      <div class="left_bottom mt_10">
+        <p class="f20 bold">案件占比分析</p>
+        <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
       </div>
-    </myDialog>
-    <paraView :showDialog.sync="showViewDialog" :paraData="paraData" @insertProduct="getList"></paraView>
-    <history :showDialog.sync="showHistoryDialog" :historyData="historyData"></history>
+
+    </div>
+    <div class="right_content clr_white">
+      <div class="title bold">案件归集下派</div>
+      <div class="top clr_white">
+        <p class="f20 bold">案件高发路段（top6）</p>
+        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
+      </div>
+      <div class="left_bottom mt_10">
+        <p class="f20 bold">部门案件处置分析</p>
+        <BarChartFive :chartData="BarData" height="300px" divwidth="100%"></BarChartFive>
+      </div>
+
+    </div>
+
   </div>
 </template>
 
 <script>
-  import {paraList, paraSave, paraUpdate, paraDelete} from '@/api/parameter'
-  import draggable from 'vuedraggable'
+  import echarts from 'echarts'
+  import RingChart from '@/components/Charts/RingChart'
+  import BarChartFive from '@/components/Charts/BarChartFive'
+  import BarChartTwo from '@/components/Charts/BarChartTwo'
+  import BarChartThree from '@/components/Charts/BarChartThree'
+  import BarChartFour from '@/components/Charts/BarChartFour'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
-  import Pagination from "@/components/Pagination/index"; // waves directive
-  import paraView from "./components/view";
-  import history from "./components/history";
+  import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
+
   export default {
     name: 'parameterList',
     directives: {waves},
-    components: {
-      draggable,
-      Pagination,
-      paraView,
-      history
-    },
+    mixins: [map],
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive},
     data() {
       return {
-        showViewDialog:false,
-        showHistoryDialog:false,
-        historyData:{},
-        viewData:{},
-        paraData:{},
-        paraLoading:false,
-        operationOption: [{
-          id: 0,
-          name: '下拉框'
-        }, {
-          id: 1,
-          name: '复选框'
-        }, {
-          id: 2,
-          name: '输入框'
-        }],
-        updateBtn: true,
-        enableBtn: true,
-        disableBtn: true,
-        total: 0,
-        parameterValueList: [{name: ''}],
-        list: [{
-          name:'列表1',
-          address:'杭州市',
-          time:1298963414,
-          num:1,
-          status:1
-        },{
-          name:'列表2',
-          address:'杭州市',
-          time:1298963414,
-          num:1,
-          status:1
-        }],
-        listLoading: false,
-        listQuery: {
-          name: '',
-          status: undefined,
-          page: 1,
-          limit: 10
+        chartData: {
+          title:{},
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          legend: {
+            show:false
+          },
+          series: [
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: ['50%', '70%'],
+              avoidLabelOverlap: false,
+              label: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: '30',
+                  fontWeight: 'bold'
+                }
+              },
+              labelLine: {
+                show: false
+              },
+              data: [
+                {value: 335, name: '直接访问'},
+                {value: 310, name: '邮件营销'},
+                {value: 234, name: '联盟广告'},
+                {value: 135, name: '视频广告'},
+                {value: 1548, name: '搜索引擎'}
+              ]
+            }
+          ]
         },
-        updateId: undefined,
-        dialogFormVisible: false,
-        temp: {
-          // id: undefined,
-          status: 1,
-          name: '',
-          orders: '',
-          isRequired: 0,
-          operatingMode: 0,
-          parameterValueList: [],
+        chartDataThree: {
+          title:{},
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          legend: {
+            show:false
+          },
+          color:['#367CFD','#E20280'],
+          series: [
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: ['70%', '90%'],
+              avoidLabelOverlap: false,
+              label: {
+                show: false,
+                position: 'center',
+
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: '30',
+                  fontWeight: 'bold'
+                }
+              },
+              labelLine: {
+                show: false
+              },
+              data: [
+                {value: 520, name: '直接访问'},
+                {value: 205, name: '邮件营销'},
+              ]
+            }
+          ]
         },
-        textMap: {
-          update: '编辑参数信息',
-          create: '新增参数信息',
-          view:'查看'
+        PieChartLegend:[],
+        BarData:{
+          title: {},
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '40',
+            top: '20',
+            containLabel: true
+          },
+          //----------------   图例 legend  -----------------
+          legend: {
+            type:'plain',				//----图例类型，默认为'plain'，当图例很多时可使用'scroll'
+            bottom:'5',					//----图例相对容器位置,top\bottom\left\right
+            data:[						//----图例内容
+              {
+                name:'应处置案件',
+                textStyle:{
+                  color:'#fff',		//----单独设置某一个图例的颜色
+                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
+                }
+              },
+              {
+                name:'已处置案件',
+                textStyle:{
+                  color:'#fff',		//----单独设置某一个图例的颜色
+                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
+                }
+              }
+            ],
+          },
+
+          xAxis: [
+            {
+
+
+              axisTick: {
+                show:false,
+                alignWithLabel: false
+              },
+              axisLabel: {
+                show: true,
+                textStyle: {
+                  color: '#fff',
+                  fontSize:'15',
+                  fontWeight:'bold'
+                }
+              },
+              splitLine: { show: false },//去除网格线
+              type: 'category',
+              data: ['浦沿中队', '西兴中队', '长河中队']
+            }
+          ],
+          yAxis: [
+            {
+              axisTick: {
+                show:false,
+                alignWithLabel: false
+              },
+              axisLabel: {
+                show: true,
+                textStyle: {
+                  color: '#fff',
+                  fontSize:'15',
+                  fontWeight:'bold'
+                }
+              },
+              splitLine: { show: false },//去除网格线
+              type: 'value'
+            }
+          ],
+          series: [
+            {
+              name:'应处置案件',
+              type: 'bar',
+              barWidth: 20,//柱图宽度
+              barGap:'50%',
+              // barCategoryGap:'50%',/*多个并排柱子设置柱子之间的间距*/
+              itemStyle: {
+                normal: {
+                  color:'#2FB26B'
+                }
+              },
+              data: [320, 332, 301]
+            },
+            {
+              name:'已处置案件',
+              type: 'bar',
+              barWidth: 20,//柱图宽度
+              barGap:'50%',
+              // barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
+              itemStyle: {
+                normal: {
+                  color:'#00A0EB'
+
+                }
+              },
+              data: [220, 182, 191]
+            }
+          ]
         },
-        dialogStatus: '',
-        rules: {
-          name: [{required: true, message: '请输入名称', trigger: 'change'}],
+        BarDataTwo:{
+          title: {},
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '-20',
+            top: '20',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              show:false,
+              axisTick: {
+                alignWithLabel: false
+              },
+              splitLine: { show: false },//去除网格线
+              type: 'value',
+            }
+          ],
+          yAxis: [
+            {
+              axisTick: {
+                show: false
+              },
+              axisLine: {
+                show: false
+              },
+              axisLabel: {
+                show: true,
+                textStyle: {
+                  color: '#fff',
+                  fontSize:'15',
+                  fontWeight:'bold'
+                }
+              },
+              splitLine: { show: false },//去除网格线
+              type: 'category',
+              data:['滨河路','秋溢路','江虹路','江陵路','长河路','滨文路']
+            }
+          ],
+          series: [
+            {
+              type: 'bar',
+              barWidth: 20,//柱图宽度
+              barGap:'180%',
+              barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
+              // label: {
+              //   normal: {
+              //     color: 'red',
+              //     show: true,
+              //     position: 'top'
+              //   }
+              // },
+              itemStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
+                    [
+                      { offset: 0, color: '#006FFF' },
+                      { offset: 1, color: '#9D4EE8' }
+                    ]
+                  ),
+                  label: {
+                    show : true,
+                    position : 'right',
+                    textStyle : {
+                      color: '#fff',
+                      fontSize:'16',
+                      fontWeight:'bold'
+                    }
+                  }
+
+                }
+              },
+              data: [320, 332, 301,230,56,963]
+            },
+          ]
         },
-        tableHeight:'100'
+        map: '', // 对象
+        zoom: 12, // 地图的初始化级别，及放大比例
+        centerLatitude:'39.65053092',//中心纬度
+        centerLongitude:'118.1834506',//中心经度
       }
     },
-    filters: {
-      filtersStatus: function (value) {
-        let StatusArr = {0: '禁用', 1: '启用'}
-        return StatusArr[value]
-      },
-      filtersMode: function (value) {
-        let StatusArr = {0: '下拉框', 1: '复选框', 2: '输入框'}
-        return StatusArr[value]
-      }
-    },
+
     computed: {
       ...mapState({
         roles: state => state.user.roles,
       }),
     },
     mounted() {
-      this.$nextTick(function() {
-        // this.$refs.filter-container.offsetHeight
-        let height = window.innerHeight - this.$refs.tableList.$el.offsetTop - 260;
-        if(height>100){
-          this.tableHeight = height
-        }else{
-          this.tableHeight = 100
-        }
-        // 监听窗口大小变化
-        const self = this;
-        window.onresize = function() {
-          let height = window.innerHeight - self.$refs.tableList.$el.offsetTop - 260;
-          if(height>100){
-            self.tableHeight = height
-          }else{
-            self.tableHeight = 100
-          }
-        };
-      });
-      // this.getList();
+      // 挂载完成后渲染地图
+      // this.$nextTick(function() {
+      //
+      // })
+      this.onLoad()
     },
     methods: {
-      handleValue(val){
-        // this.temp.parameterValueList.map(item=>{
-        //   if(item.name == val.srcElement.value){
-        //     this.$confirm(
-        //       '参数值重复，请重新输入',
-        //       "提示",
-        //       {
-        //         type: "warning",
-        //         showCancelButton: false
-        //       }
-        //     )
-        //       .then(() => {
-        //
-        //       })
-        //       .catch(() => {});
-        //   }
-        // })
-      },
-      handleOperating(val){
-        console.log(val.srcElement.value)
+      onLoad() {
+        let T = window.T
+        this.map = new T.Map('mapDiv')
+        // this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
+        // 添加地图类型控件
+        this.addCtrl()
 
-      },
-      deleteParam(index) {
-        this.parameterValueList.splice(index, 1)
-      },
-      handleFilter() {
-        this.listQuery.page = 1;
-        this.getList()
-      },
-      getList() {
-        paraList(this.listQuery).then(res => {
-          this.list = res.data.data
-          this.total = res.data.count
+        // // 普通标注
+        let site = [
+          { lng: 117.283042, lat: 31.86119 },
+          { lng: 116.41238, lat: 40.07689 },
+          { lng: 116.34143, lat: 40.03403 },
+        ]
+        // this.markerPoint(site)
+        //创建图片对象
+        var icon = new T.Icon({
+          iconUrl: point01,
+          iconSize: new T.Point(19, 27),
+          iconAnchor: new T.Point(10, 25)
         });
-      },
+        //创建信息窗口对象
+        // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
+        let marker = new T.Marker(new T.LngLat(117.283042, 31.86119), {icon: icon});// 创建标注
+        this.map.addOverLay(marker);
+        // 随机向地图添加25个标注
+        // let bounds = this.map.getBounds();
+        // let sw = bounds.getSouthWest();
+        // let ne = bounds.getNorthEast();
+        // let lngSpan = Math.abs(sw.lng - ne.lng);
+        // let latSpan = Math.abs(ne.lat - sw.lat);
+        // for (let i = 0; i < 25; i++) {
+        //   let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+        //   var marker = new T.Marker(point, {icon: icon});// 创建标注
+        //   this.map.addOverLay(marker);
+        // }
 
-      resetList() {
-        this.listQuery = {
-          name: '',
-          status: undefined,
-          page: 1,
-          limit: 10
-        }
-        this.getList();
-      },
+        var infoWin1 = new T.InfoWindow();
+        let sContent =
+          '<div style=" color: #fff;font-size:14px;font-weight:bold;width:100%">' +
+          '<div>' +
+          '<p ref="enterpriseName">任务号：20210566121511</p>' +
+          '<p ref="enterpriseName">任务来源：数字集群</p>' +
+          '<p ref="enterpriseName">事件类型：电动车乱停放</p>' +
+          '<p style="color:red" ref="enterpriseName">任务状态：超时</p>' +
+          '<p style="font-size:16px;font-weight:bold;padding-bottom:5px;" ref="enterpriseName">发生时间：2021-05-12 12:05:19</p>' +
+          '<p ref="enterpriseName">所属辖区：烟曲街道</p>' +
+          '<p ref="enterpriseName">地址描述：人民路就简单三</p>' +
+          '<p style="text-align: right"><a style="cursor: pointer;" onclick="openInfo()"> 查看详情</a></p>' +
+          '</div></div>';
+          infoWin1.setContent(sContent);
+          marker.addEventListener("click", function () {
+          marker.openInfoWindow(infoWin1);
+        });// 将标注添加到地图中
 
-      addSpecifications() {
-        this.parameterValueList.push({name: ''})
-      },
-      goView() {
-        // this.$router.push('/product/view')
-        // this.$router.push({path: "/product/paramView", query: {id: this.rowInfo[0].id, name: this.rowInfo[0].name,operatingMode: this.rowInfo[0].operatingMode}})
-        this.showViewDialog = true
-        this.paraData = {
-          option: {
-            name: this.rowInfo[0].name,
-            operatingMode: this.rowInfo[0].operatingMode
-          },
-          operatorType: 'view',
-          id: this.rowInfo[0].id
-        }
-      },
-
-      resetTemp() {
-        this.temp = {
-          // id: undefined,
-          status: 1,
-          name: '',
-          orders: '',
-          isRequired: 0,
-          operatingMode: 0,
-          parameterValueList: [],
-        }
-      },
-      handleView(row){
-        this.showViewDialog = true
-        this.viewData = {
-          id:row.id
-        }
-      },
-      handleHistory(row){
-        this.showHistoryDialog = true
-        this.historyData = {
-          id:row.id
-        }
-      },
-      handleCreate() {
-        this.resetTemp();
-        this.parameterValueList = [{name: ''}];
-        this.dialogStatus = 'create';
-        this.dialogFormVisible = true;
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      createData() {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            if(this.temp.operatingMode != 2){
-              let parameterValueList = this.parameterValueList.filter(item=>item.name!='')
-              console.log(parameterValueList)
-              if(parameterValueList.length<1){
-                this.$confirm('请输入参数值', "提示", {
-                  type: "warning",
-                  showCancelButton: false
-                })
-                  .then(() => {
-
-                  })
-                  .catch(() => {});
-              }else{
-                this.paraLoading = true
-                this.temp.parameterValueList = parameterValueList
-                paraSave(this.temp).then((res) => {
-                  setTimeout(()=>{
-                    this.paraLoading = false
-                  },1000)
-                  if(res.resp_code == 0){
-                    this.list.unshift(res.data);
-                    this.dialogFormVisible = false;
-                    this.getList();
-                    this.$message({
-                      message: '增加成功',
-                      type: 'success'
-                    });
-                  }
-                }).catch(() => {
-                  this.paraLoading = false;
-                });
-              }
-            }else{
-              this.paraLoading = true
-              paraSave(this.temp).then((res) => {
-                setTimeout(()=>{
-                  this.paraLoading = false
-                },1000)
-                if(res.resp_code == 0){
-                  this.list.unshift(res.data);
-                  this.dialogFormVisible = false;
-                  this.getList();
-                  this.$message({
-                    message: '增加成功',
-                    type: 'success'
-                  });
-                }
-              }).catch(() => {
-                this.paraLoading = false;
-              });
-            }
-          }
-        })
-      },
-      handleUpdate(row) {
-        this.temp = Object.assign({}, this.rowInfo[0]); // copy obj
-
-        if (this.temp.parameterValueList) {
-          this.parameterValueList = this.temp.parameterValueList
-        } else {
-          this.parameterValueList = [{name: ''}]
-        }
-        this.dialogStatus = 'update';
-        this.dialogFormVisible = true;
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      updateData() {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            const tempData = Object.assign({}, this.temp);
-            this.$delete(tempData, 'updateTime')
-            this.$delete(tempData, 'updateUser')
-            this.$delete(tempData, 'createTime')
-            this.$delete(tempData, 'createUser')
-            this.$delete(tempData, 'remarks')
-            this.$delete(tempData, 'status')
-            if(tempData.operatingMode != 2){
-              tempData.parameterValueList = this.parameterValueList
-              let arr = tempData.parameterValueList.filter(item=>item.name!='')
-              if(arr.length<1){
-                this.$confirm('请输入参数值', "提示", {
-                  type: "warning",
-                  showCancelButton: false
-                })
-                  .then(() => {
-
-                  })
-                  .catch(() => {});
-              }else{
-                arr = arr.map(item=>{
-                  let json={}
-                  json.id=item.id;
-                  json.name=item.name;
-                  json.parameterId=item.parameterId;
-                  return json
-                })
-                tempData.parameterValueList = arr
-                this.paraLoading = true
-                paraUpdate(tempData).then((res) => {
-                  // const index = this.list.findIndex(v => v.id === this.temp.id);
-                  // this.list.splice(index, 1, res.data);
-                  setTimeout(()=>{
-                    this.paraLoading = false
-                  },1000)
-                  if (res.resp_code == 0) {
-                    this.getList();
-                    this.dialogFormVisible = false;
-                    this.$message({
-                      message: '修改成功',
-                      type: 'success'
-                    });
-                  }
-                }).catch(() => {
-                  this.paraLoading = false;
-                });
-              }
-            }else{
-              this.$delete(tempData, 'parameterValueList')
-              this.paraLoading = true
-              paraUpdate(tempData).then((res) => {
-                setTimeout(()=>{
-                  this.paraLoading = false
-                },1000)
-                  // const index = this.list.findIndex(v => v.id === this.temp.id);
-                  // this.list.splice(index, 1, res.data);
-                if (res.resp_code == 0) {
-                  this.getList();
-                  this.dialogFormVisible = false;
-                  this.$message({
-                    message: '修改成功',
-                    type: 'success'
-                  });
-                }
-              }).catch(() => {
-                this.paraLoading = false;
-              });
-            }
-          }
-        })
-      },
-      handleState(val) {
-        console.log(this.rowInfo[0].id)
-        if (val == 0) {
-          this.$confirm('确定禁用此参数吗?', '提示', {
-            type: 'warning'
-          }).then(() => {
-            this.listLoading = true;
-            //NProgress.start();
-            let tempData = Object.assign({}, this.rowInfo[0]);
-            tempData.status = 0;
-            let para = {id:this.rowInfo[0].id,status:0}
-            this.$delete(tempData,'createTime')
-            this.$delete(tempData,'updateTime')
-            this.$delete(tempData,'createUser')
-            this.$delete(tempData,'updateUser')
-            if(tempData.operatingMode != 2){
-              tempData.parameterValueList = tempData.parameterValueList.map(item=>{
-                let obj = {}
-                obj.id = item.id
-                obj.name = item.name
-                return obj
-              })
-            }else{
-              this.$delete(tempData, 'parameterValueList')
-            }
-            paraUpdate(tempData).then((res) => {
-              this.listLoading = false;
-              if (res.resp_code == 0) {
-                // this.list.splice(index, 1);
-                //NProgress.done();
-                this.getList();
-                this.$message({
-                  message: '禁用成功',
-                  type: 'success'
-                });
-              }
-            });
-          }).catch(() => {
-
-          });
-        } else {
-          this.$confirm('确定启用此参数吗?', '提示', {
-            type: 'warning'
-          }).then(() => {
-            this.listLoading = true;
-            //NProgress.start();
-            let tempData = Object.assign({}, this.rowInfo[0]);
-            tempData.status = 1;
-            this.$delete(tempData,'createTime')
-            this.$delete(tempData,'updateTime')
-            this.$delete(tempData,'createUser')
-            this.$delete(tempData,'updateUser')
-            if(tempData.operatingMode != 2){
-              if(tempData.parameterValueList){
-                tempData.parameterValueList = tempData.parameterValueList.map(item=>{
-                  let obj = {}
-                  obj.id = item.id
-                  obj.name = item.name
-                  return obj
-                })
-              }
-            }else{
-              this.$delete(tempData, 'parameterValueList')
-            }
-            // let para = {id:this.rowInfo[0].id,status:1}
-            paraUpdate(tempData).then((res) => {
-              this.listLoading = false;
-              if (res.resp_code == 0) {
-                // this.list.splice(index, 1);
-                //NProgress.done();
-                this.getList();
-                this.$message({
-                  message: '启用成功',
-                  type: 'success'
-                });
-              }
-            });
-          }).catch(() => {
-
-          });
-        }
+        this.map.setStyle('black')
 
       },
-      handleDelete(row, index) {
-        console.log(this.rowInfo[0].id)
-        this.$confirm('确定删除此记录吗?', '提示', {
-          type: 'warning'
-        }).then(() => {
-          this.listLoading = true;
-          //NProgress.start();
-          let para = {id: this.rowInfo[0].id};
-          paraDelete(para).then((res) => {
-            this.listLoading = false;
-            if (res.resp_code == 0) {
-              // this.list.splice(index, 1);
-              //NProgress.done();
-              this.getList();
-              this.$message({
-                message: '删除成功',
-                type: 'success'
-              });
-            }
-          });
-        }).catch(() => {
-
-        });
-      },
-
 
     }
   }
 </script>
+<style lang="scss" scoped>
+  /deep/.tdt-marker-pane{
+    .tdt-marker-icon{
+      width: 57px !important;
+      height: 52px !important;
+    }
+  }
+  /deep/.tdt-infowindow-content-wrapper{
+    width: 400px;
+    background: url("../../../assets/image/pop_bg.png") left top no-repeat;
+    background-size: 100% 100%;
+  }
+  .mapDiv{
+    width:100%;
+    height:80vh;
+  }
+  .left_content{
+    padding: 20px;
+    width: 32%;
+    background: rgba(8,19,41,0.3);
+    border:1px solid #0a76a4;
+    position: fixed;
+    top: 120px;
+    left: 20px;
+    z-index: 9999;
+    .anjian_num{
+      padding: 20px 0;
+    }
+    .top{
+      padding: 20px;
+      border:1px solid #0a76a4;
+      .num01{
+        span{
+          width: 25px;
+          height: 33px;
+          line-height: 33px;
+          margin-right: 3px;
+          background: url("../../../assets/image/num_bg1.png") left top no-repeat;
+        }
+      }
+      .num02{
+        span{
+          width: 25px;
+          height: 33px;
+          line-height: 33px;
+          margin-right: 3px;
+          background: url("../../../assets/image/num_bg2.png") left top no-repeat;
+        }
+      }
+      .num03{
+        span{
+          width: 25px;
+          height: 33px;
+          line-height: 33px;
+          margin-right: 3px;
+          background: url("../../../assets/image/num_bg3.png") left top no-repeat;
+        }
+      }
+    }
+    .left_bottom{
+      padding: 20px;
+      border:1px solid #0a76a4;
+    }
+  }
+  .right_content{
+    padding: 20px;
+    width: 32%;
+    background: rgba(8,19,41,0.3);
+    border:1px solid #0a76a4;
+    position: fixed;
+    top: 12px;
+    right: 20px;
+    z-index: 9999;
+    .anjian_num{
+      padding: 20px 0;
+    }
+    .top{
+      padding: 20px;
+      border:1px solid #0a76a4;
+      .num01{
+        span{
+          width: 25px;
+          height: 33px;
+          line-height: 33px;
+          margin-right: 3px;
+          background: url("../../../assets/image/num_bg1.png") left top no-repeat;
+        }
+      }
+      .num02{
+        span{
+          width: 25px;
+          height: 33px;
+          line-height: 33px;
+          margin-right: 3px;
+          background: url("../../../assets/image/num_bg2.png") left top no-repeat;
+        }
+      }
+      .num03{
+        span{
+          width: 25px;
+          height: 33px;
+          line-height: 33px;
+          margin-right: 3px;
+          background: url("../../../assets/image/num_bg3.png") left top no-repeat;
+        }
+      }
+    }
+    .left_bottom{
+      padding: 20px 20px 0 20px;
+      border:1px solid #0a76a4;
+    }
+  }
+  .title{
+    line-height: 1.8;
+    background: url("../../../assets/image/title_bg.png") left bottom no-repeat;
+  }
+
+</style>

@@ -5,8 +5,8 @@
     <sidebar class="sidebar-container" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
-        <navbar />
-        <tags-view v-if="needTagsView" />
+<!--        <navbar />-->
+<!--        <tags-view v-if="needTagsView" />-->
       </div>
       <app-main />
       <right-panel v-if="showSettings">
@@ -70,8 +70,9 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
-    background: url("../assets/image/login_bg.jpg") no-repeat;
-    background-size: 100% 100%;
+    /*background: url("../assets/image/login_bg.jpg") no-repeat;*/
+    /*background-size: 100% 100%;*/
+    background: #081329;
     &.mobile.openSidebar {
       position: fixed;
       top: 0;

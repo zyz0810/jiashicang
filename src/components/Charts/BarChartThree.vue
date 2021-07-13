@@ -1,17 +1,17 @@
 <template>
-  <div class="clearfix" style="background: #fff; padding: 20px;">
+  <div class="clearfix">
     <div class="fl" :style="{width:divwidth}">
       <div :class="className" ref="barChart" :style="{height:height,width:width}" />
     </div>
-    <div class="legend_span fr" v-if="BarChartLegend.length>0">
-      <div v-for="(item,index) in BarChartLegend" @click="editLegend">
-        <label :for="'bar'+index">
-          <input type="checkbox" checked="checked" ref="pieCheckbox" :id="'bar'+index" :value="item.name"/>
-          <span class="color_block" :style="{background:item.color}"></span>
-          {{item.name}}
-        </label>
-      </div>
-    </div>
+<!--    <div class="legend_span fr" v-if="BarChartLegend.length>0">-->
+<!--      <div v-for="(item,index) in BarChartLegend" @click="editLegend">-->
+<!--        <label :for="'bar'+index">-->
+<!--          <input type="checkbox" checked="checked" ref="pieCheckbox" :id="'bar'+index" :value="item.name"/>-->
+<!--          <span class="color_block" :style="{background:item.color}"></span>-->
+<!--          {{item.name}}-->
+<!--        </label>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 
 </template>

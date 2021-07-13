@@ -6,6 +6,7 @@ import VLengthways from './cusomComponent/VLengthways'
 import VMeal from './cusomComponent/VMeal'
 import ColumnChart from './ColumnChart'
 import LineChart from './Charts/LineChart'
+import TdMap from './Map/index'
 
 const commomComponents = {
   install: function (Vue) {
@@ -17,6 +18,7 @@ const commomComponents = {
     Vue.component('VLengthways', VLengthways)
     Vue.component('ColumnChart', ColumnChart)
     Vue.component('LineChart', LineChart)
+    Vue.component('TdMap', TdMap)
   }
 }
 // 导出

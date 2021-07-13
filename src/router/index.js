@@ -89,22 +89,13 @@ export const asyncRoutes = [
     path: '/',
     component: Layout,
     redirect: '/testing/monitor',
-    name: '在线监测',
+    name: '综合概览',
     meta: {
       title: '在线监测',
-      icon: 'iconfont icon-jiance',
+      icon: '0',
       roles: ['admin'],
     },
     children: [
-      {
-        path: 'testing/monitor',
-        component: () => import('@/views/testing/monitor/list'),
-        name: 'modelList',
-        meta: {
-          title: '实时监控',
-          roles: ['admin'],
-        }
-      },
       {
         path: 'testing/overview',
         component: () => import('@/views/testing/overview/list'),
@@ -120,10 +111,10 @@ export const asyncRoutes = [
     path: '/workOrder',
     component: Layout,
     redirect: '/workOrder/police',
-    name: '工单处理',
+    name: '备案审批',
     meta: {
-      title: '工单处理',
-      icon: 'iconfont icon-gongdan',
+      title: '备案审批',
+      icon: '1',
       roles: [
         'admin',
       ]
@@ -132,9 +123,9 @@ export const asyncRoutes = [
       {
         path: 'police',
         component: () => import('@/views/workOrder/police/list'),
-        name: '报警列表',
+        name: '备案审批',
         meta: {
-          title: '报警列表',
+          title: '备案审批',
           roles: [
             'admin',
           ]
@@ -149,7 +140,7 @@ export const asyncRoutes = [
     name: '统计报表',
     meta: {
       title: '统计报表',
-      icon: 'iconfont icon-baobiao-copy',
+      icon: '2',
       roles: [
         'admin',
       ]
@@ -166,17 +157,6 @@ export const asyncRoutes = [
           ]
         }
       },
-      {
-        path: 'data',
-        component: () => import('@/views/statistics/data/list'),
-        name: 'dataList',
-        meta: {
-          title: '数据统计',
-          roles: [
-            'admin',
-          ]
-        }
-      },
     ]
   },
   {
@@ -186,7 +166,7 @@ export const asyncRoutes = [
     name: '运维记录',
     meta: {
       title: '运维记录',
-      icon: 'iconfont icon-jilu',
+      icon: '3',
       roles: [
         'admin',
       ]
@@ -203,17 +183,6 @@ export const asyncRoutes = [
           ]
         }
       },
-      {
-        path: 'repair',
-        component: () => import('@/views/devOps/repair/list'),
-        name: 'repairList',
-        meta: {
-          title: '故障维修',
-          roles: [
-            'admin',
-          ]
-        }
-      },
     ]
   },
   {
@@ -223,7 +192,7 @@ export const asyncRoutes = [
     name: '系统管理',
     meta: {
       title: '系统管理',
-      icon: 'iconfont icon-guanli4',
+      icon: '4',
       roles: [
         'admin',
       ]
@@ -240,56 +209,165 @@ export const asyncRoutes = [
           ]
         }
       },
-      {
-        path: 'monitor',
-        component: () => import('@/views/system/monitor/list'),
-        name: 'monitorList',
-        meta: {
-          title: '监控设备',
-          roles: ['admin',]
-        }
-      },
-      {
-        path: 'jurisdiction',
-        component: () => import('@/views/system/jurisdiction/list'),
-        name: 'jurisdictionList',
-        meta: { title: '辖区管理', roles: ['admin', 'menu:list'] }
-      },
-      {
-        path: 'user',
-        component: () => import('@/views/system/user/list'),
-        name: 'userList',
-        meta: {
-          title: '用户管理',
-          roles: [
-            'admin',
-          ]
-        }
-      },
-      {
-        path: 'threshold',
-        component: () => import('@/views/system/threshold/list'),
-        name: 'thresholdList',
-        meta: {
-          title: '阈值设置',
-          roles: [
-            'admin',
-          ]
-        }
-      },
-      {
-        path: 'dictionary',
-        component: () => import('@/views/system/dictionary/list'),
-        name: 'dictionaryList',
-        meta: {
-          title: '数据字典',
-          roles: [
-            'admin',
-          ]
-        }
-      }
     ]
-  }
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: '系统管理',
+    meta: {
+      title: '系统管理',
+      icon: '5',
+      roles: [
+        'admin',
+      ]
+    },
+    children: [
+      {
+        path: 'catering',
+        component: () => import('@/views/system/catering/list'),
+        name: 'cateringList',
+        meta: {
+          title: '餐企档案',
+          roles: [
+            'admin',
+          ]
+        }
+      },
+    ]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: '系统管理',
+    meta: {
+      title: '系统管理',
+      icon: '6',
+      roles: [
+        'admin',
+      ]
+    },
+    children: [
+      {
+        path: 'catering',
+        component: () => import('@/views/system/catering/list'),
+        name: 'cateringList',
+        meta: {
+          title: '餐企档案',
+          roles: [
+            'admin',
+          ]
+        }
+      },
+    ]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: '系统管理',
+    meta: {
+      title: '系统管理',
+      icon: '7',
+      roles: [
+        'admin',
+      ]
+    },
+    children: [
+      {
+        path: 'catering',
+        component: () => import('@/views/system/catering/list'),
+        name: 'cateringList',
+        meta: {
+          title: '餐企档案',
+          roles: [
+            'admin',
+          ]
+        }
+      },
+    ]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: '系统管理',
+    meta: {
+      title: '系统管理',
+      icon: '8',
+      roles: [
+        'admin',
+      ]
+    },
+    children: [
+      {
+        path: 'catering',
+        component: () => import('@/views/system/catering/list'),
+        name: 'cateringList',
+        meta: {
+          title: '餐企档案',
+          roles: [
+            'admin',
+          ]
+        }
+      },
+
+    ]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: '系统管理',
+    meta: {
+      title: '系统管理',
+      icon: '9',
+      roles: [
+        'admin',
+      ]
+    },
+    children: [
+      {
+        path: 'catering',
+        component: () => import('@/views/system/catering/list'),
+        name: 'cateringList',
+        meta: {
+          title: '餐企档案',
+          roles: [
+            'admin',
+          ]
+        }
+      },
+    ]
+  },
+  {
+    path: '/system',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: '系统管理',
+    meta: {
+      title: '系统管理',
+      icon: '10',
+      roles: [
+        'admin',
+      ]
+    },
+    children: [
+      {
+        path: 'catering',
+        component: () => import('@/views/system/catering/list'),
+        name: 'cateringList',
+        meta: {
+          title: '餐企档案',
+          roles: [
+            'admin',
+          ]
+        }
+      },
+    ]
+  },
 ]
 
 const createRouter = () =>
