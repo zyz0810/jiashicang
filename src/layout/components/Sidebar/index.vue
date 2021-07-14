@@ -15,17 +15,16 @@
 <!--      </el-menu>-->
 <!--    </el-scrollbar>-->
 
-
     <div class="line"></div>
     <div class="flex baseColor nav">
-      <sidebar-item v-for="route in permission_routes" :key="route.path" :item="route" :base-path="route.path" />
-      <div class="flex clr_white bold">
+      <sidebar-item v-for="(route,index) in permission_routes" :key="route.path" :item="route" :index="index" :base-path="route.path" />
+      <div class="flex clr_white bold warning_num">
         <div class="flex-item">
-          <span class="yellow_bg f20">22</span>
+          <span class="yellow_bg f16 block">22</span>
           <p class="f14">黄色预警</p>
         </div>
         <div class="flex-item">
-          <span class="red_bg f20">22</span>
+          <span class="red_bg f16 block">22</span>
           <p class="f14">红色预警</p>
         </div>
       </div>

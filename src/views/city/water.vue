@@ -4,67 +4,60 @@
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_content clr_white">
 
-        <div class="title bold">案件归集下派</div>
+        <div class="title bold">智慧河道</div>
         <div class="top clr_white">
-          <p class="f20 bold">案件状况</p>
-          <div class="flex anjian_num">
+          <p class="f20 bold">河道概况</p>
+          <div class="flex water_num">
             <div class="flex-item">
-              <p class="f16 bold baseColor">今日受理量</p>
-              <div class="num01 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>2</span>
-                <span>5</span>
-                <span>8</span>
-              </div>
+              <p class="f16 bold">河流条数</p>
+              <p>41条</p>
             </div>
             <div class="flex-item">
-              <p class="f16 bold baseColor">今日及时结案量</p>
-              <div class="num02 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>8</span>
-                <span>9</span>
-                <span>8</span>
-              </div>
+              <p class="f16 bold">河道总长</p>
+              <p>77.95km</p>
             </div>
             <div class="flex-item">
-              <p class="f16 bold baseColor">今日结案量</p>
-              <div class="num03 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>1</span>
-                <span>2</span>
-                <span>6</span>
-                <span>8</span>
-              </div>
+              <p class="f16 bold">河道水质站点</p>
+              <p>41个</p>
             </div>
           </div>
-          <el-row :gutter="20" class="pie_chart">
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-            </el-col>
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-            </el-col>
-          </el-row>
-
+          <div class="flex water_num">
+            <div class="flex-item">
+              <p class="f16 bold">河道水位站点</p>
+              <p>12个</p>
+            </div>
+            <div class="flex-item">
+              <p class="f16 bold">河道视频控点</p>
+              <p>162个</p>
+            </div>
+          </div>
         </div>
 
       <div class="left_bottom mt_10">
-        <p class="f20 bold">案件占比分析</p>
-        <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+        <p class="f20 bold">河道概况</p>
+        <el-table v-loading="listLoading" :data="list" :height="280" element-loading-text="拼命加载中" fit ref="tableList" class="f16">
+          <el-table-column type="index" label="序号" width="80" align="center">
+            <!--            <template slot-scope="scope">-->
+            <!--             <span class="block sqaer">{{index}}</span>-->
+            <!--            </template>-->
+          </el-table-column>
+          <el-table-column label="申请人/单位" align="center" prop="name"></el-table-column>
+          <el-table-column label="权力名称" align="center" prop="name"></el-table-column>
+          <el-table-column label="办理结果" align="center" prop="end"></el-table-column>
+
+        </el-table>
       </div>
 
     </div>
     <div class="right_content clr_white">
-      <div class="title bold">案件归集下派</div>
+      <div class="title bold">智慧河道</div>
       <div class="top clr_white">
-        <p class="f20 bold">案件高发路段（top6）</p>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
+        <p class="f20 bold">水质检测概况</p>
+        <PieChartTwo :chartData="BarData" :PieChartLegend="PieChartLegend" height="300px" divwidth="100%"></PieChartTwo>
       </div>
       <div class="left_bottom mt_10">
-        <p class="f20 bold">部门案件处置分析</p>
-        <BarChartFive :chartData="BarData" height="300px" divwidth="100%"></BarChartFive>
+        <p class="f20 bold">水质超标次数（top6）</p>
+        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="BarChartLegend" height="300px" divwidth="100%"></BarChartFour>
       </div>
 
     </div>
@@ -79,6 +72,7 @@
   import BarChartTwo from '@/components/Charts/BarChartTwo'
   import BarChartThree from '@/components/Charts/BarChartThree'
   import BarChartFour from '@/components/Charts/BarChartFour'
+  import PieChartTwo from '@/components/Charts/PieChartTwo'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
@@ -88,9 +82,35 @@
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        listLoading:false,
+        list:[{
+          name:'发你辅导费',
+          name2:'丰富的爽肤水',
+          end:'审批通过'
+        },{
+          name:'发你辅导费',
+          name2:'丰富的爽肤水',
+          end:'审批通过'
+        },{
+          name:'发你辅导费',
+          name2:'丰富的爽肤水',
+          end:'审批通过'
+        },{
+          name:'发你辅导费',
+          name2:'丰富的爽肤水',
+          end:'审批通过'
+        },{
+          name:'发你辅导费',
+          name2:'丰富的爽肤水',
+          end:'审批通过'
+        },{
+          name:'发你辅导费',
+          name2:'丰富的爽肤水',
+          end:'审批通过'
+        }],
         chartData: {
           title:{},
           tooltip: {
@@ -168,110 +188,35 @@
             }
           ]
         },
-        PieChartLegend:[],
+        PieChartLegend:[{name:'直接访问',color:'red'},{name:'邮件营销',color:'green'}, {name:'联盟广告',color:'yellow'},{name:'视频广告',color:'gray'},{name:'搜索引擎',color:'pink'}],
+        BarChartLegend:[],
         BarData:{
           title: {},
           tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
           },
-          grid: {
-            left: '0',
-            right: '0',
-            bottom: '40',
-            top: '20',
-            containLabel: true
-          },
-          //----------------   图例 legend  -----------------
-          legend: {
-            type:'plain',				//----图例类型，默认为'plain'，当图例很多时可使用'scroll'
-            bottom:'5',					//----图例相对容器位置,top\bottom\left\right
-            data:[						//----图例内容
-              {
-                name:'应处置案件',
-                textStyle:{
-                  color:'#fff',		//----单独设置某一个图例的颜色
-                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
-                }
-              },
-              {
-                name:'已处置案件',
-                textStyle:{
-                  color:'#fff',		//----单独设置某一个图例的颜色
-                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
-                }
-              }
-            ],
-          },
-
-          xAxis: [
-            {
-
-
-              axisTick: {
-                show:false,
-                alignWithLabel: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'category',
-              data: ['浦沿中队', '西兴中队', '长河中队']
-            }
-          ],
-          yAxis: [
-            {
-              axisTick: {
-                show:false,
-                alignWithLabel: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'value'
-            }
-          ],
+          legend: {show:false},
           series: [
             {
-              name:'应处置案件',
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'50%',
-              // barCategoryGap:'50%',/*多个并排柱子设置柱子之间的间距*/
-              itemStyle: {
-                normal: {
-                  color:'#2FB26B'
+              name: '访问来源',
+              type: 'pie',
+              radius: '55%',
+              center: ['50%', '60%'],
+              data: [
+                {value: 335, name: '直接访问'},
+                {value: 310, name: '邮件营销'},
+                {value: 234, name: '联盟广告'},
+                {value: 135, name: '视频广告'},
+                {value: 1548, name: '搜索引擎'}
+              ],
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
                 }
-              },
-              data: [320, 332, 301]
-            },
-            {
-              name:'已处置案件',
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'50%',
-              // barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
-              itemStyle: {
-                normal: {
-                  color:'#00A0EB'
-
-                }
-              },
-              data: [220, 182, 191]
+              }
             }
           ]
         },
@@ -449,7 +394,7 @@
   }
   /deep/.tdt-infowindow-content-wrapper{
     width: 400px;
-    background: url("../../../assets/image/pop_bg.png") left top no-repeat;
+    background: url("./../../assets/image/pop_bg.png") left top no-repeat;
     background-size: 100% 100%;
   }
   .mapDiv{
@@ -477,7 +422,7 @@
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("../../../assets/image/num_bg1.png") left top no-repeat;
+          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
         }
       }
       .num02{
@@ -486,7 +431,7 @@
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("../../../assets/image/num_bg2.png") left top no-repeat;
+          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
         }
       }
       .num03{
@@ -495,7 +440,7 @@
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("../../../assets/image/num_bg3.png") left top no-repeat;
+          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
         }
       }
     }
@@ -525,7 +470,7 @@
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("../../../assets/image/num_bg1.png") left top no-repeat;
+          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
         }
       }
       .num02{
@@ -534,7 +479,7 @@
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("../../../assets/image/num_bg2.png") left top no-repeat;
+          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
         }
       }
       .num03{
@@ -543,7 +488,7 @@
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("../../../assets/image/num_bg3.png") left top no-repeat;
+          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
         }
       }
     }
@@ -554,7 +499,7 @@
   }
   .title{
     line-height: 1.8;
-    background: url("../../../assets/image/title_bg.png") left bottom no-repeat;
+    background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
   }
 
 </style>

@@ -1,15 +1,16 @@
 <template>
-  <div class="clearfix" style="background: #fff; padding: 20px 0;background: #fff;">
-    <div class="fl" :style="{width: divWidth}">
+  <div class="clearfix">
+    <div class="" :style="{width: divWidth}">
       <div :class="className" ref="pieChart" :style="{height:height,width:width}" />
     </div>
-    <div class="legend_span fl" v-if="PieChartLegend.length>0">
-      <div v-for="(item,index) in PieChartLegend" @click="editLegend">
-        <label :for="index">
-          <input type="checkbox" checked="checked" ref="pieCheckbox" :id="index" :value="item.name"/>
+    <div class="legend_span flex clr_white bold" v-if="PieChartLegend.length>0">
+      <div v-for="(item,index) in PieChartLegend" @click="editLegend" class="flex-item">
+        <p>
           <span class="color_block" :style="{background:item.color}"></span>
           {{item.name}}
-        </label>
+        </p>
+        <p>20%</p>
+
       </div>
     </div>
 

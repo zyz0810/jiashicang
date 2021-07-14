@@ -4,7 +4,7 @@
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_content clr_white">
 
-        <div class="title bold">案件归集下派</div>
+        <div class="title bold">城市亮灯</div>
         <div class="top clr_white">
           <p class="f20 bold">案件状况</p>
           <div class="flex anjian_num">
@@ -449,7 +449,7 @@
   }
   /deep/.tdt-infowindow-content-wrapper{
     width: 400px;
-    background: url("../../../assets/image/pop_bg.png") left top no-repeat;
+    background: url("./../../assets/image/pop_bg.png") left top no-repeat;
     background-size: 100% 100%;
   }
   .mapDiv{
@@ -477,7 +477,7 @@
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("../../../assets/image/num_bg1.png") left top no-repeat;
+          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
         }
       }
       .num02{
@@ -486,7 +486,7 @@
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("../../../assets/image/num_bg2.png") left top no-repeat;
+          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
         }
       }
       .num03{
@@ -495,7 +495,7 @@
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("../../../assets/image/num_bg3.png") left top no-repeat;
+          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
         }
       }
     }
@@ -525,7 +525,7 @@
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("../../../assets/image/num_bg1.png") left top no-repeat;
+          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
         }
       }
       .num02{
@@ -534,7 +534,7 @@
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("../../../assets/image/num_bg2.png") left top no-repeat;
+          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
         }
       }
       .num03{
@@ -543,7 +543,7 @@
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("../../../assets/image/num_bg3.png") left top no-repeat;
+          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
         }
       }
     }
@@ -554,7 +554,7 @@
   }
   .title{
     line-height: 1.8;
-    background: url("../../../assets/image/title_bg.png") left bottom no-repeat;
+    background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
   }
 
 </style>

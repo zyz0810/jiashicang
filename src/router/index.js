@@ -88,8 +88,9 @@ export const asyncRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/testing/monitor',
+    redirect: '/general/overview',
     name: '综合概览',
+    hidden: false,
     meta: {
       title: '在线监测',
       icon: '0',
@@ -97,9 +98,10 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'testing/overview',
-        component: () => import('@/views/testing/overview/list'),
+        path: 'general/overview',
+        component: () => import('@/views/general/overview'),
         name: '综合概览',
+        hidden: false,
         meta: {
           title: '综合概览',
           roles: ['admin']
@@ -108,10 +110,11 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/workOrder',
+    path: '/record',
     component: Layout,
-    redirect: '/workOrder/police',
+    redirect: 'noRedirect',
     name: '备案审批',
+    hidden: false,
     meta: {
       title: '备案审批',
       icon: '1',
@@ -121,9 +124,10 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'police',
-        component: () => import('@/views/workOrder/police/list'),
+        path: 'approval',
+        component: () => import('@/views/record/approval'),
         name: '备案审批',
+        hidden: false,
         meta: {
           title: '备案审批',
           roles: [
@@ -134,12 +138,13 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/statistics',
+    path: '/garbage',
     component: Layout,
     redirect: 'noRedirect',
-    name: '统计报表',
+    name: '垃圾全链路',
+    hidden: false,
     meta: {
-      title: '统计报表',
+      title: '垃圾全链路',
       icon: '2',
       roles: [
         'admin',
@@ -147,11 +152,12 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'intelligence',
-        component: () => import('@/views/statistics/intelligence/list'),
-        name: 'intelligenceList',
+        path: 'link',
+        component: () => import('@/views/garbage/link'),
+        name: 'link',
+        hidden: false,
         meta: {
-          title: '智能分析',
+          title: '垃圾全链路',
           roles: [
             'admin',
           ]
@@ -160,12 +166,13 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/devOps',
+    path: '/digital',
     component: Layout,
     redirect: 'noRedirect',
-    name: '运维记录',
+    name: '数字服务',
+    hidden: false,
     meta: {
-      title: '运维记录',
+      title: '数字服务',
       icon: '3',
       roles: [
         'admin',
@@ -173,11 +180,12 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'verify',
-        component: () => import('@/views/devOps/verify/list'),
-        name: 'verifyList',
+        path: 'services',
+        component: () => import('@/views/digital/services'),
+        name: 'services',
+        hidden: false,
         meta: {
-          title: '故障核实',
+          title: '数字服务',
           roles: [
             'admin',
           ]
@@ -186,12 +194,13 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/system',
+    path: '/demonstration',
     component: Layout,
     redirect: 'noRedirect',
-    name: '系统管理',
+    name: '示范小区',
+    hidden: false,
     meta: {
-      title: '系统管理',
+      title: '示范小区',
       icon: '4',
       roles: [
         'admin',
@@ -199,11 +208,12 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'catering',
-        component: () => import('@/views/system/catering/list'),
-        name: 'cateringList',
+        path: 'community',
+        component: () => import('@/views/demonstration/community'),
+        name: 'community',
+        hidden: false,
         meta: {
-          title: '餐企档案',
+          title: '示范小区',
           roles: [
             'admin',
           ]
@@ -212,38 +222,13 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/system',
+    path: '/city',
     component: Layout,
     redirect: 'noRedirect',
-    name: '系统管理',
+    name: '市容市貌',
+    hidden: false,
     meta: {
-      title: '系统管理',
-      icon: '5',
-      roles: [
-        'admin',
-      ]
-    },
-    children: [
-      {
-        path: 'catering',
-        component: () => import('@/views/system/catering/list'),
-        name: 'cateringList',
-        meta: {
-          title: '餐企档案',
-          roles: [
-            'admin',
-          ]
-        }
-      },
-    ]
-  },
-  {
-    path: '/system',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: '系统管理',
-    meta: {
-      title: '系统管理',
+      title: '市容市貌',
       icon: '6',
       roles: [
         'admin',
@@ -251,11 +236,12 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'catering',
-        component: () => import('@/views/system/catering/list'),
-        name: 'cateringList',
+        path: 'appearance',
+        component: () => import('@/views/city/appearance'),
+        name: 'appearance',
+        hidden: false,
         meta: {
-          title: '餐企档案',
+          title: '市容市貌',
           roles: [
             'admin',
           ]
@@ -264,12 +250,13 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/system',
+    path: '/law',
     component: Layout,
     redirect: 'noRedirect',
-    name: '系统管理',
+    name: '执法单兵',
+    hidden: false,
     meta: {
-      title: '系统管理',
+      title: '执法单兵',
       icon: '7',
       roles: [
         'admin',
@@ -277,11 +264,12 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'catering',
-        component: () => import('@/views/system/catering/list'),
-        name: 'cateringList',
+        path: 'soldier',
+        component: () => import('@/views/law/soldier'),
+        name: 'soldier',
+        hidden: false,
         meta: {
-          title: '餐企档案',
+          title: '执法单兵',
           roles: [
             'admin',
           ]
@@ -290,12 +278,13 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/system',
+    path: 'illegal',
     component: Layout,
     redirect: 'noRedirect',
-    name: '系统管理',
+    name: '违法建筑',
+    hidden: false,
     meta: {
-      title: '系统管理',
+      title: '违法建筑',
       icon: '8',
       roles: [
         'admin',
@@ -303,11 +292,12 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'catering',
-        component: () => import('@/views/system/catering/list'),
-        name: 'cateringList',
+        path: 'construction',
+        component: () => import('@/views/illegal/construction'),
+        name: 'construction',
+        hidden: false,
         meta: {
-          title: '餐企档案',
+          title: '违法建筑',
           roles: [
             'admin',
           ]
@@ -317,12 +307,13 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/system',
+    path: '/city',
     component: Layout,
     redirect: 'noRedirect',
-    name: '系统管理',
+    name: '城市治水',
+    hidden: false,
     meta: {
-      title: '系统管理',
+      title: '城市治水',
       icon: '9',
       roles: [
         'admin',
@@ -330,11 +321,12 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'catering',
-        component: () => import('@/views/system/catering/list'),
-        name: 'cateringList',
+        path: 'water',
+        component: () => import('@/views/city/water'),
+        name: 'water',
+        hidden: false,
         meta: {
-          title: '餐企档案',
+          title: '城市治水',
           roles: [
             'admin',
           ]
@@ -343,12 +335,13 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/system',
+    path: '/municipal',
     component: Layout,
     redirect: 'noRedirect',
-    name: '系统管理',
+    name: '市政设施',
+    hidden: false,
     meta: {
-      title: '系统管理',
+      title: '市政设施',
       icon: '10',
       roles: [
         'admin',
@@ -356,11 +349,40 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'catering',
-        component: () => import('@/views/system/catering/list'),
-        name: 'cateringList',
+        path: 'facilities',
+        component: () => import('@/views/municipal/facilities'),
+        name: 'Municipal',
+        hidden: false,
         meta: {
-          title: '餐企档案',
+          title: '市政设施',
+          roles: [
+            'admin',
+          ]
+        }
+      },
+    ]
+  },
+  {
+    path: '/law',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: '案件归集下派',
+    hidden: false,
+    meta: {
+      title: '案件归集下派',
+      icon: '5',
+      roles: [
+        'admin',
+      ]
+    },
+    children: [
+      {
+        path: 'case',
+        component: () => import('@/views/low/case'),
+        name: 'underworld',
+        hidden: false,
+        meta: {
+          title: '案件归集下派',
           roles: [
             'admin',
           ]

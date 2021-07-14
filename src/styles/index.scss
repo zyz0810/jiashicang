@@ -331,7 +331,7 @@ body .el-table th.gutter{
   }
 }
 .el-table thead{
-  color: #000;
+  color: #fff;
 }
 .addForm{
   .el-form-item__content{
@@ -593,26 +593,29 @@ input[type="number"] {
     }
   }
 }
+.el-table th.is-leaf, .el-table td{
+  border: none;
+}
 .el-table{
-  color:$txtColor !important;
-  border:1px solid #1362a0;
-  background: #0a275f !important;
+  color:#fff !important;
+  //border:1px solid #1362a0;
+  background: transparent !important;
   &::before {
     height: 0px;
   }
   tr{
-    background: #0a275f !important;
+    background: transparent !important;
   }
   td{
-    border-bottom: 1px solid #1362a0;
+    //border-bottom: 1px solid #1362a0;
   }
   th{
     &.is-leaf{
-      border-bottom: 1px solid #1362a0;
+      //border-bottom: 1px solid #1362a0;
     }
   }
   thead{
-    color:$txtColor !important;
+    color:#fff !important;
 
     th{
       background: transparent !important;
@@ -620,13 +623,13 @@ input[type="number"] {
   }
 }
 .el-table--border th, .el-table--border td{
-  border-right: 1px solid #1362a0;
+  //border-right: 1px solid #1362a0;
 }
 .el-table--group::after, .el-table--border::after{
   width: 0;
 }
 .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .el-table__body tr.current-row>td {
-  background-color: #a2a4a7!important;
+  background-color: transparent!important;
 }
 .el-pagination__total{
   color: $txtColor;
@@ -699,4 +702,10 @@ input[type="number"] {
 }
 .el-form-item__label{
   color: $txtColor !important;
+}
+.mapDiv {
+  background-color: rgb(3,38,105) !important;
+}
+.clr_yellow{
+  color:#D5BB4E;
 }
