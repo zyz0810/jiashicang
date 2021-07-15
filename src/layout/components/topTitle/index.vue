@@ -17,14 +17,14 @@
         <span class="f18 bold m_r30">晴</span>
         <span class="f18 bold">26~35℃</span>
       </el-col>
-      <el-col :span="14">a
-<!--        <img src="./../../../assets/image/logo.png"/>-->
+      <el-col :span="14" class="logo text-center">
+        <img src="./../../../assets/image/logo.png"/>
       </el-col>
-      <el-col :span="5" class="top_right">
-        <div class="right-menu">
-          <span class="date f14 bold">{{$moment().format('YYYY-MM-DD hh:mm:ss')}}</span>
-          <div class="f16 bold" @click="logout"><i class="el-icon-switch-button"></i>退 出</div>
-        </div>
+      <el-col :span="5" class="top_right text-right">
+        <!--<div class="right-menu">-->
+          <span class="date f14 bold">{{$moment().format('YYYY-MM-DD')}}</span>
+          <span class="f16 bold" @click="logout">退 出<i class="el-icon-switch-button" style="margin-left: 5px"></i></span>
+        <!--</div>-->
         <my-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="80%">
           <ul class="street">
             <li>街道1</li>

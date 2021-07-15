@@ -2,10 +2,10 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content clr_white">
+    <div class="left_content clr_white border base_bg shadow">
 
         <div class="title bold">备案审批</div>
-        <div class="top clr_white">
+        <div class="top clr_white border">
           <div class="f26 bold text-center baseColor approval_num">审核总数：600</div>
 
           <div class="circle_num text-center">
@@ -30,21 +30,21 @@
 
         </div>
 
-      <div class="left_bottom mt_10">
+      <div class="left_bottom mt_10 border">
         <p class="f20 bold">审批类型数量排名（top8）</p>
         <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
       </div>
 
     </div>
-    <div class="right_content clr_white">
+    <div class="right_content clr_white border base_bg shadow">
       <div class="title bold">备案审批</div>
-      <div class="top clr_white">
+      <div class="top clr_white border">
         <p class="f20 bold">审批走势（一周）</p>
-        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></LineChart>
+        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></LineChart>
       </div>
-      <div class="left_bottom mt_10">
+      <div class="left_bottom mt_10 border">
         <p class="f20 bold">审批详情</p>
-        <el-table v-loading="listLoading" :data="list" :height="280" element-loading-text="拼命加载中" fit ref="tableList" class="f16">
+        <el-table v-loading="listLoading" :data="list" :height="300" element-loading-text="拼命加载中" fit ref="tableList" class="f16">
           <el-table-column type="index" label="序号" width="80" align="center">
 <!--            <template slot-scope="scope">-->
 <!--             <span class="block sqaer">{{index}}</span>-->
@@ -213,7 +213,7 @@
           grid: {
             left: '0',
             right: '0',
-            bottom: '40',
+            bottom: '5',
             top: '20',
             containLabel: true
           },
@@ -450,7 +450,7 @@
           marker.addEventListener("click", function () {
           marker.openInfoWindow(infoWin1);
         });// 将标注添加到地图中
-        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none'
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
         this.map.setStyle('indigo')
 
       },
@@ -473,10 +473,8 @@
   .left_content{
     padding: 20px;
     width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
     position: fixed;
-    top: 120px;
+    top: 10vh;
     left: 20px;
     z-index: 9999;
     .anjian_num{
@@ -484,7 +482,6 @@
     }
     .top{
       padding: 20px;
-      border:1px solid #0a76a4;
       .num01{
         span{
           width: 25px;
@@ -515,16 +512,13 @@
     }
     .left_bottom{
       padding: 20px;
-      border:1px solid #0a76a4;
     }
   }
   .right_content{
     padding: 20px;
     width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
     position: fixed;
-    top: 12px;
+    top: 10vh;
     right: 20px;
     z-index: 9999;
     .anjian_num{
@@ -532,7 +526,6 @@
     }
     .top{
       padding: 20px;
-      border:1px solid #0a76a4;
       .num01{
         span{
           width: 25px;
@@ -563,7 +556,6 @@
     }
     .left_bottom{
       padding: 20px 20px 0 20px;
-      border:1px solid #0a76a4;
     }
   }
   .title{

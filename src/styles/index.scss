@@ -558,11 +558,11 @@ input[type="number"] {
   left: 0 !important;
 }
 .el-input__inner{
-  border: 1px solid $borderColor !important;
+  //border: 1px solid $borderColor !important;
 }
 .el-date-editor .el-range-input,.el-input__inner,.el-textarea__inner{
   color: $txtColor !important;
-  background: #0a275f !important;
+  //background: #0a275f !important;
   //border: 1px solid #0a3f7a !important;
 
   &::-webkit-input-placeholder {
@@ -810,4 +810,13 @@ input[type="number"] {
 }
 .bg_purple{
   background: #A15C9B;
+}
+.border{
+  border: 1px solid $borderColor;
+}
+.shadow{
+  box-shadow: 0 0 20px rgba(5,46,255,0.3);
+}
+.base_bg{
+  background: rgba(2,54,177,0.2);
 }

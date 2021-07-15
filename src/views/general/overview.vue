@@ -2,14 +2,13 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content clr_white">
-
+    <div class="left_content border clr_white base_bg shadow">
         <div class="title bold">案件归集下派</div>
-        <div class="top clr_white">
+        <div class="top clr_white border">
           <p class="f20 bold">案件状况</p>
           <div class="flex anjian_num">
             <div class="flex-item">
-              <p class="f16 bold baseColor">今日受理量</p>
+              <p class="f16 bold clr_blue01">今日受理量</p>
               <div class="num01 flex text-center f26 bold mt_10">
                 <span></span>
                 <span>2</span>
@@ -19,7 +18,7 @@
               </div>
             </div>
             <div class="flex-item">
-              <p class="f16 bold baseColor">今日及时结案量</p>
+              <p class="f16 bold clr_blue01">今日及时结案量</p>
               <div class="num02 flex text-center f26 bold mt_10">
                 <span></span>
                 <span>2</span>
@@ -29,7 +28,7 @@
               </div>
             </div>
             <div class="flex-item">
-              <p class="f16 bold baseColor">今日结案量</p>
+              <p class="f16 bold clr_blue01">今日结案量</p>
               <div class="num03 flex text-center f26 bold mt_10">
                 <span></span>
                 <span>1</span>
@@ -47,26 +46,23 @@
               <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
             </el-col>
           </el-row>
-
         </div>
-
-      <div class="left_bottom mt_10">
+      <div class="left_bottom mt_10 border">
         <p class="f20 bold">案件占比分析</p>
         <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
       </div>
 
     </div>
-    <div class="right_content clr_white">
+    <div class="right_content border clr_white base_bg shadow">
       <div class="title bold">案件归集下派</div>
-      <div class="top clr_white">
+      <div class="top clr_white border">
         <p class="f20 bold">案件高发路段（top6）</p>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
+        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></BarChartFour>
       </div>
-      <div class="left_bottom mt_10">
+      <div class="left_bottom mt_10 border">
         <p class="f20 bold">部门案件处置分析</p>
-        <BarChartFive :chartData="BarData" height="300px" divwidth="100%"></BarChartFive>
+        <BarChartFive :chartData="BarData" height="30vh" divwidth="100%"></BarChartFive>
       </div>
-
     </div>
 
   </div>
@@ -432,7 +428,7 @@
           marker.addEventListener("click", function () {
           marker.openInfoWindow(infoWin1);
         });// 将标注添加到地图中
-
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
         this.map.setStyle('indigo')
 
       },
@@ -441,6 +437,7 @@
   }
 </script>
 <style lang="scss" scoped>
+  @import "~@/styles/variables.scss";
   /deep/.tdt-marker-pane{
     .tdt-marker-icon{
       width: 57px !important;
@@ -459,10 +456,8 @@
   .left_content{
     padding: 20px;
     width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
     position: fixed;
-    top: 120px;
+    top: 10vh;
     left: 20px;
     z-index: 9999;
     .anjian_num{
@@ -470,7 +465,6 @@
     }
     .top{
       padding: 20px;
-      border:1px solid #0a76a4;
       .num01{
         span{
           width: 25px;
@@ -501,16 +495,13 @@
     }
     .left_bottom{
       padding: 20px;
-      border:1px solid #0a76a4;
     }
   }
   .right_content{
     padding: 20px;
     width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
     position: fixed;
-    top: 12px;
+    top: 10vh;
     right: 20px;
     z-index: 9999;
     .anjian_num{
@@ -518,7 +509,6 @@
     }
     .top{
       padding: 20px;
-      border:1px solid #0a76a4;
       .num01{
         span{
           width: 25px;
@@ -549,7 +539,6 @@
     }
     .left_bottom{
       padding: 20px 20px 0 20px;
-      border:1px solid #0a76a4;
     }
   }
   .title{

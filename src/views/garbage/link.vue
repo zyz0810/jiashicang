@@ -7,13 +7,13 @@
       <div class="clean_rate flex">
         <div>
           <p class="f26">95.6%</p>
-          <p>清扫完成</p>
+          <p class="mt_5">清扫完成</p>
         </div>
       </div>
       <div class="watering_rate flex">
         <div>
           <p class="f26">95.6%</p>
-          <p>洒水完成</p>
+          <p class="mt_5">洒水完成</p>
         </div>
       </div>
       <ul class="f16 clr_white bold text-center link_intro">
@@ -47,20 +47,20 @@
         </li>
       </ul>
     </div>
-    <div class="right_content clr_white">
+    <div class="right_content clr_white base_bg shadow border">
       <div class="title bold">清扫作业</div>
-      <div class="top clr_white">
+      <div class="top clr_white border">
         <p class="f20 bold">
           道路统计78条
           <span class="f16 baseColor fr">清扫完成率</span>
         </p>
         <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" :height="'300px'" :divwidth="'100%'"></PieChartTwo>
       </div>
-      <div class="left_bottom mt_10">
+      <div class="left_bottom mt_10 border">
         <p class="f20 bold">作业里程统计</p>
         <BarChartFive :chartData="BarData" height="100px" divwidth="100%"></BarChartFive>
       </div>
-      <div class="left_bottom mt_10">
+      <div class="left_bottom mt_10 border">
         <p class="f20 bold">实际作业车辆统计</p>
         <BarChartFive :chartData="BarDataTwo" height="100px" divwidth="100%"></BarChartFive>
       </div>
@@ -412,7 +412,7 @@
           marker.addEventListener("click", function () {
           marker.openInfoWindow(infoWin1);
         });// 将标注添加到地图中
-
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
         this.map.setStyle('indigo')
 
       },
@@ -438,7 +438,7 @@
   }
   .left_rate{
     position: fixed;
-    top: 100px;
+    top: 10vh;
     left: 20px;
     z-index: 99999999;
     .clean_rate{
@@ -492,10 +492,8 @@
   .right_content{
     padding: 20px;
     width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
     position: fixed;
-    top: 12px;
+    top: 10vh;
     right: 20px;
     z-index: 9999;
     .anjian_num{
@@ -503,7 +501,6 @@
     }
     .top{
       padding: 20px;
-      border:1px solid #0a76a4;
       .num01{
         span{
           width: 25px;
@@ -534,7 +531,6 @@
     }
     .left_bottom{
       padding: 20px 20px 0 20px;
-      border:1px solid #0a76a4;
     }
   }
   .title{

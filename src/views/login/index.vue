@@ -1,36 +1,40 @@
 <template>
   <div class="login-container flex flex-vertical">
-
-<!--    <el-row class="login_content">-->
-<!--      <el-col :xs="12" :sm="12" :md="12" :lg="12" :xl="12"></el-col>-->
-<!--      <el-col :xs="4" :sm="6" :md="8" :lg="9" :xl="11"><div class="grid-content bg-purple-light"></div></el-col>-->
-
-<!--    </el-row>-->
     <div class="login_content">
-      <img src="../../assets/image/login_txt.png" class="login_txt"/>
-      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
-          <div class="title-container">
-            <h3 class="title">用户登录</h3>
+      <img src="../../assets/image/login_title.png" class="login_title"/>
+      <div class="login_div mt_20">
+        <img src="../../assets/image/login_txt.png" class="login_txt"/>
+        <div class="flex">
+          <div class="flex-item  text-center">
+            <img src="../../assets/image/login_ewm.png"/>
+            <p class="baseColor">打开浙政钉扫码登录</p>
           </div>
-          <el-form-item prop="mobile">
+          <div><img src="../../assets/image/login_border.png"/></div>
+          <div class="flex-item">
+            <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login_form" autocomplete="on" label-position="left">
+              <el-form-item prop="mobile">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-            <el-input ref="mobile" v-model="loginForm.mobile" placeholder="请输入用户名" name="mobile" type="text" tabindex="1" autocomplete="on"/>
-          </el-form-item>
-          <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-            <el-form-item prop="password">
+                <el-input ref="mobile" v-model="loginForm.mobile" placeholder="请输入用户名" name="mobile" type="text" tabindex="1" autocomplete="on"/>
+              </el-form-item>
+              <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+                <el-form-item prop="password">
           <span class="svg-container">
             <svg-icon icon-class="password" />
           </span>
-              <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="请输入密码" name="password" tabindex="2" autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin"/>
-              <span class="show-pwd" @click="showPwd">
+                  <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType" placeholder="请输入密码" name="password" tabindex="2" autocomplete="on" @keyup.native="checkCapslock" @blur="capsTooltip = false" @keyup.enter.native="handleLogin"/>
+                  <span class="show-pwd" @click="showPwd">
             <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
           </span>
-            </el-form-item>
-          </el-tooltip>
-          <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" class="login_btn" @click.native.prevent="handleLogin">登录</el-button>
-        </el-form>
+                </el-form-item>
+              </el-tooltip>
+              <el-button :loading="loading" type="primary" class="login_btn" @click.native.prevent="handleLogin">安全登录</el-button>
+            </el-form>
+          </div>
+        </div>
+      </div>
+
     </div>
 
 
@@ -228,14 +232,16 @@ $cursor: #fff;
     }
   }
 .login_btn{
+  width: 100%;
+  margin-top: 30px;
   background-color: #2143af; /* 浏览器不支持的时候显示 */
-  background-image: linear-gradient( #44c6fe, #0577f9);
+  /*background-image: linear-gradient( #44c6fe, #0577f9);*/
   border:none;
 }
 
   .el-form-item {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: #fff;
+    border: 1px solid #0a3f7a;
+    /*background: #fff;*/
     border-radius: 5px;
     color: #fff;
   }
@@ -248,14 +254,22 @@ $dark_gray:#889aa4;
 $light_gray:#eee;
 $txt:#3f35cf;
 
+.login_div{
+  width: 100%;
+  padding: 70px 0 30px;
+  background: url("../../assets/image/login_bg.png") no-repeat;
+  background-position: 0 0;
+  background-size: 100% 100%;
+}
 
 .login-container {
   min-height: 100%;
   width: 100%;
   //background-color: $bg;
-  background: url("../../assets/image/login_bg.jpg") no-repeat;
-  background-position: 0 0;
-  background-size: 100% 100%;
+  /*background: url("../../assets/image/login_bg.jpg") no-repeat;*/
+  /*background-position: 0 0;*/
+  /*background-size: 100% 100%;*/
+  background: #00012D;
   overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -270,16 +284,20 @@ $txt:#3f35cf;
     /*width: 90%;*/
     /*margin: 0 auto;*/
     /*height: 100vh;*/
-    width: 600px;
+    width: 800px;
   }
 
-
+.login_form{
+  padding: 0 20px;
+}
 .login_txt{
-  width: 400px;
+  width: 300px;
   margin: 0 auto 20px;
   display: block;
 }
-
+.login_title{
+  margin-bottom: 40px;
+}
 
   .login-form {
     color:#fff;
