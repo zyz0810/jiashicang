@@ -7,38 +7,6 @@
         <div class="title bold">城市亮灯</div>
         <div class="top clr_white">
           <p class="f20 bold">案件状况</p>
-          <div class="flex anjian_num">
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日受理量</p>
-              <div class="num01 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>2</span>
-                <span>5</span>
-                <span>8</span>
-              </div>
-            </div>
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日及时结案量</p>
-              <div class="num02 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>8</span>
-                <span>9</span>
-                <span>8</span>
-              </div>
-            </div>
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日结案量</p>
-              <div class="num03 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>1</span>
-                <span>2</span>
-                <span>6</span>
-                <span>8</span>
-              </div>
-            </div>
-          </div>
           <el-row :gutter="20" class="pie_chart">
             <el-col :span="12">
               <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
@@ -51,20 +19,70 @@
         </div>
 
       <div class="left_bottom mt_10">
-        <p class="f20 bold">案件占比分析</p>
+        <div class="title bold">智慧市政</div>
+        <p class="f20 bold">市政管理信息总览</p>
+        <div class="baseColor f20 bold">
+          <div>养护道路：103条</div>
+          <div>排水管线长度：5625米</div>
+          <div>养护单位：14家</div>
+          <div>智能感应井盖：103个</div>
+          <div>管道水位监测：24个</div>
+          <div>管道流量监测：2个</div>
+        </div>
         <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
       </div>
 
     </div>
     <div class="right_content clr_white">
-      <div class="title bold">案件归集下派</div>
+      <div class="title bold">桥梁监测（江虹桥）</div>
       <div class="top clr_white">
-        <p class="f20 bold">案件高发路段（top6）</p>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
+        <p class="f20 bold">设备异常情况</p>
+        <div class="flex bold text-center">
+          <div class="flex-item equipment_normal">
+            <div class="f26 num">46</div>
+            <p class="f18 mt_10">正常设备</p>
+          </div>
+          <div class="flex-item equipment_abnormal">
+            <div class="f26 num">46</div>
+            <p class="f18 mt_10">正常设备</p>
+          </div>
+          <div class="flex-item rate_abnormal">
+            <div class="f26 num">46</div>
+            <p class="f18 mt_10">异常率</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="top clr_white mt_10">
+        <p class="f20 bold">预警信息</p>
+        <div class="flex warning_intro mt_20">
+          <div class="flex m_r30"><span class="block warning_circle bg_green"></span>正常</div>
+          <div class="flex m_r30"><span class="block warning_circle bg_blue"></span>一级预警</div>
+          <div class="flex m_r30"><span class="block warning_circle bg_yellow"></span>二级预警</div>
+          <div class="flex m_r30"><span class="block warning_circle bg_red"></span>三级预警</div>
+        </div>
+        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="150px" divwidth="100%"></BarChartFour>
       </div>
       <div class="left_bottom mt_10">
-        <p class="f20 bold">部门案件处置分析</p>
-        <BarChartFive :chartData="BarData" height="300px" divwidth="100%"></BarChartFive>
+        <p class="f20 bold">实时曲线</p>
+        <el-form :inline="true" :model="listQuery" class="search_form">
+          <el-form-item label="检测项类型">
+            <el-select v-model="listQuery.status">
+              <el-option label="启用" value="1"></el-option>
+              <el-option label="禁用" value="0"></el-option>
+            </el-select>
+          </el-form-item>
+<!--          <el-form-item label="监测线">-->
+<!--            <el-select v-model="listQuery.status" placeholder="">-->
+<!--              <el-option label="启用" value="1"></el-option>-->
+<!--              <el-option label="禁用" value="0"></el-option>-->
+<!--            </el-select>-->
+<!--          </el-form-item>-->
+          <el-form-item>
+            <el-button v-waves class="filter-item" type="primary">生成曲线</el-button>
+          </el-form-item>
+        </el-form>
+        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></LineChart>
       </div>
 
     </div>
@@ -91,6 +109,9 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive},
     data() {
       return {
+        listQuery:{
+          status:0
+        },
         chartData: {
           title:{},
           tooltip: {
@@ -169,6 +190,78 @@
           ]
         },
         PieChartLegend:[],
+        lineData:{
+          title: {},
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '40',
+            top: '20',
+            containLabel: true
+          },
+          //----------------   图例 legend  -----------------
+          legend:{},
+          xAxis: {
+            // show:false,
+            axisTick: {
+              show: false,
+              alignWithLabel: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#26CBE2',
+                fontSize:'16',
+                fontWeight:'bold'
+              }
+            },
+            splitLine: { show: false },//去除网格线
+            type: 'category',
+            data: ['5.13', '5.14', '5.15', '5.16', '5.17', '5.18', '5.19']
+          },
+          yAxis: {
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              // show: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#26CBE2',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            splitLine: {
+              show: false,//去除网格线
+              textStyle: {
+                color: '#08245F',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            type: 'value'
+          },
+          series: [{
+            itemStyle : {
+              normal : {
+                lineStyle:{
+                  color:'#F3E981'
+                }
+              }
+            },
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line'
+          }]
+        },
         BarData:{
           title: {},
           tooltip: {
@@ -556,5 +649,40 @@
     line-height: 1.8;
     background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
   }
+  .warning_intro{
+    padding: 2%;
+    border: 1px solid #476ABA;
+  }
 
+  .warning_circle{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  .equipment_normal{
+    color: #0DE3F9;
+   .num{
+     width: 60px;
+     height: 60px;
+     line-height: 60px;
+     border-radius: 50%;
+     border: 3px dotted #0DE3F9;
+     margin: 0 auto;
+   }
+  }
+  .equipment_abnormal{
+    color: #F8F19F;
+    .num{
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      border-radius: 50%;
+      border: 3px dotted #F8F19F;
+      margin: 0 auto;
+    }
+  }
+  .rate_abnormal{
+  color:#3EFEBC
+  }
 </style>

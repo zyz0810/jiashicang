@@ -1,10 +1,234 @@
 <template>
   <div class="dashboard-editor-container">
-    <!--    <github-corner class="github-corner" />-->
+    <el-row :gutter="10">
+      <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
+        <div class="content_index">
+          <div class="title_index f18 bold text-center">数字城管</div>
+          <div class="flex anjian_num clr_white">
+            <div class="flex-item">
+              <p class="f16 bold baseColor">今日受理量</p>
+              <div class="num01 flex text-center f26 bold mt_10">
+                <span></span>
+                <span>2</span>
+                <span>2</span>
+                <span>5</span>
+                <span>8</span>
+              </div>
+            </div>
+            <div class="flex-item">
+              <p class="f16 bold baseColor">今日及时结案量</p>
+              <div class="num02 flex text-center f26 bold mt_10">
+                <span></span>
+                <span>2</span>
+                <span>8</span>
+                <span>9</span>
+                <span>8</span>
+              </div>
+            </div>
+            <div class="flex-item">
+              <p class="f16 bold baseColor">今日结案量</p>
+              <div class="num03 flex text-center f26 bold mt_10">
+                <span></span>
+                <span>1</span>
+                <span>2</span>
+                <span>6</span>
+                <span>8</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <el-col :span="12">
+              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+            </el-col>
+            <el-col :span="12">
+              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+            </el-col>
+          </div>
+          <div class="flex city_num clr_white text-center">
+            <div class="flex-item f16 bold">行走杭州</div>
+            <div class="flex-item">
+              <p class="f26 clr_yellow bold">79.97</p>
+              <p class="mt_5">总得分</p>
+            </div>
+            <div class="flex-item">
+              <p class="f26 clr_yellow bold">1.04%</p>
+              <p class="mt_5">环比下降</p>
+            </div>
+            <div class="flex-item">
+              <p class="f26 clr_yellow bold">第4名</p>
+              <p class="mt_5">全市排名</p>
+            </div>
+          </div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
+       <div class="content_index">
+         <div class="title_index f18 bold text-center">执法办案</div>
+         <div class="flex">
+           <ul class="f16 clr_white bold anjian_cegory">
+             <li class="flex">
+               <span class="block f26 text-center">268</span>
+               <p>今日受理案件</p>
+             </li>
+             <li class="flex mt_20">
+               <span class="block f26 text-center">228</span>
+               <p>今日审理案件</p>
+             </li>
+             <li class="flex mt_20">
+               <span class="block f26 text-center">198</span>
+               <p>今日结案案件</p>
+             </li>
+           </ul>
+           <div class="map_echart"></div>
+           <div class="anjian_genzong bold">
+             <p class="baseColor text-center bold f18">案件实时跟踪</p>
+             <div class="weui-cells clr_white">
+               <div class="weui-cell">
+                 <div class="weui-cell__hd flex">
+                   <span class="bg_red f12 tag">市容</span>
+                   <img class="anjian_img" src="https://profile.csdnimg.cn/8/3/9/3_u011424614"/>
+                 </div>
+                 <div class="weui-cell__bd">
+                   <p class="f16">市容环境-暴露垃圾</p>
+                   <p class="f14">有暴露垃圾，请处理</p>
+                 </div>
+                 <div class="weui-cell__ft f12">
+                   <p>上报  王先军</p>
+                   <p>16:23:05</p>
+                 </div>
+               </div>
+               <div class="weui-cell">
+                 <div class="weui-cell__hd flex">
+                   <span class="bg_blue f12 tag">执法</span>
+                   <img class="anjian_img" src="https://profile.csdnimg.cn/8/3/9/3_u011424614"/>
+                 </div>
+                 <div class="weui-cell__bd">
+                   <p class="f16">市容环境-暴露垃圾</p>
+                   <p class="f14">有暴露垃圾，请处理</p>
+                 </div>
+                 <div class="weui-cell__ft f12">
+                   <p>上报  王先军</p>
+                   <p>16:23:05</p>
+                 </div>
+               </div>
+               <div class="weui-cell">
+                 <div class="weui-cell__hd flex">
+                   <span class="bg_purple f12 tag">市容</span>
+                   <img class="anjian_img" src="https://profile.csdnimg.cn/8/3/9/3_u011424614"/>
+                 </div>
+                 <div class="weui-cell__bd">
+                   <p class="f16">市容环境-暴露垃圾</p>
+                   <p class="f14">有暴露垃圾，请处理</p>
+                 </div>
+                 <div class="weui-cell__ft f12">
+                   <p>上报  王先军</p>
+                   <p>16:23:05</p>
+                 </div>
+               </div>
+               <div class="weui-cell">
+                 <div class="weui-cell__hd flex">
+                   <span class="bg_red f12 tag">市容</span>
+                   <img class="anjian_img" src="https://profile.csdnimg.cn/8/3/9/3_u011424614"/>
+                 </div>
+                 <div class="weui-cell__bd">
+                   <p class="f16">市容环境-暴露垃圾</p>
+                   <p class="f14">有暴露垃圾，请处理</p>
+                 </div>
+                 <div class="weui-cell__ft f12">
+                   <p>上报  王先军</p>
+                   <p>16:23:05</p>
+                 </div>
+               </div>
+               <div class="weui-cell">
+                 <div class="weui-cell__hd flex">
+                   <span class="bg_red f12 tag">市容</span>
+                   <img class="anjian_img" src="https://profile.csdnimg.cn/8/3/9/3_u011424614"/>
+                 </div>
+                 <div class="weui-cell__bd">
+                   <p class="f16">市容环境-暴露垃圾</p>
+                   <p class="f14">有暴露垃圾，请处理</p>
+                 </div>
+                 <div class="weui-cell__ft f12">
+                   <p>上报  王先军</p>
+                   <p>16:23:05</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+      </el-col>
+    </el-row>
+    <el-row :gutter="10" class="mt_10">
+      <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
+        <div class="content_index">
+          <div class="title_index f18 bold text-center">信访投诉</div>
+          <div class="flex bold text-center">
+            <div class="flex-item">
+              <p class="clr_white">今日投诉量</p>
+              <p class="clr_blue01 f26">868</p>
+            </div>
+            <div class="flex-item">
+              <p class="clr_white">今日投诉量</p>
+              <p class="clr_yellow f26">868</p>
+            </div>
+            <div class="flex-item">
+              <p class="clr_white">今日投诉量</p>
+              <p class="clr_purple f26">868</p>
+            </div>
+          </div>
+          <div class="flex bold text-center clr_white" style="margin-top: 30px">
+            <div class="flex-item">
+              <p class="clr_yellow f26">99.89</p>
+              <p class="clr_white">总得分</p>
+            </div>
+            <div class="flex-item">
+              <p class="f26">1.04%</p>
+              <p class="clr_white">环比下降</p>
+            </div>
+            <div class="flex-item">
+              <p class="f26">第2名</p>
+              <p class="clr_white">全市排名</p>
+            </div>
+          </div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
+        <div class="content_index">
+          <div class="title_index f18 bold text-center">审批情况</div>
+          <div class="top clr_white">
+            <div class="f26 bold text-center baseColor approval_num">审核总数：600</div>
 
-    <!--    <el-row :gutter="40" class="panel-group">首页</el-row>-->
-    <!--<img src="../../../assets/image/2.jpg"/>-->
+            <div class="circle_num text-center">
+              <img src="./../../../assets/image/approval_circle.png" class="circle_img">
+              <div class="circle_num_item">
+                <span class="clr_white f20 bold circleNum_left_bg block">180/15%</span>
+                <p class="clr_yellow bold">犬只审批</p>
+              </div>
+              <div class="circle_num_item">
+                <span class="clr_white f20 bold circleNum_left_bg block">120/10%</span>
+                <p class="clr_yellow bold">工程车审批</p>
+              </div>
+              <div class="circle_num_item">
+                <span class="clr_white f20 bold circleNum_right_bg block">18/1%</span>
+                <p class="clr_yellow bold">广告审批</p>
+              </div>
+              <div class="circle_num_item">
+                <span class="clr_white f20 bold circleNum_right_bg block">260/50%</span>
+                <p class="clr_yellow bold">其他审批</p>
+              </div>
+            </div>
 
+          </div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
+       <div class="content_index">
+         <div class="title_index f18 bold text-center">服务视图</div>
+         <p class="baseColor text-center bold f18">各项服务完成情况</p>
+       </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -13,7 +237,7 @@
   import PanelGroup from './components/PanelGroup'
   import PieChart from '@/components/Charts/PieChartTwo'
   import BarChartThree from '@/components/Charts/BarChartThree'
-
+  import RingChart from '@/components/Charts/RingChart'
   export default {
     name: 'DashboardAdmin',
     components: {
@@ -21,13 +245,50 @@
       PanelGroup,
       PieChart,
       BarChartThree,
+      RingChart
     },
     data() {
       return {
-        todayConsults:0,
-        todayTurnoverData:0,
-        todayProfit:0,
-        todayOut:0,
+        PieChartLegend:[],
+        chartData: {
+          title:{},
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          legend: {
+            show:false
+          },
+          series: [
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: ['50%', '70%'],
+              avoidLabelOverlap: false,
+              label: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: '30',
+                  fontWeight: 'bold'
+                }
+              },
+              labelLine: {
+                show: false
+              },
+              data: [
+                {value: 335, name: '直接访问'},
+                {value: 310, name: '邮件营销'},
+                {value: 234, name: '联盟广告'},
+                {value: 135, name: '视频广告'},
+                {value: 1548, name: '搜索引擎'}
+              ]
+            }
+          ]
+        },
 
       }
     },
@@ -41,26 +302,173 @@
 </script>
 
 <style lang="scss" scoped>
-  .dashboard-editor-container {
-    height: calc(100vh - 100px);
-    padding: 10px 30px;
-    /*background-color: rgb(240, 242, 245);*/
-    width: 90%;
-    margin: 0 auto;
-    background: url("./../../../assets/image/index.jpg") no-repeat;
-    background-size: 100%;
-    background-position: center;
-    position: relative;
-    /*img{*/
-    /*  width: 100%;*/
-    /*  height: 100%;*/
-    /*}*/
-    .chart-wrapper {
-      background: #fff;
-      padding: 16px 16px 0;
-      margin-bottom: 32px;
+  @import '@/styles/variables.scss';
+  .content_index{
+    padding: 0 20px 20px !important;
+    box-shadow: $menuText 0 0 18px inset;
+  }
+  .anjian_num{
+    .num01{
+      span{
+        width: 25px;
+        height: 33px;
+        line-height: 33px;
+        margin-right: 3px;
+        background: url("./../../../assets/image/num_bg1.png") left top no-repeat;
+      }
+    }
+    .num02{
+      span{
+        width: 25px;
+        height: 33px;
+        line-height: 33px;
+        margin-right: 3px;
+        background: url("./../../../assets/image/num_bg2.png") left top no-repeat;
+      }
+    }
+    .num03{
+      span{
+        width: 25px;
+        height: 33px;
+        line-height: 33px;
+        margin-right: 3px;
+        background: url("./../../../assets/image/num_bg3.png") left top no-repeat;
+      }
     }
   }
+  .title_index{
+    height: 3em;
+    line-height: 3em;
+    background-image:-webkit-linear-gradient(bottom,#69CFF4,#fff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .city_num{
+    width: 100%;
+
+    background: #061A3B;
+    border-radius: 10px;
+
+
+    & > div{
+      &:nth-child(1){
+        /*width: 1em;*/
+        flex: 0.1;
+        padding: 0 10px 0 20px;
+        background-image:-webkit-linear-gradient(bottom,#69CFF4,#fff);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+        /*background: #0A264D;*/
+      }
+      &:nth-child(2){
+        padding: 20px 0;
+      }
+    }
+  }
+  .anjian_cegory{
+    width: 20%;
+    li{
+      height: 7vh;
+      line-height: 7vh;
+      background: url("./../../../assets/image/communityNum_bg.png") left top no-repeat;
+      span{
+        width: 35%;
+      }
+      p{
+        width: 65%;
+      }
+    }
+  }
+  .map_echart{
+    width: 40%;
+  }
+  .anjian_genzong{
+    width: 40%;
+    .anjian_img{
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      margin-right: 10px;
+    }
+    .tag{
+      width: 20px;
+      padding: 5px;
+      margin-right: 5px;
+      line-height: 1;
+      border-radius: 10px;
+    }
+  }
+  .approval_num{
+    height: 60px;
+    background: url("./../../../assets/image/approvalTitle_bg.png") center bottom no-repeat;
+  }
+  .circle_num{
+    width: 21vh;
+    height: 15vh;
+    margin: 0 auto 10px;
+    position: relative;
+    /*background: url("./../../assets/image/approval_circle.png") center bottom no-repeat;*/
+    background-size: 100% 100%;
+    .circle_img{
+      width: 21vh;
+      height: 15vh;
+
+      /*position: ;*/
+      /*width: 100%;*/
+      /*height: 100%;*/
+    }
+    .circle_num_item{
+      position: absolute;
+      &:nth-child(2){
+        top: 1.6vh;
+        left: -80px;
+      }
+      &:nth-child(3){
+        top: 11vh;
+        left: -80px;
+      }
+      &:nth-child(4){
+        top: 1.6vh;
+        right: -60px;
+      }
+      &:nth-child(5){
+        top: 11vh;
+        right: -80px;
+      }
+    }
+  }
+  .circleNum_left_bg{
+    padding-right: 3px;
+    margin-bottom: 5px;
+    border-right: 2px solid $baseColor;
+    background-image: linear-gradient(270deg,  rgba(39,73,167,1), rgba(39,73,167,0));
+  }
+  .circleNum_right_bg{
+    padding-left: 3px;
+    margin-bottom: 5px;
+    border-left: 2px solid $baseColor;
+    background-image: linear-gradient(270deg,  rgba(39,73,167,0), rgba(39,73,167,1));
+  }
+  /*.dashboard-editor-container {*/
+  /*  height: calc(100vh - 100px);*/
+  /*  padding: 10px 30px;*/
+  /*  !*background-color: rgb(240, 242, 245);*!*/
+  /*  width: 90%;*/
+  /*  margin: 0 auto;*/
+  /*  background: url("./../../../assets/image/index.jpg") no-repeat;*/
+  /*  background-size: 100%;*/
+  /*  background-position: center;*/
+  /*  position: relative;*/
+  /*  !*img{*!*/
+  /*  !*  width: 100%;*!*/
+  /*  !*  height: 100%;*!*/
+  /*  !*}*!*/
+  /*  .chart-wrapper {*/
+  /*    background: #fff;*/
+  /*    padding: 16px 16px 0;*/
+  /*    margin-bottom: 32px;*/
+  /*  }*/
+  /*}*/
 
 
   @media (max-width:1024px) {

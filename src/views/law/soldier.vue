@@ -2,74 +2,28 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content clr_white">
-
-        <div class="title bold">案件归集下派</div>
-        <div class="top clr_white">
-          <p class="f20 bold">案件状况</p>
-          <div class="flex anjian_num">
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日受理量</p>
-              <div class="num01 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>2</span>
-                <span>5</span>
-                <span>8</span>
-              </div>
-            </div>
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日及时结案量</p>
-              <div class="num02 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>8</span>
-                <span>9</span>
-                <span>8</span>
-              </div>
-            </div>
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日结案量</p>
-              <div class="num03 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>1</span>
-                <span>2</span>
-                <span>6</span>
-                <span>8</span>
-              </div>
-            </div>
-          </div>
-          <el-row :gutter="20" class="pie_chart">
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-            </el-col>
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-            </el-col>
-          </el-row>
-
-        </div>
-
-      <div class="left_bottom mt_10">
-        <p class="f20 bold">案件占比分析</p>
-        <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-      </div>
-
-    </div>
-    <div class="right_content clr_white">
-      <div class="title bold">案件归集下派</div>
-      <div class="top clr_white">
-        <p class="f20 bold">案件高发路段（top6）</p>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
-      </div>
-      <div class="left_bottom mt_10">
-        <p class="f20 bold">部门案件处置分析</p>
-        <BarChartFive :chartData="BarData" height="300px" divwidth="100%"></BarChartFive>
-      </div>
-
+    <div class="right_soldier baseColor bold text-center">
+     <ul>
+       <li class="f16">
+         <p class="clr_white"><span class="f26">5623</span>个</p>
+         <span class="block flex"><i class="iconfont icon-guanli4 f26"></i></span>
+         <p class="f16 intro_txt">在线人员</p>
+       </li>
+       <li class="f16 mt_20">
+         <p class="clr_white"><span class="f26">12</span>辆</p>
+         <span class="block flex"><i class="iconfont icon-guanli4 f26"></i></span>
+         <p class="f16 intro_txt">在线车辆</p>
+       </li>
+       <li class="f16 mt_20">
+         <p class="clr_white"><span class="f26">828</span>路</p>
+         <span class="block flex"><i class="iconfont icon-guanli4 f26"></i></span>
+         <p class="f16 intro_txt">在线视频</p>
+       </li>
+     </ul>
     </div>
 
   </div>
+
 </template>
 
 <script>
@@ -82,7 +36,7 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
+  import point07 from '@/assets/image/point07.png' // 引入刚才的map.js 注意路径
 
   export default {
     name: 'parameterList',
@@ -395,8 +349,8 @@
         // this.markerPoint(site)
         //创建图片对象
         var icon = new T.Icon({
-          iconUrl: point01,
-          iconSize: new T.Point(19, 27),
+          iconUrl: point07,
+          iconSize: new T.Point(59, 53),
           iconAnchor: new T.Point(10, 25)
         });
         //创建信息窗口对象
@@ -419,14 +373,13 @@
         let sContent =
           '<div style=" color: #fff;font-size:14px;font-weight:bold;width:100%">' +
           '<div>' +
-          '<p ref="enterpriseName">任务号：20210566121511</p>' +
-          '<p ref="enterpriseName">任务来源：数字集群</p>' +
-          '<p ref="enterpriseName">事件类型：电动车乱停放</p>' +
-          '<p style="color:red" ref="enterpriseName">任务状态：超时</p>' +
-          '<p style="font-size:16px;font-weight:bold;padding-bottom:5px;" ref="enterpriseName">发生时间：2021-05-12 12:05:19</p>' +
-          '<p ref="enterpriseName">所属辖区：烟曲街道</p>' +
-          '<p ref="enterpriseName">地址描述：人民路就简单三</p>' +
-          '<p style="text-align: right"><a style="cursor: pointer;" onclick="openInfo()"> 查看详情</a></p>' +
+          '<p ref="enterpriseName"><span class="f20 clr_yellow">王杰</span>（执法队员）</p>' +
+          '<p ref="enterpriseName">电话：1519832321</p>' +
+          '<p ref="enterpriseName">所属中队：浦沿中队</p>' +
+          '<p style="color:green" ref="enterpriseName">在线状态：在线</p>' +
+          '<p ref="enterpriseName">今日上报案件：2件</p>' +
+          '<p ref="enterpriseName">当前位置：人民路就简单三</p>' +
+          '<p style="text-align: right"><a style="cursor: pointer;" onclick="openInfo()"> 查看轨迹</a></p>' +
           '</div></div>';
           infoWin1.setContent(sContent);
           marker.addEventListener("click", function () {
@@ -456,105 +409,25 @@
     width:100%;
     height:80vh;
   }
-  .left_content{
-    padding: 20px;
-    width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
+
+  .right_soldier{
+    width: 135px;
     position: fixed;
-    top: 120px;
-    left: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-    .top{
-      padding: 20px;
-      border:1px solid #0a76a4;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
-    }
-    .left_bottom{
-      padding: 20px;
-      border:1px solid #0a76a4;
-    }
-  }
-  .right_content{
-    padding: 20px;
-    width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
-    position: fixed;
-    top: 12px;
+    bottom: 200px;
     right: 20px;
     z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-    .top{
-      padding: 20px;
-      border:1px solid #0a76a4;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
+    li{
+      & > span{
+        width: 135px;
+        height: 92px;
+        line-height: 80px;
+        background: url("./../../assets/image/soldier_icon.png") left top no-repeat;
       }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
+      .intro_txt{
+        margin-top: -10px;
       }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
-    }
-    .left_bottom{
-      padding: 20px 20px 0 20px;
-      border:1px solid #0a76a4;
     }
   }
-  .title{
-    line-height: 1.8;
-    background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
-  }
+
 
 </style>

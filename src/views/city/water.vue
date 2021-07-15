@@ -192,6 +192,7 @@
         BarChartLegend:[],
         BarData:{
           title: {},
+          calculable : true,
           tooltip: {
             trigger: 'item',
             formatter: '{a} <br/>{b} : {c} ({d}%)'

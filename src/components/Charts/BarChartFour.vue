@@ -1,6 +1,6 @@
 <template>
 
-  <div class="">
+  <div class="111">
     <div class="legend_span legend_inline text-center" v-if="BarChartLegend.length>0">
       <div v-for="(item,index) in BarChartLegend" @click="editLegend">
         <label :for="inputName+index">

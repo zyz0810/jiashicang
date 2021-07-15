@@ -2,69 +2,67 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content clr_white">
 
-        <div class="title bold">案件归集下派</div>
-        <div class="top clr_white">
-          <p class="f20 bold">案件状况</p>
-          <div class="flex anjian_num">
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日受理量</p>
-              <div class="num01 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>2</span>
-                <span>5</span>
-                <span>8</span>
-              </div>
-            </div>
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日及时结案量</p>
-              <div class="num02 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>8</span>
-                <span>9</span>
-                <span>8</span>
-              </div>
-            </div>
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日结案量</p>
-              <div class="num03 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>1</span>
-                <span>2</span>
-                <span>6</span>
-                <span>8</span>
-              </div>
-            </div>
-          </div>
-          <el-row :gutter="20" class="pie_chart">
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-            </el-col>
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-            </el-col>
-          </el-row>
-
+    <div class="left_rate bold clr_white text-center">
+      <div class="clean_rate flex">
+        <div>
+          <p class="f26">95.6%</p>
+          <p>清扫完成</p>
         </div>
-
-      <div class="left_bottom mt_10">
-        <p class="f20 bold">案件占比分析</p>
-        <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
       </div>
-
+      <div class="watering_rate flex">
+        <div>
+          <p class="f26">95.6%</p>
+          <p>洒水完成</p>
+        </div>
+      </div>
+      <ul class="f16 clr_white bold text-center link_intro">
+        <li>
+          <p>0次</p>
+          <span class="block color_bg01"></span>
+        </li>
+        <li>
+          <p>1次</p>
+          <span class="block color_bg02"></span>
+        </li>
+        <li>
+          <p>2次</p>
+          <span class="block color_bg03"></span>
+        </li>
+        <li>
+          <p>3次</p>
+          <span class="block color_bg04"></span>
+        </li>
+        <li>
+          <p>4次</p>
+          <span class="block color_bg05"></span>
+        </li>
+        <li>
+          <p>5次</p>
+          <span class="block color_bg06"></span>
+        </li>
+        <li>
+          <p>完成</p>
+          <span class="block color_bg07"></span>
+        </li>
+      </ul>
     </div>
     <div class="right_content clr_white">
-      <div class="title bold">案件归集下派</div>
+      <div class="title bold">清扫作业</div>
       <div class="top clr_white">
-        <p class="f20 bold">案件高发路段（top6）</p>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
+        <p class="f20 bold">
+          道路统计78条
+          <span class="f16 baseColor fr">清扫完成率</span>
+        </p>
+        <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" :height="'300px'" :divwidth="'100%'"></PieChartTwo>
       </div>
       <div class="left_bottom mt_10">
-        <p class="f20 bold">部门案件处置分析</p>
-        <BarChartFive :chartData="BarData" height="300px" divwidth="100%"></BarChartFive>
+        <p class="f20 bold">作业里程统计</p>
+        <BarChartFive :chartData="BarData" height="100px" divwidth="100%"></BarChartFive>
+      </div>
+      <div class="left_bottom mt_10">
+        <p class="f20 bold">实际作业车辆统计</p>
+        <BarChartFive :chartData="BarDataTwo" height="100px" divwidth="100%"></BarChartFive>
       </div>
 
     </div>
@@ -75,6 +73,7 @@
 <script>
   import echarts from 'echarts'
   import RingChart from '@/components/Charts/RingChart'
+  import PieChartTwo from '@/components/Charts/PieChartTwo'
   import BarChartFive from '@/components/Charts/BarChartFive'
   import BarChartTwo from '@/components/Charts/BarChartTwo'
   import BarChartThree from '@/components/Charts/BarChartThree'
@@ -88,9 +87,10 @@
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        pieHeight:'300px',
         chartData: {
           title:{},
           tooltip: {
@@ -170,118 +170,9 @@
         },
         PieChartLegend:[],
         BarData:{
-          title: {},
           tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
-          },
-          grid: {
-            left: '0',
-            right: '0',
-            bottom: '40',
-            top: '20',
-            containLabel: true
-          },
-          //----------------   图例 legend  -----------------
-          legend: {
-            type:'plain',				//----图例类型，默认为'plain'，当图例很多时可使用'scroll'
-            bottom:'5',					//----图例相对容器位置,top\bottom\left\right
-            data:[						//----图例内容
-              {
-                name:'应处置案件',
-                textStyle:{
-                  color:'#fff',		//----单独设置某一个图例的颜色
-                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
-                }
-              },
-              {
-                name:'已处置案件',
-                textStyle:{
-                  color:'#fff',		//----单独设置某一个图例的颜色
-                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
-                }
-              }
-            ],
-          },
-
-          xAxis: [
-            {
-
-
-              axisTick: {
-                show:false,
-                alignWithLabel: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'category',
-              data: ['浦沿中队', '西兴中队', '长河中队']
-            }
-          ],
-          yAxis: [
-            {
-              axisTick: {
-                show:false,
-                alignWithLabel: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'value'
-            }
-          ],
-          series: [
-            {
-              name:'应处置案件',
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'50%',
-              // barCategoryGap:'50%',/*多个并排柱子设置柱子之间的间距*/
-              itemStyle: {
-                normal: {
-                  color:'#2FB26B'
-                }
-              },
-              data: [320, 332, 301]
-            },
-            {
-              name:'已处置案件',
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'50%',
-              // barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
-              itemStyle: {
-                normal: {
-                  color:'#00A0EB'
-
-                }
-              },
-              data: [220, 182, 191]
-            }
-          ]
-        },
-        BarDataTwo:{
-          title: {},
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
+            trigger:"axis",
+            formatter:"{a1}<br/>{b1}：{c1}%"
           },
           grid: {
             left: '0',
@@ -290,71 +181,160 @@
             top: '20',
             containLabel: true
           },
-          xAxis: [
+          xAxis: {
+            type: 'value',
+            show:false,
+            axisTick: {
+              alignWithLabel: false
+            },
+            splitLine: { show: false },//去除网格线
+          },
+          color:['#15193F',new echarts.graphic.LinearGradient(0, 0, 1, 0,
+            [
+              { offset: 0, color: '#E4683A' },
+              { offset: 1, color: '#FDB019' }
+            ]
+          )],
+          yAxis: {
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#fff',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            splitLine: { show: false },//去除网格线
+            type: 'category',
+            data: ["清扫作业","洒水作业",]
+          },
+          series: [{
+            name: '',
+            type: 'bar',
+            barWidth: 20,//柱图宽度
+            z:"-1",
+            barGap: '-100%',
+            data: [100, 100,]
+          },
             {
-              show:false,
-              axisTick: {
-                alignWithLabel: false
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'value',
-            }
-          ],
-          yAxis: [
-            {
-              axisTick: {
-                show: false
-              },
-              axisLine: {
-                show: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'category',
-              data:['滨河路','秋溢路','江虹路','江陵路','长河路','滨文路']
-            }
-          ],
-          series: [
-            {
+              name: '增长率',
               type: 'bar',
               barWidth: 20,//柱图宽度
-              barGap:'180%',
-              barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
-              // label: {
-              //   normal: {
-              //     color: 'red',
-              //     show: true,
-              //     position: 'top'
-              //   }
-              // },
+              data: [5, 20, ]
+            }]
+        },
+        BarDataTwo:{
+          tooltip: {
+            trigger:"axis",
+            formatter:"{a1}<br/>{b1}：{c1}%"
+          },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '-20',
+            top: '20',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'value',
+            show:false,
+            axisTick: {
+              alignWithLabel: false
+            },
+            splitLine: { show: false },//去除网格线
+          },
+          color:['#15193F',new echarts.graphic.LinearGradient(0, 0, 1, 0,
+            [
+              { offset: 0, color: '#2975FF' },
+              { offset: 1, color: '#81BAFF' }
+            ]
+          )],
+          yAxis: {
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#fff',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            splitLine: { show: false },//去除网格线
+            type: 'category',
+            data: ["清扫作业","洒水作业",]
+          },
+          series: [{
+            name: '',
+            type: 'bar',
+            barWidth: 20,//柱图宽度
+            z:"-1",
+            barGap: '-100%',
+            data: [100, 100,]
+          },
+            {
+              name: '增长率',
+              type: 'bar',
+              barWidth: 20,//柱图宽度
+              data: [5, 20, ]
+            }]
+        },
+        PieData:{
+          color: ['#EB4B4B', 'rgb(245,245,245)'],
+          title: [],
+          polar: {
+            radius: ['75%', '60%'],
+            center: ['50%', '50%'],
+          },
+          angleAxis: {
+            max: 100,
+            show: false,
+            startAngle: 0,
+          },
+          radiusAxis: {
+            type: 'category',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+
+            },
+            axisTick: {
+              show: false
+            },
+          },
+          series: [
+            {
+              name: '',
+              type: 'bar',
+              roundCap: true,
+              barWidth: 60,
+              showBackground: true,
+              data: [75],
+              coordinateSystem: 'polar',
               itemStyle: {
                 normal: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
-                    [
-                      { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: '#9D4EE8' }
-                    ]
-                  ),
-                  label: {
-                    show : true,
-                    position : 'right',
-                    textStyle : {
-                      color: '#fff',
-                      fontSize:'16',
-                      fontWeight:'bold'
-                    }
-                  }
-
+                  color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                    offset: 0,
+                    color: '#EB4B4B'
+                  }, {
+                    offset: 1,
+                    color: '#F47F7F'
+                  }]),
                 }
-              },
-              data: [320, 332, 301,230,56,963]
+              }
             },
           ]
         },
@@ -456,54 +436,59 @@
     width:100%;
     height:80vh;
   }
-  .left_content{
-    padding: 20px;
-    width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
+  .left_rate{
     position: fixed;
-    top: 120px;
+    top: 100px;
     left: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
+    z-index: 99999999;
+    .clean_rate{
+      width: 18vh;
+      height: 18vh;
+      background: url("./../../assets/image/cleanRate_bg.png") center center no-repeat;
+      background-size: 100% 100%;
     }
-    .top{
-      padding: 20px;
-      border:1px solid #0a76a4;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
+    .watering_rate{
+      width: 18vh;
+      height: 18vh;
+      background: url("./../../assets/image/wateringRate_bg.png") center center no-repeat;
+      background-size: 100% 100%;
     }
-    .left_bottom{
+    .link_intro{
+      width: 100px;
       padding: 20px;
-      border:1px solid #0a76a4;
+      margin-left: 3vh;
+      background: rgba(4,40,90,1);
+      li{
+        & > span{
+          width: 40px;
+          height: 10px;
+          margin: 3px auto 15px;
+        }
+      }
+      .color_bg01{
+        background: rgba(255,100,71,1);
+      }
+      .color_bg02{
+        background: rgba(254,98,71,1);
+      }
+      .color_bg03{
+        background: rgba(222,194,21,1);
+      }
+      .color_bg04{
+        background: rgba(231,96,196,1);
+      }
+      .color_bg05{
+        background: rgba(147,126,214,1);
+      }
+      .color_bg06{
+        background: rgba(15,165,197,1);
+      }
+      .color_bg07{
+        background: rgba(145,178,61,1);
+      }
     }
   }
+
   .right_content{
     padding: 20px;
     width: 32%;

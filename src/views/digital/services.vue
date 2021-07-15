@@ -2,69 +2,43 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content clr_white">
-
-        <div class="title bold">案件归集下派</div>
-        <div class="top clr_white">
-          <p class="f20 bold">案件状况</p>
-          <div class="flex anjian_num">
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日受理量</p>
-              <div class="num01 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>2</span>
-                <span>5</span>
-                <span>8</span>
-              </div>
-            </div>
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日及时结案量</p>
-              <div class="num02 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>8</span>
-                <span>9</span>
-                <span>8</span>
-              </div>
-            </div>
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日结案量</p>
-              <div class="num03 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>1</span>
-                <span>2</span>
-                <span>6</span>
-                <span>8</span>
-              </div>
-            </div>
-          </div>
-          <el-row :gutter="20" class="pie_chart">
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-            </el-col>
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-            </el-col>
-          </el-row>
-
+    <div class="left_server baseColor text-center f16 bold">
+      <div :class="['mb_20',activeIndex == 0 ? 'clr_white':'']" @click="activeIndex = 0">
+        <i class="iconfont icon-zaosheng f26"></i>
+        <p class="mt_10">数字停车</p>
+      </div>
+      <div :class="activeIndex == 1 ? 'clr_white':''" @click="activeIndex = 1">
+        <i class="iconfont icon-fengji f26"></i>
+        <p class="mt_10">共享单车</p>
+      </div>
+    </div>
+    <div class="right_content clr_white" v-show="activeIndex == 1">
+      <div class="title bold">共享单车</div>
+      <div class="flex f16 bold clr_white bicycle text-center">
+        <div class="flex-item">
+          <p>已备案车辆</p>
+          <p class="clr_purple mt_10"><span class="f26">1.0</span>万</p>
         </div>
-
-      <div class="left_bottom mt_10">
-        <p class="f20 bold">案件占比分析</p>
+        <div class="flex-item">
+          <p>活跃车辆</p>
+          <p class="clr_blue01 f26 mt_10">3287</p>
+        </div>
+        <div class="flex-item">
+          <p>按规停放车辆</p>
+          <p class="clr_blue02 f26 mt_10">7892</p>
+        </div>
+        <div class="flex-item">
+          <p>违规停放</p>
+          <p class="clr_yellow f26 mt_10">1887</p>
+        </div>
+      </div>
+      <div class="top clr_white mt_10">
+        <p class="f20 bold">区域统计</p>
         <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
       </div>
-
-    </div>
-    <div class="right_content clr_white">
-      <div class="title bold">案件归集下派</div>
-      <div class="top clr_white">
-        <p class="f20 bold">案件高发路段（top6）</p>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
-      </div>
       <div class="left_bottom mt_10">
-        <p class="f20 bold">部门案件处置分析</p>
-        <BarChartFive :chartData="BarData" height="300px" divwidth="100%"></BarChartFive>
+        <p class="f20 bold">违规次数</p>
+        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="200px" divwidth="100%"></BarChartFour>
       </div>
 
     </div>
@@ -91,6 +65,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive},
     data() {
       return {
+        activeIndex:0,
         chartData: {
           title:{},
           tooltip: {
@@ -318,7 +293,7 @@
               },
               splitLine: { show: false },//去除网格线
               type: 'category',
-              data:['滨河路','秋溢路','江虹路','江陵路','长河路','滨文路']
+              data:['哈罗','摩拜','青桔','骑呗',]
             }
           ],
           series: [
@@ -354,7 +329,7 @@
 
                 }
               },
-              data: [320, 332, 301,230,56,963]
+              data: [320, 332, 301,230,]
             },
           ]
         },
@@ -456,61 +431,34 @@
     width:100%;
     height:80vh;
   }
-  .left_content{
-    padding: 20px;
-    width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
+  .left_server{
     position: fixed;
     top: 120px;
     left: 20px;
     z-index: 9999;
-    .anjian_num{
+    padding: 20px;
+    background: rgba(8,19,41,0.3);
+    border:1px solid #0a76a4;
+  }
+  .bicycle{
+    .flex-item{
       padding: 20px 0;
-    }
-    .top{
-      padding: 20px;
-      border:1px solid #0a76a4;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
+      background: #081329;
+      &:nth-child(2){
+        margin: 0 10px;
       }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
+      &:nth-child(3){
+        margin-right: 10px;
       }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
-    }
-    .left_bottom{
-      padding: 20px;
-      border:1px solid #0a76a4;
     }
   }
   .right_content{
     padding: 20px;
-    width: 32%;
+    width: 40%;
     background: rgba(8,19,41,0.3);
     border:1px solid #0a76a4;
     position: fixed;
-    top: 12px;
+    top: 10vh;
     right: 20px;
     z-index: 9999;
     .anjian_num{

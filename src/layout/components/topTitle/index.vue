@@ -230,10 +230,10 @@ export default {
   @import "~@/styles/variables.scss";
   .el-header{
     color: $txtColor;
-    height: 100px !important;
+    height: 10vh !important;
     background: url("../../../assets/image/top_bg.png") left top no-repeat;
     background-size: 100% 100%;
-    line-height: 100px;
+    line-height: 10vh;
   }
   .get_code {
     position: relative;
@@ -251,13 +251,13 @@ export default {
 
   }
   .top_right {
-    height: 100px;
+    height: 10vh;
     overflow: hidden;
     position: relative;
     box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
     .hamburger-container {
-      line-height: 100px;
+      line-height:10vh;
       height: 100%;
       float: left;
       cursor: pointer;

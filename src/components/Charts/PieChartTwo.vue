@@ -110,11 +110,16 @@ export default {
       this.chart = echarts.init(this.$refs.pieChart, 'macarons');
       this.setOptions(this.chartData);
     },
-    setOptions({title,tooltip,legend,series } = {}) {
+    setOptions({title,calculable,tooltip,color,polar,angleAxis,legend,radiusAxis,series } = {}) {
       this.chart.setOption({
+        calculable:calculable,
+        color:color,
         title: title,
         tooltip: tooltip,
         legend: legend,
+        polar:polar,
+        angleAxis:angleAxis,
+        radiusAxis:radiusAxis,
         series: series
       })
     },

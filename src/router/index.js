@@ -66,19 +66,19 @@ export const constantRoutes = [
     component: () => import('@/views/error-page/401'),
     hidden: true
   },
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/dashboard',
-  //   children: [
-  //     {
-  //       path: 'dashboard',
-  //       component: () => import('@/views/dashboard/index'),
-  //       name: '首页',
-  //       meta: { title: '首页', icon: 'indexIcon', affix: true }
-  //     }
-  //   ]
-  // }
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index'),
+        name: '首页',
+        meta: { title: '首页', icon: 'indexIcon', affix: true }
+      }
+    ]
+  }
 ]
 /**
  * asyncRoutes
@@ -86,7 +86,7 @@ export const constantRoutes = [
  */
 export const asyncRoutes = [
   {
-    path: '/',
+    path: '/general',
     component: Layout,
     redirect: '/general/overview',
     name: '综合概览',
@@ -98,7 +98,7 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'general/overview',
+        path: 'overview',
         component: () => import('@/views/general/overview'),
         name: '综合概览',
         hidden: false,

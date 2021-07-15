@@ -56,13 +56,14 @@
 
         this.setOptions(this.chartData)
       },
-      setOptions({ title,tooltip,legend,grid,xAxis,yAxis,series } = {}) {
+      setOptions({ title,tooltip,legend,grid,color,xAxis,yAxis,series } = {}) {
         // this.chart.setOption(BarData)
         this.chart.setOption({
           title: title,
           tooltip: tooltip,
           legend: legend,
           grid: grid,
+          color:color,
           xAxis: xAxis,
           yAxis: yAxis,
           series: series

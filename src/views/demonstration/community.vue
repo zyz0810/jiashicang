@@ -2,70 +2,60 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content clr_white">
-
-        <div class="title bold">案件归集下派</div>
-        <div class="top clr_white">
-          <p class="f20 bold">案件状况</p>
-          <div class="flex anjian_num">
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日受理量</p>
-              <div class="num01 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>2</span>
-                <span>5</span>
-                <span>8</span>
-              </div>
-            </div>
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日及时结案量</p>
-              <div class="num02 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>8</span>
-                <span>9</span>
-                <span>8</span>
-              </div>
-            </div>
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日结案量</p>
-              <div class="num03 flex text-center f26 bold mt_10">
-                <span></span>
-                <span>1</span>
-                <span>2</span>
-                <span>6</span>
-                <span>8</span>
-              </div>
-            </div>
-          </div>
-          <el-row :gutter="20" class="pie_chart">
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-            </el-col>
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-            </el-col>
-          </el-row>
-
+    <div class="left_left_community">
+      <div class="left_server baseColor text-center f16 bold">
+        <div class="mb_20 clr_white">
+          <i class="iconfont icon-zaosheng f26"></i>
+          <p class="mt_10">滨江二区</p>
         </div>
-
-      <div class="left_bottom mt_10">
-        <p class="f20 bold">案件占比分析</p>
-        <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
       </div>
+      <div class="left_content clr_white">
+        <div class="title bold">滨康小区</div>
+        <p class="f20 bold">AI视频墙</p>
+        <ul class="AI_list">
+          <li class="mt_20">
+            <div class="img_txt f14 bold">滨湖路与江虹路交叉口</div>
+            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic18.nipic.com%2F20111226%2F6647776_214907087000_2.jpg&refer=http%3A%2F%2Fpic18.nipic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1628911322&t=74fc6a998a3b91caed7e5ae052df4354">
+          </li>
+          <li class="mt_20">
+            <div class="img_txt f14 bold">滨湖路120号</div>
+            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic18.nipic.com%2F20111226%2F6647776_214907087000_2.jpg&refer=http%3A%2F%2Fpic18.nipic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1628911322&t=74fc6a998a3b91caed7e5ae052df4354">
+          </li>
+          <li class="mt_20">
+            <div class="img_txt f14 bold">滨湖路138号</div>
+            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic18.nipic.com%2F20111226%2F6647776_214907087000_2.jpg&refer=http%3A%2F%2Fpic18.nipic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1628911322&t=74fc6a998a3b91caed7e5ae052df4354">
+          </li>
+          <li class="mt_20">
+            <div class="img_txt f14 bold">滨湖路269号</div>
+            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic18.nipic.com%2F20111226%2F6647776_214907087000_2.jpg&refer=http%3A%2F%2Fpic18.nipic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1628911322&t=74fc6a998a3b91caed7e5ae052df4354">
+          </li>
+        </ul>
 
+
+      </div>
     </div>
+
     <div class="right_content clr_white">
-      <div class="title bold">案件归集下派</div>
-      <div class="top clr_white">
-        <p class="f20 bold">案件高发路段（top6）</p>
+      <div class="title bold">滨康小区</div>
+        <p class="f20 bold">智能识别概况</p>
+        <div class="flex text-center">
+          <ul class="bold communityNum">
+            <li class="flex">
+              <span class="f26 baseColor block">32</span>
+              <span class="f16 clr_white block">监控点位</span>
+            </li>
+            <li class="flex mt_20">
+              <span class="f26 baseColor block">1</span>
+              <span class="f16 clr_white block">监控路段</span>
+            </li>
+          </ul>
+          <div class="pieChart">
+            <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+          </div>
+        </div>
+        <p class="f20 bold mt_20">今日违规场景概况</p>
         <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
-      </div>
-      <div class="left_bottom mt_10">
-        <p class="f20 bold">部门案件处置分析</p>
-        <BarChartFive :chartData="BarData" height="300px" divwidth="100%"></BarChartFive>
-      </div>
+
 
     </div>
 
@@ -318,7 +308,7 @@
               },
               splitLine: { show: false },//去除网格线
               type: 'category',
-              data:['滨河路','秋溢路','江虹路','江陵路','长河路','滨文路']
+              data:['出店经营','无照商贩','占道经营','乱堆物料','非机动车违停','户外广告','违规撑伞','暴露垃圾']
             }
           ],
           series: [
@@ -354,7 +344,7 @@
 
                 }
               },
-              data: [320, 332, 301,230,56,963]
+              data: [320, 332, 301,230,56,963,56,963]
             },
           ]
         },
@@ -456,61 +446,83 @@
     width:100%;
     height:80vh;
   }
+  .left_community{
+
+  }
+  .left_server{
+    position: fixed;
+    top: 120px;
+    left: 20px;
+    width: 120px;
+    z-index: 9999;
+    padding: 20px;
+    background: rgba(8,19,41,0.3);
+    border:1px solid #0a76a4;
+  }
   .left_content{
     padding: 20px;
-    width: 32%;
+    width: 22%;
     background: rgba(8,19,41,0.3);
     border:1px solid #0a76a4;
     position: fixed;
     top: 120px;
-    left: 20px;
+    left: 150px;
     z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-    .top{
-      padding: 20px;
-      border:1px solid #0a76a4;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
+    .AI_list{
+      li{
+        border-radius: 20px;
+        position: relative;
+        .img_txt{
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: 99999;
+          width: 100%;
+          line-height: 2;
+          padding: 0 10px;
+          background: rgba(0,0,0,0.5);
+          border-top-left-radius: 20px;
+          border-top-right-radius: 20px;
         }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
+        img{
+          width: 100%;
+          height: 13vh;
+          border-radius: 20px;
         }
       }
     }
-    .left_bottom{
-      padding: 20px;
-      border:1px solid #0a76a4;
+  }
+  .communityNum{
+    width: 36%;
+    li{
+      height: 8vh;
+      line-height: 8vh;
+      background: url("./../../assets/image/communityNum_bg.png") left top no-repeat;
+      background-size: 100% 100%;
+      & > span{
+        &:nth-child(1){
+          width: 40%;
+          height: 8vh;
+        }
+        &:nth-child(2){
+          width: 60%;
+          height: 8vh;
+        }
+      }
     }
+
+
+  }
+  .pieChart{
+    width: 60%;
   }
   .right_content{
     padding: 20px;
-    width: 32%;
+    width: 40%;
     background: rgba(8,19,41,0.3);
     border:1px solid #0a76a4;
     position: fixed;
-    top: 12px;
+    top: 120px;
     right: 20px;
     z-index: 9999;
     .anjian_num{

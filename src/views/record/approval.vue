@@ -450,7 +450,7 @@
           marker.addEventListener("click", function () {
           marker.openInfoWindow(infoWin1);
         });// 将标注添加到地图中
-
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none'
         this.map.setStyle('indigo')
 
       },
