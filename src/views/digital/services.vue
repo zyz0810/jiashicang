@@ -2,7 +2,7 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_server baseColor text-center f16 bold">
+    <div class="left_server baseColor text-center f16 bold border base_bg shadow">
       <div :class="['mb_20',activeIndex == 0 ? 'clr_white':'']" @click="activeIndex = 0">
         <i class="iconfont icon-zaosheng f26"></i>
         <p class="mt_10">数字停车</p>
@@ -12,7 +12,7 @@
         <p class="mt_10">共享单车</p>
       </div>
     </div>
-    <div class="right_content clr_white" v-show="activeIndex == 1">
+    <div class="right_content clr_white border shadow base_bg" v-show="activeIndex == 1">
       <div class="title bold">共享单车</div>
       <div class="flex f16 bold clr_white bicycle text-center">
         <div class="flex-item">
@@ -32,11 +32,11 @@
           <p class="clr_yellow f26 mt_10">1887</p>
         </div>
       </div>
-      <div class="top clr_white mt_10">
+      <div class="top clr_white mt_10 border">
         <p class="f20 bold">区域统计</p>
         <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
       </div>
-      <div class="left_bottom mt_10">
+      <div class="left_bottom mt_10 border">
         <p class="f20 bold">违规次数</p>
         <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="200px" divwidth="100%"></BarChartFour>
       </div>
@@ -407,7 +407,7 @@
           marker.addEventListener("click", function () {
           marker.openInfoWindow(infoWin1);
         });// 将标注添加到地图中
-
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
         this.map.setStyle('indigo')
 
       },
@@ -433,12 +433,10 @@
   }
   .left_server{
     position: fixed;
-    top: 120px;
+    top: 13vh;
     left: 20px;
     z-index: 9999;
     padding: 20px;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
   }
   .bicycle{
     .flex-item{
@@ -455,8 +453,6 @@
   .right_content{
     padding: 20px;
     width: 40%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
     position: fixed;
     top: 10vh;
     right: 20px;
@@ -466,7 +462,6 @@
     }
     .top{
       padding: 20px;
-      border:1px solid #0a76a4;
       .num01{
         span{
           width: 25px;
@@ -497,7 +492,6 @@
     }
     .left_bottom{
       padding: 20px 20px 0 20px;
-      border:1px solid #0a76a4;
     }
   }
   .title{

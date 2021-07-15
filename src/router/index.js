@@ -278,7 +278,7 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: 'illegal',
+    path: '/illegal',
     component: Layout,
     redirect: 'noRedirect',
     name: '违法建筑',

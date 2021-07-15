@@ -3,13 +3,13 @@
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_left_community">
-      <div class="left_server baseColor text-center f16 bold">
+      <div class="left_server baseColor text-center f16 bold border shadow base_bg">
         <div class="mb_20 clr_white">
           <i class="iconfont icon-zaosheng f26"></i>
           <p class="mt_10">滨江二区</p>
         </div>
       </div>
-      <div class="left_content clr_white">
+      <div class="left_content clr_white border shadow base_bg">
         <div class="title bold">滨康小区</div>
         <p class="f20 bold">AI视频墙</p>
         <ul class="AI_list">
@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <div class="right_content clr_white">
+    <div class="right_content clr_white border shadow base_bg">
       <div class="title bold">滨康小区</div>
         <p class="f20 bold">智能识别概况</p>
         <div class="flex text-center">
@@ -54,7 +54,7 @@
           </div>
         </div>
         <p class="f20 bold mt_20">今日违规场景概况</p>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
+        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="36vh" divwidth="100%"></BarChartFour>
 
 
     </div>
@@ -422,7 +422,7 @@
           marker.addEventListener("click", function () {
           marker.openInfoWindow(infoWin1);
         });// 将标注添加到地图中
-
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
         this.map.setStyle('indigo')
 
       },
@@ -446,9 +446,7 @@
     width:100%;
     height:80vh;
   }
-  .left_community{
 
-  }
   .left_server{
     position: fixed;
     top: 120px;
@@ -456,14 +454,10 @@
     width: 120px;
     z-index: 9999;
     padding: 20px;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
   }
   .left_content{
     padding: 20px;
     width: 22%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
     position: fixed;
     top: 120px;
     left: 150px;
@@ -518,9 +512,7 @@
   }
   .right_content{
     padding: 20px;
-    width: 40%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
+    width: 36%;
     position: fixed;
     top: 120px;
     right: 20px;
@@ -530,38 +522,9 @@
     }
     .top{
       padding: 20px;
-      border:1px solid #0a76a4;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
     }
     .left_bottom{
       padding: 20px 20px 0 20px;
-      border:1px solid #0a76a4;
     }
   }
   .title{

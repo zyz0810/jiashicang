@@ -2,22 +2,22 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="right_soldier baseColor bold text-center">
+    <div class="right_soldier bold text-center">
      <ul>
        <li class="f16">
-         <p class="clr_white"><span class="f26">5623</span>个</p>
-         <span class="block flex"><i class="iconfont icon-guanli4 f26"></i></span>
-         <p class="f16 intro_txt">在线人员</p>
+         <p class="clr_white"><span class="f26">5623</span> 个</p>
+         <span class="block"></span>
+         <p class="f16 intro_txt clr_blue01">在线人员</p>
        </li>
        <li class="f16 mt_20">
-         <p class="clr_white"><span class="f26">12</span>辆</p>
-         <span class="block flex"><i class="iconfont icon-guanli4 f26"></i></span>
-         <p class="f16 intro_txt">在线车辆</p>
+         <p class="clr_white"><span class="f26">12</span> 辆</p>
+         <span class="block flex"></span>
+         <p class="f16 intro_txt clr_blue01">在线车辆</p>
        </li>
        <li class="f16 mt_20">
-         <p class="clr_white"><span class="f26">828</span>路</p>
-         <span class="block flex"><i class="iconfont icon-guanli4 f26"></i></span>
-         <p class="f16 intro_txt">在线视频</p>
+         <p class="clr_white"><span class="f26">828</span> 路</p>
+         <span class="block flex"></span>
+         <p class="f16 intro_txt clr_blue01">在线视频</p>
        </li>
      </ul>
     </div>
@@ -385,7 +385,7 @@
           marker.addEventListener("click", function () {
           marker.openInfoWindow(infoWin1);
         });// 将标注添加到地图中
-
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
         this.map.setStyle('indigo')
 
       },
@@ -421,10 +421,18 @@
         width: 135px;
         height: 92px;
         line-height: 80px;
-        background: url("./../../assets/image/soldier_icon.png") left top no-repeat;
+        &:nth-child(1){
+          background: url("./../../assets/image/soldier_icon01.png") left top no-repeat;
+        }
+        &:nth-child(2){
+          background: url("./../../assets/image/soldier_icon02.png") left top no-repeat;
+        }
+        &:nth-child(3){
+          background: url("./../../assets/image/soldier_icon03.png") left top no-repeat;
+        }
       }
       .intro_txt{
-        margin-top: -10px;
+        margin-top: -15px;
       }
     }
   }
