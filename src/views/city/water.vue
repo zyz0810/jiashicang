@@ -2,38 +2,38 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content clr_white">
+    <div class="left_content clr_white border shadow base_bg p20">
 
         <div class="title bold">智慧河道</div>
-        <div class="top clr_white">
+        <div class="top clr_white border p20">
           <p class="f20 bold">河道概况</p>
-          <div class="flex water_num">
+          <div class="flex water_num01 f16 bold text-center mt_10">
             <div class="flex-item">
-              <p class="f16 bold">河流条数</p>
-              <p>41条</p>
+              <p class="clr_white">河流条数</p>
+              <p class="clr_purple mt_5"><span class="f26">41</span>条</p>
             </div>
             <div class="flex-item">
               <p class="f16 bold">河道总长</p>
-              <p>77.95km</p>
+              <p class="clr_blue01 mt_5"><span class="f26">77.95</span>km</p>
             </div>
             <div class="flex-item">
               <p class="f16 bold">河道水质站点</p>
-              <p>41个</p>
+              <p class="clr_blue02 mt_5"><span class="f26">24</span>个</p>
             </div>
           </div>
-          <div class="flex water_num">
-            <div class="flex-item">
+          <div class="flex water_num02 f16 bold text-center mt_10">
+            <div>
               <p class="f16 bold">河道水位站点</p>
-              <p>12个</p>
+              <p class="clr_yellow mt_5"><span class="f26">12</span>个</p>
             </div>
-            <div class="flex-item">
+            <div>
               <p class="f16 bold">河道视频控点</p>
-              <p>162个</p>
+              <p class="clr_yellow mt_5"><span class="f26">162</span>个</p>
             </div>
           </div>
         </div>
 
-      <div class="left_bottom mt_10">
+      <div class="left_bottom mt_10 border p20">
         <p class="f20 bold">河道概况</p>
         <el-table v-loading="listLoading" :data="list" :height="280" element-loading-text="拼命加载中" fit ref="tableList" class="f16">
           <el-table-column type="index" label="序号" width="80" align="center">
@@ -49,15 +49,15 @@
       </div>
 
     </div>
-    <div class="right_content clr_white">
+    <div class="right_content clr_white border shadow base_bg p20">
       <div class="title bold">智慧河道</div>
-      <div class="top clr_white">
+      <div class="top clr_white border p20">
         <p class="f20 bold">水质检测概况</p>
-        <PieChartTwo :chartData="BarData" :PieChartLegend="PieChartLegend" height="300px" divwidth="100%"></PieChartTwo>
+        <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh" divwidth="100%"></PieChartTwo>
       </div>
-      <div class="left_bottom mt_10">
+      <div class="left_bottom mt_10 border p20">
         <p class="f20 bold">水质超标次数（top6）</p>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="BarChartLegend" height="300px" divwidth="100%"></BarChartFour>
+        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="BarChartLegend" height="25vh" divwidth="100%"></BarChartFour>
       </div>
 
     </div>
@@ -141,7 +141,7 @@
                 show: false
               },
               data: [
-                {value: 335, name: '直接访问'},
+                {value: 335, name: '1类水'},
                 {value: 310, name: '邮件营销'},
                 {value: 234, name: '联盟广告'},
                 {value: 135, name: '视频广告'},
@@ -156,46 +156,72 @@
             trigger: 'item',
             formatter: '{a} <br/>{b}: {c} ({d}%)'
           },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '0',
+            top: '-30',
+            containLabel: true
+          },
           legend: {
             show:false
           },
-          color:['#367CFD','#E20280'],
+          color:['#20BB76','#247DF5','#24D0F4','#13F3F5','#FA6C24'],
           series: [
             {
-              name: '访问来源',
+              name: '',
               type: 'pie',
-              radius: ['70%', '90%'],
-              avoidLabelOverlap: false,
+              radius: ['5%', '90%'],
+              center: ['50%', '50%'],
+              data: [
+                {value: 0, name: 'Ⅰ类水'},
+                {value: 310, name: 'Ⅱ类水'},
+                {value: 234, name: 'Ⅲ类水'},
+                {value: 135, name: 'Ⅳ类水'},
+                {value: 135, name: '不达标'},
+              ],
               label: {
                 show: false,
-                position: 'center',
-
-              },
-              emphasis: {
-                label: {
-                  show: true,
-                  fontSize: '30',
-                  fontWeight: 'bold'
-                }
+                position: 'center'
               },
               labelLine: {
                 show: false
               },
-              data: [
-                {value: 520, name: '直接访问'},
-                {value: 205, name: '邮件营销'},
-              ]
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
             }
           ]
         },
-        PieChartLegend:[{name:'直接访问',color:'red'},{name:'邮件营销',color:'green'}, {name:'联盟广告',color:'yellow'},{name:'视频广告',color:'gray'},{name:'搜索引擎',color:'pink'}],
+        PieChartLegend:[{name:'Ⅰ类水',color:'#20BB76'},{name:'Ⅱ类水',color:'#247DF5'}, {name:'Ⅲ类水',color:'#24D0F4'},{name:'Ⅳ类水',color:'#13F3F5'},{name:'不达标',color:'#FA6C24'}],
         BarChartLegend:[],
         BarData:{
           title: {},
           calculable : true,
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '0',
+            top: '0',
+            containLabel: true
+          },
           tooltip: {
             trigger: 'item',
             formatter: '{a} <br/>{b} : {c} ({d}%)'
+          },
+          label: {
+            show: false,
+            position: 'center',
+
+          },
+          labelLine: {
+            normal: {
+              show: false
+            }
           },
           legend: {show:false},
           series: [
@@ -203,7 +229,7 @@
               name: '访问来源',
               type: 'pie',
               radius: '55%',
-              center: ['50%', '60%'],
+              center: ['50%', '90%'],
               data: [
                 {value: 335, name: '直接访问'},
                 {value: 310, name: '邮件营销'},
@@ -378,7 +404,7 @@
           marker.addEventListener("click", function () {
           marker.openInfoWindow(infoWin1);
         });// 将标注添加到地图中
-
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
         this.map.setStyle('indigo')
 
       },
@@ -403,104 +429,51 @@
     height:80vh;
   }
   .left_content{
-    padding: 20px;
     width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
     position: fixed;
-    top: 120px;
+    top: 10vh;
     left: 20px;
     z-index: 9999;
     .anjian_num{
       padding: 20px 0;
     }
-    .top{
-      padding: 20px;
-      border:1px solid #0a76a4;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
-    }
     .left_bottom{
       padding: 20px;
-      border:1px solid #0a76a4;
     }
   }
   .right_content{
     padding: 20px;
     width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
     position: fixed;
-    top: 12px;
+    top: 10vh;
     right: 20px;
     z-index: 9999;
     .anjian_num{
       padding: 20px 0;
     }
-    .top{
-      padding: 20px;
-      border:1px solid #0a76a4;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
-    }
     .left_bottom{
       padding: 20px 20px 0 20px;
-      border:1px solid #0a76a4;
     }
   }
-  .title{
-    line-height: 1.8;
-    background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
+  .water_num01{
+    .flex-item{
+      padding: 20px 0;
+      background: #00073E;
+      &:nth-child(2){
+        margin: 0 2%;
+      }
+    }
   }
+  .water_num02{
+    & > div{
+      width: 30%;
+      padding: 20px 0;
+      background: #00073E;
+      &:nth-child(2){
+        margin: 0 0 0 2%;
+      }
+    }
+   }
+
 
 </style>

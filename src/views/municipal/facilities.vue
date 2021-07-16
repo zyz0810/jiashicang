@@ -2,30 +2,34 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content clr_white">
+    <div class="left_content">
 
-        <div class="title bold">城市亮灯</div>
-        <div class="top clr_white">
-          <p class="f20 bold">案件状况</p>
+
+        <div class="top clr_white border p20 clr_white base_bg shadow">
+          <div class="title bold">城市亮灯</div>
           <el-row :gutter="20" class="pie_chart">
             <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
             </el-col>
             <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
             </el-col>
           </el-row>
 
         </div>
 
-      <div class="left_bottom mt_10">
+      <div class="left_bottom mt_10 border p20 clr_white base_bg shadow">
         <div class="title bold">智慧市政</div>
         <p class="f20 bold">市政管理信息总览</p>
-        <div class="baseColor f20 bold">
+        <div class="baseColor f16 bold flex mt_20 facilities_intro">
           <div>养护道路：103条</div>
           <div>排水管线长度：5625米</div>
+        </div>
+        <div class="baseColor f16 bold flex mt_10 facilities_intro">
           <div>养护单位：14家</div>
           <div>智能感应井盖：103个</div>
+        </div>
+        <div class="baseColor f16 bold flex mt_10 facilities_intro">
           <div>管道水位监测：24个</div>
           <div>管道流量监测：2个</div>
         </div>
@@ -33,9 +37,9 @@
       </div>
 
     </div>
-    <div class="right_content clr_white">
-      <div class="title bold">桥梁监测（江虹桥）</div>
-      <div class="top clr_white">
+    <div class="right_content border base_bg shadow">
+      <div class="title bold clr_white">桥梁监测（江虹桥）</div>
+      <div class="top clr_white border p20 mt_5">
         <p class="f20 bold">设备异常情况</p>
         <div class="flex bold text-center">
           <div class="flex-item equipment_normal">
@@ -53,18 +57,54 @@
         </div>
 
       </div>
-      <div class="top clr_white mt_10">
-        <p class="f20 bold">预警信息</p>
-        <div class="flex warning_intro mt_20">
+      <div class="top mt_10 border p20">
+        <p class="f20 clr_white bold">预警信息</p>
+        <div class="flex warning_intro clr_white mt_10">
           <div class="flex m_r30"><span class="block warning_circle bg_green"></span>正常</div>
           <div class="flex m_r30"><span class="block warning_circle bg_blue"></span>一级预警</div>
           <div class="flex m_r30"><span class="block warning_circle bg_yellow"></span>二级预警</div>
           <div class="flex m_r30"><span class="block warning_circle bg_red"></span>三级预警</div>
         </div>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="150px" divwidth="100%"></BarChartFour>
+        <div class="flex divBar_content bold mt_10 text-center">
+          <div class="flex-item">
+            <div class="bar_div f16 bg_green">
+              <div>总27</div>
+              <p>0</p>
+            </div>
+            <p class="f14 clr_blue01 mt_5">应变计</p>
+          </div>
+          <div class="flex-item">
+            <div class="bar_div f16 bg_green">
+              <div>总27</div>
+              <p>0</p>
+            </div>
+            <p class="f14 clr_blue01 mt_5">饶变计</p>
+          </div>
+          <div class="flex-item">
+            <div class="bar_div f16 bg_green">
+              <div>总27</div>
+              <p>0</p>
+            </div>
+            <p class="f14 clr_blue01 mt_5">温湿度计</p>
+          </div>
+          <div class="flex-item">
+            <div class="bar_div f16 bg_green">
+              <div>总27</div>
+              <p>0</p>
+            </div>
+            <p class="f14 clr_blue01 mt_5">裂缝计</p>
+          </div>
+          <div class="flex-item">
+            <div class="bar_div f16 bg_green">
+              <div>总27</div>
+              <p>0</p>
+            </div>
+            <p class="f14 clr_blue01 mt_5">钢索计</p>
+          </div>
+        </div>
       </div>
-      <div class="left_bottom mt_10">
-        <p class="f20 bold">实时曲线</p>
+      <div class="left_bottom mt_10 border">
+        <p class="f20 bold clr_white">实时曲线</p>
         <el-form :inline="true" :model="listQuery" class="search_form">
           <el-form-item label="检测项类型">
             <el-select v-model="listQuery.status">
@@ -82,7 +122,7 @@
             <el-button v-waves class="filter-item" type="primary">生成曲线</el-button>
           </el-form-item>
         </el-form>
-        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></LineChart>
+        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="20vh" divwidth="100%"></LineChart>
       </div>
 
     </div>
@@ -202,7 +242,7 @@
             left: '0',
             right: '0',
             bottom: '40',
-            top: '20',
+            top: '10',
             containLabel: true
           },
           //----------------   图例 legend  -----------------
@@ -525,7 +565,7 @@
           marker.addEventListener("click", function () {
           marker.openInfoWindow(infoWin1);
         });// 将标注添加到地图中
-
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
         this.map.setStyle('indigo')
 
       },
@@ -550,99 +590,29 @@
     height:80vh;
   }
   .left_content{
-    padding: 20px;
     width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
     position: fixed;
-    top: 120px;
+    top: 10vh;
     left: 20px;
     z-index: 9999;
     .anjian_num{
       padding: 20px 0;
     }
-    .top{
-      padding: 20px;
-      border:1px solid #0a76a4;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
-    }
-    .left_bottom{
-      padding: 20px;
-      border:1px solid #0a76a4;
-    }
+
   }
   .right_content{
     padding: 20px;
     width: 32%;
-    background: rgba(8,19,41,0.3);
-    border:1px solid #0a76a4;
     position: fixed;
-    top: 12px;
+    top: 10vh;
     right: 20px;
     z-index: 9999;
     .anjian_num{
       padding: 20px 0;
     }
-    .top{
-      padding: 20px;
-      border:1px solid #0a76a4;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
-    }
+
     .left_bottom{
       padding: 20px 20px 0 20px;
-      border:1px solid #0a76a4;
     }
   }
   .title{
@@ -650,10 +620,34 @@
     background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
   }
   .warning_intro{
-    padding: 2%;
+    padding: 1.5%;
     border: 1px solid #476ABA;
   }
-
+  .facilities_intro{
+    & > div{
+      width: 50%;
+    }
+  }
+  .divBar_content{
+    .bar_div{
+      width: 30px;
+      height: 12vh;
+      position: relative;
+      margin: 0 auto;
+      &>div{
+        position: absolute;
+        top: 3px;
+        left: 0;
+        width: 30px;
+      }
+      &>p{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 30px;
+      }
+    }
+  }
   .warning_circle{
     width: 20px;
     height: 20px;

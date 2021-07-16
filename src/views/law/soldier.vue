@@ -421,16 +421,24 @@
         width: 135px;
         height: 92px;
         line-height: 80px;
-        &:nth-child(1){
+      }
+      &:nth-child(1){
+        span{
           background: url("./../../assets/image/soldier_icon01.png") left top no-repeat;
         }
-        &:nth-child(2){
+      }
+      &:nth-child(2){
+        span{
           background: url("./../../assets/image/soldier_icon02.png") left top no-repeat;
         }
-        &:nth-child(3){
+      }
+      &:nth-child(3){
+        span{
           background: url("./../../assets/image/soldier_icon03.png") left top no-repeat;
         }
       }
+
+
       .intro_txt{
         margin-top: -15px;
       }

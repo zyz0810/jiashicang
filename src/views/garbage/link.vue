@@ -54,7 +54,8 @@
           道路统计78条
           <span class="f16 baseColor fr">清扫完成率</span>
         </p>
-        <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" :height="'300px'" :divwidth="'100%'"></PieChartTwo>
+        <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" :height="'300px'" :divwidth="'50%'"></PieChartTwo>
+        <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" :height="'300px'" :divwidth="'50%'"></PieChartTwo>
       </div>
       <div class="left_bottom mt_10 border">
         <p class="f20 bold">作业里程统计</p>
@@ -290,52 +291,57 @@
             }]
         },
         PieData:{
-          color: ['#EB4B4B', 'rgb(245,245,245)'],
-          title: [],
-          polar: {
-            radius: ['75%', '60%'],
-            center: ['50%', '50%'],
-          },
-          angleAxis: {
-            max: 100,
+          tooltip: {
             show: false,
-            startAngle: 0,
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
           },
-          radiusAxis: {
-            type: 'category',
-            show: true,
-            axisLabel: {
-              show: false,
-            },
-            axisLine: {
-              show: false,
+          color: ['#7CDBFF', '#20437A'],
+          // 80%是环中的数据显示
+          title: {
+            text: '80%',
+            left: 'center',
+            top: '38%',
+            textStyle: {
+              // color: '#27D9C8',
+              color: '#bfbfbf',
+              fontSize: 40,
+              align: 'center',
+            }
+          },
+          graphic: {
+            type: 'text',
+            left: 'center',
+            top: '58%',
+            style: {
+              text: '满意度',
 
-            },
-            axisTick: {
-              show: false
-            },
+              textAlign: 'center',
+              fill: '#bfbfbf',
+              fontSize: 30,
+              fontWeight: 700
+            }
           },
           series: [
             {
-              name: '',
-              type: 'bar',
-              roundCap: true,
-              barWidth: 60,
-              showBackground: true,
-              data: [75],
-              coordinateSystem: 'polar',
-              itemStyle: {
+              name: '单位工程评定',
+              type: 'pie',
+              radius: ['65%', '80%'],
+              avoidLabelOverlap: false,
+              label: {
                 normal: {
-                  color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
-                    offset: 0,
-                    color: '#EB4B4B'
-                  }, {
-                    offset: 1,
-                    color: '#F47F7F'
-                  }]),
-                }
-              }
-            },
+                  show: false,
+                  position: 'center'
+                },
+
+              },
+
+              data: [
+                { value: 80, name: '优良' },
+                { value: 20, name: '不及格' },
+
+              ]
+            }
           ]
         },
         map: '', // 对象

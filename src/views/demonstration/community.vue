@@ -50,7 +50,8 @@
             </li>
           </ul>
           <div class="pieChart">
-            <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+<!--            <PieChartTwo :chartData="pieChart" :PieChartLegend="PieChartLegend" height="200px"></PieChartTwo>-->
+            <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" :height="'300px'" :divwidth="'50%'"></PieChartTwo>
           </div>
         </div>
         <p class="f20 bold mt_20">今日违规场景概况</p>
@@ -69,6 +70,7 @@
   import BarChartTwo from '@/components/Charts/BarChartTwo'
   import BarChartThree from '@/components/Charts/BarChartThree'
   import BarChartFour from '@/components/Charts/BarChartFour'
+  import PieChartTwo from '@/components/Charts/PieChartTwo'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
@@ -78,9 +80,159 @@
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        pieChartOne:{
+          color: ['#ed0a46', '#ff8800', '#ffe05a'],
+          // 预警值 环中的数据显示
+          title: {
+            text: '预警值',
+            top: '38%',
+            subtext: '',
+            textStyle: {
+              color: '#f2f2f2',
+              fontSize: 40,
+              align: 'center'
+            },
+            subtextStyle: {
+              fontSize: 40,
+              color: ['#fff'],
+              align: 'center'
+            },
+            x: '50%',
+            y: 'center',
+            textAlign: 'center'
+          },
+          // 中心的文字
+          graphic: {
+            type: 'text',
+            top: '55%',
+            left: '45%',
+            style: {
+              color: '#f2f2f2',
+              text: '36',
+              textAlign: 'center',
+              fill: '#f2f2f2',
+              fontSize: 50,
+              fontWeight: 700
+            },
+          },
+          // 图表的位置和大小是由grid控制的
+          grid: {
+            top: 10,
+            bottom: 10,
+            left: 10,
+            right: 10
+          },
+
+          series: [// 主要展示层的
+            {
+              name: '',
+              radius: ['40%', '60%'],
+              center: ['50%', '50%'],
+              type: 'pie',
+              data: [{ value: 100, name: '违规立案' },
+                { value: 20, name: '待审核' },
+                { value: 30, name: '违规不立案' }],
+              label: { //对标签中 显示的文字进行设置
+                color: 'white',
+                position: 'outside',
+                normal: {
+                  // formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                  formatter: '{a|{b}}\n{hr|}\n{per|{d}%}',
+                  padding: [10, 15],
+                  backgroundColor: '#387993',
+                  borderRadius: 5,
+                  rich: {
+                    a: {
+                      color: 'white',
+                      fontSize: 15,
+                      lineHeight: 20,
+                      align: 'left'
+                    },
+                    hr: {
+                      width: '100%',
+                      height: 0,
+                      alien: 'left'
+                    },
+                    per: {
+                      color: '#fff',
+                      align: 'left',
+                      fontSize: 15,
+                    }
+                  }
+                },
+              },
+            },
+            {
+              name: '',
+              type: 'gauge',
+              center: ['50%', '50%'],
+              radius: '95%',
+              startAngle: 0,
+              endAngle: 359.9,
+              splitNumber: 99,
+              hoverAnimation: true,
+              axisTick: {
+                show: false
+              },
+              splitLine: {
+                length: 20,
+                lineStyle: {
+                  width: 3,//最外层光圈的粗细
+                  color: '#5692BC'// 最外层光圈颜色宽度
+                }
+              },
+              title: {
+                show: false
+              },
+              axisLabel: {
+                show: false
+              },
+              pointer: {
+                show: false
+              },
+              axisLine: {
+                lineStyle: {
+                  opacity: 0
+                }
+              },
+              detail: {
+                show: false
+              },
+              data: [{ value: 100, name: '违规立案' },
+                { value: 20, name: '待审核' },
+                { value: 30, name: '违规不立案' }],
+            },
+            {
+              name: '',
+              type: 'pie',
+              radius: ['76%', '95%'],
+              center: ['77%', '50%'],
+              silent: true,
+              z: 0,
+              zlevel: 0,
+              showVal: true,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                }
+              },
+              itemStyle: {
+                normal: {
+                  // 定制显示（按顺序）最外层光环色值
+                  color: function (params) {
+                    var colorList = []
+                    return colorList[params.dataIndex]
+                  }
+                }
+              },
+              data: []
+            }
+          ],
+        },
         chartData: {
           title:{},
           tooltip: {

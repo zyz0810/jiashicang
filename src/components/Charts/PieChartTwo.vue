@@ -4,12 +4,12 @@
       <div :class="className" ref="pieChart" :style="{height:height,width:width}" />
     </div>
     <div class="legend_span flex clr_white bold" v-if="PieChartLegend.length>0">
-      <div v-for="(item,index) in PieChartLegend" @click="editLegend" class="flex-item">
-        <p>
+      <div v-for="(item,index) in PieChartLegend" @click="editLegend" class="flex-item text-center">
+        <div class="flex baseColor">
           <span class="color_block" :style="{background:item.color}"></span>
           {{item.name}}
-        </p>
-        <p>20%</p>
+        </div>
+        <p class="mt_5">20%</p>
 
       </div>
     </div>
