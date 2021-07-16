@@ -51,7 +51,7 @@
           </ul>
           <div class="pieChart">
 <!--            <PieChartTwo :chartData="pieChart" :PieChartLegend="PieChartLegend" height="200px"></PieChartTwo>-->
-            <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" :height="'300px'" :divwidth="'50%'"></PieChartTwo>
+            <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'50%'"></PieChartTwo>
           </div>
         </div>
         <p class="f20 bold mt_20">今日违规场景概况</p>
@@ -84,7 +84,7 @@
     data() {
       return {
         pieChartOne:{
-          color: ['#ed0a46', '#ff8800', '#ffe05a'],
+          color: ['#75E4E3', '#E5AF45', '#9941E2'],
           // 预警值 环中的数据显示
           title: {
             text: '预警值',
@@ -180,7 +180,7 @@
               splitLine: {
                 length: 20,
                 lineStyle: {
-                  width: 3,//最外层光圈的粗细
+                  width: 1,//最外层光圈的粗细
                   color: '#5692BC'// 最外层光圈颜色宽度
                 }
               },
@@ -208,7 +208,7 @@
             {
               name: '',
               type: 'pie',
-              radius: ['76%', '95%'],
+              radius: ['90%', '95%'],
               center: ['77%', '50%'],
               silent: true,
               z: 0,

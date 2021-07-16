@@ -54,8 +54,31 @@
           道路统计78条
           <span class="f16 baseColor fr">清扫完成率</span>
         </p>
-        <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" :height="'300px'" :divwidth="'50%'"></PieChartTwo>
-        <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" :height="'300px'" :divwidth="'50%'"></PieChartTwo>
+        <el-row :gutter="10" class="mt_20">
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="flex">
+            <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+            <div style="width: 250px; margin-left: 10px" class="f16 bold">
+              <p>一类道路</p>
+              <p class="mt_10">30条</p>
+            </div>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="flex">
+            <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+            <div style="width: 250px; margin-left: 10px" class="f16 bold">
+              <p>二类道路</p>
+              <p class="mt_10">30条</p>
+            </div>
+          </el-col>
+          <div class="flex" style="width:50%;margin: -50px auto 0;">
+            <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+            <div style="width: 250px; margin-left: 10px" class="f16 bold">
+              <p>三类道路</p>
+              <p class="mt_10">30条</p>
+            </div>
+          </div>
+        </el-row>
+
+
       </div>
       <div class="left_bottom mt_10 border">
         <p class="f20 bold">作业里程统计</p>
@@ -91,6 +114,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        divwidth:'30%',
         pieHeight:'300px',
         chartData: {
           title:{},
@@ -297,15 +321,19 @@
             formatter: '{a} <br/>{b}: {c} ({d}%)'
           },
           color: ['#7CDBFF', '#20437A'],
+          gird:{
+            top:0,
+            left:0,
+
+          },
           // 80%是环中的数据显示
           title: {
             text: '80%',
             left: 'center',
-            top: '38%',
+            top: '34%',
             textStyle: {
-              // color: '#27D9C8',
-              color: '#bfbfbf',
-              fontSize: 40,
+              color: '#fff',
+              fontSize: 26,
               align: 'center',
             }
           },
@@ -326,20 +354,17 @@
             {
               name: '单位工程评定',
               type: 'pie',
-              radius: ['65%', '80%'],
+              radius: ['75%', '100%'],
               avoidLabelOverlap: false,
               label: {
                 normal: {
                   show: false,
                   position: 'center'
                 },
-
               },
-
               data: [
                 { value: 80, name: '优良' },
                 { value: 20, name: '不及格' },
-
               ]
             }
           ]
