@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="" style="width: 100%;">
     <div :class="className" ref="ringCharts" :style="{height:height,width:width,}" />
     <div class="legend_span legend_inline text-center" style="margin-top: -30px" v-if="PieChartLegend.length>0">
       <div v-for="(item,index) in PieChartLegend" @click="editLegend">

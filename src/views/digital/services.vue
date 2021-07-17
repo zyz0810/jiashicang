@@ -12,7 +12,7 @@
         <p class="mt_10">共享单车</p>
       </div>
     </div>
-    <div class="right_content clr_white border shadow base_bg" v-show="activeIndex == 0">
+    <div class="right_content clr_white border shadow base_bg" v-if="activeIndex == 0">
       <div class="title bold">数字停车</div>
       <el-row :gutter="10">
         <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10">
@@ -33,7 +33,7 @@
       </div>
       <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
     </div>
-    <div class="right_content clr_white border shadow base_bg" v-show="activeIndex == 1">
+    <div class="right_content clr_white border shadow base_bg" v-if="activeIndex == 1">
       <div class="title bold">共享单车</div>
       <div class="flex f16 bold clr_white bicycle text-center">
         <div class="flex-item">
@@ -55,7 +55,7 @@
       </div>
       <div class="top clr_white mt_10 border">
         <p class="f20 bold">区域统计</p>
-        <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+        <RingChart :chartData="chartDataTwo" :PieChartLegend="PieChartLegend" height="200px" divwidth="100%"></RingChart>
       </div>
       <div class="left_bottom mt_10 border">
         <p class="f20 bold">违规次数</p>
@@ -86,6 +86,81 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        chartDataTwo: {
+          title:{},
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          legend: {
+            show:false
+          },
+          color:['#06F5FF','#FFBA0A','#367CFD','#E20280'],
+          series: [
+            {
+              name: '',
+              type: 'pie',
+              radius: ['70%', '90%'],
+              avoidLabelOverlap: false,
+              // label: {
+              //   show: false,
+              //   position: 'center',
+              //
+              // },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: '30',
+                  fontWeight: 'bold'
+                }
+              },
+              // labelLine: {
+              //   show: false
+              // },
+              markLine :{
+                label  :{
+                  show:true,
+                  position :'outside'
+                },
+              },
+              labelLine:{
+                normal:{
+                  lineStyle: {
+                    color: '#fff'
+                  },
+                  length:10,
+                  length2 :35,
+                }
+              },
+              label :{
+                formatter: [
+                  '{c}',
+                  '{b}',
+                ].join('\n'),
+                verticalAlign :'bottom',
+                position:'outside',
+                textShadowOffsetY :10,
+                align :'right',
+                color:'white',
+                height :60,
+                lineHeight:30,
+                fontSize:'16',
+                rich: {
+                  a: {
+                    verticalAlign:'bottom',
+                    // 没有设置 `verticalAlign`，则 `verticalAlign` 为 bottom
+                  }
+                }
+              },
+              data: [
+                {value: 220, name: '禁停区'},
+                {value: 205, name: '禁行区'},
+                {value: 320, name: '重点监管区'},
+                {value: 505, name: '停车区'},
+              ]
+            }
+          ]
+        },
         PieData:{
           tooltip: {
             show: false,
@@ -126,7 +201,7 @@
             {
               name: '单位工程评定',
               type: 'pie',
-              radius: ['75%', '100%'],
+              radius: ['85%', '100%'],
               avoidLabelOverlap: false,
               label: {
                 normal: {
@@ -188,19 +263,26 @@
             formatter: '{a} <br/>{b}: {c} ({d}%)'
           },
           legend: {
-            show:false
+            // show:false
+            orient: 'vertical',
+            right: '0',
+            top:'10%',
+            textStyle: {
+              color: '#fff',          // 图例文字颜色
+              fontSize:15,
+              lineHeight:25
+            }
           },
-          color:['#367CFD','#E20280'],
+          color:['#BBF2F4','#8757DF','#2696E9','#4BADDC'],
           series: [
             {
               name: '访问来源',
               type: 'pie',
-              radius: ['70%', '90%'],
+              radius: ['60%', '90%'],
               avoidLabelOverlap: false,
               label: {
                 show: false,
                 position: 'center',
-
               },
               emphasis: {
                 label: {
@@ -212,9 +294,18 @@
               labelLine: {
                 show: false
               },
+              itemStyle : {
+                normal : {
+                  borderWidth:3, //设置border的宽度有多大
+                  // borderColor:'#2C8AF0',
+                  borderColor:'transparent',
+                },
+              },
               data: [
-                {value: 520, name: '直接访问'},
-                {value: 205, name: '邮件营销'},
+                {value: 120, name: '公用泊位'},
+                {value: 105, name: '专用泊位'},
+                {value: 50, name: '道路泊位'},
+                {value: 305, name: '其他泊位'},
               ]
             }
           ]
