@@ -19,11 +19,12 @@
               </li>
             </ul>
             <div class="pieChart">
-              <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="16vh"></RingChart>
+<!--              <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="16vh"></RingChart>-->
+              <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'50%'"></PieChartTwo>
             </div>
           </div>
           <p class="f20 bold mt_20">今日违规场景概况</p>
-          <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="27vh" divwidth="100%"></BarChartFour>
+          <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="22vh" divwidth="100%"></BarChartFour>
           <p class="f20 bold mt_20">AI视频墙</p>
           <ul class="flex AI_list  mt_10">
             <li class="flex-item m_r30">
@@ -79,14 +80,173 @@
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
+  import PieChartTwo from '@/components/Charts/PieChartTwo'
 
   export default {
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        pieChartOne:{
+          color: ['#75E4E3', '#E5AF45', '#9941E2'],
+          // 预警值 环中的数据显示
+          title: {
+            text: '预警量',
+            top: '38%',
+            subtext: '',
+            textStyle: {
+              color: '#f2f2f2',
+              fontSize: 20,
+              align: 'center'
+            },
+            subtextStyle: {
+              fontSize: 20,
+              color: ['#fff'],
+              align: 'center'
+            },
+            x: '50%',
+            y: 'center',
+            textAlign: 'center'
+          },
+          // 中心的文字
+          graphic: {
+            type: 'text',
+            top: '55%',
+            left: '45%',
+            style: {
+              color: '#f2f2f2',
+              text: '10',
+              textAlign: 'center',
+              fill: '#f2f2f2',
+              fontSize: 10,
+              fontWeight: 700
+            },
+          },
+          // 图表的位置和大小是由grid控制的
+          grid: {
+            top: 10,
+            bottom: 10,
+            left: 10,
+            right: 10
+          },
+
+          series: [// 主要展示层的
+            {
+              name: '',
+              radius: ['55%', '70%'],
+              center: ['50%', '50%'],
+              type: 'pie',
+              data: [{ value: 80, name: '违规立案' },
+                { value: 20, name: '待审核' },
+                { value: 30, name: '违规不立案' }],
+              labelLine: {
+                normal: {
+                  show: false,
+                  length1:'0',
+                  length2:'0',
+                }
+              },
+              label: { //对标签中 显示的文字进行设置
+                color: 'white',
+                position: 'outside',
+                normal: {
+                  // formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                  formatter: '{a|{b}}\n{hr|}\n{per|{d}%}',
+                  padding: [10, 15],
+                  backgroundColor: '#387993',
+                  borderRadius: 5,
+                  rich: {
+                    a: {
+                      color: 'white',
+                      fontSize: 15,
+                      lineHeight: 20,
+                      align: 'left'
+                    },
+                    hr: {
+                      width: '100%',
+                      height: 0,
+                      alien: 'left'
+                    },
+                    per: {
+                      color: '#fff',
+                      align: 'left',
+                      fontSize: 15,
+                    }
+                  }
+                },
+              },
+            },
+            {
+              name: '',
+              type: 'gauge',
+              center: ['50%', '50%'],
+              // radius: ['80%', '90%'],
+              radius: '100%',
+              startAngle: 0,
+              endAngle: 359.9,
+              splitNumber: 99,
+              hoverAnimation: true,
+              axisTick: {
+                show: false
+              },
+              splitLine: {
+                length: 13,
+                lineStyle: {
+                  width: 1,//最外层光圈的粗细
+                  color: '#5692BC'// 最外层光圈颜色宽度
+                }
+              },
+              title: {
+                show: false
+              },
+              axisLabel: {
+                show: false
+              },
+              pointer: {
+                show: false
+              },
+              axisLine: {
+                lineStyle: {
+                  opacity: 0
+                }
+              },
+              detail: {
+                show: false
+              },
+              data: [{ value: 80, name: '违规立案' },
+                { value: 20, name: '待审核' },
+                { value: 30, name: '违规不立案' }],
+            },
+            {
+              name: '',
+              type: 'pie',
+              radius: ['90%', '100%'],
+              center: ['77%', '50%'],
+              silent: true,
+              z: 0,
+              zlevel: 0,
+              showVal: true,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                }
+              },
+              itemStyle: {
+                normal: {
+                  // 定制显示（按顺序）最外层光环色值
+                  color: function (params) {
+                    var colorList = []
+                    return colorList[params.dataIndex]
+                  }
+                }
+              },
+              data: []
+            }
+          ],
+        },
         chartData: {
           title:{},
           tooltip: {

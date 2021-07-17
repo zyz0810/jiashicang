@@ -87,16 +87,16 @@
           color: ['#75E4E3', '#E5AF45', '#9941E2'],
           // 预警值 环中的数据显示
           title: {
-            text: '预警值',
+            text: '预警量',
             top: '38%',
             subtext: '',
             textStyle: {
               color: '#f2f2f2',
-              fontSize: 40,
+              fontSize: 20,
               align: 'center'
             },
             subtextStyle: {
-              fontSize: 40,
+              fontSize: 20,
               color: ['#fff'],
               align: 'center'
             },
@@ -111,10 +111,10 @@
             left: '45%',
             style: {
               color: '#f2f2f2',
-              text: '36',
+              text: '10',
               textAlign: 'center',
               fill: '#f2f2f2',
-              fontSize: 50,
+              fontSize: 10,
               fontWeight: 700
             },
           },
@@ -129,12 +129,19 @@
           series: [// 主要展示层的
             {
               name: '',
-              radius: ['40%', '60%'],
+              radius: ['55%', '70%'],
               center: ['50%', '50%'],
               type: 'pie',
-              data: [{ value: 100, name: '违规立案' },
+              data: [{ value: 80, name: '违规立案' },
                 { value: 20, name: '待审核' },
                 { value: 30, name: '违规不立案' }],
+              labelLine: {
+                normal: {
+                  show: false,
+                  length1:'0',
+                  length2:'0',
+                }
+              },
               label: { //对标签中 显示的文字进行设置
                 color: 'white',
                 position: 'outside',
@@ -169,7 +176,8 @@
               name: '',
               type: 'gauge',
               center: ['50%', '50%'],
-              radius: '95%',
+              // radius: ['80%', '90%'],
+              radius: '100%',
               startAngle: 0,
               endAngle: 359.9,
               splitNumber: 99,
@@ -178,7 +186,7 @@
                 show: false
               },
               splitLine: {
-                length: 20,
+                length: 13,
                 lineStyle: {
                   width: 1,//最外层光圈的粗细
                   color: '#5692BC'// 最外层光圈颜色宽度
@@ -201,14 +209,14 @@
               detail: {
                 show: false
               },
-              data: [{ value: 100, name: '违规立案' },
+              data: [{ value: 80, name: '违规立案' },
                 { value: 20, name: '待审核' },
                 { value: 30, name: '违规不立案' }],
             },
             {
               name: '',
               type: 'pie',
-              radius: ['90%', '95%'],
+              radius: ['90%', '100%'],
               center: ['77%', '50%'],
               silent: true,
               z: 0,

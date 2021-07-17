@@ -12,6 +12,27 @@
         <p class="mt_10">共享单车</p>
       </div>
     </div>
+    <div class="right_content clr_white border shadow base_bg" v-show="activeIndex == 0">
+      <div class="title bold">数字停车</div>
+      <el-row :gutter="10">
+        <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10">
+          <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="20vh" divwidth="100%"></PieChartTwo>
+        </el-col>
+        <el-col :xs="24" :sm="14" :md="14" :lg="14" :xl="14" class="bold">
+            <p class="f20">当前占用泊位</p>
+            <p class="f16">
+              占用泊位<span class="baseColor">188</span>
+              占用泊位<span class="baseColor">188</span>
+            </p>
+        </el-col>
+
+      </el-row>
+
+      <div class="mt_20">
+        <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
+      </div>
+      <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
+    </div>
     <div class="right_content clr_white border shadow base_bg" v-show="activeIndex == 1">
       <div class="title bold">共享单车</div>
       <div class="flex f16 bold clr_white bicycle text-center">
@@ -57,14 +78,69 @@
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
-
+  import PieChartTwo from '@/components/Charts/PieChartTwo'
   export default {
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        PieData:{
+          tooltip: {
+            show: false,
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          color: ['#7CDBFF', '#20437A'],
+          gird:{
+            top:0,
+            left:0,
+
+          },
+          // 80%是环中的数据显示
+          title: {
+            text: '80%',
+            left: 'center',
+            top: '34%',
+            textStyle: {
+              color: '#fff',
+              fontSize: 26,
+              align: 'center',
+            }
+          },
+          graphic: {
+            type: 'text',
+            left: 'center',
+            top: '58%',
+            style: {
+              text: '满意度',
+
+              textAlign: 'center',
+              fill: '#bfbfbf',
+              fontSize: 30,
+              fontWeight: 700
+            }
+          },
+          series: [
+            {
+              name: '单位工程评定',
+              type: 'pie',
+              radius: ['75%', '100%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+              },
+              data: [
+                { value: 80, name: '优良' },
+                { value: 20, name: '不及格' },
+              ]
+            }
+          ]
+        },
         activeIndex:0,
         chartData: {
           title:{},
