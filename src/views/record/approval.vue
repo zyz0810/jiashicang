@@ -2,11 +2,11 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content clr_white border base_bg shadow">
+    <div class="left_content clr_white base_bg_left ">
 
-        <div class="title bold">备案审批</div>
-        <div class="top clr_white border">
-          <div class="f26 bold text-center baseColor approval_num">审核总数：600</div>
+        <div class="txt_linear f18 bold">备案审批</div>
+        <div class="top clr_white">
+          <div class="f26 bold text-center approval_num txt_shadow">审核总数：600</div>
 
           <div class="circle_num text-center">
             <img src="./../../assets/image/approval_circle.png" class="circle_img">
@@ -30,21 +30,20 @@
 
         </div>
 
-      <div class="left_bottom mt_10 border">
-        <p class="f20 bold">审批类型数量排名（top8）</p>
+      <div class="mt_20">
+        <p class="f20 bold txt_linear">审批类型数量排名（top8）</p>
         <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
       </div>
 
     </div>
-    <div class="right_content clr_white border base_bg shadow">
-      <div class="title bold">备案审批</div>
-      <div class="top clr_white border">
-        <p class="f20 bold">审批走势（一周）</p>
+    <div class="right_content clr_white base_bg_right">
+      <div class="top clr_white">
+        <p class="f20 bold txt_linear">审批走势（一周）</p>
         <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></LineChart>
       </div>
-      <div class="left_bottom mt_10 border">
-        <p class="f20 bold">审批详情</p>
-        <el-table v-loading="listLoading" :data="list" :height="300" element-loading-text="拼命加载中" fit ref="tableList" class="f16">
+      <div class="mt_20">
+        <p class="f20 bold txt_linear">审批详情</p>
+        <el-table v-loading="listLoading" :data="list" :height="300"  stripe element-loading-text="拼命加载中" fit ref="tableList" class="f14">
           <el-table-column type="index" label="序号" width="80" align="center">
 <!--            <template slot-scope="scope">-->
 <!--             <span class="block sqaer">{{index}}</span>-->
@@ -56,7 +55,6 @@
 
         </el-table>
       </div>
-
     </div>
     <div class="center_content clr_white text-center">
       <div class="map_intro f14 bold flex baseColor">
@@ -233,17 +231,27 @@
                 fontWeight:'bold'
               }
             },
+            axisLine: {
+              // show: false
+              lineStyle: {
+                color: 'rgb(31,67,88,1)'
+              }
+            },
             splitLine: { show: false },//去除网格线
             type: 'category',
             data: ['5.13', '5.14', '5.15', '5.16', '5.17', '5.18', '5.19']
           },
           yAxis: {
             axisTick: {
-              show: false
+              show: true
             },
             axisLine: {
               // show: false
+              lineStyle: {
+                color: 'rgb(31,67,88,1)'
+              }
             },
+            splitArea : {show : false},//保留网格区域
             axisLabel: {
               show: true,
               textStyle: {
@@ -253,9 +261,14 @@
               }
             },
             splitLine: {
-              show: false,//去除网格线
+              show: true,//去除网格线
+              lineStyle:{
+                color: ['rgb(31,67,88,1)'],
+                width: 1,
+                type: 'solid',
+              },
               textStyle: {
-                color: '#08245F',
+                color: 'rgb(31,67,88,1)',
                 fontSize:'15',
                 fontWeight:'bold'
               }
@@ -263,6 +276,8 @@
             type: 'value'
           },
           series: [{
+            smooth: false,
+            symbol: 'none',
             itemStyle : {
               normal : {
                 lineStyle:{
@@ -338,7 +353,7 @@
                   color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
                     [
                       { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: '#9D4EE8' }
+                      { offset: 1, color: 'rgba(0,181,255,1)' }
                     ]
                   ),
                   label: {
@@ -466,104 +481,6 @@
     background: url("./../../assets/image/pop_bg.png") left top no-repeat;
     background-size: 100% 100%;
   }
-  .mapDiv{
-    width:100%;
-    height:80vh;
-  }
-  .left_content{
-    padding: 20px;
-    width: 32%;
-    position: fixed;
-    top: 10vh;
-    left: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-    .top{
-      padding: 20px;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
-    }
-    .left_bottom{
-      padding: 20px;
-    }
-  }
-  .right_content{
-    padding: 20px;
-    width: 32%;
-    position: fixed;
-    top: 10vh;
-    right: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-    .top{
-      padding: 20px;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
-    }
-    .left_bottom{
-      padding: 20px 20px 0 20px;
-    }
-  }
-  .title{
-    line-height: 1.8;
-    background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
-  }
-
-
   .approval_num{
     height: 60px;
     background: url("./../../assets/image/approvalTitle_bg.png") center bottom no-repeat;
@@ -571,7 +488,7 @@
   .circle_num{
     width: 21vh;
     height: 15vh;
-    margin: 0 auto 10px;
+    margin: 0 auto 10vh;
     position: relative;
     /*background: url("./../../assets/image/approval_circle.png") center bottom no-repeat;*/
     background-size: 100% 100%;

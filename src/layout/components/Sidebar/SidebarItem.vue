@@ -7,7 +7,9 @@
 
         <div class="nav_li f14 bold text-center" :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}" :data-id="onlyOneChild.noShowingChildren">
 <!--          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />-->
-          <img  :src="activeIndex == index ? navListActive[onlyOneChild.meta.icon||(item.meta&&item.meta.icon)] : navList[onlyOneChild.meta.icon||(item.meta&&item.meta.icon)]">
+          <!--<img  :src="activeIndex == index ? navListActive[onlyOneChild.meta.icon||(item.meta&&item.meta.icon)] : navList[onlyOneChild.meta.icon||(item.meta&&item.meta.icon)]">-->
+          <img class="nav_img" :src="navList[onlyOneChild.meta.icon||(item.meta&&item.meta.icon)]">
+          <img class="nav_active_img" :src="navListActive[onlyOneChild.meta.icon||(item.meta&&item.meta.icon)]">
           <p v-if="onlyOneChild.meta.icon||(item.meta&&item.meta.icon) != 0">{{onlyOneChild.meta.title}}</p>
         </div>
 
@@ -141,3 +143,20 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+  .nav_img{
+    display: block;
+  }
+  .nav_active_img{
+    display: none;
+  }
+  .router-link-active{
+    .nav_img{
+      display: none;
+    }
+    .nav_active_img{
+      display: block;
+    }
+  }
+
+</style>

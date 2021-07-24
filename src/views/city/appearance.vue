@@ -2,11 +2,10 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content clr_white border shadow base_bg">
+    <div class="left_content base_bg_left">
 
-        <div class="title bold">AI智能识别</div>
-        <div class="top clr_white">
-          <p class="f20 bold">智能识别概况</p>
+        <div class="clr_white">
+          <p class="f20 bold txt_linear">智能识别概况</p>
           <div class="flex text-center">
             <ul class="bold communityNum">
               <li class="flex">
@@ -23,24 +22,13 @@
               <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'50%'"></PieChartTwo>
             </div>
           </div>
-          <p class="f20 bold mt_20">今日违规场景概况</p>
-          <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="22vh" divwidth="100%"></BarChartFour>
-          <p class="f20 bold mt_20">AI视频墙</p>
-          <ul class="flex AI_list  mt_10">
-            <li class="flex-item m_r30">
-              <div class="img_txt f14 bold">滨湖路与江虹路交叉口</div>
-              <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic18.nipic.com%2F20111226%2F6647776_214907087000_2.jpg&refer=http%3A%2F%2Fpic18.nipic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1628911322&t=74fc6a998a3b91caed7e5ae052df4354">
-            </li>
-            <li class="flex-item">
-              <div class="img_txt f14 bold">滨湖路与江虹路交叉口</div>
-              <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic18.nipic.com%2F20111226%2F6647776_214907087000_2.jpg&refer=http%3A%2F%2Fpic18.nipic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1628911322&t=74fc6a998a3b91caed7e5ae052df4354">
-            </li>
-          </ul>
+          <p class="f20 bold txt_linear mt_20">今日违规场景概况</p>
+          <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="42vh" divwidth="100%"></BarChartFour>
         </div>
     </div>
-    <div class="right_content clr_white border shadow base_bg">
-      <div class="title bold">智慧执法</div>
-      <div class="flex bold enforcement_num text-center">
+    <div class="right_content clr_white base_bg_right">
+      <p class="f20 bold txt_linear">案件概况</p>
+      <div class="flex bold enforcement_num text-center mt_20">
         <div class="flex-item">
           <p class="f16">上报量</p>
           <p class="f26 clr_blue01 mt_5">300</p>
@@ -54,14 +42,13 @@
           <p class="f26 clr_yellow mt_5">300</p>
         </div>
       </div>
-      <div class="top clr_white">
-        <p class="f20 bold">今日违停场景概况</p>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="15vh" divwidth="100%"></BarChartFour>
+      <div class="clr_white mt_20">
+        <p class="f20 bold txt_linear">今日违停场景概况</p>
+        <BarChartFour :chartData="BarDataThree" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></BarChartFour>
       </div>
-      <div class="left_bottom">
-        <div class="title bold">油烟监测</div>
-        <p class="f20 bold">餐企报警次数分析</p>
-        <BarChartFive :chartData="BarData" height="26vh" divwidth="100%"></BarChartFive>
+      <div class="mt_20">
+        <p class="f20 bold txt_linear">油烟超标次数（top8）</p>
+        <BarChartFive :chartData="BarData" height="30vh" divwidth="100%"></BarChartFive>
       </div>
 
     </div>
@@ -337,7 +324,7 @@
             left: '0',
             right: '0',
             bottom: '40',
-            top: '20',
+            top: '50',
             containLabel: true
           },
           //----------------   图例 legend  -----------------
@@ -345,8 +332,6 @@
 
           xAxis: [
             {
-
-
               axisTick: {
                 show:false,
                 alignWithLabel: false
@@ -361,11 +346,12 @@
               },
               splitLine: { show: false },//去除网格线
               type: 'category',
-              data: ['浦沿中队', '西兴中队', '长河中队']
+              data: ['浦沿中队', '西兴中队', '长河中队','浦沿中队', '西兴中队', '长河中队','浦沿中队', '西兴中队']
             }
           ],
           yAxis: [
             {
+              splitArea:{show: false},
               axisTick: {
                 show:false,
                 alignWithLabel: false
@@ -395,11 +381,94 @@
 
                 }
               },
-              data: [220, 182, 191]
+              data: [220, 182, 191,220, 182, 191,220, 182]
             }
           ]
         },
         BarDataTwo:{
+          title: {},
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '-20',
+            top: '20',
+            containLabel: true
+          },
+          xAxis: [
+            {
+              show:false,
+              axisTick: {
+                alignWithLabel: false
+              },
+              splitLine: { show: false },//去除网格线
+              type: 'value',
+            }
+          ],
+          yAxis: [
+            {
+              axisTick: {
+                show: false
+              },
+              axisLine: {
+                show: false
+              },
+              axisLabel: {
+                show: true,
+                textStyle: {
+                  color: '#fff',
+                  fontSize:'15',
+                  fontWeight:'bold'
+                }
+              },
+              splitLine: { show: false },//去除网格线
+              type: 'category',
+              data:['出店经营','无照商贩','占道经营','乱堆物料','非机动车违停','占道经营','乱堆物料','非机动车违停']
+            }
+          ],
+          series: [
+            {
+              type: 'bar',
+              barWidth: 20,//柱图宽度
+              barGap:'180%',
+              barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
+              // label: {
+              //   normal: {
+              //     color: 'red',
+              //     show: true,
+              //     position: 'top'
+              //   }
+              // },
+              itemStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
+                    [
+                      { offset: 0, color: '#006FFF' },
+                      { offset: 1, color: 'rgba(4,178,255,1)' }
+                    ]
+                  ),
+                  label: {
+                    show : true,
+                    position : 'right',
+                    textStyle : {
+                      color: '#fff',
+                      fontSize:'16',
+                      fontWeight:'bold'
+                    }
+                  }
+
+                }
+              },
+              data: [320, 332, 301,230,56, 301,230,56]
+            },
+          ]
+        },
+        BarDataThree:{
           title: {},
           tooltip: {
             trigger: 'axis',
@@ -462,8 +531,8 @@
                 normal: {
                   color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
                     [
-                      { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: '#9D4EE8' }
+                      { offset: 0, color: 'rgba(255,183,102,1)' },
+                      { offset: 1, color: 'rgba(252,187,112,1)' }
                     ]
                   ),
                   label: {
@@ -478,7 +547,7 @@
 
                 }
               },
-              data: [320, 332, 301,230,56]
+              data: [320, 332, 301,230,56,]
             },
           ]
         },
@@ -565,21 +634,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  /deep/.tdt-marker-pane{
-    .tdt-marker-icon{
-      width: 57px !important;
-      height: 52px !important;
-    }
-  }
-  /deep/.tdt-infowindow-content-wrapper{
-    width: 400px;
-    background: url("./../../assets/image/pop_bg.png") left top no-repeat;
-    background-size: 100% 100%;
-  }
-  .mapDiv{
-    width:100%;
-    height:80vh;
-  }
+
   .communityNum{
     width: 30%;
     li{
@@ -604,58 +659,9 @@
   .pieChart{
     width: 60%;
   }
-  .left_content{
-    padding: 20px;
-    width: 32%;
-    position: fixed;
-    top: 10vh;
-    left: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
 
-  }
-  .right_content{
-    padding: 20px;
-    width: 32%;
-    position: fixed;
-    top: 10vh;
-    right: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-    .top{
-      padding: 20px;
-    }
-    .left_bottom{
-      padding: 20px 20px 0 20px;
-    }
-  }
-  .AI_list{
-    li{
-      border-radius: 20px;
-      position: relative;
-      .img_txt{
-        position: absolute;
-        left: 0;
-        top: 0;
-        z-index: 99999;
-        width: 100%;
-        line-height: 2;
-        padding: 0 10px;
-        background: rgba(0,0,0,0.5);
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-      }
-      img{
-        width: 100%;
-        height: 13vh;
-        border-radius: 20px;
-      }
-    }
-  }
+
+
   .enforcement_num{
     .flex-item{
       padding: 20px 0;
@@ -665,9 +671,6 @@
       }
     }
   }
-  .title{
-    line-height: 1.8;
-    background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
-  }
+
 
 </style>

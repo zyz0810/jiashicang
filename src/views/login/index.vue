@@ -29,7 +29,7 @@
           </span>
                 </el-form-item>
               </el-tooltip>
-              <el-button :loading="loading" type="primary" class="login_btn" @click.native.prevent="handleLogin">安全登录</el-button>
+              <el-button :loading="loading" type="primary" class="login_btn f16" @click.native.prevent="handleLogin">安 全 登 录</el-button>
             </el-form>
           </div>
         </div>
@@ -234,7 +234,7 @@ $cursor: #fff;
 .login_btn{
   width: 100%;
   margin-top: 30px;
-  background-color: #2143af; /* 浏览器不支持的时候显示 */
+  background-color: rgba(0,108,198,1); /* 浏览器不支持的时候显示 */
   /*background-image: linear-gradient( #44c6fe, #0577f9);*/
   border:none;
 }
@@ -288,7 +288,7 @@ $txt:#3f35cf;
   }
 
 .login_form{
-  padding: 0 20px;
+  padding: 0 50px;
 }
 .login_txt{
   width: 300px;

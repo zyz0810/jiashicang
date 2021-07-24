@@ -5,17 +5,15 @@
 
     <div class="left_rate bold clr_white text-center">
       <div class="clean_rate flex">
-        <div>
-          <p class="f26">95.6%</p>
-          <p class="mt_5">清扫完成</p>
-        </div>
+        <p class="f26">95.6%</p>
       </div>
+      <p class="mb_20">清扫完成</p>
       <div class="watering_rate flex">
         <div>
           <p class="f26">95.6%</p>
-          <p class="mt_5">洒水完成</p>
         </div>
       </div>
+      <p class="mb_20">洒水完成</p>
       <ul class="f16 clr_white bold text-center link_intro">
         <li>
           <p>0次</p>
@@ -47,12 +45,10 @@
         </li>
       </ul>
     </div>
-    <div class="right_content clr_white base_bg shadow border">
-      <div class="title bold">清扫作业</div>
-      <div class="top clr_white border">
-        <p class="f20 bold">
-          道路统计78条
-          <span class="f16 baseColor fr">清扫完成率</span>
+    <div class="right_content clr_white base_bg_right">
+      <div class="top clr_white ">
+        <p class="f20 bold txt_linear">
+          清扫完成率
         </p>
         <el-row :gutter="10" class="mt_20">
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="flex">
@@ -80,13 +76,13 @@
 
 
       </div>
-      <div class="left_bottom mt_10 border">
-        <p class="f20 bold">作业里程统计</p>
-        <BarChartFive :chartData="BarData" height="100px" divwidth="100%"></BarChartFive>
+      <div class="mt_20">
+        <p class="f20 bold txt_linear">作业里程统计</p>
+        <BarChartFive :chartData="BarData" height="150px" divwidth="100%"></BarChartFive>
       </div>
-      <div class="left_bottom mt_10 border">
-        <p class="f20 bold">实际作业车辆统计</p>
-        <BarChartFive :chartData="BarDataTwo" height="100px" divwidth="100%"></BarChartFive>
+      <div class="mt_20">
+        <p class="f20 bold txt_linear">实际作业车辆统计</p>
+        <BarChartFive :chartData="BarDataTwo" height="150px" divwidth="100%"></BarChartFive>
       </div>
 
     </div>
@@ -202,7 +198,7 @@
           grid: {
             left: '0',
             right: '0',
-            bottom: '-20',
+            bottom: '20',
             top: '20',
             containLabel: true
           },
@@ -214,10 +210,10 @@
             },
             splitLine: { show: false },//去除网格线
           },
-          color:['#15193F',new echarts.graphic.LinearGradient(0, 0, 1, 0,
+          color:['rgba(21,25,60,1)',new echarts.graphic.LinearGradient(0, 0, 1, 0,
             [
-              { offset: 0, color: '#E4683A' },
-              { offset: 1, color: '#FDB019' }
+              { offset: 0, color: 'rgba(15,234,192,1)' },
+              { offset: 1, color: 'rgba(131,188,237,1)' }
             ]
           )],
           yAxis: {
@@ -262,7 +258,7 @@
           grid: {
             left: '0',
             right: '0',
-            bottom: '-20',
+            bottom: '20',
             top: '20',
             containLabel: true
           },
@@ -354,7 +350,7 @@
             {
               name: '单位工程评定',
               type: 'pie',
-              radius: ['75%', '100%'],
+              radius: ['85%', '100%'],
               avoidLabelOverlap: false,
               label: {
                 normal: {
@@ -452,20 +448,10 @@
   }
 </script>
 <style lang="scss" scoped>
-  /deep/.tdt-marker-pane{
-    .tdt-marker-icon{
-      width: 57px !important;
-      height: 52px !important;
-    }
-  }
   /deep/.tdt-infowindow-content-wrapper{
     width: 400px;
     background: url("./../../assets/image/pop_bg.png") left top no-repeat;
     background-size: 100% 100%;
-  }
-  .mapDiv{
-    width:100%;
-    height:80vh;
   }
   .left_rate{
     position: fixed;
@@ -518,55 +504,6 @@
         background: rgba(145,178,61,1);
       }
     }
-  }
-
-  .right_content{
-    padding: 20px;
-    width: 32%;
-    position: fixed;
-    top: 10vh;
-    right: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-    .top{
-      padding: 20px;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
-    }
-    .left_bottom{
-      padding: 20px 20px 0 20px;
-    }
-  }
-  .title{
-    line-height: 1.8;
-    background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
   }
 
 </style>

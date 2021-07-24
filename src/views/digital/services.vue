@@ -12,8 +12,31 @@
         <p class="mt_10">共享单车</p>
       </div>
     </div>
-    <div class="right_content clr_white border shadow base_bg" v-if="activeIndex == 0">
-      <div class="title bold">数字停车</div>
+    <ul class="f16 clr_white bold text-center link_intro">
+      <li class="mb_20 f14">空闲泊位等级</li>
+      <li>
+        <p>5级</p>
+        <span class="block color_bg01"></span>
+      </li>
+      <li>
+        <p>4级</p>
+        <span class="block color_bg02"></span>
+      </li>
+      <li>
+        <p>3级</p>
+        <span class="block color_bg03"></span>
+      </li>
+      <li>
+        <p>2级</p>
+        <span class="block color_bg04"></span>
+      </li>
+      <li>
+        <p>1级</p>
+        <span class="block color_bg05"></span>
+      </li>
+    </ul>
+    <div class="right_content clr_white base_bg_right" v-if="activeIndex == 0">
+      <p class="f20 bold txt_linear mb_20">泊位概况</p>
       <el-row :gutter="10">
         <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10">
           <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="20vh" divwidth="100%"></PieChartTwo>
@@ -33,8 +56,8 @@
       </div>
       <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
     </div>
-    <div class="right_content clr_white border shadow base_bg" v-if="activeIndex == 1">
-      <div class="title bold">共享单车</div>
+    <div class="right_content clr_white base_bg_right" v-if="activeIndex == 1">
+      <p class="f20 bold txt_linear mb_20">车辆概况</p>
       <div class="flex f16 bold clr_white bicycle text-center">
         <div class="flex-item">
           <p>已备案车辆</p>
@@ -53,12 +76,12 @@
           <p class="clr_yellow f26 mt_10">1887</p>
         </div>
       </div>
-      <div class="top clr_white mt_10 border">
-        <p class="f20 bold">区域统计</p>
+      <div class="top clr_white mt_20 ">
+        <p class="f20 bold txt_linear">区域统计</p>
         <RingChart :chartData="chartDataTwo" :PieChartLegend="PieChartLegend" height="200px" divwidth="100%"></RingChart>
       </div>
-      <div class="left_bottom mt_10 border">
-        <p class="f20 bold">违规次数</p>
+      <div class="left_bottom mt_20">
+        <p class="f20 bold txt_linear">违规次数</p>
         <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="200px" divwidth="100%"></BarChartFour>
       </div>
 
@@ -481,7 +504,7 @@
                   color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
                     [
                       { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: '#9D4EE8' }
+                      { offset: 1, color: 'rgba(4,178,255,1)' }
                     ]
                   ),
                   label: {
@@ -583,21 +606,13 @@
   }
 </script>
 <style lang="scss" scoped>
-  /deep/.tdt-marker-pane{
-    .tdt-marker-icon{
-      width: 57px !important;
-      height: 52px !important;
-    }
-  }
+
   /deep/.tdt-infowindow-content-wrapper{
     width: 400px;
     background: url("./../../assets/image/pop_bg.png") left top no-repeat;
     background-size: 100% 100%;
   }
-  .mapDiv{
-    width:100%;
-    height:80vh;
-  }
+
   .left_server{
     position: fixed;
     top: 13vh;
@@ -608,7 +623,7 @@
   .bicycle{
     .flex-item{
       padding: 20px 0;
-      background: #081329;
+      background: rgba(11,46,65,1);
       &:nth-child(2){
         margin: 0 10px;
       }
@@ -617,53 +632,43 @@
       }
     }
   }
-  .right_content{
-    padding: 20px;
-    width: 40%;
+  .link_intro{
     position: fixed;
-    top: 10vh;
-    right: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-    .top{
-      padding: 20px;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
+    left: 100px;
+    top: 13vh;
+    z-index: 2000;
+    width: 100px;
+    padding: 20px;
+    margin-left: 3vh;
+    background: rgba(4,40,90,1);
+    li{
+      & > span{
+        width: 40px;
+        height: 10px;
+        margin: 3px auto 15px;
       }
     }
-    .left_bottom{
-      padding: 20px 20px 0 20px;
+    .color_bg01{
+      background: rgba(255,100,71,1);
     }
-  }
-  .title{
-    line-height: 1.8;
-    background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
+    .color_bg02{
+      background: rgba(254,98,71,1);
+    }
+    .color_bg03{
+      background: rgba(222,194,21,1);
+    }
+    .color_bg04{
+      background: rgba(231,96,196,1);
+    }
+    .color_bg05{
+      background: rgba(147,126,214,1);
+    }
+    .color_bg06{
+      background: rgba(15,165,197,1);
+    }
+    .color_bg07{
+      background: rgba(145,178,61,1);
+    }
   }
 
 </style>

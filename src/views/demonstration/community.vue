@@ -10,8 +10,10 @@
         </div>
       </div>
       <div class="left_content clr_white border shadow base_bg">
-        <div class="title bold">滨康小区</div>
-        <p class="f20 bold">AI视频墙</p>
+        <p class="bold clearfix">
+          <span class="f20 txt_linear fl">AI视频墙</span>
+          <span class="f14 fr">更多</span>
+        </p>
         <ul class="AI_list">
           <li class="mt_20">
             <div class="img_txt f14 bold">滨湖路与江虹路交叉口</div>
@@ -35,9 +37,8 @@
       </div>
     </div>
 
-    <div class="right_content clr_white border shadow base_bg">
-      <div class="title bold">滨康小区</div>
-        <p class="f20 bold">智能识别概况</p>
+    <div class="right_content clr_white base_bg_right">
+        <p class="f20 bold txt_linear">智能识别概况</p>
         <div class="flex text-center">
           <ul class="bold communityNum">
             <li class="flex">
@@ -54,7 +55,7 @@
             <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'50%'"></PieChartTwo>
           </div>
         </div>
-        <p class="f20 bold mt_20">今日违规场景概况</p>
+        <p class="f20 bold txt_linear mt_20">今日违规场景概况</p>
         <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="36vh" divwidth="100%"></BarChartFour>
 
 
@@ -591,37 +592,18 @@
   }
 </script>
 <style lang="scss" scoped>
-  /deep/.tdt-marker-pane{
-    .tdt-marker-icon{
-      width: 57px !important;
-      height: 52px !important;
-    }
-  }
-  /deep/.tdt-infowindow-content-wrapper{
-    width: 400px;
-    background: url("./../../assets/image/pop_bg.png") left top no-repeat;
-    background-size: 100% 100%;
-  }
-  .mapDiv{
-    width:100%;
-    height:80vh;
-  }
-
+.left_left_community{
   .left_server{
     position: fixed;
-    top: 120px;
+    top: 10vh;
     left: 20px;
     width: 120px;
     z-index: 9999;
     padding: 20px;
   }
   .left_content{
-    padding: 20px;
     width: 22%;
-    position: fixed;
-    top: 120px;
     left: 150px;
-    z-index: 9999;
     .AI_list{
       li{
         border-radius: 20px;
@@ -646,6 +628,9 @@
       }
     }
   }
+}
+
+
   .communityNum{
     width: 36%;
     li{
@@ -670,26 +655,6 @@
   .pieChart{
     width: 60%;
   }
-  .right_content{
-    padding: 20px;
-    width: 36%;
-    position: fixed;
-    top: 120px;
-    right: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-    .top{
-      padding: 20px;
-    }
-    .left_bottom{
-      padding: 20px 20px 0 20px;
-    }
-  }
-  .title{
-    line-height: 1.8;
-    background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
-  }
+
 
 </style>

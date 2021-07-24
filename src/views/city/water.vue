@@ -2,11 +2,9 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content clr_white border shadow base_bg p20">
-
-        <div class="title bold">智慧河道</div>
-        <div class="top clr_white border p20">
-          <p class="f20 bold">河道概况</p>
+    <div class="left_content clr_white base_bg_left">
+        <div class="clr_white">
+          <p class="f20 bold txt_linear">河道概况</p>
           <div class="flex water_num01 f16 bold text-center mt_10">
             <div class="flex-item">
               <p class="clr_white">河流条数</p>
@@ -33,30 +31,29 @@
           </div>
         </div>
 
-      <div class="left_bottom mt_10 border p20">
-        <p class="f20 bold">河道概况</p>
-        <el-table v-loading="listLoading" :data="list" :height="280" element-loading-text="拼命加载中" fit ref="tableList" class="f16">
+      <div class="mt_20">
+        <p class="f20 bold txt_linear">异常报警</p>
+        <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList" class="f14 mt_20">
           <el-table-column type="index" label="序号" width="80" align="center">
             <!--            <template slot-scope="scope">-->
             <!--             <span class="block sqaer">{{index}}</span>-->
             <!--            </template>-->
           </el-table-column>
-          <el-table-column label="申请人/单位" align="center" prop="name"></el-table-column>
-          <el-table-column label="权力名称" align="center" prop="name"></el-table-column>
-          <el-table-column label="办理结果" align="center" prop="end"></el-table-column>
+          <el-table-column label="方案名称" align="center" prop="name"></el-table-column>
+          <el-table-column label="配水量" align="center" prop="name"></el-table-column>
+          <el-table-column label="排水量" align="center" prop="end"></el-table-column>
 
         </el-table>
       </div>
 
     </div>
-    <div class="right_content clr_white border shadow base_bg p20">
-      <div class="title bold">智慧河道</div>
-      <div class="top clr_white border p20">
-        <p class="f20 bold">水质检测概况</p>
+    <div class="right_content clr_white base_bg_right">
+      <div class="clr_white">
+        <p class="f20 bold txt_linear">水质检测概况</p>
         <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh" divwidth="100%"></PieChartTwo>
       </div>
-      <div class="left_bottom mt_10 border p20">
-        <p class="f20 bold">水质超标次数（top6）</p>
+      <div class="mt_20">
+        <p class="f20 bold txt_linear">河道水位</p>
         <BarChartFour :chartData="BarDataTwo" :BarChartLegend="BarChartLegend" height="25vh" divwidth="100%"></BarChartFour>
       </div>
 
@@ -413,48 +410,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  /deep/.tdt-marker-pane{
-    .tdt-marker-icon{
-      width: 57px !important;
-      height: 52px !important;
-    }
-  }
-  /deep/.tdt-infowindow-content-wrapper{
-    width: 400px;
-    background: url("./../../assets/image/pop_bg.png") left top no-repeat;
-    background-size: 100% 100%;
-  }
-  .mapDiv{
-    width:100%;
-    height:80vh;
-  }
-  .left_content{
-    width: 32%;
-    position: fixed;
-    top: 10vh;
-    left: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-    .left_bottom{
-      padding: 20px;
-    }
-  }
-  .right_content{
-    padding: 20px;
-    width: 32%;
-    position: fixed;
-    top: 10vh;
-    right: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-    .left_bottom{
-      padding: 20px 20px 0 20px;
-    }
-  }
+
   .water_num01{
     .flex-item{
       padding: 20px 0;
