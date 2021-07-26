@@ -15,9 +15,8 @@
 <!--      </el-menu>-->
 <!--    </el-scrollbar>-->
 
-    <div class="line"></div>
+<!--    <div class="line"></div>-->
     <div class="flex baseColor nav">
-      <sidebar-item v-for="(route,index) in permission_routes" :key="route.path" :item="route" :index="index" :base-path="route.path" />
       <div class="flex clr_white bold warning_num">
         <div class="flex-item">
           <span class="yellow_bg f16 block">22</span>
@@ -28,6 +27,7 @@
           <p class="f14">红色预警</p>
         </div>
       </div>
+      <sidebar-item v-for="(route,index) in permission_routes" :key="route.path" :item="route" :index="index" :base-path="route.path" />
     </div>
 
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&item.hidden == false" @click="aa(index)">
+  <div class="nav_div" v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&item.hidden == false" @click="aa(index)">
     <!--    没有下拉箭头-->
 <!--    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">-->
     <template>
@@ -10,13 +10,13 @@
           <!--<img  :src="activeIndex == index ? navListActive[onlyOneChild.meta.icon||(item.meta&&item.meta.icon)] : navList[onlyOneChild.meta.icon||(item.meta&&item.meta.icon)]">-->
           <img class="nav_img" :src="navList[onlyOneChild.meta.icon||(item.meta&&item.meta.icon)]">
           <img class="nav_active_img" :src="navListActive[onlyOneChild.meta.icon||(item.meta&&item.meta.icon)]">
-          <p v-if="onlyOneChild.meta.icon||(item.meta&&item.meta.icon) != 0">{{onlyOneChild.meta.title}}</p>
+          <p class="mt_5" v-if="onlyOneChild.meta.icon||(item.meta&&item.meta.icon) != 0">{{onlyOneChild.meta.title}}</p>
         </div>
 
 
       </app-link>
     </template>
-
+    <div class="line"></div>
   </div>
 </template>
 
