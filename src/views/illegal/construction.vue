@@ -5,10 +5,10 @@
     <div class="right_content right_construction bold base_bg_right">
         <div class="flex clr_white">
           <div class="text-center">
-            <img src="./../../assets/image/soldier_icon01.png">
-            <p class="txt_linear f20">违建概况</p>
+            <img src="./../../assets/image/construction-icon.png">
+            <p class="txt_linear f20 mt_10">违建概况</p>
           </div>
-          <ul>
+          <ul class="ml_10">
             <li><span class="f16">本月新增违建</span><span class="clr_blue03 f26">1</span></li>
             <li><span class="f16">存量违建</span><span class="clr_blue03 f26">11</span></li>
             <li><span class="f16">完成进度</span><span class="clr_blue03 f26">46%</span></li>
