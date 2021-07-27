@@ -2,14 +2,16 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="right_construction bold text-center">
-        <div>
-          <div>
+    <div class="right_content right_construction bold base_bg_right">
+        <div class="flex clr_white">
+          <div class="text-center">
             <img src="./../../assets/image/soldier_icon01.png">
             <p class="txt_linear f20">违建概况</p>
           </div>
           <ul>
-            <li>本月新增违建<span class="baseColor f26">1</span></li>
+            <li><span class="f16">本月新增违建</span><span class="clr_blue03 f26">1</span></li>
+            <li><span class="f16">存量违建</span><span class="clr_blue03 f26">11</span></li>
+            <li><span class="f16">完成进度</span><span class="clr_blue03 f26">46%</span></li>
           </ul>
         </div>
     </div>
@@ -330,7 +332,7 @@
         // this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
         this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
-        this.addCtrl()
+        // this.addCtrl()
 
         // // 普通标注
         let site = [
@@ -388,37 +390,20 @@
 <style lang="scss" scoped>
 
 
-  .right_soldier{
-    width: 135px;
-    position: fixed;
-    bottom: 200px;
-    right: 20px;
-    z-index: 9999;
-    li{
-      & > span{
-        width: 135px;
-        height: 92px;
-        line-height: 80px;
-      }
-      &:nth-child(1){
+  .right_construction{
+    /*width: 400px;*/
+    /*position: fixed;*/
+    /*top: 15vh;*/
+    /*right: 50px;*/
+    /*z-index: 9999;*/
+    ul{
+      li{
         span{
-          background: url("./../../assets/image/soldier_icon01.png") left top no-repeat;
+          &:nth-child(1){
+            display: inline-block;
+            width: 200px;
+          }
         }
-      }
-      &:nth-child(2){
-        span{
-          background: url("./../../assets/image/soldier_icon02.png") left top no-repeat;
-        }
-      }
-      &:nth-child(3){
-        span{
-          background: url("./../../assets/image/soldier_icon03.png") left top no-repeat;
-        }
-      }
-
-
-      .intro_txt{
-        margin-top: -15px;
       }
     }
   }

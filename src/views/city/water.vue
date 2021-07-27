@@ -53,8 +53,8 @@
         <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh" divwidth="100%"></PieChartTwo>
       </div>
       <div class="mt_20">
-        <p class="f20 bold txt_linear">河道水位</p>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="BarChartLegend" height="25vh" divwidth="100%"></BarChartFour>
+        <p class="f20 bold txt_linear mb_20">河道水位</p>
+        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></LineChart>
       </div>
 
     </div>
@@ -82,6 +82,84 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        lineData:{
+          title: {},
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '40',
+            top: '10',
+            containLabel: true
+          },
+          //----------------   图例 legend  -----------------
+          legend:{},
+          xAxis: {
+            // show:false,
+            axisTick: {
+              show: false,
+              alignWithLabel: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#26CBE2',
+                fontSize:'16',
+                fontWeight:'bold'
+              }
+            },
+            splitLine: { show: false },//去除网格线
+            type: 'category',
+            data: ['5.13', '5.14', '5.15', '5.16', '5.17', '5.18', '5.19']
+          },
+          yAxis: {
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              // show: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#26CBE2',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            splitArea:{show:false},
+            splitLine: {
+              show: true,//去除网格线
+              textStyle: {
+                color: 'rgba(30,66,88,1)',
+                fontSize:'15',
+                fontWeight:'bold'
+              },
+              lineStyle:{
+                color: ['rgba(30,66,88,1)'],
+                width: 1,
+                type: 'solid'
+              }
+            },
+            type: 'value'
+          },
+          series: [{
+            itemStyle : {
+              normal : {
+                lineStyle:{
+                  color:'#F3E981'
+                }
+              }
+            },
+            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'line'
+          }]
+        },
         listLoading:false,
         list:[{
           name:'发你辅导费',

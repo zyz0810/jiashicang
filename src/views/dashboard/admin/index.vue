@@ -3,11 +3,11 @@
     <el-row :gutter="10">
       <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
         <div class="content_index">
-          <div class="title_index f18 bold text-center">数字城管</div>
+          <div class="title_index f18 bold text-center"><span class="txt_linear">数字城管</span></div>
           <div class="flex anjian_num clr_white">
             <div class="flex-item">
-              <p class="f16 bold baseColor">今日受理量</p>
-              <div class="num01 flex text-center f26 bold mt_10">
+              <p class="f16 bold txtColor">今日受理量</p>
+              <div class="num flex text-center f26 bold mt_10">
                 <span></span>
                 <span>2</span>
                 <span>2</span>
@@ -16,8 +16,8 @@
               </div>
             </div>
             <div class="flex-item">
-              <p class="f16 bold baseColor">今日及时结案量</p>
-              <div class="num02 flex text-center f26 bold mt_10">
+              <p class="f16 bold txtColor">今日及时结案量</p>
+              <div class="num flex text-center f26 bold mt_10">
                 <span></span>
                 <span>2</span>
                 <span>8</span>
@@ -26,8 +26,8 @@
               </div>
             </div>
             <div class="flex-item">
-              <p class="f16 bold baseColor">今日结案量</p>
-              <div class="num03 flex text-center f26 bold mt_10">
+              <p class="f16 bold txtColor">今日结案量</p>
+              <div class="num flex text-center f26 bold mt_10">
                 <span></span>
                 <span>1</span>
                 <span>2</span>
@@ -48,14 +48,14 @@
             <div class="flex-item f16 bold">行走杭州</div>
             <div class="flex-item">
               <p class="f26 clr_yellow bold">79.97</p>
-              <p class="mt_5">总得分</p>
+              <p class="mt_5 clr_yellow">总得分</p>
             </div>
             <div class="flex-item">
-              <p class="f26 clr_yellow bold">1.04%</p>
+              <p class="f26 bold">1.04%</p>
               <p class="mt_5">环比下降</p>
             </div>
             <div class="flex-item">
-              <p class="f26 clr_yellow bold">第4名</p>
+              <p class="f26 bold">第4名</p>
               <p class="mt_5">全市排名</p>
             </div>
           </div>
@@ -63,7 +63,7 @@
       </el-col>
       <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
        <div class="content_index">
-         <div class="title_index f18 bold text-center">执法办案</div>
+         <div class="title_index f18 bold text-center"><span class="txt_linear">执法办案</span></div>
          <div class="flex">
            <ul class="f16 clr_white bold anjian_cegory">
              <li class="flex">
@@ -79,7 +79,9 @@
                <p>今日结案案件</p>
              </li>
            </ul>
-           <div class="map_echart"></div>
+           <div class="map_echart">
+             <p class="f20 baseColor bold">今日案件热力图</p>
+           </div>
            <div class="anjian_genzong bold">
              <p class="baseColor text-center bold f18">案件实时跟踪</p>
              <div class="weui-cells clr_white">
@@ -93,7 +95,7 @@
                    <p class="f14">有暴露垃圾，请处理</p>
                  </div>
                  <div class="weui-cell__ft f12">
-                   <p>上报  王先军</p>
+                   <p>上报<span class="ml_10">王先军</span></p>
                    <p>16:23:05</p>
                  </div>
                </div>
@@ -107,7 +109,7 @@
                    <p class="f14">有暴露垃圾，请处理</p>
                  </div>
                  <div class="weui-cell__ft f12">
-                   <p>上报  王先军</p>
+                   <p>上报<span class="ml_10">王先军</span></p>
                    <p>16:23:05</p>
                  </div>
                </div>
@@ -121,7 +123,7 @@
                    <p class="f14">有暴露垃圾，请处理</p>
                  </div>
                  <div class="weui-cell__ft f12">
-                   <p>上报  王先军</p>
+                   <p>上报<span class="ml_10">王先军</span></p>
                    <p>16:23:05</p>
                  </div>
                </div>
@@ -135,7 +137,7 @@
                    <p class="f14">有暴露垃圾，请处理</p>
                  </div>
                  <div class="weui-cell__ft f12">
-                   <p>上报  王先军</p>
+                   <p>上报<span class="ml_10">王先军</span></p>
                    <p>16:23:05</p>
                  </div>
                </div>
@@ -149,7 +151,7 @@
                    <p class="f14">有暴露垃圾，请处理</p>
                  </div>
                  <div class="weui-cell__ft f12">
-                   <p>上报  王先军</p>
+                   <p>上报<span class="ml_10">王先军</span></p>
                    <p>16:23:05</p>
                  </div>
                </div>
@@ -162,40 +164,43 @@
     <el-row :gutter="10" class="mt_10">
       <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
         <div class="content_index">
-          <div class="title_index f18 bold text-center">信访投诉</div>
+          <div class="title_index f18 bold text-center"><span class="txt_linear">信访投诉</span></div>
           <div class="flex bold text-center">
             <div class="flex-item">
               <p class="clr_white">今日投诉量</p>
-              <p class="clr_blue01 f26">868</p>
+              <p class="clr_blue03 f26 complain_num mt_10">868</p>
             </div>
             <div class="flex-item">
-              <p class="clr_white">今日投诉量</p>
-              <p class="clr_yellow f26">868</p>
+              <p class="clr_white">今日重复投诉量</p>
+              <p class="clr_blue03 f26 complain_num mt_10">868</p>
             </div>
             <div class="flex-item">
-              <p class="clr_white">今日投诉量</p>
-              <p class="clr_purple f26">868</p>
+              <p class="clr_white">今日结案量</p>
+              <p class="clr_blue03 f26 complain_num mt_10">868</p>
+            </div>
+            <div class="flex-item">
+              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="13vh"></RingChart>
             </div>
           </div>
           <div class="flex bold text-center clr_white" style="margin-top: 30px">
             <div class="flex-item">
               <p class="clr_yellow f26">99.89</p>
-              <p class="clr_white">总得分</p>
+              <p class="mt_5">总得分</p>
             </div>
             <div class="flex-item">
               <p class="f26">1.04%</p>
-              <p class="clr_white">环比下降</p>
+              <p class="mt_5">环比下降</p>
             </div>
             <div class="flex-item">
               <p class="f26">第2名</p>
-              <p class="clr_white">全市排名</p>
+              <p class="mt_5">全市排名</p>
             </div>
           </div>
         </div>
       </el-col>
       <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
         <div class="content_index">
-          <div class="title_index f18 bold text-center">审批情况</div>
+          <div class="title_index f18 bold text-center"><span class="txt_linear">审批情况</span></div>
           <div class="top clr_white">
             <div class="f26 bold text-center baseColor approval_num">审核总数：600</div>
 
@@ -224,8 +229,47 @@
       </el-col>
       <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
        <div class="content_index">
-         <div class="title_index f18 bold text-center">服务视图</div>
-         <p class="baseColor text-center bold f18">各项服务完成情况</p>
+         <div class="title_index f18 bold text-center"><span class="txt_linear">服务视图</span></div>
+         <div class="flex clr_white f14 bold">
+           <div class="flex-item">
+             <div class="flex text-center">
+               <div class="flex-item">
+               <p>清扫完成</p>
+               <div class="clean_rate clr_blue03 f26">95.6%</div>
+             </div>
+               <div class="flex-item">
+                 <p>洒水完成</p>
+                 <div class="clean_rate clr_blue03 f26">95.6%</div>
+               </div>
+             </div>
+             <div class="weui-cell">
+               <div class="weui-cell__hd"><RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="10vh"></RingChart></div>
+               <div class="weui-cell__bd">
+                 <p>亮灯数<span class="clr_blue03 ml_10">18961</span></p>
+                 <p>总灯数<span class="clr_blue03 ml_10">18961</span></p>
+               </div>
+             </div>
+             <p>亮灯率</p>
+           </div>
+           <div class="flex-item">
+             <div class="weui-cell">
+               <div class="weui-cell__hd"><RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="10vh"></RingChart></div>
+               <div class="weui-cell__bd">
+                 <p>占用厕位<span class="clr_blue03 ml_10">18961</span></p>
+                 <p>总厕位数<span class="clr_blue03 ml_10">18961</span></p>
+               </div>
+             </div>
+             <p>厕位占用率</p>
+             <div class="weui-cell">
+               <div class="weui-cell__hd"><RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="10vh"></RingChart></div>
+               <div class="weui-cell__bd">
+                 <p>占用泊位<span class="clr_blue03 ml_10">18961</span></p>
+                 <p>总泊位数<span class="clr_blue03 ml_10">18961</span></p>
+               </div>
+             </div>
+             <p>泊位占用率</p>
+           </div>
+         </div>
        </div>
       </el-col>
     </el-row>
@@ -308,40 +352,29 @@
     box-shadow: $menuText 0 0 18px inset;
   }
   .anjian_num{
-    .num01{
+    .num{
       span{
         width: 25px;
         height: 33px;
         line-height: 33px;
         margin-right: 3px;
-        background: url("./../../../assets/image/num_bg1.png") left top no-repeat;
+        background: url("./../../../assets/image/index-num-bg.png") left top no-repeat;
       }
     }
-    .num02{
-      span{
-        width: 25px;
-        height: 33px;
-        line-height: 33px;
-        margin-right: 3px;
-        background: url("./../../../assets/image/num_bg2.png") left top no-repeat;
-      }
-    }
-    .num03{
-      span{
-        width: 25px;
-        height: 33px;
-        line-height: 33px;
-        margin-right: 3px;
-        background: url("./../../../assets/image/num_bg3.png") left top no-repeat;
-      }
-    }
+
+  }
+  .clean_rate{
+    height: 10vh;
+    line-height: 10vh;
+    background: url("./../../../assets/image/index-range-bg.png") center center no-repeat;
   }
   .title_index{
     height: 3em;
-    line-height: 3em;
-    background-image:-webkit-linear-gradient(bottom,#69CFF4,#fff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+    line-height: 2em;
+    background: url("./../../../assets/image/index-title-bg.png") center top no-repeat;
+    /*background-image:-webkit-linear-gradient(bottom,#69CFF4,#fff);*/
+    /*-webkit-background-clip:text;*/
+    /*-webkit-text-fill-color:transparent;*/
   }
   .city_num{
     width: 100%;
@@ -366,16 +399,17 @@
     }
   }
   .anjian_cegory{
-    width: 20%;
+    width: 25%;
     li{
-      height: 7vh;
+      height: 11vh;
       line-height: 7vh;
-      background: url("./../../../assets/image/communityNum_bg.png") left top no-repeat;
+      background: url("./../../../assets/image/index-num-bg02.png") left top no-repeat;
       span{
-        width: 35%;
+        width: 45%;
       }
       p{
-        width: 65%;
+        width: 53%;
+        margin-left: 2%;
       }
     }
   }
@@ -448,6 +482,10 @@
     margin-bottom: 5px;
     border-left: 2px solid $baseColor;
     background-image: linear-gradient(270deg,  rgba(39,73,167,0), rgba(39,73,167,1));
+  }
+  .complain_num{
+    height: 6vh;
+    background: url("./../../../assets/image/index-num-bg03.png") center bottom no-repeat;
   }
   /*.dashboard-editor-container {*/
   /*  height: calc(100vh - 100px);*/

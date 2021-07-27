@@ -72,7 +72,7 @@ export default {
     width: 100%;
     /*background: url("../assets/image/login_bg.jpg") no-repeat;*/
     /*background-size: 100% 100%;*/
-    background: #081329;
+    background: #00022d;
     &.mobile.openSidebar {
       position: fixed;
       top: 0;

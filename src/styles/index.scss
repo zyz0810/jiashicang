@@ -120,6 +120,14 @@ div:focus {
 .baseColor{
   color: $baseColor;
 }
+.txtColor{
+  color: $txtColor;
+}
+.clr_blue03{
+  color: rgba(77,244,250,1);
+}
+
+
 .gray01{
   color: #ccc;
 }
@@ -848,6 +856,7 @@ input[type="number"] {
   top: 10vh;
   left: 20px;
   z-index: 9999;
+  height: 82%;
 }
 .right_content{
   padding: 20px;
@@ -856,6 +865,7 @@ input[type="number"] {
   top: 10vh;
   right: 20px;
   z-index: 9999;
+  height: 82%;
 }
 .el-table tbody tr:hover>td {
   background-color: transparent!important
@@ -895,4 +905,8 @@ input[type="number"] {
   width: 400px;
   background: url("./../assets/image/pop_bg.png") left top no-repeat;
   background-size: 100% 100%;
+}
+
+.ml_10{
+  margin-left: 10px;
 }

@@ -2,11 +2,9 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content">
-
-
-        <div class="top clr_white border p20 clr_white base_bg shadow">
-          <div class="title bold">城市亮灯</div>
+    <div class="left_content base_bg_left">
+        <div class="clr_white p20">
+          <p class="f20 bold txt_linear">亮灯概况</p>
           <el-row :gutter="20" class="pie_chart">
             <el-col :span="12">
               <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
@@ -15,21 +13,19 @@
               <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
             </el-col>
           </el-row>
-
         </div>
 
-      <div class="left_bottom mt_10 border p20 clr_white base_bg shadow">
-        <div class="title bold">智慧市政</div>
-        <p class="f20 bold">市政管理信息总览</p>
-        <div class="baseColor f16 bold flex mt_20 facilities_intro">
+      <div class="mt_20 clr_white">
+        <p class="f20 bold txt_linear">市政管理信息总览</p>
+        <div class="f16 bold flex mt_20 facilities_intro">
           <div>养护道路：103条</div>
           <div>排水管线长度：5625米</div>
         </div>
-        <div class="baseColor f16 bold flex mt_10 facilities_intro">
+        <div class="f16 bold flex mt_10 facilities_intro">
           <div>养护单位：14家</div>
           <div>智能感应井盖：103个</div>
         </div>
-        <div class="baseColor f16 bold flex mt_10 facilities_intro">
+        <div class="f16 bold flex mt_10 facilities_intro">
           <div>管道水位监测：24个</div>
           <div>管道流量监测：2个</div>
         </div>
@@ -37,10 +33,9 @@
       </div>
 
     </div>
-    <div class="right_content border base_bg shadow">
-      <div class="title bold clr_white">桥梁监测（江虹桥）</div>
-      <div class="top clr_white border p20 mt_5">
-        <p class="f20 bold">设备异常情况</p>
+    <div class="right_content base_bg_right">
+      <div class="clr_white p20 mt_20">
+        <p class="f20 bold txt_linear">设备异常情况</p>
         <div class="flex bold text-center">
           <div class="flex-item equipment_normal">
             <div class="f26 num">46</div>
@@ -57,8 +52,8 @@
         </div>
 
       </div>
-      <div class="top mt_10 border p20">
-        <p class="f20 clr_white bold">预警信息</p>
+      <div class="mt_20 ">
+        <p class="f20 bold txt_linear">预警信息</p>
         <div class="flex warning_intro clr_white mt_10">
           <div class="flex m_r30"><span class="block warning_circle bg_green"></span>正常</div>
           <div class="flex m_r30"><span class="block warning_circle bg_blue"></span>一级预警</div>
@@ -103,7 +98,7 @@
           </div>
         </div>
       </div>
-      <div class="left_bottom mt_10 border">
+      <div class="mt_20">
         <p class="f20 bold clr_white">实时曲线</p>
         <el-form :inline="true" :model="listQuery" class="search_form">
           <el-form-item label="检测项类型">
@@ -122,7 +117,7 @@
             <el-button v-waves class="filter-item" type="primary">生成曲线</el-button>
           </el-form-item>
         </el-form>
-        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="20vh" divwidth="100%"></LineChart>
+        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></LineChart>
       </div>
 
     </div>
@@ -280,12 +275,18 @@
                 fontWeight:'bold'
               }
             },
+            splitArea:{show:false},
             splitLine: {
-              show: false,//去除网格线
+              show: true,//去除网格线
               textStyle: {
-                color: '#08245F',
+                color: 'rgba(30,66,88,1)',
                 fontSize:'15',
                 fontWeight:'bold'
+              },
+              lineStyle:{
+                color: ['rgba(30,66,88,1)'],
+                width: 1,
+                type: 'solid'
               }
             },
             type: 'value'
@@ -574,51 +575,6 @@
   }
 </script>
 <style lang="scss" scoped>
-  /deep/.tdt-marker-pane{
-    .tdt-marker-icon{
-      width: 57px !important;
-      height: 52px !important;
-    }
-  }
-  /deep/.tdt-infowindow-content-wrapper{
-    width: 400px;
-    background: url("./../../assets/image/pop_bg.png") left top no-repeat;
-    background-size: 100% 100%;
-  }
-  .mapDiv{
-    width:100%;
-    height:80vh;
-  }
-  .left_content{
-    width: 32%;
-    position: fixed;
-    top: 10vh;
-    left: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-
-  }
-  .right_content{
-    padding: 20px;
-    width: 32%;
-    position: fixed;
-    top: 10vh;
-    right: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-
-    .left_bottom{
-      padding: 20px 20px 0 20px;
-    }
-  }
-  .title{
-    line-height: 1.8;
-    background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
-  }
   .warning_intro{
     padding: 1.5%;
     border: 1px solid #476ABA;

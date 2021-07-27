@@ -99,7 +99,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'overview',
-        component: () => import('@/views/general/overview'),
+        component: () => import('@/views/dashboard/index'),
         name: '综合概览',
         hidden: false,
         meta: {

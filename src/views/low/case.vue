@@ -2,15 +2,13 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content clr_white border base_bg shadow">
-
-        <div class="title bold">案件归集下派</div>
-        <div class="top clr_white border">
-          <p class="f20 bold">案件状况</p>
+    <div class="left_content clr_white base_bg_left">
+        <div class="top clr_white">
+          <p class="f20 bold txt_linear">案件状况</p>
           <div class="flex anjian_num">
             <div class="flex-item">
               <p class="f16 bold baseColor">今日受理量</p>
-              <div class="num01 flex text-center f26 bold mt_10">
+              <div class="num flex text-center f26 bold mt_10">
                 <span></span>
                 <span>2</span>
                 <span>2</span>
@@ -20,7 +18,7 @@
             </div>
             <div class="flex-item">
               <p class="f16 bold baseColor">今日及时结案量</p>
-              <div class="num02 flex text-center f26 bold mt_10">
+              <div class="num flex text-center f26 bold mt_10">
                 <span></span>
                 <span>2</span>
                 <span>8</span>
@@ -30,7 +28,7 @@
             </div>
             <div class="flex-item">
               <p class="f16 bold baseColor">今日结案量</p>
-              <div class="num03 flex text-center f26 bold mt_10">
+              <div class="num flex text-center f26 bold mt_10">
                 <span></span>
                 <span>1</span>
                 <span>2</span>
@@ -50,20 +48,19 @@
 
         </div>
 
-      <div class="left_bottom mt_10 border">
-        <p class="f20 bold">案件占比分析</p>
+      <div class="mt_20">
+        <p class="f20 bold txt_linear">案件类型占比分析</p>
         <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
       </div>
 
     </div>
-    <div class="right_content clr_white border base_bg shadow">
-      <div class="title bold">案件归集下派</div>
-      <div class="top clr_white border">
-        <p class="f20 bold">案件高发路段（top6）</p>
+    <div class="right_content clr_white base_bg_right">
+      <div class="top clr_white">
+        <p class="f20 bold txt_linear">案件高发路段（top6）</p>
         <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="26vh" divwidth="100%"></BarChartFour>
       </div>
-      <div class="left_bottom mt_10 border">
-        <p class="f20 bold">部门案件处置分析</p>
+      <div class="mt_20 ">
+        <p class="f20 bold txt_linear">部门案件处置分析</p>
         <BarChartFive :chartData="BarData" height="30vh" divwidth="100%"></BarChartFive>
       </div>
 
@@ -279,6 +276,7 @@
                 }
               },
               splitLine: { show: false },//去除网格线
+              splitArea: { show: false },//去除网格线
               type: 'value'
             }
           ],
@@ -291,7 +289,7 @@
               // barCategoryGap:'50%',/*多个并排柱子设置柱子之间的间距*/
               itemStyle: {
                 normal: {
-                  color:'#2FB26B'
+                  color:'rgba(0,107,226)'
                 }
               },
               data: [320, 332, 301]
@@ -304,7 +302,7 @@
               // barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
               itemStyle: {
                 normal: {
-                  color:'#00A0EB'
+                  color:'rgba(0,183,255)'
 
                 }
               },
@@ -376,7 +374,7 @@
                   color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
                     [
                       { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: '#9D4EE8' }
+                      { offset: 1, color: 'rgba(0,183,255)' }
                     ]
                   ),
                   label: {
@@ -479,15 +477,7 @@
 </script>
 <style lang="scss" scoped>
 
-  /deep/.tdt-infowindow-content-wrapper{
-    width: 400px;
-    background: url("./../../assets/image/pop_bg.png") left top no-repeat;
-    background-size: 100% 100%;
-  }
-  .mapDiv{
-    width:100%;
-    height:80vh;
-  }
+
   .left_content{
     padding: 20px;
     width: 32%;
@@ -498,87 +488,18 @@
     .anjian_num{
       padding: 20px 0;
     }
-    .top{
-      padding: 20px;
-      .num01{
+      .num{
         span{
           width: 25px;
           height: 33px;
           line-height: 33px;
           margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
+          background: url("./../../assets/image/index-num-bg.png") left top no-repeat;
         }
       }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
-    }
-    .left_bottom{
-      padding: 20px;
-    }
+
   }
-  .right_content{
-    padding: 20px;
-    width: 32%;
-    position: fixed;
-    top: 10vh;
-    right: 20px;
-    z-index: 9999;
-    .anjian_num{
-      padding: 20px 0;
-    }
-    .top{
-      padding: 20px;
-      .num01{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg1.png") left top no-repeat;
-        }
-      }
-      .num02{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg2.png") left top no-repeat;
-        }
-      }
-      .num03{
-        span{
-          width: 25px;
-          height: 33px;
-          line-height: 33px;
-          margin-right: 3px;
-          background: url("./../../assets/image/num_bg3.png") left top no-repeat;
-        }
-      }
-    }
-    .left_bottom{
-      padding: 20px 20px 0 20px;
-    }
-  }
-  .title{
-    line-height: 1.8;
-    background: url("./../../assets/image/title_bg.png") left bottom no-repeat;
-  }
+
+
 
 </style>
