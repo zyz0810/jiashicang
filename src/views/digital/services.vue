@@ -224,7 +224,7 @@
             {
               name: '单位工程评定',
               type: 'pie',
-              radius: ['85%', '100%'],
+              radius: ['80%', '88%'],
               avoidLabelOverlap: false,
               label: {
                 normal: {
@@ -236,7 +236,30 @@
                 { value: 80, name: '优良' },
                 { value: 20, name: '不及格' },
               ]
-            }
+            },{
+              name: 'decorationOne',
+              type: 'pie',
+              color: ['#52D6FF'],
+              // center: ['30%', '50%'],
+              radius: ['70%', '69%'],
+              hoverAnimation: false,
+              lable: {
+                normal: {
+                  show: false,
+                },
+                emphasis: {
+                  show: false,
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false,
+                },
+              },
+              data: [
+                { value: 335, name: '' },
+              ],
+            },
           ]
         },
         activeIndex:0,

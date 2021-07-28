@@ -3,50 +3,49 @@
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_content clr_white base_bg_left">
-        <div class="top clr_white">
-          <p class="f20 bold txt_linear">案件状况</p>
-          <div class="flex anjian_num">
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日受理量</p>
-              <div class="num flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>2</span>
-                <span>5</span>
-                <span>8</span>
-              </div>
-            </div>
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日及时结案量</p>
-              <div class="num flex text-center f26 bold mt_10">
-                <span></span>
-                <span>2</span>
-                <span>8</span>
-                <span>9</span>
-                <span>8</span>
-              </div>
-            </div>
-            <div class="flex-item">
-              <p class="f16 bold baseColor">今日结案量</p>
-              <div class="num flex text-center f26 bold mt_10">
-                <span></span>
-                <span>1</span>
-                <span>2</span>
-                <span>6</span>
-                <span>8</span>
-              </div>
+      <div class="top clr_white">
+        <p class="f20 bold txt_linear">案件状况</p>
+        <div class="flex anjian_num">
+          <div class="flex-item">
+            <p class="f16 bold txtColor">今日受理量</p>
+            <div class="num flex text-center f26 bold mt_10">
+              <span></span>
+              <span>2</span>
+              <span>2</span>
+              <span>5</span>
+              <span>8</span>
             </div>
           </div>
-          <el-row :gutter="20" class="pie_chart">
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-            </el-col>
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-            </el-col>
-          </el-row>
-
+          <div class="flex-item">
+            <p class="f16 bold txtColor">今日及时结案量</p>
+            <div class="num flex text-center f26 bold mt_10">
+              <span></span>
+              <span>2</span>
+              <span>8</span>
+              <span>9</span>
+              <span>8</span>
+            </div>
+          </div>
+          <div class="flex-item">
+            <p class="f16 bold txtColor">今日结案量</p>
+            <div class="num flex text-center f26 bold mt_10">
+              <span></span>
+              <span>1</span>
+              <span>2</span>
+              <span>6</span>
+              <span>8</span>
+            </div>
+          </div>
         </div>
+        <el-row :gutter="20" class="pie_chart">
+          <el-col :span="12">
+            <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+          </el-col>
+          <el-col :span="12">
+            <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+          </el-col>
+        </el-row>
+      </div>
 
       <div class="mt_20">
         <p class="f20 bold txt_linear">案件类型占比分析</p>
@@ -138,12 +137,12 @@
           legend: {
             show:false
           },
-          color:['#367CFD','#E20280'],
+          color:['#367CFD','rgba(255,209,91,1)'],
           series: [
             {
               name: '访问来源',
               type: 'pie',
-              radius: ['50%', '70%'],
+              radius: ['65%', '80%'],
               avoidLabelOverlap: false,
               // label: {
               //   show: false,

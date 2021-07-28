@@ -58,7 +58,38 @@
       </div>
 
     </div>
-
+    <div class="water_survey flex">
+      <div class="flex p20 f14 bold mr_20">
+        <div class="flex-item"><span class="txt_linear f20">设备管理</span></div>
+        <div class="flex-item">
+          <p class="baseColor">总览</p>
+          <p class="f20 clr_yellow mt_5 ml_10">66</p>
+        </div>
+        <div class="flex-item">
+          <p class="baseColor">离线</p>
+          <p class="f20 clr_yellow mt_5 ml_10">0</p>
+        </div>
+        <div class="flex-item">
+          <p class="baseColor">故障</p>
+          <p class="f20 clr_yellow mt_5 ml_10">0</p>
+        </div>
+      </div>
+      <div class="flex p20 f14 bold">
+        <div class="flex-item"><span class="txt_linear f20">视频监控</span></div>
+        <div class="flex-item">
+          <p class="baseColor">正常</p>
+          <p class="f20 clr_yellow mt_5 ml_10">1836</p>
+        </div>
+        <div class="flex-item">
+          <p class="baseColor">离线</p>
+          <p class="f20 clr_yellow mt_5 ml_10">0</p>
+        </div>
+        <div class="flex-item">
+          <p class="baseColor">故障</p>
+          <p class="f20 clr_yellow mt_5 ml_10">0</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -488,7 +519,7 @@
   }
 </script>
 <style lang="scss" scoped>
-
+  @import '@/styles/variables.scss';
   .water_num01{
     .flex-item{
       padding: 20px 0;
@@ -509,5 +540,24 @@
     }
    }
 
+  .water_survey{
+    position: fixed;
+    top: 10vh;
+    left: 30%;
+    z-index: 20001;
+    .flex{
+      width: 260px;
+      background: rgba(9,15,47,0.5);
+      border-radius: 10px;
+      .flex-item{
+        p{
+          &:first-child{
+            padding-left: 5px;
+            border-left: 3px solid $baseColor;
+          }
+        }
+      }
+    }
+  }
 
 </style>
