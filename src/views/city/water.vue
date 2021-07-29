@@ -33,7 +33,24 @@
 
       <div class="mt_20">
         <p class="f20 bold txt_linear">异常报警</p>
-        <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList" class="f14 mt_20">
+        <div class="flex abnormal_tab bold f16 mt_20">
+          <div :class="['flex-item',abnormalIndex == 0?'clr_yellow txt_shadow':'']" @click="abnormalIndex = 0">水质告警：6</div>
+          <div :class="['flex-item','text-center',abnormalIndex == 1?'clr_yellow txt_shadow':'']" @click="abnormalIndex = 1">配水方案</div>
+          <div :class="['flex-item','text-right',abnormalIndex == 2?'clr_yellow txt_shadow':'']" @click="abnormalIndex = 2">内涝预测：0</div>
+        </div>
+        <img src="./../../assets/image/water_bg.png" class="mt_10"/>
+        <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList1" v-show="abnormalIndex == 0" class="f14 mt_20">
+          <el-table-column type="index" label="序号" width="80" align="center">
+            <!--            <template slot-scope="scope">-->
+            <!--             <span class="block sqaer">{{index}}</span>-->
+            <!--            </template>-->
+          </el-table-column>
+          <el-table-column label="水质告警" align="center" prop="name"></el-table-column>
+          <el-table-column label="配水量" align="center" prop="name"></el-table-column>
+          <el-table-column label="排水量" align="center" prop="end"></el-table-column>
+
+        </el-table>
+        <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList2" v-show="abnormalIndex == 1" class="f14 mt_20">
           <el-table-column type="index" label="序号" width="80" align="center">
             <!--            <template slot-scope="scope">-->
             <!--             <span class="block sqaer">{{index}}</span>-->
@@ -44,23 +61,34 @@
           <el-table-column label="排水量" align="center" prop="end"></el-table-column>
 
         </el-table>
+        <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList3" v-show="abnormalIndex == 2" class="f14 mt_20">
+          <el-table-column type="index" label="序号" width="80" align="center">
+            <!--            <template slot-scope="scope">-->
+            <!--             <span class="block sqaer">{{index}}</span>-->
+            <!--            </template>-->
+          </el-table-column>
+          <el-table-column label="内涝预测" align="center" prop="name"></el-table-column>
+          <el-table-column label="配水量" align="center" prop="name"></el-table-column>
+          <el-table-column label="排水量" align="center" prop="end"></el-table-column>
+
+        </el-table>
       </div>
 
     </div>
     <div class="right_content clr_white base_bg_right">
       <div class="clr_white">
         <p class="f20 bold txt_linear">水质检测概况</p>
-        <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh" divwidth="100%"></PieChartTwo>
+        <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="25vh" divwidth="100%"></PieChartTwo>
       </div>
       <div class="mt_20">
         <p class="f20 bold txt_linear mb_20">河道水位</p>
-        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></LineChart>
+        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="30vh" divwidth="100%"></LineChart>
       </div>
 
     </div>
     <div class="water_survey flex">
-      <div class="flex p20 f14 bold mr_20">
-        <div class="flex-item"><span class="txt_linear f20">设备管理</span></div>
+      <div class="flex f14 bold mr_20">
+        <div class="survey_name text-center"><span class="txt_linear f18">设备管理</span></div>
         <div class="flex-item">
           <p class="baseColor">总览</p>
           <p class="f20 clr_yellow mt_5 ml_10">66</p>
@@ -74,8 +102,8 @@
           <p class="f20 clr_yellow mt_5 ml_10">0</p>
         </div>
       </div>
-      <div class="flex p20 f14 bold">
-        <div class="flex-item"><span class="txt_linear f20">视频监控</span></div>
+      <div class="flex f14 bold">
+        <div class="survey_name text-center"><span class="txt_linear f18">视频监控</span></div>
         <div class="flex-item">
           <p class="baseColor">正常</p>
           <p class="f20 clr_yellow mt_5 ml_10">1836</p>
@@ -113,6 +141,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        abnormalIndex:0,
         lineData:{
           title: {},
           tooltip: {
@@ -125,16 +154,59 @@
             left: '0',
             right: '0',
             bottom: '40',
-            top: '10',
+            top: '50',
             containLabel: true
           },
           //----------------   图例 legend  -----------------
-          legend:{},
+          // legend:{
+          //   data:['新浦河','时代河','槐河','西兴后河'],
+          // },
+          legend: {
+            type:'plain',				//----图例类型，默认为'plain'，当图例很多时可使用'scroll'
+            top:'5',					//----图例相对容器位置,top\bottom\left\right
+            // data:['新浦河','时代河','槐河','西兴后河'],
+            data:[						//----图例内容
+              {
+                name:'新浦河',
+                textStyle:{
+                  color:'#fff',		//----单独设置某一个图例的颜色
+                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
+                }
+              },
+              {
+                name:'时代河',
+                textStyle:{
+                  color:'#fff',		//----单独设置某一个图例的颜色
+                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
+                }
+              },
+              {
+                name:'槐河',
+                textStyle:{
+                  color:'#fff',		//----单独设置某一个图例的颜色
+                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
+                }
+              },
+              {
+                name:'西兴后河',
+                textStyle:{
+                  color:'#fff',		//----单独设置某一个图例的颜色
+                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
+                }
+              }
+            ],
+          },
           xAxis: {
             // show:false,
             axisTick: {
               show: false,
               alignWithLabel: false
+            },
+            axisLine: {
+              // show: false
+              lineStyle: {
+                color: 'rgba(30,66,88,1)',//刻度线的颜色
+              }
             },
             axisLabel: {
               show: true,
@@ -150,10 +222,18 @@
           },
           yAxis: {
             axisTick: {
-              show: false
+              show: true,
+
+              lineStyle: {
+                color: 'rgba(30,66,88,1)',//刻度线的颜色
+              }
+
             },
             axisLine: {
               // show: false
+              lineStyle: {
+                color: 'rgba(30,66,88,1)',//刻度线的颜色
+              }
             },
             axisLabel: {
               show: true,
@@ -180,16 +260,54 @@
             type: 'value'
           },
           series: [{
+            name:'新浦河',
             itemStyle : {
               normal : {
                 lineStyle:{
-                  color:'#F3E981'
+                  color:'rgba(1,190,246,1)'
                 }
               }
             },
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            smooth:false,
+            data: [1, 4, 6, 8, 2, 3, 1],
             type: 'line'
-          }]
+          },{
+            name:'时代河',
+            itemStyle : {
+              normal : {
+                lineStyle:{
+                  color:'rgba(22,241,247,1)'
+                }
+              }
+            },
+            smooth:false,
+            data: [4, 5, 6, 6, 5, 2, 3],
+            type: 'line'
+          },{
+            name:'槐河',
+            itemStyle : {
+              normal : {
+                lineStyle:{
+                  color:'rgba(28,210,239,1)'
+                }
+              }
+            },
+            smooth:false,
+            data: [2, 4, 5, 3, 2, 6, 4],
+            type: 'line'
+          },{
+            name:'西兴后河',
+            itemStyle : {
+              normal : {
+                lineStyle:{
+                  color:'rgba(251,106,35,1)'
+                }
+              }
+            },
+            smooth:false,
+            data: [5, 2, 7, 1, 8, 5, 1],
+            type: 'line'
+          },]
         },
         listLoading:false,
         list:[{
@@ -520,6 +638,9 @@
 </script>
 <style lang="scss" scoped>
   @import '@/styles/variables.scss';
+  .abnormal_tab{
+
+  }
   .water_num01{
     .flex-item{
       padding: 20px 0;
@@ -544,9 +665,22 @@
     left: 30%;
     z-index: 20001;
     .flex{
-      width: 260px;
+      padding: 10px;
+      width: 280px;
       background: rgba(9,15,47,0.5);
       border-radius: 10px;
+      .survey_name{
+        width: 80px;
+        height: 73px;
+        margin-right: 10px;
+        background: url("./../../assets/image/water_bg02.png") left top no-repeat;
+        background-size: 100% 100%;
+        span{
+          display: inline-block;
+          width: 50px;
+          margin-top: 18px;
+        }
+      }
       .flex-item{
         p{
           &:first-child{

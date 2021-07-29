@@ -7,7 +7,8 @@
           <p class="f20 bold txt_linear">亮灯概况</p>
           <el-row :gutter="20" class="pie_chart">
             <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
+              <!--<RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>-->
+              <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'100%'"></PieChartTwo>
             </el-col>
             <el-col :span="12">
               <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
@@ -21,11 +22,11 @@
           <div>养护道路：103条</div>
           <div>排水管线长度：5625米</div>
         </div>
-        <div class="f16 bold flex mt_10 facilities_intro">
+        <div class="f16 bold flex mt_20 facilities_intro">
           <div>养护单位：14家</div>
           <div>智能感应井盖：103个</div>
         </div>
-        <div class="f16 bold flex mt_10 facilities_intro">
+        <div class="f16 bold flex mt_20 mb_20 facilities_intro">
           <div>管道水位监测：24个</div>
           <div>管道流量监测：2个</div>
         </div>
@@ -131,6 +132,7 @@
   import echarts from 'echarts';
   import 'echarts-liquidfill';
   import RingChart from '@/components/Charts/RingChart';
+  import PieChartTwo from '@/components/Charts/PieChartTwo';
   import BarChartFive from '@/components/Charts/BarChartFive';
   import BarChartTwo from '@/components/Charts/BarChartTwo';
   import BarChartThree from '@/components/Charts/BarChartThree';
@@ -144,11 +146,94 @@
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
         listQuery:{
           status:0
+        },
+        PieDataTwo:{
+          color: ['#EB4B4B', 'rgb(245,245,245)'],
+          title: [{
+            text: '75%',
+            x: '45%',
+            y: '35%',
+            textAlign: 'center',
+            textStyle: {
+              fontSize: '20',
+              fontWeight: '500',
+              color: '#fff',
+              textAlign: 'center',
+            },
+          }],
+          polar: {
+            radius: ['95%', '80%'],
+            center: ['50%', '50%'],
+          },
+          angleAxis: {
+            max: 100,
+            show: false,
+            // startAngle: 0,
+          },
+          radiusAxis: {
+            type: 'category',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false
+            },
+          },
+          series: [
+            {
+              name: '',
+              type: 'bar',
+              roundCap: true,
+              barWidth: 60,
+              showBackground: true,
+              data: [75],
+              coordinateSystem: 'polar',
+              itemStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                    offset: 0,
+                    color: 'rgba(41,154,237,1)'
+                  }, {
+                    offset: 1,
+                    color: 'rgba(57,252,255,1)'
+                  }]),
+                  // color:'rgba(78,239,254,1)'
+                }
+              }
+            },{
+              name: 'decorationOne',
+              type: 'pie',
+              color: ['rgba(62,109,176,1)'],
+              // center: ['30%', '50%'],
+              radius: ['74%', '72%'],
+              hoverAnimation: false,
+              lable: {
+                normal: {
+                  show: false,
+                },
+                emphasis: {
+                  show: false,
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false,
+                },
+              },
+              data: [
+                { value: 335, name: '' },
+              ],
+            },
+          ]
         },
         chartData: {
           title:{},
