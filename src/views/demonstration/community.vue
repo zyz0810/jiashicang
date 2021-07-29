@@ -39,7 +39,7 @@
 
     <div class="right_content clr_white base_bg_right">
         <p class="f20 bold txt_linear">智能识别概况</p>
-        <div class="flex text-center">
+        <div class="flex text-center mt_20">
           <ul class="bold communityNum">
             <li class="flex">
               <span class="f26 baseColor block">32</span>
@@ -130,7 +130,7 @@
           series: [// 主要展示层的
             {
               name: '',
-              radius: ['55%', '70%'],
+              radius: ['50%', '65%'],
               center: ['50%', '50%'],
               type: 'pie',
               data: [{ value: 80, name: '违规立案' },
@@ -178,7 +178,7 @@
               type: 'gauge',
               center: ['50%', '50%'],
               // radius: ['80%', '90%'],
-              radius: '100%',
+              radius: '90%',
               startAngle: 0,
               endAngle: 359.9,
               splitNumber: 99,
@@ -632,20 +632,21 @@
 
 
   .communityNum{
-    width: 36%;
+    width: 32%;
+    margin-right: 3%;
     li{
-      height: 8vh;
-      line-height: 8vh;
+      height: 7vh;
+      line-height: 7vh;
       background: url("./../../assets/image/communityNum_bg.png") left top no-repeat;
       background-size: 100% 100%;
       & > span{
         &:nth-child(1){
           width: 40%;
-          height: 8vh;
+          height: 7vh;
         }
         &:nth-child(2){
           width: 60%;
-          height: 8vh;
+          height: 7vh;
         }
       }
     }

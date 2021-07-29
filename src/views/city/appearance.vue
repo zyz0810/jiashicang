@@ -29,15 +29,15 @@
     <div class="right_content clr_white base_bg_right">
       <p class="f20 bold txt_linear">案件概况</p>
       <div class="flex bold enforcement_num text-center mt_20">
-        <div class="flex-item">
+        <div class="flex-item flex_block_bg">
           <p class="f16">上报量</p>
           <p class="f26 clr_blue01 mt_5">300</p>
         </div>
-        <div class="flex-item">
+        <div class="flex-item flex_block_bg">
           <p class="f16">受理量</p>
           <p class="f26 clr_blue02 mt_5">300</p>
         </div>
-        <div class="flex-item">
+        <div class="flex-item flex_block_bg">
           <p class="f16">结案量</p>
           <p class="f26 clr_yellow mt_5">300</p>
         </div>
@@ -170,7 +170,7 @@
               type: 'gauge',
               center: ['50%', '50%'],
               // radius: ['80%', '90%'],
-              radius: '100%',
+              radius: '90%',
               startAngle: 0,
               endAngle: 359.9,
               splitNumber: 99,
@@ -657,7 +657,7 @@
 
   }
   .pieChart{
-    width: 60%;
+    width: 70%;
   }
 
 
@@ -665,7 +665,6 @@
   .enforcement_num{
     .flex-item{
       padding: 20px 0;
-      background: #000942;
       &:nth-child(2){
         margin: 0 20px;
       }

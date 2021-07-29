@@ -5,16 +5,16 @@
 
     <div class="left_rate bold clr_white text-center">
       <div class="clean_rate flex">
-        <p class="f26">95.6%</p>
+        <p class="f20">95.6%</p>
       </div>
-      <p class="mb_20">清扫完成</p>
+      <p class="mb_10">清扫完成</p>
       <div class="watering_rate flex">
         <div>
-          <p class="f26">95.6%</p>
+          <p class="f20">95.6%</p>
         </div>
       </div>
-      <p class="mb_20">洒水完成</p>
-      <ul class="f16 clr_white bold text-center link_intro">
+      <p class="mb_10">洒水完成</p>
+      <ul class="f16 clr_white bold text-center mt_20 link_intro">
         <li>
           <p>0次</p>
           <span class="block color_bg01"></span>
@@ -196,8 +196,8 @@
             formatter:"{a1}<br/>{b1}：{c1}%"
           },
           grid: {
-            left: '0',
-            right: '0',
+            left: '30',
+            right: '30',
             bottom: '20',
             top: '20',
             containLabel: true
@@ -256,8 +256,8 @@
             formatter:"{a1}<br/>{b1}：{c1}%"
           },
           grid: {
-            left: '0',
-            right: '0',
+            left: '30',
+            right: '30',
             bottom: '20',
             top: '20',
             containLabel: true
@@ -310,59 +310,142 @@
               data: [5, 20, ]
             }]
         },
+        // PieData:{
+        //   tooltip: {
+        //     show: false,
+        //     trigger: 'item',
+        //     formatter: '{a} <br/>{b}: {c} ({d}%)'
+        //   },
+        //   color: ['#7CDBFF', '#20437A'],
+        //   gird:{
+        //     top:0,
+        //     left:0,
+        //
+        //   },
+        //   // 80%是环中的数据显示
+        //   title: {
+        //     text: '80%',
+        //     left: 'center',
+        //     top: '34%',
+        //     textStyle: {
+        //       color: '#fff',
+        //       fontSize: 26,
+        //       align: 'center',
+        //     }
+        //   },
+        //   graphic: {
+        //     type: 'text',
+        //     left: 'center',
+        //     top: '58%',
+        //     style: {
+        //       text: '满意度',
+        //
+        //       textAlign: 'center',
+        //       fill: '#bfbfbf',
+        //       fontSize: 30,
+        //       fontWeight: 700
+        //     }
+        //   },
+        //   series: [
+        //     {
+        //       name: '单位工程评定',
+        //       type: 'pie',
+        //       radius: ['85%', '100%'],
+        //       avoidLabelOverlap: false,
+        //       label: {
+        //         normal: {
+        //           show: false,
+        //           position: 'center'
+        //         },
+        //       },
+        //       data: [
+        //         { value: 80, name: '优良' },
+        //         { value: 20, name: '不及格' },
+        //       ]
+        //     }
+        //   ]
+        // },
         PieData:{
-          tooltip: {
-            show: false,
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          color: ['#7CDBFF', '#20437A'],
-          gird:{
-            top:0,
-            left:0,
-
-          },
-          // 80%是环中的数据显示
-          title: {
-            text: '80%',
-            left: 'center',
-            top: '34%',
+          color: ['#EB4B4B', 'rgb(245,245,245)'],
+          title: [{
+            text: '75%',
+            x: '45%',
+            y: '35%',
+            textAlign: 'center',
             textStyle: {
+              fontSize: '26',
+              fontWeight: '500',
               color: '#fff',
-              fontSize: 26,
-              align: 'center',
-            }
-          },
-          graphic: {
-            type: 'text',
-            left: 'center',
-            top: '58%',
-            style: {
-              text: '满意度',
-
               textAlign: 'center',
-              fill: '#bfbfbf',
-              fontSize: 30,
-              fontWeight: 700
-            }
+            },
+          }],
+          polar: {
+            radius: ['95%', '80%'],
+            center: ['50%', '50%'],
+          },
+          angleAxis: {
+            max: 100,
+            show: false,
+            // startAngle: 0,
+          },
+          radiusAxis: {
+            type: 'category',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false
+            },
           },
           series: [
             {
-              name: '单位工程评定',
+              name: '',
+              type: 'bar',
+              roundCap: true,
+              barWidth: 60,
+              showBackground: true,
+              data: [75],
+              coordinateSystem: 'polar',
+              itemStyle: {
+                normal: {
+                  // color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                  //   offset: 0,
+                  //   color: '#EB4B4B'
+                  // }, {
+                  //   offset: 1,
+                  //   color: '#F47F7F'
+                  // }]),
+                  color:'rgba(78,239,254,1)'
+                }
+              }
+            },{
+              name: 'decorationOne',
               type: 'pie',
-              radius: ['85%', '100%'],
-              avoidLabelOverlap: false,
-              label: {
+              color: ['rgba(62,109,176,1)'],
+              // center: ['30%', '50%'],
+              radius: ['70%', '68%'],
+              hoverAnimation: false,
+              lable: {
                 normal: {
                   show: false,
-                  position: 'center'
+                },
+                emphasis: {
+                  show: false,
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false,
                 },
               },
               data: [
-                { value: 80, name: '优良' },
-                { value: 20, name: '不及格' },
-              ]
-            }
+                { value: 335, name: '' },
+              ],
+            },
           ]
         },
         map: '', // 对象
@@ -459,14 +542,14 @@
     left: 20px;
     z-index: 99999999;
     .clean_rate{
-      width: 18vh;
-      height: 18vh;
+      width: 15vh;
+      height: 15vh;
       background: url("./../../assets/image/cleanRate_bg.png") center center no-repeat;
       background-size: 100% 100%;
     }
     .watering_rate{
-      width: 18vh;
-      height: 18vh;
+      width: 15vh;
+      height: 15vh;
       background: url("./../../assets/image/wateringRate_bg.png") center center no-repeat;
       background-size: 100% 100%;
     }

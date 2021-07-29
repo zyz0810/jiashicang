@@ -6,25 +6,25 @@
         <div class="clr_white">
           <p class="f20 bold txt_linear">河道概况</p>
           <div class="flex water_num01 f16 bold text-center mt_10">
-            <div class="flex-item">
+            <div class="flex-item flex_block_bg">
               <p class="clr_white">河流条数</p>
               <p class="clr_purple mt_5"><span class="f26">41</span>条</p>
             </div>
-            <div class="flex-item">
+            <div class="flex-item flex_block_bg">
               <p class="f16 bold">河道总长</p>
               <p class="clr_blue01 mt_5"><span class="f26">77.95</span>km</p>
             </div>
-            <div class="flex-item">
+            <div class="flex-item flex_block_bg">
               <p class="f16 bold">河道水质站点</p>
               <p class="clr_blue02 mt_5"><span class="f26">24</span>个</p>
             </div>
           </div>
           <div class="flex water_num02 f16 bold text-center mt_10">
-            <div>
+            <div class="flex_block_bg">
               <p class="f16 bold">河道水位站点</p>
               <p class="clr_yellow mt_5"><span class="f26">12</span>个</p>
             </div>
-            <div>
+            <div class="flex_block_bg">
               <p class="f16 bold">河道视频控点</p>
               <p class="clr_yellow mt_5"><span class="f26">162</span>个</p>
             </div>
@@ -523,7 +523,6 @@
   .water_num01{
     .flex-item{
       padding: 20px 0;
-      background: #00073E;
       &:nth-child(2){
         margin: 0 2%;
       }
@@ -533,7 +532,6 @@
     & > div{
       width: 30%;
       padding: 20px 0;
-      background: #00073E;
       &:nth-child(2){
         margin: 0 0 0 2%;
       }

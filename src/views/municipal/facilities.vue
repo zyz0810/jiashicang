@@ -34,9 +34,9 @@
 
     </div>
     <div class="right_content base_bg_right">
-      <div class="clr_white p20 mt_20">
+      <div class="clr_white">
         <p class="f20 bold txt_linear">设备异常情况</p>
-        <div class="flex bold text-center">
+        <div class="flex bold text-center mt_10">
           <div class="flex-item equipment_normal">
             <div class="f26 num">46</div>
             <p class="f18 mt_10">正常设备</p>
@@ -46,7 +46,9 @@
             <p class="f18 mt_10">正常设备</p>
           </div>
           <div class="flex-item rate_abnormal">
-            <div class="f26 num">46</div>
+            <div class="f26 num">
+              <ring-chart :chartData="pieData" :PieChartLegend="PieChartLegend" height="60px" divwidth="100%"></ring-chart>
+            </div>
             <p class="f18 mt_10">异常率</p>
           </div>
         </div>
@@ -117,7 +119,7 @@
             <el-button v-waves class="filter-item" type="primary">生成曲线</el-button>
           </el-form-item>
         </el-form>
-        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></LineChart>
+        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" :divwidth="'100%'"></LineChart>
       </div>
 
     </div>
@@ -126,16 +128,17 @@
 </template>
 
 <script>
-  import echarts from 'echarts'
-  import RingChart from '@/components/Charts/RingChart'
-  import BarChartFive from '@/components/Charts/BarChartFive'
-  import BarChartTwo from '@/components/Charts/BarChartTwo'
-  import BarChartThree from '@/components/Charts/BarChartThree'
-  import BarChartFour from '@/components/Charts/BarChartFour'
-  import waves from '@/directive/waves'
-  import { mapState } from 'vuex'
-  import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
+  import echarts from 'echarts';
+  import 'echarts-liquidfill';
+  import RingChart from '@/components/Charts/RingChart';
+  import BarChartFive from '@/components/Charts/BarChartFive';
+  import BarChartTwo from '@/components/Charts/BarChartTwo';
+  import BarChartThree from '@/components/Charts/BarChartThree';
+  import BarChartFour from '@/components/Charts/BarChartFour';
+  import waves from '@/directive/waves';
+  import { mapState } from 'vuex';
+  import map from '@/components/Map/map.js'; // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point01.png'; // 引入刚才的map.js 注意路径
 
   export default {
     name: 'parameterList',
@@ -225,6 +228,53 @@
           ]
         },
         PieChartLegend:[],
+        pieData:{
+          // x轴
+          xAxis: {
+            show: false, // 不显示
+          },
+          // y轴
+          yAxis: {
+            show: false, // 不显示
+          },
+          grid: {
+            top: '2.5%',
+            right: '40',
+            bottom: '2.5%',
+            left: 0,
+          },
+          series: [{
+            type: 'liquidFill',
+            radius: '96%', // 半径大小
+            center: ['50%', '50%'], // 布局位置
+            data:  [20], // 水球波纹值
+            color: ['#36A989'],//设置颜色系列
+            label: {
+              normal: {
+                // color: '#FC7272',
+                color: '#36A989',
+                textStyle: {
+                  fontSize: 18
+                },
+                formatter: (params) => { //console.log(params)
+                  let newValue = params.value * 100;
+                  return newValue.toFixed(2) + '%\n联网车位数\n' + ToInt
+                }
+              }
+            },
+            outline: { // 轮廓设置
+              show: true,
+              borderDistance: 2, // 轮廓间距
+              itemStyle: {
+                // borderColor: '#294D99', // 轮廓颜色
+                borderColor: '#36A989', // 轮廓颜色
+                borderWidth: 4, // 轮廓大小
+                shadowBlur: 'none', // 轮廓阴影
+              }
+            },
+          }
+          ]
+        },
         lineData:{
           title: {},
           tooltip: {

@@ -52,6 +52,7 @@
       </el-row>
 
       <div class="mt_20">
+        <p class="mb_20 f20 bold text-center">全区停车场数：1210</p>
         <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
       </div>
       <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
@@ -59,19 +60,19 @@
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 1">
       <p class="f20 bold txt_linear mb_20">车辆概况</p>
       <div class="flex f16 bold clr_white bicycle text-center">
-        <div class="flex-item">
+        <div class="flex-item flex_block_bg">
           <p>已备案车辆</p>
           <p class="clr_purple mt_10"><span class="f26">1.0</span>万</p>
         </div>
-        <div class="flex-item">
+        <div class="flex-item flex_block_bg">
           <p>活跃车辆</p>
           <p class="clr_blue01 f26 mt_10">3287</p>
         </div>
-        <div class="flex-item">
+        <div class="flex-item flex_block_bg">
           <p>按规停放车辆</p>
           <p class="clr_blue02 f26 mt_10">7892</p>
         </div>
-        <div class="flex-item">
+        <div class="flex-item flex_block_bg">
           <p>违规停放</p>
           <p class="clr_yellow f26 mt_10">1887</p>
         </div>
@@ -101,6 +102,7 @@
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
+  import toolTipBg from '@/assets/image/digital-bg.png' // 引入刚才的map.js 注意路径
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   export default {
     name: 'parameterList',
@@ -123,7 +125,7 @@
             {
               name: '',
               type: 'pie',
-              radius: ['70%', '90%'],
+              radius: ['60%', '80%'],
               avoidLabelOverlap: false,
               // label: {
               //   show: false,
@@ -200,7 +202,7 @@
           title: {
             text: '80%',
             left: 'center',
-            top: '34%',
+            top: '40%',
             textStyle: {
               color: '#fff',
               fontSize: 26,
@@ -224,7 +226,7 @@
             {
               name: '单位工程评定',
               type: 'pie',
-              radius: ['80%', '88%'],
+              radius: ['68%', '78%'],
               avoidLabelOverlap: false,
               label: {
                 normal: {
@@ -241,7 +243,7 @@
               type: 'pie',
               color: ['#52D6FF'],
               // center: ['30%', '50%'],
-              radius: ['70%', '69%'],
+              radius: ['60%', '59%'],
               hoverAnimation: false,
               lable: {
                 normal: {
@@ -306,7 +308,19 @@
           title:{},
           tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+            // formatter: '{a} <br/>{b}: {c} ({d}%)'
+            backgroundColor: "transparent",
+            borderWidth: 1,
+            padding: 10,
+            formatter: function(params) {
+              // var str =params['percent']+'%'+'<br/>'+params.data.value+'笔'
+              var str = `<div style = "background:url(" + toolTipBg + ") no-repeat center center ;width:60px;height:60px; ">${
+                params["percent"]
+              }%<br/> ${params.data.value}笔</div>`;
+              // parms.marker
+              console.log(str);
+              return str;
+            }
           },
           legend: {
             // show:false
@@ -342,11 +356,15 @@
               },
               itemStyle : {
                 normal : {
-                  borderWidth:3, //设置border的宽度有多大
+                  borderWidth:8, //设置border的宽度有多大
                   // borderColor:'#2C8AF0',
-                  borderColor:'transparent',
+                  borderColor:'#061027',
                 },
               },
+              // itemStyle:{
+              //   borderWidth:5, //设置border的宽度有多大
+              //   borderColor:'#fff',
+              // },
               data: [
                 {value: 120, name: '公用泊位'},
                 {value: 105, name: '专用泊位'},
@@ -646,7 +664,6 @@
   .bicycle{
     .flex-item{
       padding: 20px 0;
-      background: rgba(11,46,65,1);
       &:nth-child(2){
         margin: 0 10px;
       }

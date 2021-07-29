@@ -4,8 +4,8 @@
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_content clr_white base_bg_left ">
 
-        <div class="txt_linear f18 bold">备案审批</div>
-        <div class="top clr_white">
+        <div class="txt_linear f18 bold">备案审批概况</div>
+        <div class="mt_20 clr_white">
           <div class="f26 bold text-center approval_num txt_shadow">审核总数：600</div>
 
           <div class="circle_num text-center">
@@ -38,11 +38,11 @@
     </div>
     <div class="right_content clr_white base_bg_right">
       <div class="top clr_white">
-        <p class="f20 bold txt_linear">审批走势（一周）</p>
+        <p class="f20 bold txt_linear mb_20">审批走势（一周）</p>
         <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></LineChart>
       </div>
       <div class="mt_20">
-        <p class="f20 bold txt_linear">审批详情</p>
+        <p class="f20 bold txt_linear mb_20">审批详情</p>
         <el-table v-loading="listLoading" :data="list" :height="300"  stripe element-loading-text="拼命加载中" fit ref="tableList" class="f14">
           <el-table-column type="index" label="序号" width="80" align="center">
 <!--            <template slot-scope="scope">-->

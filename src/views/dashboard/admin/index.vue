@@ -81,6 +81,7 @@
            </ul>
            <div class="map_echart">
              <p class="f20 baseColor bold">今日案件热力图</p>
+<!--             <RingChart :chartData="mapData" :PieChartLegend="PieChartLegend" height="13vh"></RingChart>-->
            </div>
            <div class="anjian_genzong bold">
              <p class="baseColor text-center bold f18">案件实时跟踪</p>
@@ -243,7 +244,7 @@
                </div>
              </div>
              <div class="weui-cell">
-               <div class="weui-cell__hd"><RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="10vh"></RingChart></div>
+               <div class="weui-cell__hd"><RingChart :chartData="PieData2" :PieChartLegend="PieChartLegend" height="10vh"></RingChart></div>
                <div class="weui-cell__bd">
                  <p>亮灯数<span class="clr_blue03 ml_10">18961</span></p>
                  <p>总灯数<span class="clr_blue03 ml_10">18961</span></p>
@@ -253,7 +254,7 @@
            </div>
            <div class="flex-item">
              <div class="weui-cell">
-               <div class="weui-cell__hd"><RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="10vh"></RingChart></div>
+               <div class="weui-cell__hd"><RingChart :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh"></RingChart></div>
                <div class="weui-cell__bd">
                  <p>占用厕位<span class="clr_blue03 ml_10">18961</span></p>
                  <p>总厕位数<span class="clr_blue03 ml_10">18961</span></p>
@@ -261,7 +262,10 @@
              </div>
              <p>厕位占用率</p>
              <div class="weui-cell">
-               <div class="weui-cell__hd"><RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="10vh"></RingChart></div>
+               <div class="weui-cell__hd">
+                 <RingChart :chartData="PieData3" :PieChartLegend="PieChartLegend" height="10vh"></RingChart>
+<!--                 <PieChartTwo :chartData="PieData3" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo>-->
+               </div>
                <div class="weui-cell__bd">
                  <p>占用泊位<span class="clr_blue03 ml_10">18961</span></p>
                  <p>总泊位数<span class="clr_blue03 ml_10">18961</span></p>
@@ -277,11 +281,14 @@
 </template>
 
 <script>
+  import echarts from 'echarts'
+  import "echarts/lib/component/polar"
   import CountTo from 'vue-count-to'
   import PanelGroup from './components/PanelGroup'
   import PieChart from '@/components/Charts/PieChartTwo'
   import BarChartThree from '@/components/Charts/BarChartThree'
   import RingChart from '@/components/Charts/RingChart'
+
   export default {
     name: 'DashboardAdmin',
     components: {
@@ -294,6 +301,260 @@
     data() {
       return {
         PieChartLegend:[],
+        PieData3:{
+          color: ['#EB4B4B', 'rgb(245,245,245)'],
+          title: [{
+            text: '75%',
+            x: '45%',
+            y: '35%',
+            textAlign: 'center',
+            textStyle: {
+              fontSize: '26',
+              fontWeight: '500',
+              color: '#fff',
+              textAlign: 'center',
+            },
+          }],
+          polar: {
+            radius: ['95%', '80%'],
+            center: ['50%', '50%'],
+          },
+          angleAxis: {
+            max: 100,
+            show: false,
+            // startAngle: 0,
+          },
+          radiusAxis: {
+            type: 'category',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false
+            },
+          },
+          series: [
+            {
+              name: '',
+              type: 'bar',
+              roundCap: true,
+              barWidth: 60,
+              showBackground: true,
+              data: [75],
+              coordinateSystem: 'polar',
+              itemStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                    offset: 0,
+                    color: '#EB4B4B'
+                  }, {
+                    offset: 1,
+                    color: '#F47F7F'
+                  }]),
+                  // color:'rgba(78,239,254,1)'
+                }
+              }
+            },{
+              name: 'decorationOne',
+              type: 'pie',
+              color: ['rgba(62,109,176,1)'],
+              // center: ['30%', '50%'],
+              radius: ['70%', '68%'],
+              hoverAnimation: false,
+              lable: {
+                normal: {
+                  show: false,
+                },
+                emphasis: {
+                  show: false,
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false,
+                },
+              },
+              data: [
+                { value: 335, name: '' },
+              ],
+            },
+          ]
+        },
+        PieData:{
+          tooltip: {
+            show: false,
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          color: ['#7CDBFF', '#20437A'],
+          gird:{
+            top:0,
+            left:0,
+
+          },
+          // 80%是环中的数据显示
+          title: {
+            text: '80%',
+            left: 'center',
+            top: '34%',
+            textStyle: {
+              color: '#fff',
+              fontSize: 26,
+              align: 'center',
+            }
+          },
+          graphic: {
+            type: 'text',
+            left: 'center',
+            top: '58%',
+            style: {
+              text: '满意度',
+
+              textAlign: 'center',
+              fill: '#bfbfbf',
+              fontSize: 30,
+              fontWeight: 700
+            }
+          },
+          series: [
+            {
+              name: '单位工程评定',
+              type: 'pie',
+              color: ['red'],
+              radius: ['80%', '88%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+              },
+              data: [
+                { value: 80, name: '优良' },
+              ]
+            },{
+              name: '单位工程评定',
+              type: 'pie',
+              radius: ['80%', '88%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+              },
+              data: [
+                { value: 80, name: '优良' },
+                { value: 20, name: '不及格' },
+              ]
+            },{
+              name: 'decorationOne',
+              type: 'pie',
+              color: ['#52D6FF'],
+              // center: ['30%', '50%'],
+              radius: ['70%', '69%'],
+              hoverAnimation: false,
+              lable: {
+                normal: {
+                  show: false,
+                },
+                emphasis: {
+                  show: false,
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false,
+                },
+              },
+              data: [
+                { value: 335, name: '' },
+              ],
+            },
+          ]
+        },
+        PieData2:{
+          tooltip: {
+            show: false,
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          color: ['rgba(253,210,90,1)', '#20437A'],
+          gird:{
+            top:0,
+            left:0,
+
+          },
+          // 80%是环中的数据显示
+          title: {
+            text: '80%',
+            left: 'center',
+            top: '34%',
+            textStyle: {
+              color: '#fff',
+              fontSize: 26,
+              align: 'center',
+            }
+          },
+          graphic: {
+            type: 'text',
+            left: 'center',
+            top: '58%',
+            style: {
+              text: '满意度',
+
+              textAlign: 'center',
+              fill: '#bfbfbf',
+              fontSize: 30,
+              fontWeight: 700
+            }
+          },
+          series: [
+            {
+              name: '单位工程评定',
+              type: 'pie',
+              radius: ['80%', '88%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+              },
+              data: [
+                { value: 80, name: '优良' },
+                { value: 20, name: '不及格' },
+              ]
+            },{
+              name: 'decorationOne',
+              type: 'pie',
+              color: ['rgba(253,210,90,1)'],
+              // center: ['30%', '50%'],
+              radius: ['70%', '69%'],
+              hoverAnimation: false,
+              lable: {
+                normal: {
+                  show: false,
+                },
+                emphasis: {
+                  show: false,
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false,
+                },
+              },
+              data: [
+                { value: 335, name: '' },
+              ],
+            },
+          ]
+        },
         chartData: {
           title:{},
           tooltip: {
