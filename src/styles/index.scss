@@ -570,12 +570,10 @@ input[type="number"] {
   top: 0 !important;
   left: 0 !important;
 }
-.el-input__inner{
-  //border: 1px solid $borderColor !important;
-}
+
 .el-date-editor .el-range-input,.el-input__inner,.el-textarea__inner{
   color: $txtColor !important;
-  //background: #0a275f !important;
+  background: #061027 !important;
   //border: 1px solid #0a3f7a !important;
 
   &::-webkit-input-placeholder {
@@ -671,6 +669,7 @@ input[type="number"] {
 .el-select-dropdown{
   color: #fff;
   border: 1px solid #0a275f;
+  z-index: 99999 !important;
   background: #0a275f !important;
   .el-select-dropdown__item{
     color: #fff;
@@ -852,7 +851,7 @@ input[type="number"] {
   text-shadow: 0 0 8px rgba(237,254,255,1);
 }
 .left_content{
-  padding: 20px;
+  padding: 20px 0 20px 20px;
   width: 32%;
   position: fixed;
   top: 10vh;
@@ -861,7 +860,7 @@ input[type="number"] {
   height: 82%;
 }
 .right_content{
-  padding: 20px;
+  padding: 20px 0 20px 20px;
   width: 35%;
   position: fixed;
   top: 10vh;
@@ -915,4 +914,42 @@ input[type="number"] {
 
 .flex_block_bg{
   background: #0b2e41;
+}
+
+
+.el-progress-bar__outer{
+
+  background: transparent;
+}
+.el-progress-bar__inner{
+  height: 20px;
+  border-radius: 0;
+  background-color: transparent;
+  background-image: linear-gradient(to left,rgba(63,219,234,1) ,  rgba(63,219,234,0)); /* 标准的语法（必须放在最后） */
+}
+.progress_cont{
+  position: relative;
+  padding: 5px;
+  border: 1px solid rgba(95,108,155,1);
+  .progress_border{
+    display: block;
+    position: absolute;
+    width: 5px;
+    height: 20px;
+    background: #061027;
+    top: 5px;
+    z-index: 9999999;
+    &:nth-child(2){
+      left: 20%;
+    }
+    &:nth-child(3){
+      left: 40%;
+    }
+    &:nth-child(4){
+      left: 60%;
+    }
+    &:nth-child(5){
+      left: 80%;
+    }
+  }
 }

@@ -36,20 +36,27 @@
       </li>
     </ul>
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 0">
-      <p class="f20 bold txt_linear mb_20">泊位概况</p>
-      <el-row :gutter="10">
-        <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10">
-          <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="20vh" divwidth="100%"></PieChartTwo>
-        </el-col>
-        <el-col :xs="24" :sm="14" :md="14" :lg="14" :xl="14" class="bold">
-            <p class="f20">当前占用泊位</p>
-            <p class="f16">
-              占用泊位<span class="baseColor">188</span>
-              占用泊位<span class="baseColor">188</span>
-            </p>
-        </el-col>
+      <p class="f20 bold txt_linear">泊位概况</p>
+      <div class="weui-cell">
+        <div class="weui-cell__hd" style="width: 40%;">
+          <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="18vh" divwidth="100%"></PieChartTwo>
+        </div>
+        <div class="weui-cell__bd bold">
+          <p class="f20">当前占用泊位</p>
+          <div class="progress_cont mt_10">
+            <el-progress :show-text="false" :stroke-width="15" :percentage="80"></el-progress>
+            <span class="progress_border"></span>
+            <span class="progress_border"></span>
+            <span class="progress_border"></span>
+            <span class="progress_border"></span>
+          </div>
+          <p class="mt_10">
+            占用泊位<span class="baseColor txt_shadow m_r30">188</span>
+            占用泊位<span class="baseColor txt_shadow">188</span>
+          </p>
+        </div>
+      </div>
 
-      </el-row>
 
       <div class="mt_20">
         <p class="mb_20 f20 bold text-center">全区停车场数：1210</p>
@@ -648,11 +655,6 @@
 </script>
 <style lang="scss" scoped>
 
-  /deep/.tdt-infowindow-content-wrapper{
-    width: 400px;
-    background: url("./../../assets/image/pop_bg.png") left top no-repeat;
-    background-size: 100% 100%;
-  }
 
   .left_server{
     position: fixed;

@@ -39,10 +39,12 @@
             </div>
             <div>
               <el-col :span="12">
-                <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+<!--                <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>-->
+                <PieChartTwo :chartData="chartData" :PieChartLegend="PieChartLegend" height="21vh" :divwidth="'100%'"></PieChartTwo>
               </el-col>
               <el-col :span="12">
-                <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+<!--                <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>-->
+                <PieChartTwo :chartData="chartDataTwo" :PieChartLegend="PieChartLegend" height="21vh" :divwidth="'100%'"></PieChartTwo>
               </el-col>
             </div>
             <div class="flex city_num clr_white text-center">
@@ -82,7 +84,7 @@
               </ul>
               <div class="map_echart">
                 <p class="f20 baseColor bold">今日案件热力图</p>
-                <!--             <RingChart :chartData="mapData" :PieChartLegend="PieChartLegend" height="13vh"></RingChart>-->
+                             <RingChart :chartData="mapData" :PieChartLegend="PieChartLegend" height="13vh"></RingChart>
               </div>
               <div class="anjian_genzong bold">
                 <p class="baseColor text-center bold f18">案件实时跟踪</p>
@@ -290,6 +292,7 @@
   import BarChartThree from '@/components/Charts/BarChartThree'
   import RingChart from '@/components/Charts/RingChart'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
+  import xinjiang from "echarts/map/js/province/xinjiang";//必须要导入
 
   export default {
     name: 'Dashboard',
@@ -301,6 +304,9 @@
     },
     data() {
       return {
+        mapData:{
+
+        },
         PieDataOne:{
           color: ['#EB4B4B', 'rgb(245,245,245)'],
           title: [{
@@ -723,45 +729,153 @@
           ]
         },
         chartData: {
-          title:{},
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          color: ['#EB4B4B', 'rgb(245,245,245)'],
+          title: [{
+            text: '75%',
+            x: '49%',
+            y: '35%',
+            textAlign: 'center',
+            textStyle: {
+              fontSize: '26',
+              fontWeight: '500',
+              color: '#fff',
+              textAlign: 'center',
+            },
+          }, {
+            text: '及时结案率',
+            left: '48%',
+            top: '52%',
+            textAlign: 'center',
+            textStyle: {
+              fontSize: '14',
+              fontWeight: '500',
+              color: 'rgba(255,255,255,1)',
+              textAlign: 'center',
+            },
+          }],
+          polar: {
+            radius: ['65%', '80%'],
+            center: ['50%', '50%'],
           },
-          legend: {
-            show:false
+          angleAxis: {
+            max: 100,
+            show: false,
+            // startAngle: 0,
+          },
+          radiusAxis: {
+            type: 'category',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false
+            },
           },
           series: [
             {
-              name: '访问来源',
-              type: 'pie',
-              radius: ['50%', '70%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: false,
-                position: 'center'
-              },
-              emphasis: {
-                label: {
-                  show: true,
-                  fontSize: '30',
-                  fontWeight: 'bold'
+              name: '',
+              type: 'bar',
+              roundCap: true,
+              barWidth: 60,
+              showBackground: true,
+              data: [75],
+              coordinateSystem: 'polar',
+              itemStyle: {
+                normal: {
+                  // color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                  //   offset: 0,
+                  //   color: '#EB4B4B'
+                  // }, {
+                  //   offset: 1,
+                  //   color: '#F47F7F'
+                  // }]),
+
+                  color:'rgba(6,183,225,1)',
+                  // borderWidth:3, //设置border的宽度有多大
+                  // borderColor:'#060c2a',
                 }
-              },
-              labelLine: {
-                show: false
-              },
-              data: [
-                {value: 335, name: '直接访问'},
-                {value: 310, name: '邮件营销'},
-                {value: 234, name: '联盟广告'},
-                {value: 135, name: '视频广告'},
-                {value: 1548, name: '搜索引擎'}
-              ]
+              }
             }
           ]
         },
+        chartDataTwo: {
+          color: ['#EB4B4B', 'rgb(245,245,245)'],
+          title: [{
+            text: '75%',
+            x: '49%',
+            y: '35%',
+            textAlign: 'center',
+            textStyle: {
+              fontSize: '26',
+              fontWeight: '500',
+              color: '#fff',
+              textAlign: 'center',
+            },
+          }, {
+            text: '结案率',
+            left: '48%',
+            top: '52%',
+            textAlign: 'center',
+            textStyle: {
+              fontSize: '14',
+              fontWeight: '500',
+              color: 'rgba(255,255,255,1)',
+              textAlign: 'center',
+            },
+          }],
+          polar: {
+            radius: ['65%', '80%'],
+            center: ['50%', '50%'],
+          },
+          angleAxis: {
+            max: 100,
+            show: false,
+            // startAngle: 0,
+          },
+          radiusAxis: {
+            type: 'category',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false
+            },
+          },
+          series: [
+            {
+              name: '',
+              type: 'bar',
+              roundCap: true,
+              barWidth: 60,
+              showBackground: true,
+              data: [75],
+              coordinateSystem: 'polar',
+              itemStyle: {
+                normal: {
+                  // color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                  //   offset: 0,
+                  //   color: '#EB4B4B'
+                  // }, {
+                  //   offset: 1,
+                  //   color: '#F47F7F'
+                  // }]),
 
+                  color:'rgba(247,214,81,1)',
+                  // borderWidth:3, //设置border的宽度有多大
+                  // borderColor:'#060c2a',
+                }
+              }
+            }
+          ]
+        },
       }
     },
     created() {

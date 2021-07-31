@@ -5,15 +5,36 @@
     <div class="left_content base_bg_left">
         <div class="clr_white p20">
           <p class="f20 bold txt_linear">亮灯概况</p>
-          <el-row :gutter="20" class="pie_chart">
-            <el-col :span="12">
-              <!--<RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>-->
+          <div class="weui-cell facilities_bg">
+            <div class="weui-cell__hd" style="width: 40%;">
               <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'100%'"></PieChartTwo>
-            </el-col>
-            <el-col :span="12">
-              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
-            </el-col>
-          </el-row>
+            </div>
+            <div class="weui-cell__bd bold">
+              <p class="f20">当前亮灯情况</p>
+              <div class="progress_cont mt_10">
+                <el-progress :show-text="false" :stroke-width="15" :percentage="80"></el-progress>
+                <span class="progress_border"></span>
+                <span class="progress_border"></span>
+                <span class="progress_border"></span>
+                <span class="progress_border"></span>
+              </div>
+              <p class="mt_10">
+                亮灯数<span class="clr_yellow txt_shadow m_r30">226521</span>
+                总灯数<span class="clr_yellow txt_shadow">21596</span>
+              </p>
+            </div>
+          </div>
+
+
+<!--          <el-row :gutter="20" class="pie_chart">-->
+<!--            <el-col :span="12">-->
+<!--              &lt;!&ndash;<RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>&ndash;&gt;-->
+<!--              <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'100%'"></PieChartTwo>-->
+<!--            </el-col>-->
+<!--            <el-col :span="12">-->
+<!--              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>-->
+<!--            </el-col>-->
+<!--          </el-row>-->
         </div>
 
       <div class="mt_20 clr_white">
@@ -30,7 +51,7 @@
           <div>管道水位监测：24个</div>
           <div>管道流量监测：2个</div>
         </div>
-        <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+        <RingChart :class="'transformChart'" :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
       </div>
 
     </div>
@@ -102,20 +123,20 @@
         </div>
       </div>
       <div class="mt_20">
-        <p class="f20 bold clr_white">实时曲线</p>
-        <el-form :inline="true" :model="listQuery" class="search_form">
+        <p class="f20 bold clr_white txt_linear mb_20">实时曲线</p>
+        <el-form :inline="true" :model="listQuery" class="facilities_form">
           <el-form-item label="检测项类型">
             <el-select v-model="listQuery.status">
               <el-option label="启用" value="1"></el-option>
               <el-option label="禁用" value="0"></el-option>
             </el-select>
           </el-form-item>
-<!--          <el-form-item label="监测线">-->
-<!--            <el-select v-model="listQuery.status" placeholder="">-->
-<!--              <el-option label="启用" value="1"></el-option>-->
-<!--              <el-option label="禁用" value="0"></el-option>-->
-<!--            </el-select>-->
-<!--          </el-form-item>-->
+          <el-form-item label="监测线">
+            <el-select v-model="listQuery.status" placeholder="">
+              <el-option label="启用" value="1"></el-option>
+              <el-option label="禁用" value="0"></el-option>
+            </el-select>
+          </el-form-item>
           <el-form-item>
             <el-button v-waves class="filter-item" type="primary">生成曲线</el-button>
           </el-form-item>
@@ -201,10 +222,10 @@
                 normal: {
                   color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
                     offset: 0,
-                    color: 'rgba(41,154,237,1)'
+                    color: 'rgba(221,189,109,1)'
                   }, {
                     offset: 1,
-                    color: 'rgba(57,252,255,1)'
+                    color: 'rgba(220,188,111,1)'
                   }]),
                   // color:'rgba(78,239,254,1)'
                 }
@@ -212,7 +233,7 @@
             },{
               name: 'decorationOne',
               type: 'pie',
-              color: ['rgba(62,109,176,1)'],
+              color: ['rgba(220,188,111,1)'],
               // center: ['30%', '50%'],
               radius: ['74%', '72%'],
               hoverAnimation: false,
@@ -275,7 +296,24 @@
           ]
         },
         chartDataThree: {
-          title:{},
+          title: {
+            text: '12件',
+            top: '62%',
+            subtext: '',
+            textStyle: {
+              color: '#f2f2f2',
+              fontSize: 40,
+              align: 'center'
+            },
+            subtextStyle: {
+              fontSize: 40,
+              color: ['#fff'],
+              align: 'center'
+            },
+            x: '50%',
+            y: 'center',
+            textAlign: 'center'
+          },
           tooltip: {
             trigger: 'item',
             formatter: '{a} <br/>{b}: {c} ({d}%)'
@@ -283,33 +321,128 @@
           legend: {
             show:false
           },
+          backgroundColor: '#001453',
           color:['#367CFD','#E20280'],
           series: [
             {
-              name: '访问来源',
-              type: 'pie',
-              radius: ['70%', '90%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: false,
-                position: 'center',
-
-              },
-              emphasis: {
-                label: {
-                  show: true,
-                  fontSize: '30',
-                  fontWeight: 'bold'
+              name: '业务指标',
+              type: 'gauge',
+              axisLine: {
+                lineStyle: {
+                  width: 30,
+                  color: [
+                    [0.5, 'rgba(3,244,254,1)'],
+                    [1, 'rgba(9,46,91,1)']
+                  ],
+                  shadowColor: '#0B487E',
+                  shadowBlur: 20,
                 }
               },
-              labelLine: {
+              // detail: { formatter: '{value}%' },
+              // data: [{ value: 45, name: '完成率' }],
+              startAngle: 0,
+              endAngle: 359.999,
+              pointer: {
+                itemStyle: {
+                  color: 'auto'
+                }
+              },
+              axisTick: {
+                distance: -30,
+                length: 30,
+                lineStyle: {
+                  color: '#053973',
+                  width: 2
+                }
+              },
+              splitLine: {
+                distance: -30,
+                length: 30,
+                lineStyle: {
+                  color: '#08316C',
+                  width: 2
+                }
+              },
+              axisLabel: {
+                color: 'transparent',
+                distance: 40,
+                fontSize: 20
+              },
+            },
+            {
+              name: '外层辅助线',
+              type: 'gauge',
+              z: 1,
+              min: 0,
+              max: 10,
+              splitNumber: 30,
+              startAngle: 175,
+              endAngle: 360,
+              radius: '80%',
+              axisLine: { // 坐标轴线
+                lineStyle: { // 属性lineStyle控制线条样式
+                  width: 2,
+                  color: [[0.09, 'rgba(9,37,63,1)'], [0.5, '#108293'], [1, '#02FFC2']],
+                  // color: [
+                  //   [1, '#02FFC2']
+                  // ],
+                  opacity: 0.4,
+                  shadowBlur: 10,
+                  shadowColor: '#fff', //默认透明
+                }
+              },
+              axisTick: {
                 show: false
               },
-              data: [
-                {value: 520, name: '直接访问'},
-                {value: 205, name: '邮件营销'},
-              ]
-            }
+              axisLabel: {
+                show: false,
+              },
+              splitLine: { // 分隔线
+                show: false,
+                length: 15,
+              },
+              detail: {
+                show: false,
+              },
+              data: [],
+              clockwise: false
+            },
+            {
+              name: '外层辅助线',
+              type: 'gauge',
+              z: 1,
+              min: 0,
+              max: 10,
+              startAngle: 185,
+              endAngle: 355,
+              radius: '85%',
+              axisLine: { // 坐标轴线
+                lineStyle: { // 属性lineStyle控制线条样式
+                  width: 2,
+                  color: [
+                    [1, '#02FFC2']
+                  ],
+                  opacity: 0.4,
+                  shadowBlur: 10,
+                  shadowColor: '#fff', //默认透明
+                }
+              },
+              axisTick: {
+                show: false
+              },
+              axisLabel: {
+                show: false,
+              },
+              splitLine: { // 分隔线
+                show: false,
+                length: 15,
+              },
+              detail: {
+                show: false,
+              },
+              data: [],
+              clockwise: false
+            },
           ]
         },
         PieChartLegend:[],
@@ -710,6 +843,16 @@
   }
 </script>
 <style lang="scss" scoped>
+  .facilities_form{
+    /deep/.el-form-item__content{
+      width: 80px;
+    }
+  }
+  .facilities_bg{
+    /deep/.el-progress-bar__inner{
+      background-image: linear-gradient(to left,rgba(221,189,109,1) ,  rgba(221,189,109,0)); /* 标准的语法（必须放在最后） */
+    }
+  }
   .warning_intro{
     padding: 1.5%;
     border: 1px solid #476ABA;
@@ -740,8 +883,8 @@
     }
   }
   .warning_circle{
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     margin-right: 5px;
   }

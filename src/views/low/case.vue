@@ -39,16 +39,16 @@
         </div>
         <el-row :gutter="20" class="pie_chart">
           <el-col :span="12">
-            <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+            <PieChartTwo :chartData="chartData" :PieChartLegend="PieChartLegend" height="21vh" :divwidth="'100%'"></PieChartTwo>
           </el-col>
           <el-col :span="12">
-            <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+            <PieChartTwo :chartData="chartDataTwo" :PieChartLegend="PieChartLegend" height="21vh" :divwidth="'100%'"></PieChartTwo>
           </el-col>
         </el-row>
       </div>
 
       <div class="mt_20">
-        <p class="f20 bold txt_linear">案件类型占比分析</p>
+        <p class="f20 bold txt_linear mb_20">案件类型占比分析</p>
         <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
       </div>
 
@@ -75,6 +75,7 @@
   import BarChartTwo from '@/components/Charts/BarChartTwo'
   import BarChartThree from '@/components/Charts/BarChartThree'
   import BarChartFour from '@/components/Charts/BarChartFour'
+  import PieChartTwo from '@/components/Charts/PieChartTwo'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
@@ -84,47 +85,154 @@
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
         chartData: {
-          title:{},
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          color: ['#EB4B4B', 'rgb(245,245,245)'],
+          title: [{
+            text: '75%',
+            x: '49%',
+            y: '35%',
+            textAlign: 'center',
+            textStyle: {
+              fontSize: '26',
+              fontWeight: '500',
+              color: '#fff',
+              textAlign: 'center',
+            },
+          }, {
+            text: '及时结案率',
+            left: '48%',
+            top: '52%',
+            textAlign: 'center',
+            textStyle: {
+              fontSize: '14',
+              fontWeight: '500',
+              color: 'rgba(255,255,255,1)',
+              textAlign: 'center',
+            },
+          }],
+          polar: {
+            radius: ['70%', '80%'],
+            center: ['50%', '50%'],
           },
-          legend: {
-            show:false
+          angleAxis: {
+            max: 100,
+            show: false,
+            // startAngle: 0,
+          },
+          radiusAxis: {
+            type: 'category',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false
+            },
           },
           series: [
             {
-              name: '访问来源',
-              type: 'pie',
-              radius: ['50%', '70%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: false,
-                position: 'center'
-              },
-              emphasis: {
-                label: {
-                  show: true,
-                  fontSize: '30',
-                  fontWeight: 'bold'
+              name: '',
+              type: 'bar',
+              roundCap: true,
+              barWidth: 60,
+              showBackground: true,
+              data: [75],
+              coordinateSystem: 'polar',
+              itemStyle: {
+                normal: {
+                  // color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                  //   offset: 0,
+                  //   color: '#EB4B4B'
+                  // }, {
+                  //   offset: 1,
+                  //   color: '#F47F7F'
+                  // }]),
+
+                  color:'rgba(6,183,225,1)',
+                  // borderWidth:3, //设置border的宽度有多大
+                  // borderColor:'#060c2a',
                 }
-              },
-              labelLine: {
-                show: false
-              },
+              }
+            }
+          ]
+        },
+        chartDataTwo: {
+          color: ['#EB4B4B', 'rgb(245,245,245)'],
+          title: [{
+            text: '75%',
+            x: '49%',
+            y: '35%',
+            textAlign: 'center',
+            textStyle: {
+              fontSize: '26',
+              fontWeight: '500',
+              color: '#fff',
+              textAlign: 'center',
+            },
+          }, {
+            text: '结案率',
+            left: '48%',
+            top: '52%',
+            textAlign: 'center',
+            textStyle: {
+              fontSize: '14',
+              fontWeight: '500',
+              color: 'rgba(255,255,255,1)',
+              textAlign: 'center',
+            },
+          }],
+          polar: {
+            radius: ['70%', '80%'],
+            center: ['50%', '50%'],
+          },
+          angleAxis: {
+            max: 100,
+            show: false,
+            // startAngle: 0,
+          },
+          radiusAxis: {
+            type: 'category',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false
+            },
+          },
+          series: [
+            {
+              name: '',
+              type: 'bar',
+              roundCap: true,
+              barWidth: 60,
+              showBackground: true,
+              data: [75],
+              coordinateSystem: 'polar',
+              itemStyle: {
+                normal: {
+                  // color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                  //   offset: 0,
+                  //   color: '#EB4B4B'
+                  // }, {
+                  //   offset: 1,
+                  //   color: '#F47F7F'
+                  // }]),
 
-
-              data: [
-                {value: 335, name: '直接访问'},
-                {value: 310, name: '邮件营销'},
-                {value: 234, name: '联盟广告'},
-                {value: 135, name: '视频广告'},
-                {value: 1548, name: '搜索引擎'}
-              ]
+                  color:'rgba(247,214,81,1)',
+                  // borderWidth:3, //设置border的宽度有多大
+                  // borderColor:'#060c2a',
+                }
+              }
             }
           ]
         },

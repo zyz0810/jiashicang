@@ -105,3 +105,8 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .transformChart{
+    transform: rotateX(50deg)
+  }
+</style>

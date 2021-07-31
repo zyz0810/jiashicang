@@ -18,7 +18,8 @@
         <span class="f18 bold">26~35℃</span>
       </el-col>
       <el-col :span="14" class="logo text-center">
-        <img src="./../../../assets/image/logo.png"/>
+<!--        <img src="./../../../assets/image/logo.png"/>-->
+        <span class="txt_linear bold block xitong_title">{{title}}</span>
       </el-col>
       <el-col :span="5" class="top_right text-right">
         <!--<div class="right-menu">-->
@@ -78,6 +79,7 @@ export default {
       temp:{
         oldPassword:''
       },
+      title:'滨江区城市管理局数字驾驶舱',
       rules:{
         password: [
           { required: true, message: "请输入密码", trigger: "change" },{validator: isPassword}
@@ -110,6 +112,37 @@ export default {
     Screenfull,
     SizeSelect,
     Search
+  },
+  watch: {
+    $route(route) {
+      // if you go to the redirect page, do not update the breadcrumbs
+      if (route.path.startsWith('/redirect/')) {
+        return
+      }
+      if(route.path == '/general/overview' || route.path == '/dashboard'){
+        this.title = '滨江区城市管理局数字驾驶舱'
+      } else if(route.path == '/record/approval'){
+        this.title = '备案审批数字驾驶舱'
+      } else if(route.path == '/garbage/link'){
+        this.title = '垃圾全链路数字驾驶舱'
+      } else if(route.path == '/digital/services'){
+        this.title = '数字服务驾驶舱'
+      } else if(route.path == '/demonstration/community'){
+        this.title = '示范小区数字驾驶舱'
+      } else if(route.path == '/city/appearance'){
+        this.title = '市容市貌数字驾驶舱'
+      } else if(route.path == '/law/soldier'){
+        this.title = '执法单兵数字驾驶舱'
+      } else if(route.path == '/illegal/construction'){
+        this.title = '违法建筑数字驾驶舱'
+      } else if(route.path == '/city/water'){
+        this.title = '城市治水数字驾驶舱'
+      } else if(route.path == '/municipal/facilities'){
+        this.title = '市政设施数字驾驶舱'
+      } else if(route.path == '/law/case'){
+        this.title = '案件归集下派数字驾驶舱'
+      }
+    }
   },
   computed: {
     ...mapGetters([
@@ -222,6 +255,8 @@ export default {
   },
   mounted() {
     // this.addDate();
+    console.log('111111')
+    console.log( this.$route.path)
   },
 }
 </script>
@@ -234,6 +269,11 @@ export default {
     background: url("../../../assets/image/top_bg.png") left top no-repeat;
     background-size: 100% 100%;
     line-height: 10vh;
+  }
+  .xitong_title{
+    font-size: 2.6em;
+    margin: 0 auto;
+    line-height: 9vh;
   }
   .get_code {
     position: relative;
