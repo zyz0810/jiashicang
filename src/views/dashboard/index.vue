@@ -5,7 +5,7 @@
         <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">数字城管</span></div>
-            <div class="flex anjian_num clr_white">
+            <div class="flex anjian_num clr_white mt_10">
               <div class="flex-item">
                 <p class="f16 bold txtColor">今日受理量</p>
                 <div class="num flex text-center f26 bold mt_10">
@@ -40,11 +40,11 @@
             <div>
               <el-col :span="12">
 <!--                <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>-->
-                <PieChartTwo :chartData="chartData" :PieChartLegend="PieChartLegend" height="21vh" :divwidth="'100%'"></PieChartTwo>
+                <PieChartTwo :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'100%'"></PieChartTwo>
               </el-col>
               <el-col :span="12">
 <!--                <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="200px"></RingChart>-->
-                <PieChartTwo :chartData="chartDataTwo" :PieChartLegend="PieChartLegend" height="21vh" :divwidth="'100%'"></PieChartTwo>
+                <PieChartTwo :chartData="chartDataTwo" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'100%'"></PieChartTwo>
               </el-col>
             </div>
             <div class="flex city_num clr_white text-center">
@@ -84,7 +84,8 @@
               </ul>
               <div class="map_echart">
                 <p class="f20 baseColor bold">今日案件热力图</p>
-                             <RingChart :chartData="mapData" :PieChartLegend="PieChartLegend" height="13vh"></RingChart>
+<!--                             <RingChart :chartData="mapData" :PieChartLegend="PieChartLegend" height="13vh"></RingChart>-->
+                <div id="myMap"></div>
               </div>
               <div class="anjian_genzong bold">
                 <p class="baseColor text-center bold f18">案件实时跟踪</p>
@@ -169,7 +170,7 @@
         <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">信访投诉</span></div>
-            <div class="flex bold text-center mt_20">
+            <div class="flex bold text-center mt_20" style="margin-top: 30px">
               <div class="flex-item">
                 <p class="clr_white">今日投诉量</p>
                 <p class="clr_blue03 f26 complain_num mt_10">868</p>
@@ -186,7 +187,7 @@
                 <PieChartTwo :chartData="PieDataOne" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo>
               </div>
             </div>
-            <div class="flex bold text-center clr_white mt_20" style="margin-top: 30px">
+            <div class="flex bold text-center clr_white mt_20 mb_20" style="margin-top: 40px">
               <div class="flex-item">
                 <p class="clr_yellow f26">99.89</p>
                 <p class="mt_5">总得分</p>
@@ -288,6 +289,7 @@
 <script>
   import echarts from 'echarts'
   import "echarts/lib/component/polar"
+  // import "echarts/chart/map"
   import PieChart from '@/components/Charts/PieChartTwo'
   import BarChartThree from '@/components/Charts/BarChartThree'
   import RingChart from '@/components/Charts/RingChart'
@@ -881,7 +883,138 @@
     created() {
 
     },
+    mounted(){
+      // this.mapChart();
+    },
     methods: {
+      mapChart(){
+        var cityMap = {
+          "杭州市": "330100"
+        };
+        var placeList = [
+          {name:'西湖区', geoCoord:[120.13, 30.27],count:10},
+          {name:'上城区', geoCoord:[120.17, 30.25],count:12},
+          {name:'下城区', geoCoord:[120.17, 30.28],count:14},
+          {name:'江干区', geoCoord:[120.20, 30.27],count:66},
+          {name:'拱墅区', geoCoord:[120.13, 30.32],count:34},
+          {name:'滨江区', geoCoord:[120.20, 30.20],count:88},
+          {name:'萧山区', geoCoord:[120.27, 30.17],count:3422},
+          {name:'余杭区', geoCoord:[120.30, 30.42],count:423},
+          {name:'桐庐县', geoCoord:[119.67, 29.80],count:3},
+          {name:'淳安县', geoCoord:[119.03, 29.60],count:44},
+          {name:'建德市', geoCoord:[119.28, 29.48],count:3},
+          {name:'富阳市', geoCoord:[119.95, 30.05],count:2},
+          {name:'临安市', geoCoord:[119.72, 30.23],count:1}
+        ];
+        console.log('地图')
+        let option = {
+          tooltip : {
+            trigger: 'item',
+            formatter: '{b}'
+          },
+
+          series : [
+            {
+              name: '杭州市地图',
+              type: 'map',
+              mapType: '杭州市',
+              roam:true,
+              itemStyle:{
+                normal:{label:{show:true}},
+                emphasis:{label:{show:true}}
+              },
+              data:[],
+              markPoint : {
+                symbol:'Circle',
+                symbolSize: 0.3,
+                large: true,
+                effect : {
+                  show: true
+                },
+                itemStyle:{
+                  normal:{color:"#FF3300"}
+                },
+                data : (function(){
+                  var data = [];
+                  for(var j=0;j<placeList.length;j++){
+
+                    var len = placeList[j].count;
+                    var x = parseInt(4*Math.random())%4;
+                    var geoCoord = placeList[j].geoCoord;
+                    while(len--) {
+                      if(x==0){
+                        data.push({
+                          name : placeList[j].name + len,
+                          value : 2000,
+                          geoCoord : [
+                            geoCoord[0] + Math.random()*0.05,
+                            geoCoord[1] + Math.random()*0.05
+                          ]
+                        })
+                      }
+                      if(x==1){
+                        data.push({
+                          name : placeList[j].name + len,
+                          value : 2000,
+                          geoCoord : [
+                            geoCoord[0] + Math.random()*0.05,
+                            geoCoord[1] - Math.random()*0.05
+                          ]
+                        })
+                      }
+                      if(x==2){
+                        data.push({
+                          name : placeList[j].name + len,
+                          value : 2000,
+                          geoCoord : [
+                            geoCoord[0] - Math.random()*0.05,
+                            geoCoord[1] - Math.random()*0.05
+                          ]
+                        })
+                      }
+                      if(x==3){
+                        data.push({
+                          name : placeList[j].name + len,
+                          value : 2000,
+                          geoCoord : [
+                            geoCoord[0] + Math.random()*0.05,
+                            geoCoord[1] - Math.random()*0.05
+                          ]
+                        })
+                      }
+                    }
+                  }
+
+                  return data;
+                })()
+              }
+            }
+          ],
+          backgroundColor: '#fffff'
+        };
+        var curIndx = 0;
+        var mapType = [];
+        // var mapGeoData = require('echarts/util/mapData/params');
+        //
+        // for (var city in cityMap) {
+        //   mapType.push(city);
+        //   // 自定义扩展图表类型
+        //   mapGeoData.params[city] = {
+        //     getGeoJson: (function (c) {
+        //       var geoJsonName = cityMap[c];
+        //       return function (callback) {
+        //         $.getJSON('${rc.contextPath}/common/plugs/echart/js/' + geoJsonName + '.json', callback);
+        //       }
+        //     })(city)
+        //   }
+        // }
+
+        // var ecConfig = require('echarts/config');
+        // var zrEvent = require('zrender/tool/event');
+
+        this.mapData =  option
+        console.log( this.mapData)
+      },
 
     }
   }
@@ -981,7 +1114,7 @@
   }
   .circle_num{
     width: 21vh;
-    height: 15vh;
+    height: 16vh;
     margin: 0 auto 10px;
     position: relative;
     /*background: url("./../../assets/image/approval_circle.png") center bottom no-repeat;*/
