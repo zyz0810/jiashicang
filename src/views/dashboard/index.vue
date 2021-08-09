@@ -90,40 +90,40 @@
      </div>
      <ul class="f18 txtColor text-center index_ul">
        <li>
-         <a href="http://192.168.2.3:8090/#/system/organization/manage" target="_blank">
+<!--         <a href="http://192.168.2.3:8090/#/system/organization/manage" target="_blank">-->
            <img src="./../../assets/image/index_icon11.png"/>
            <p class="mt_10">系统管理</p>
-         </a>
+<!--         </a>-->
        </li>
        <li>
-         <a href="http://192.168.2.3:8090/#/dataExchange/exchangeApi" target="_blank">
+<!--         <a href="http://192.168.2.3:8090/#/dataExchange/exchangeApi" target="_blank">-->
          <img src="./../../assets/image/index_icon12.png"/>
          <p class="mt_10">数据交换</p>
-       </a>
+<!--       </a>-->
        </li>
        <li>
-         <a href="http://192.168.2.3:8090/#/dataAcquisition/grid" target="_blank">
+<!--         <a href="http://192.168.2.3:8090/#/dataAcquisition/grid" target="_blank">-->
          <img src="./../../assets/image/index_icon13.png"/>
          <p class="mt_10">数据采集</p>
-         </a>
+<!--         </a>-->
        </li>
        <li>
-         <a href="http://192.168.2.3:8090/#/personnel/personnelList" target="_blank">
+<!--         <a href="http://192.168.2.3:8090/#/personnel/personnelList" target="_blank">-->
          <img src="./../../assets/image/index_icon14.png"/>
          <p class="mt_10">人员管理</p>
-         </a>
+<!--         </a>-->
        </li>
        <li>
-         <a href="http://192.168.2.3:8090/#/car/carList" target="_blank">
+<!--         <a href="http://192.168.2.3:8090/#/car/carList" target="_blank">-->
          <img src="./../../assets/image/index_icon15.png"/>
          <p class="mt_10">车辆管理</p>
-         </a>
+<!--         </a>-->
        </li>
        <li>
-         <a href="http://192.168.2.3:8090/#/video/videoList" target="_blank">
+<!--         <a href="http://192.168.2.3:8090/#/video/videoList" target="_blank">-->
          <img src="./../../assets/image/index_icon16.png"/>
          <p class="mt_10">视频管理</p>
-         </a>
+<!--         </a>-->
        </li>
      </ul>
    </div>
