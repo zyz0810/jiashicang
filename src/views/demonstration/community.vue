@@ -602,7 +602,9 @@
     padding: 20px;
   }
   .left_content{
-    width: 22%;
+    width: 15%;
+    min-width: 260px;
+    padding-right: 20px;
     left: 150px;
     .AI_list{
       li{

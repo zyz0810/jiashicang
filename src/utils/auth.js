@@ -14,6 +14,19 @@ export function removeToken() {
   return Cookies.remove(TokenKey)
 }
 
+// export function getToken() {
+//   return localStorage.getItem('TokenKey')
+// }
+//
+// export function setToken(value) {
+//   return localStorage.setItem("TokenKey", value);
+// }
+//
+// export function removeToken() {
+//   return localStorage.removeItem('TokenKey')
+// }
+
+
 const IdKey = 'id';
 export function getId() {
   return Cookies.get(IdKey)

@@ -39,19 +39,34 @@
 
       <div class="mt_20 clr_white">
         <p class="f20 bold txt_linear">市政管理信息总览</p>
-        <div class="f16 bold flex mt_20 facilities_intro">
+        <div class="f16 bold flex mt_20 facilities_intro ml_10">
           <div>养护道路：103条</div>
           <div>排水管线长度：5625米</div>
         </div>
-        <div class="f16 bold flex mt_20 facilities_intro">
+        <div class="f16 bold flex mt_20 facilities_intro ml_10">
           <div>养护单位：14家</div>
           <div>智能感应井盖：103个</div>
         </div>
-        <div class="f16 bold flex mt_20 mb_20 facilities_intro">
+        <div class="f16 bold flex mt_20 mb_20 facilities_intro ml_10">
           <div>管道水位监测：24个</div>
           <div>管道流量监测：2个</div>
         </div>
-        <RingChart :class="'transformChart'" :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+<!--        <RingChart :class="'transformChart'" :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>-->
+        <div class="flex facilitiesWarning_num bold text-center">
+          <div class="flex-item f16">
+            <div class="facilities_bg01"><span class="f26">12</span> 件</div>
+            <p class="mt_10">流量报警</p>
+          </div>
+          <div class="flex-item f16">
+            <div class="facilities_bg02"><span class="f26">36</span> 件</div>
+            <p class="mt_10">水位报警</p>
+          </div>
+        </div>
+        <div class="facilitiesWarning_num text-center f16 bold">
+          <div class="facilities_bg03"><span class="f26">12</span> 件</div>
+          <p class="mt_10">井盖报警</p>
+        </div>
+
       </div>
 
     </div>
@@ -843,6 +858,36 @@
   }
 </script>
 <style lang="scss" scoped>
+  .facilitiesWarning_num{
+    .flex-item{
+      &:nth-child(1){
+        /*margin-right: 10px;*/
+      }
+
+    }
+    .facilities_bg01{
+      width: 80%;
+      height: 10vh;
+      line-height: 8vh;
+      background: url("./../../assets/image/facilities_bg01.png") center center no-repeat;
+      background-size: 100% 100%;
+    }
+    .facilities_bg02{
+      width: 80%;
+      height: 10vh;
+      line-height: 8vh;
+      background: url("./../../assets/image/facilities_bg02.png") center center no-repeat;
+      background-size: 100% 100%;
+    }
+    .facilities_bg03{
+      width: 45%;
+      height: 10vh;
+      line-height: 8vh;
+      margin: 0 auto;
+      background: url("./../../assets/image/facilities_bg03.png") center center no-repeat;
+      background-size: 100% 100%;
+    }
+  }
   .facilities_form{
     /deep/.el-form-item__content{
       width: 80px;

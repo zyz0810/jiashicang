@@ -48,7 +48,7 @@ service.interceptors.request.use(
     config.headers['client_secret'] = 'webApp'
     if (store.getters.token) {
       // config.headers['Authorization'] = store.getters.token
-      config.headers.Authorization = 'Bearer ' + store.getters.token
+      config.headers.Authorization = store.getters.token
     }
     return config
   },

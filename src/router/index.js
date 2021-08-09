@@ -66,18 +66,33 @@ export const constantRoutes = [
     component: () => import('@/views/error-page/401'),
     hidden: true
   },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [
+  //     {
+  //       path: 'dashboard',
+  //       component: () => import('@/views/dashboard/index'),
+  //       name: '首页',
+  //       meta: { title: '首页', icon: 'indexIcon', affix: true }
+  //     }
+  //   ]
+  // },
   {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: '首页',
-        meta: { title: '首页', icon: 'indexIcon', affix: true }
-      }
-    ]
+    path: '/dashboard',
+    component: () => import('@/views/dashboard/index'),
+    // redirect: '/dashboard',
+    name: '首页',
+    meta: { title: '首页', icon: 'indexIcon', affix: true }
+    // children: [
+    //   {
+    //     path: 'dashboard',
+    //     component: () => import('@/views/dashboard/index'),
+    //     name: '首页',
+    //     meta: { title: '首页', icon: 'indexIcon', affix: true }
+    //   }
+    // ]
   }
 ]
 /**
@@ -99,7 +114,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'overview',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/general/overview'),
         name: '综合概览',
         hidden: false,
         meta: {
@@ -229,7 +244,7 @@ export const asyncRoutes = [
     hidden: false,
     meta: {
       title: '市容市貌',
-      icon: '6',
+      icon: '5',
       roles: [
         'admin',
       ]
@@ -257,7 +272,7 @@ export const asyncRoutes = [
     hidden: false,
     meta: {
       title: '执法单兵',
-      icon: '7',
+      icon: '6',
       roles: [
         'admin',
       ]
@@ -285,7 +300,7 @@ export const asyncRoutes = [
     hidden: false,
     meta: {
       title: '违法建筑',
-      icon: '8',
+      icon: '7',
       roles: [
         'admin',
       ]
@@ -314,7 +329,7 @@ export const asyncRoutes = [
     hidden: false,
     meta: {
       title: '城市治水',
-      icon: '9',
+      icon: '8',
       roles: [
         'admin',
       ]
@@ -342,7 +357,7 @@ export const asyncRoutes = [
     hidden: false,
     meta: {
       title: '市政设施',
-      icon: '10',
+      icon: '9',
       roles: [
         'admin',
       ]
@@ -366,11 +381,11 @@ export const asyncRoutes = [
     path: '/law',
     component: Layout,
     redirect: 'noRedirect',
-    name: '案件归集下派',
+    name: '案件归集',
     hidden: false,
     meta: {
-      title: '案件归集下派',
-      icon: '5',
+      title: '案件归集',
+      icon: '10',
       roles: [
         'admin',
       ]

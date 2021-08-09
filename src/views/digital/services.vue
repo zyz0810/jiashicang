@@ -42,7 +42,7 @@
           <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="18vh" divwidth="100%"></PieChartTwo>
         </div>
         <div class="weui-cell__bd bold">
-          <p class="f20">当前占用泊位</p>
+          <p class="f16">当前占用泊位</p>
           <div class="progress_cont mt_10">
             <el-progress :show-text="false" :stroke-width="15" :percentage="80"></el-progress>
             <span class="progress_border"></span>
@@ -59,7 +59,7 @@
 
 
       <div class="mt_20">
-        <p class="mb_20 f20 bold text-center">全区停车场数：1210</p>
+        <p class="mb_20 f18 bold text-center">全区停车场数：1210</p>
         <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
       </div>
       <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>

@@ -270,6 +270,9 @@ html{
 .f26{
   font-size: 2.6rem;
 }
+.f50{
+  font-size: 5rem;
+}
  .title{
    font-size: 20px;
    margin-bottom: 20px;
@@ -853,19 +856,19 @@ input[type="number"] {
 }
 .left_content{
   padding: 20px 0 20px 20px;
-  width: 32%;
+  width: 26%;
   position: fixed;
   top: 10vh;
-  left: 20px;
+  left: 0px;
   z-index: 9999;
   height: 82%;
 }
 .right_content{
-  padding: 20px 0 20px 20px;
-  width: 35%;
+  padding: 20px 20px 20px 0;
+  width: 26%;
   position: fixed;
   top: 10vh;
-  right: 20px;
+  right: 0px;
   z-index: 9999;
   height: 82%;
 }
@@ -953,4 +956,7 @@ input[type="number"] {
       left: 80%;
     }
   }
+}
+.flex_stretch{
+  align-items: stretch;
 }
