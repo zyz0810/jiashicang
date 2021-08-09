@@ -397,7 +397,7 @@ export const asyncRoutes = [
         name: 'underworld',
         hidden: false,
         meta: {
-          title: '案件归集下派',
+          title: '案件归集',
           roles: [
             'admin',
           ]

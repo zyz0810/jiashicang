@@ -5,19 +5,19 @@
     <div class="right_soldier bold text-center">
      <ul>
        <li class="f16">
-         <p class="clr_white"><span class="f26">5623</span> 个</p>
+         <p class="clr_white"><span class="f26">35</span> 个</p>
          <span class="block"></span>
-         <p class="f16 intro_txt clr_blue01">在线人员</p>
+         <p class="f16 intro_txt clr_blue01">执法人员</p>
        </li>
        <li class="f16 mt_20">
-         <p class="clr_white"><span class="f26">12</span> 辆</p>
+         <p class="clr_white"><span class="f26">16</span> 辆</p>
          <span class="block flex"></span>
-         <p class="f16 intro_txt clr_blue01">在线车辆</p>
+         <p class="f16 intro_txt clr_blue01">执法车辆</p>
        </li>
        <li class="f16 mt_20">
          <p class="clr_white"><span class="f26">828</span> 路</p>
          <span class="block flex"></span>
-         <p class="f16 intro_txt clr_blue01">在线视频</p>
+         <p class="f16 intro_txt clr_blue01">视频</p>
        </li>
      </ul>
     </div>
@@ -313,9 +313,9 @@
           ]
         },
         map: '', // 对象
-        zoom: 12, // 地图的初始化级别，及放大比例
-        centerLatitude:'39.65053092',//中心纬度
-        centerLongitude:'118.1834506',//中心经度
+        zoom: 14, // 地图的初始化级别，及放大比例
+        centerLatitude:'30.2099178915',//中心纬度
+        centerLongitude:'120.2372328407',//中心经度
       }
     },
 
@@ -335,10 +335,10 @@
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        // this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
-        this.addCtrl()
+        // this.addCtrl()
 
         // // 普通标注
         let site = [
@@ -355,19 +355,20 @@
         });
         //创建信息窗口对象
         // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        let marker = new T.Marker(new T.LngLat(117.283042, 31.86119), {icon: icon});// 创建标注
-        this.map.addOverLay(marker);
+        // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119), {icon: icon});// 创建标注
+        // this.map.addOverLay(marker);
         // 随机向地图添加25个标注
-        // let bounds = this.map.getBounds();
-        // let sw = bounds.getSouthWest();
-        // let ne = bounds.getNorthEast();
-        // let lngSpan = Math.abs(sw.lng - ne.lng);
-        // let latSpan = Math.abs(ne.lat - sw.lat);
-        // for (let i = 0; i < 25; i++) {
-        //   let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-        //   var marker = new T.Marker(point, {icon: icon});// 创建标注
-        //   this.map.addOverLay(marker);
-        // }
+        let bounds = this.map.getBounds();
+        let sw = bounds.getSouthWest();
+        let ne = bounds.getNorthEast();
+        let lngSpan = Math.abs(sw.lng - ne.lng);
+        let latSpan = Math.abs(ne.lat - sw.lat);
+        for (let i = 0; i < 1; i++) {
+          // let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+          let point = new T.LngLat(this.centerLongitude, this.centerLatitude)
+          var marker = new T.Marker(point, {icon: icon});// 创建标注
+          this.map.addOverLay(marker);
+        }
 
         var infoWin1 = new T.InfoWindow();
         let sContent =

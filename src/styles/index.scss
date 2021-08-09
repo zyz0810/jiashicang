@@ -734,7 +734,9 @@ input[type="number"] {
 .clr_blue02{
   color:#1465DF;
 }
-
+.clr_red{
+  color:rgb(252,1,0);
+}
 .tdt-infowindow-tip{
   background: #00A4FF !important;
 }
@@ -906,7 +908,7 @@ input[type="number"] {
   height:80vh;
 }
 
-/deep/.tdt-infowindow-content-wrapper{
+.tdt-infowindow-content-wrapper{
   width: 400px;
   background: url("./../assets/image/pop_bg.png") left top no-repeat;
   background-size: 100% 100%;
@@ -959,4 +961,7 @@ input[type="number"] {
 }
 .flex_stretch{
   align-items: stretch;
+}
+.bg_blue{
+  background: #081b3c;
 }

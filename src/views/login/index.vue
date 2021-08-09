@@ -6,10 +6,10 @@
       <div class="login_div mt_20">
         <img src="../../assets/image/login_txt.png" class="login_txt"/>
         <div class="flex">
-          <div class="flex-item  text-center">
-            <img src="../../assets/image/login_ewm.png"/>
-            <p class="baseColor">打开浙政钉扫码登录</p>
-          </div>
+<!--          <div class="flex-item  text-center">-->
+<!--            <img src="../../assets/image/login_ewm.png"/>-->
+<!--            <p class="baseColor">打开浙政钉扫码登录</p>-->
+<!--          </div>-->
           <div><img src="../../assets/image/login_border.png"/></div>
           <div class="flex-item">
             <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login_form" autocomplete="on" label-position="left">
@@ -235,7 +235,7 @@ $cursor: #fff;
 .login_btn{
   width: 100%;
   margin-top: 30px;
-  background-color: rgba(0,108,198,1); /* 浏览器不支持的时候显示 */
+  background-color: #2e9fe0; /* 浏览器不支持的时候显示 */
   /*background-image: linear-gradient( #44c6fe, #0577f9);*/
   border:none;
 }
@@ -285,11 +285,12 @@ $txt:#3f35cf;
     /*width: 90%;*/
     /*margin: 0 auto;*/
     /*height: 100vh;*/
-    width: 800px;
+    width: 700px;
+    margin-bottom: 100px;
   }
 
 .login_form{
-  padding: 0 50px;
+  padding: 0 180px;
 }
 .login_txt{
   width: 300px;

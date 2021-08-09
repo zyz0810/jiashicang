@@ -40,35 +40,35 @@
         </div>
         <img src="./../../assets/image/water_bg.png" class="mt_10"/>
         <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList1" v-show="abnormalIndex == 0" class="f14 mt_20">
-          <el-table-column type="index" label="序号" width="80" align="center">
+          <el-table-column type="index" label="序号" width="50" align="center">
             <!--            <template slot-scope="scope">-->
             <!--             <span class="block sqaer">{{index}}</span>-->
             <!--            </template>-->
           </el-table-column>
           <el-table-column label="水质告警" align="center" prop="name"></el-table-column>
-          <el-table-column label="配水量" align="center" prop="name"></el-table-column>
+          <el-table-column label="配水量" align="center" prop="name2"></el-table-column>
           <el-table-column label="排水量" align="center" prop="end"></el-table-column>
 
         </el-table>
         <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList2" v-show="abnormalIndex == 1" class="f14 mt_20">
-          <el-table-column type="index" label="序号" width="80" align="center">
+          <el-table-column type="index" label="序号" width="50" align="center">
             <!--            <template slot-scope="scope">-->
             <!--             <span class="block sqaer">{{index}}</span>-->
             <!--            </template>-->
           </el-table-column>
           <el-table-column label="方案名称" align="center" prop="name"></el-table-column>
-          <el-table-column label="配水量" align="center" prop="name"></el-table-column>
+          <el-table-column label="配水量" align="center" prop="name2"></el-table-column>
           <el-table-column label="排水量" align="center" prop="end"></el-table-column>
 
         </el-table>
         <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList3" v-show="abnormalIndex == 2" class="f14 mt_20">
-          <el-table-column type="index" label="序号" width="80" align="center">
+          <el-table-column type="index" label="序号" width="50" align="center">
             <!--            <template slot-scope="scope">-->
             <!--             <span class="block sqaer">{{index}}</span>-->
             <!--            </template>-->
           </el-table-column>
           <el-table-column label="内涝预测" align="center" prop="name"></el-table-column>
-          <el-table-column label="配水量" align="center" prop="name"></el-table-column>
+          <el-table-column label="配水量" align="center" prop="name2"></el-table-column>
           <el-table-column label="排水量" align="center" prop="end"></el-table-column>
 
         </el-table>
@@ -311,29 +311,29 @@
         },
         listLoading:false,
         list:[{
-          name:'发你辅导费',
-          name2:'丰富的爽肤水',
-          end:'审批通过'
+          name:'20201211号…',
+          name2:'850000',
+          end:'5000'
         },{
-          name:'发你辅导费',
-          name2:'丰富的爽肤水',
-          end:'审批通过'
+          name:'20201211号…',
+          name2:'850000',
+          end:'5000'
         },{
-          name:'发你辅导费',
-          name2:'丰富的爽肤水',
-          end:'审批通过'
+          name:'20201211号…',
+          name2:'850000',
+          end:'5000'
         },{
-          name:'发你辅导费',
-          name2:'丰富的爽肤水',
-          end:'审批通过'
+          name:'20201211号…',
+          name2:'850000',
+          end:'5000'
         },{
-          name:'发你辅导费',
-          name2:'丰富的爽肤水',
-          end:'审批通过'
+          name:'20201211号…',
+          name2:'850000',
+          end:'5000'
         },{
-          name:'发你辅导费',
-          name2:'丰富的爽肤水',
-          end:'审批通过'
+          name:'20201211号…',
+          name2:'850000',
+          end:'5000'
         }],
         chartData: {
           title:{},
@@ -555,9 +555,9 @@
           ]
         },
         map: '', // 对象
-        zoom: 12, // 地图的初始化级别，及放大比例
-        centerLatitude:'39.65053092',//中心纬度
-        centerLongitude:'118.1834506',//中心经度
+        zoom: 14, // 地图的初始化级别，及放大比例
+        centerLatitude:'30.2099178915',//中心纬度
+        centerLongitude:'120.2372328407',//中心经度
       }
     },
 
@@ -577,8 +577,8 @@
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        // this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         this.addCtrl()
 
@@ -597,7 +597,7 @@
         });
         //创建信息窗口对象
         // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        let marker = new T.Marker(new T.LngLat(117.283042, 31.86119), {icon: icon});// 创建标注
+        let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
         this.map.addOverLay(marker);
         // 随机向地图添加25个标注
         // let bounds = this.map.getBounds();
