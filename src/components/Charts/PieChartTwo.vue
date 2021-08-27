@@ -1,6 +1,6 @@
 <template>
   <div class="clearfix">
-    <div class="88" :style="{width: divWidth}">
+    <div :style="{width: divWidth}">
       <div :class="className" ref="pieChart" :style="{height:height,width:width}" />
     </div>
     <div class="legend_span flex clr_white bold" v-if="PieChartLegend.length>0">

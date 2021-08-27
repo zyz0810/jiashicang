@@ -9,8 +9,10 @@
      </div>
      <ul class="f18 txtColor text-center index_ul">
        <li>
-         <img src="./../../assets/image/index_icon02.png"/>
-         <p class="mt_10">指挥平台</p>
+         <a href="/direct/index.html">
+           <img src="./../../assets/image/index_icon02.png"/>
+           <p class="mt_10">指挥平台</p>
+         </a>
        </li>
        <li>
 <!--         <a href="http://jsc.susongzhijia.com/#/general/overview" target="_blank">-->
@@ -36,7 +38,8 @@
          </a>
        </li>
        <li>
-         <a href="http://ai.susongzhijia.com/" target="_blank">
+<!--         <a href="http://ai.susongzhijia.com/" target="_blank">-->
+         <a href="/AI/index.html">
 <!--         <a href=" http://192.168.2.3:8091/">-->
            <img src="./../../assets/image/index_icon04.png"/>
            <p class="mt_10">AI识别</p>
@@ -55,8 +58,10 @@
          </a>
        </li>
        <li>
-         <img src="./../../assets/image/index_icon03.png"/>
-         <p class="mt_10">重点工作</p>
+         <a href="/keynote/index.html">
+           <img src="./../../assets/image/index_icon03.png"/>
+           <p class="mt_10">重点工作</p>
+         </a>
        </li>
        <li>
          <a href="http://218.108.98.28/map/index.html?system=ZHZF" target="_blank">
@@ -90,37 +95,38 @@
      </div>
      <ul class="f18 txtColor text-center index_ul">
        <li>
-         <a href="http://erp-web.susongzhijia.com/#/system/organization/manage" target="_blank">
+<!--         <a href="http://erp-web.susongzhijia.com/#/system/organization/manage" target="_blank">-->
+         <a href="/zhuanxiang/index.html#/system/organization/manage">
            <img src="./../../assets/image/index_icon11.png"/>
            <p class="mt_10">系统管理</p>
          </a>
        </li>
        <li>
-         <a href="http://erp-web.susongzhijia.com/#/dataExchange/exchangeApi" target="_blank">
+         <a href="/zhuanxiang/index.html#/dataExchange/exchangeApi">
          <img src="./../../assets/image/index_icon12.png"/>
          <p class="mt_10">数据交换</p>
        </a>
        </li>
        <li>
-         <a href="http://erp-web.susongzhijia.com/#/dataAcquisition/grid" target="_blank">
+         <a href="/zhuanxiang/index.html#/dataAcquisition/grid">
          <img src="./../../assets/image/index_icon13.png"/>
          <p class="mt_10">数据采集</p>
          </a>
        </li>
        <li>
-         <a href="http://erp-web.susongzhijia.com/#/personnel/personnelList" target="_blank">
+         <a href="/zhuanxiang/index.html#/personnel/personnelList">
          <img src="./../../assets/image/index_icon14.png"/>
          <p class="mt_10">人员管理</p>
          </a>
        </li>
        <li>
-         <a href="http://erp-web.susongzhijia.com/#/car/carList" target="_blank">
+         <a href="/zhuanxiang/index.html#/car/carList">
          <img src="./../../assets/image/index_icon15.png"/>
          <p class="mt_10">车辆管理</p>
          </a>
        </li>
        <li>
-         <a href="http://erp-web.susongzhijia.com/#/video/videoList" target="_blank">
+         <a href="/zhuanxiang/index.html#/video/videoList">
          <img src="./../../assets/image/index_icon16.png"/>
          <p class="mt_10">视频管理</p>
          </a>

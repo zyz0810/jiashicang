@@ -720,6 +720,8 @@ input[type="number"] {
   color: $txtColor !important;
 }
 .mapDiv {
+  width:100%;
+  height:80vh;
   background-color: rgb(3,38,105) !important;
 }
 .clr_yellow{
@@ -903,10 +905,6 @@ input[type="number"] {
 .el-table--striped .el-table__body tr.el-table__row--striped td{
   background-color: transparent!important;
 }
-.mapDiv{
-  width:100%;
-  height:80vh;
-}
 
 .tdt-infowindow-content-wrapper{
   width: 400px;
@@ -964,4 +962,7 @@ input[type="number"] {
 }
 .bg_blue{
   background: #081b3c;
+}
+iframe{
+  border: none;
 }
