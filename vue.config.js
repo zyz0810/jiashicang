@@ -39,11 +39,11 @@ module.exports = {
     // before: require('./mock/mock-server.js'),
     proxy:{
       '/api':{
-        target:'http://erp.susongzhijia.com',
+        target:'http://yy.susongzhijia.com',
         changeOrigin: true,
-        // pathRewrite:{
-        //   '^/api':'/api'
-        // }
+        pathRewrite:{
+          '^/api':'/api'
+        }
       },
       '/admin':{
         target:'http://erp.susongzhijia.com',
