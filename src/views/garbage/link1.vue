@@ -468,6 +468,13 @@
       // this.onLoad()
     },
     methods: {
+      flyToCar() {
+        let a = document.getElementById("testMsg");
+        let msg = {
+          funcName: 'test'
+        }
+        a.contentWindow.postMessage(msg, "*");
+      },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')

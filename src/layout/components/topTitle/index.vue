@@ -24,7 +24,7 @@
       <el-col :span="5" class="top_right text-right">
         <!--<div class="right-menu">-->
           <span class="date f14 bold">{{$moment().format('YYYY-MM-DD')}}</span>
-        <router-link :to="{path:'/dashboard'}" class="m_r30">回首页<i class="el-icon-s-promotion"></i></router-link>
+        <router-link :to="{path:'/dashboard'}" class="m_r30"><i class="el-icon-s-promotion"></i>回首页</router-link>
           <span class="f16 bold" @click="logout">退 出<i class="el-icon-switch-button" style="margin-left: 5px"></i></span>
         <!--</div>-->
         <my-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="80%">
