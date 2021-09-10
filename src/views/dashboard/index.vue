@@ -108,7 +108,7 @@
        </a>
        </li>
        <li>
-         <a href="/zhuanxiang/index.html#/dataAcquisition/grid">
+         <a href="/zhuanxiang/index.html#/dataAcquisition/grid/index">
          <img src="./../../assets/image/index_icon13.png"/>
          <p class="mt_10">数据采集</p>
          </a>
