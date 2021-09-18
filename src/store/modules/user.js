@@ -46,9 +46,9 @@ const actions = {
         const { data } = response;
         // token_type  access_token
         commit('SET_TOKEN', data.access_token);
-        // commit('SET_ID', response.data.id);
+        commit('SET_ID', response.data.id);
         // commit('SET_NAME', response.data.name);
-        // setId(response.data.id);
+        setId(response.data.id);
         // setName(response.data.name);
         setToken(data.access_token);
         sessionStorage.setItem("Admin-Token", JSON.stringify(data.access_token));
@@ -127,7 +127,7 @@ const actions = {
         removeToken();
         sessionStorage.setItem("Admin-Token", '');
         resetRouter();
-        // removeId();
+        removeId();
         removeName();
         removeMobile();
         // reset visited views and cached views
@@ -143,7 +143,7 @@ const actions = {
         removeToken();
         sessionStorage.setItem("Admin-Token", '');
         resetRouter();
-        // removeId();
+        removeId();
         removeName();
         removeMobile();
         reject(error)
@@ -156,11 +156,11 @@ const actions = {
     return new Promise(resolve => {
       commit('SET_TOKEN', '');
       commit('SET_ROLES', []);
-      // commit('SET_ID', '');
+      commit('SET_ID', '');
       commit('SET_NAME', '');
       removeToken();
       sessionStorage.setItem("Admin-Token", '');
-      // removeId();
+      removeId();
       removeName();
       resolve()
     })
