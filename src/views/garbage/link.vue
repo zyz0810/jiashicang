@@ -196,8 +196,8 @@
             formatter:"{a1}<br/>{b1}：{c1}%"
           },
           grid: {
-            left: '30',
-            right: '30',
+            left: '0',
+            right: '80',
             bottom: '20',
             top: '20',
             containLabel: true
@@ -247,7 +247,30 @@
               name: '增长率',
               type: 'bar',
               barWidth: 20,//柱图宽度
-              data: [5, 20, ]
+
+              itemStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
+                    [
+                      { offset: 0, color: '#006FFF' },
+                      { offset: 1, color: 'rgba(0,181,255,1)' }
+                    ]
+                  ),
+                  label: {
+                    show : true,
+                    position : 'right',
+                    formatter: '{c}/180',
+                    textStyle : {
+                      color: '#fff',
+                      fontSize:'16',
+                      fontWeight:'bold'
+                    }
+                  }
+
+                }
+              },
+
+              data: [5, 100, ]
             }]
         },
         BarDataTwo:{
@@ -256,8 +279,8 @@
             formatter:"{a1}<br/>{b1}：{c1}%"
           },
           grid: {
-            left: '30',
-            right: '30',
+            left: '0',
+            right: '80',
             bottom: '20',
             top: '20',
             containLabel: true
@@ -307,6 +330,16 @@
               name: '增长率',
               type: 'bar',
               barWidth: 20,//柱图宽度
+              label: {
+                show : true,
+                position : 'right',
+                formatter: '{c}/180',
+                textStyle : {
+                  color: '#fff',
+                  fontSize:'16',
+                  fontWeight:'bold'
+                }
+              },
               data: [5, 20, ]
             }]
         },
@@ -523,7 +556,25 @@
           marker.openInfoWindow(infoWin1);
         });// 将标注添加到地图中
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
-        this.map.setStyle('indigo')
+        this.map.setStyle('indigo');
+        let path=[
+          {num:1,arr:[{lng:120.212120,lat:30.211440},{lng:120.212270,lat:30.208720}]},
+          {num:2,arr:[{lng:120.213240,lat:30.207230},{lng:120.217510,lat:30.207700}]},
+          {num:3,arr:[{lng:120.208670,lat:30.208050},{lng:120.209140,lat:30.206290}]},
+        ];
+        for (let i=0;i<path.length;i++){
+          if(path[i].num==1){
+            var line = new T.Polyline(path[i].arr, {color:'#fe6247',weight: 8,opacity: 0.7}); //path为天地图经纬度数组，第二个参数为配置项
+            this.map.addOverLay(line);  // 绘制线到地图上
+          }else if(path[i].num==2){
+            var line = new T.Polyline(path[i].arr, {color:'#dec215',weight: 8,opacity: 0.7}); //path为天地图经纬度数组，第二个参数为配置项
+            this.map.addOverLay(line);  // 绘制线到地图上
+          }else if(path[i].num==3){
+            var line = new T.Polyline(path[i].arr, {color:'#e760c4',weight: 8,opacity: 0.7}); //path为天地图经纬度数组，第二个参数为配置项
+            this.map.addOverLay(line);  // 绘制线到地图上
+          }
+
+        }
 
       },
 

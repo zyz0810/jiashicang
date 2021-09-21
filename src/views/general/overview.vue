@@ -127,8 +127,8 @@
               <div class="map_echart text-center">
                 <p class="f20 txtColor bold">今日案件热力图</p>
                 <!--                             <RingChart :chartData="mapData" :PieChartLegend="PieChartLegend" height="13vh"></RingChart>-->
-<!--                <div id="myMap"></div>-->
-                <img src="./../../assets/image/map.png" class="my_map"/>
+                <div id='mapDiv' class="mapDiv" style="width: 250px;height: 300px;"></div>
+                <!--<img src="./../../assets/image/map.png" class="my_map"/>-->
               </div>
               <div class="anjian_genzong bold">
                 <p class="txtColor text-center bold f18">案件实时跟踪</p>
@@ -947,6 +947,9 @@
             }
           ]
         },
+        zoom:12,
+        centerLatitude:'30.20835',//中心纬度
+        centerLongitude:'120.21194',//中心经度
       }
     },
     created() {
@@ -954,8 +957,19 @@
     },
     mounted(){
       // this.mapChart();
+      this.onLoad();
     },
     methods: {
+      onLoad() {
+        let T = window.T
+        this.map = new T.Map('mapDiv')
+        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        // 添加地图类型控件
+        // this.addCtrl()
+        // this.map.setStyle('indigo');
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
+
+      },
       mapChart(){
         var cityMap = {
           "杭州市": "330100"

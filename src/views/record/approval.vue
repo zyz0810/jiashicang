@@ -58,18 +58,18 @@
     </div>
     <div class="center_content clr_white text-center">
       <div class="map_intro f14 bold flex baseColor">
-        <img src="./../../assets/image/point04.png"/>
+        <img src="./../../assets/image/point05.png"/>
         <div>广告审批</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor">
-        <img src="./../../assets/image/point05.png"/>
-        <div>工程车审批</div>
-      </div>
-      <div class="map_intro f14 bold flex baseColor">
-        <img src="./../../assets/image/point06.png"/>
-        <div>犬只审批</div>
-      </div>
-      <p class="text-right baseColor f16 bold mt_20">说明</p>
+      <!--<div class="map_intro f14 bold flex baseColor">-->
+        <!--<img src="./../../assets/image/point05.png"/>-->
+        <!--<div>工程车审批</div>-->
+      <!--</div>-->
+      <!--<div class="map_intro f14 bold flex baseColor">-->
+        <!--<img src="./../../assets/image/point06.png"/>-->
+        <!--<div>犬只审批</div>-->
+      <!--</div>-->
+      <!--<p class="text-right baseColor f16 bold mt_20">说明</p>-->
     </div>
   </div>
 </template>

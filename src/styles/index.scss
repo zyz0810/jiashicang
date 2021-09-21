@@ -811,7 +811,6 @@ input[type="number"] {
   -webkit-align-items: center;
   align-items: center;
 }
-
 .weui-cell__bd {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
@@ -965,4 +964,23 @@ input[type="number"] {
 }
 iframe{
   border: none;
+}
+.top_div{
+  position: fixed;
+  top: 10vh;
+  left: 10%;
+  width: 70%;
+  z-index: 9999;
+  //background: ;
+  background-image: linear-gradient(to bottom, #061027 60%, rgba(6,16,39,0.5) 85%, rgba(6,16,39,0.3) 90%, rgba(6,16,39,0) 100%);
+  .flex{
+    padding: 10px;
+    .flex-item{
+      padding: 0 10px;
+      border-left: 1px solid #fff;
+      &:nth-child(1){
+        border-left:none;
+      }
+    }
+  }
 }

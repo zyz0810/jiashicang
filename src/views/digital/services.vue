@@ -2,17 +2,21 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_server baseColor text-center f16 bold border base_bg shadow">
-      <div :class="['mb_20',activeIndex == 0 ? 'clr_white':'']" @click="activeIndex = 0">
+    <div class="left_server clr_white text-center f16 bold border base_bg shadow">
+      <div :class="['mb_20',activeIndex == 0 ? 'baseColor':'']" @click="activeIndex = 0">
         <i class="iconfont icon-zaosheng f26"></i>
         <p class="mt_10">数字停车</p>
       </div>
-      <div :class="activeIndex == 1 ? 'clr_white':''" @click="activeIndex = 1">
+      <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="activeIndex = 1">
         <i class="iconfont icon-fengji f26"></i>
         <p class="mt_10">共享单车</p>
       </div>
+      <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="activeIndex = 2">
+        <i class="iconfont icon-zaosheng f26"></i>
+        <p class="mt_10">城市亮灯</p>
+      </div>
     </div>
-    <ul class="f16 clr_white bold text-center link_intro">
+    <ul class="f16 clr_white bold text-center link_intro" v-if="activeIndex == 0">
       <li class="mb_20 f14">空闲泊位等级</li>
       <li>
         <p>5级</p>
@@ -60,9 +64,26 @@
 
       <div class="mt_20">
         <p class="mb_20 f18 bold text-center">全区停车场数：1210</p>
-        <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
+        <div  class="weui-cell">
+          <div class="weui-cell__hd text-center" style="width: 90px;">
+            <p class="f26 bold clr_yellow mb_20">25321</p>
+            <p class="f18">普查泊位</p>
+          </div>
+          <div class="weui-cell__bd">
+            <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
+          </div>
+        </div>
+
       </div>
-      <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
+      <div  class="weui-cell">
+        <div class="weui-cell__hd text-center" style="width: 90px;">
+          <p class="f26 bold clr_yellow mb_20">25321</p>
+          <p class="f18">接入泊位</p>
+        </div>
+        <div class="weui-cell__bd">
+          <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
+        </div>
+      </div>
     </div>
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 1">
       <p class="f20 bold txt_linear mb_20">车辆概况</p>
@@ -94,6 +115,89 @@
       </div>
 
     </div>
+    <div class="right_content clr_white base_bg_right" v-if="activeIndex == 2">
+      <p class="f20 bold txt_linear">亮灯率</p>
+      <div class="weui-cell">
+        <div class="weui-cell__hd" style="width: 40%;">
+          <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="18vh" divwidth="100%"></PieChartTwo>
+        </div>
+        <div class="weui-cell__bd bold">
+          <p class="f16">当前亮灯情况</p>
+          <div class="progress_cont mt_10 progress_light">
+            <el-progress :show-text="false" :stroke-width="15" :percentage="80"></el-progress>
+            <span class="progress_border"></span>
+            <span class="progress_border"></span>
+            <span class="progress_border"></span>
+            <span class="progress_border"></span>
+          </div>
+          <p class="mt_10">
+            亮灯数<span class="baseColor txt_shadow m_r30">188</span>
+            总灯数<span class="baseColor txt_shadow">188</span>
+          </p>
+        </div>
+      </div>
+
+
+      <div class="mt_20">
+        <el-row :gutter="10" class="mt_20 text-center">
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+            <p class="f16 bold txt_linear">节能率</p>
+            <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+            <p class="f16 bold txt_linear">综合评价</p>
+            <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+          </el-col>
+          <div style="width:50%;margin: 0 auto 0;">
+            <p class="f16 bold txt_linear">故障警告</p>
+            <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+          </div>
+        </el-row>
+
+      </div>
+
+    </div>
+
+    <div class="top_div flex clr_white text-center" v-if="activeIndex == 2">
+      <div class="flex f14 bold mr_20 border shadow" style="width: 300px;">
+        <div class="flex-item txt_linear">控制柜</div>
+        <div class="flex-item">
+          总览
+          <span class="txt_linear">66</span>
+        </div>
+        <div class="flex-item">
+          离线
+          <span class="txt_linear">4</span>
+        </div>
+        <div class="flex-item">
+          故障
+          <span class="txt_linear">4</span>
+        </div>
+      </div>
+      <div class="flex f14 bold mr_20 border shadow" style="width: 350px;">
+        <div class="flex-item txt_linear">亮灯设备</div>
+        <div class="flex-item">
+          总览
+          <span class="txt_linear">66</span>
+        </div>
+        <div class="flex-item">
+          离线
+          <span class="txt_linear">4</span>
+        </div>
+        <div class="flex-item">
+          故障
+          <span class="txt_linear">4</span>
+        </div>
+
+      </div>
+      <div class="flex border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">
+        设备点位
+        <div style="position: absolute;top: 35px;left: 0;width: 100%; line-height: 30px;" class="clr_white border shadow" v-if="showOption==1">
+          <p :class="showType == 1 ? 'baseColor':''" @click="showType = 1">亮灯杆</p>
+          <p :class="showType == 2 ? 'baseColor':''" @click="showType = 2">控制柜</p>
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -118,6 +222,8 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        showType:1,
+        showOption:0,
         chartDataTwo: {
           title:{},
           tooltip: {
@@ -346,6 +452,7 @@
               name: '访问来源',
               type: 'pie',
               radius: ['60%', '90%'],
+              center: ['35%', '50%'],
               avoidLabelOverlap: false,
               label: {
                 show: false,
@@ -373,10 +480,10 @@
               //   borderColor:'#fff',
               // },
               data: [
-                {value: 120, name: '公用泊位'},
-                {value: 105, name: '专用泊位'},
-                {value: 50, name: '道路泊位'},
-                {value: 305, name: '其他泊位'},
+                {value: 120, name: '公用泊位 20'},
+                {value: 105, name: '专用泊位 80'},
+                {value: 50, name: '道路泊位 65'},
+                {value: 305, name: '其他泊位 99'},
               ]
             }
           ]
@@ -654,7 +761,11 @@
   }
 </script>
 <style lang="scss" scoped>
-
+.progress_light{
+  /deep/.el-progress-bar__inner{
+    background-image: linear-gradient(to left,rgba(63,219,234,1) ,  rgba(48,164,104,0)) !important; /* 标准的语法（必须放在最后） */
+  }
+}
 
   .left_server{
     position: fixed;

@@ -45,13 +45,13 @@ const actions = {
       login({ mobile: mobile.trim(), password: password }).then(response => {
         const { data } = response;
         // token_type  access_token
-        commit('SET_TOKEN', data.access_token);
+        commit('SET_TOKEN', data.token);
         commit('SET_ID', response.data.id);
         // commit('SET_NAME', response.data.name);
         setId(response.data.id);
         // setName(response.data.name);
-        setToken(data.access_token);
-        sessionStorage.setItem("Admin-Token", JSON.stringify(data.access_token));
+        setToken(data.token);
+        sessionStorage.setItem("Admin-Token", JSON.stringify(data.token));
         resolve()
       }).catch(error => {
         reject(error)
