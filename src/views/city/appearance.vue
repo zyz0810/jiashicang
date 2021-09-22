@@ -2,57 +2,130 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_content base_bg_left">
 
-        <div class="clr_white">
-          <p class="f20 bold txt_linear">智能识别概况</p>
-          <div class="flex text-center">
-            <ul class="bold communityNum">
-              <li class="flex">
-                <span class="f26 baseColor block">32</span>
-                <span class="f16 clr_white block">监控点位</span>
-              </li>
-              <li class="flex mt_20">
-                <span class="f26 baseColor block">1</span>
-                <span class="f16 clr_white block">监控路段</span>
-              </li>
-            </ul>
-            <div class="pieChart">
-<!--              <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="16vh"></RingChart>-->
-              <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'50%'"></PieChartTwo>
-            </div>
-          </div>
-          <p class="f20 bold txt_linear mt_20">今日违规场景概况</p>
-          <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="42vh" divwidth="100%"></BarChartFour>
-        </div>
+    <div class="left_server clr_white text-center f16 bold border base_bg shadow">
+      <div :class="['mb_20',activeIndex == 0 ? 'baseColor':'']" @click="activeIndex = 0">
+        <i class="iconfont icon-zaosheng f26"></i>
+        <p class="mt_10">AI视频</p>
+      </div>
+      <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="activeIndex = 1">
+        <i class="iconfont icon-fengji f26"></i>
+        <p class="mt_10">油烟监测</p>
+      </div>
+      <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="activeIndex = 2">
+        <i class="iconfont icon-zaosheng f26"></i>
+        <p class="mt_10">工地监测</p>
+      </div>
     </div>
-    <div class="right_content clr_white base_bg_right">
-      <p class="f20 bold txt_linear">案件概况</p>
-      <div class="flex bold enforcement_num text-center mt_20">
-        <div class="flex-item flex_block_bg">
-          <p class="f16">上报量</p>
-          <p class="f26 clr_blue01 mt_5">300</p>
-        </div>
-        <div class="flex-item flex_block_bg">
-          <p class="f16">受理量</p>
-          <p class="f26 clr_blue02 mt_5">300</p>
-        </div>
-        <div class="flex-item flex_block_bg">
-          <p class="f16">结案量</p>
-          <p class="f26 clr_yellow mt_5">300</p>
+
+    <div class="right_content clr_white base_bg_right" v-if="activeIndex == 0">
+      <p class="f20 bold txt_linear">智能识别概况</p>
+      <div class="text-center">
+        <ul class="bold communityNum flex mt_10">
+          <li class="flex flex-item">
+            <span class="f26 baseColor block">32</span>
+            <span class="f16 clr_white block">监控点位</span>
+          </li>
+          <li class="flex flex-item">
+            <span class="f26 baseColor block">1</span>
+            <span class="f16 clr_white block">监控路段</span>
+          </li>
+        </ul>
+        <div class="pieChart mt_10">
+          <!--              <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="16vh"></RingChart>-->
+          <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" height="16vh" :divwidth="'50%'"></PieChartTwo>
         </div>
       </div>
-      <div class="clr_white mt_20">
-        <p class="f20 bold txt_linear">今日违停场景概况</p>
-        <BarChartFour :chartData="BarDataThree" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></BarChartFour>
-      </div>
+      <p class="f20 bold txt_linear mt_20">今日违规场景概况</p>
+      <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="42vh" divwidth="100%"></BarChartFour>
+
+    </div>
+    <div class="right_content clr_white base_bg_right" v-if="activeIndex == 1">
+      <p class="f20 bold txt_linear">辖区报警工单数占比分析</p>
+      <RingChart :chartData="chartDataFour" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
       <div class="mt_20">
-        <p class="f20 bold txt_linear">油烟超标次数（top8）</p>
+        <p class="f20 bold txt_linear">油烟超标时长（top8）</p>
         <BarChartFive :chartData="BarData" height="30vh" divwidth="100%"></BarChartFive>
       </div>
 
     </div>
+    <div class="right_content clr_white base_bg_right" v-if="activeIndex == 2">
+      <p class="f20 bold txt_linear">工地五色治理</p>
+      <div class="flex bold enforcement_num text-center mt_20">
+        <div class="flex-item bg_blue01 weui-cell">
+          <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"></div>
+          <div class="weui-cell__bd">
+            <p class="f14">低风险</p>
+            <p class="f18 txt_linear mt_5">26</p>
+          </div>
+        </div>
+        <div class="flex-item bg_blue01 weui-cell">
+          <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"></div>
+          <div class="weui-cell__bd">
+            <p class="f14">一般风险</p>
+            <p class="f18 txt_linear mt_5">26</p>
+          </div>
+        </div>
+        <div class="flex-item bg_blue01 weui-cell">
+          <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"></div>
+          <div class="weui-cell__bd">
+            <p class="f14">中风险</p>
+            <p class="f18 txt_linear mt_5">26</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex bold enforcement_num text-center mt_20">
+        <div class="flex-item bg_blue01 weui-cell">
+          <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"></div>
+          <div class="weui-cell__bd">
+            <p class="f14">较高风险</p>
+            <p class="f18 txt_linear mt_5">26</p>
+          </div>
+        </div>
+        <div class="flex-item bg_blue01 weui-cell">
+          <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"></div>
+          <div class="weui-cell__bd">
+            <p class="f14">高风险</p>
+            <p class="f18 txt_linear mt_5">26</p>
+          </div>
+        </div>
+      </div>
+      <div class="clr_white mt_20">
+        <p class="f20 bold txt_linear">工地一件事</p>
+<!--        <BarChartFour :chartData="BarDataThree" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></BarChartFour>-->
+        <RingChart :chartData="chartDataFive" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+      </div>
+      <div class="mt_20">
+        <p class="f20 bold txt_linear">社会监督</p>
+        <div class="bg_blue01 text-center">
+          <div class="flex p20">
+            <div class="flex-item">
+              <p>社会关注度</p>
+              <p class="f26 bold txt_linear mt_10 mb_10">65562</p>
+              <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>
+            </div>
+            <div class="flex-item">
+              <p>社会关注度</p>
+              <p class="f26 bold txt_linear mt_10 mb_10">65562</p>
+              <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>
+            </div>
+          </div>
+          <div class="flex p20">
+            <div class="flex-item">
+              <p>社会关注度</p>
+              <p class="f26 bold txt_linear mt_10 mb_10">65562</p>
+              <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>
+            </div>
+            <div class="flex-item">
+              <p>社会关注度</p>
+              <p class="f26 bold txt_linear LH_2">65562</p>
+              <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
+    </div>
   </div>
 </template>
 
@@ -70,12 +143,13 @@
   import PieChartTwo from '@/components/Charts/PieChartTwo'
 
   export default {
-    name: 'parameterList',
+    name: 'appearance',
     directives: {waves},
     mixins: [map],
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        activeIndex:0,
         pieChartOne:{
           color: ['#75E4E3', '#E5AF45', '#9941E2'],
           // 预警值 环中的数据显示
@@ -338,10 +412,10 @@
               },
               axisLabel: {
                 show: true,
+                rotate:40,
                 textStyle: {
                   color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
+                  fontSize:'12',
                 }
               },
               splitLine: { show: false },//去除网格线
@@ -551,6 +625,179 @@
             },
           ]
         },
+        chartDataFour: {
+          title:{},
+          tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          legend: {
+            show:false
+          },
+          color:['#367CFD','rgba(255,209,91,1)'],
+          series: [
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: ['65%', '80%'],
+              avoidLabelOverlap: false,
+              // label: {
+              //   show: false,
+              //   position: 'center',
+              //
+              // },
+              emphasis: {
+                label: {
+                  show: true,
+                  fontSize: '30',
+                  fontWeight: 'bold'
+                }
+              },
+              // labelLine: {
+              //   show: false
+              // },
+              markLine :{
+                label  :{
+                  show:true,
+                  position :'outside'
+                },
+              },
+              labelLine:{
+                normal:{
+                  lineStyle: {
+                    color: '#fff'
+                  },
+                  length:10,
+                  length2 :35,
+                }
+              },
+              label :{
+                // formatter: [
+                //   '{c}',
+                //   '{b}',
+                //   '{d}'
+                // ].join('\n'),
+                formatter: '{c}<\n>{b}{d}%',
+                verticalAlign :'bottom',
+                position:'outside',
+                textShadowOffsetY :10,
+                align :'right',
+                color:'white',
+                height :60,
+                lineHeight:30,
+                fontSize:'16',
+                rich: {
+                  a: {
+                    verticalAlign:'bottom',
+                    // 没有设置 `verticalAlign`，则 `verticalAlign` 为 bottom
+                  }
+                }
+              },
+              data: [
+                {value: 520, name: '数字城管'},
+                {value: 205, name: '信访投诉'},
+              ]
+            }
+          ]
+        },
+        chartDataFive:{
+          title: {
+            zlevel: 0,
+            text: [
+              '{value|￥' + '}',
+              '{name|总金额}',
+            ].join('\n'),
+            rich: {
+              value: {
+                color: '#303133',
+                fontSize: 40,
+                fontWeight: 'bold',
+                lineHeight: 40,
+              },
+              name: {
+                color: '#909399',
+                lineHeight: 20
+              },
+            },
+            top: 'center',
+            left: '145',
+            textAlign: 'center',
+            textStyle: {
+              rich: {
+                value: {
+                  color: '#303133',
+                  fontSize: 40,
+                  fontWeight: 'bold',
+                  lineHeight: 40,
+                },
+                name: {
+                  color: '#909399',
+                  lineHeight: 20
+                },
+              },
+            },
+          },
+          tooltip: { // 悬停指示
+            trigger: 'item',
+            formatter: "{b}: {c} ({d}%)"
+          },
+          legend: {
+            orient: 'vertical',
+            x: 'right',
+            data: ['访问来源'],
+            itemGap: 30,
+            top: 'middle',
+            align: 'left',
+            icon: 'circle',
+            formatter: function (name) {
+              return name;
+            }
+          },
+          series: [
+            {
+              name: '访问来源',
+              type: 'pie',
+              radius: ['80%', '84%'],
+              center: [150, '50%'],
+              stillShowZeroSum: false,
+              avoidLabelOverlap: false,
+              zlevel: 1,
+              label: {
+                normal: {
+                  padding: [30, 30, 30, 30],
+                  backgroundColor: '#fff',
+                  show: false,
+                  position: 'center',
+                  formatter: [
+                    '{value|￥{c}}',
+                    '{name|{b}}'
+                  ].join('\n'),
+                  rich: {
+                    value: {
+                      color: '#303133',
+                      fontSize: 40,
+                      fontWeight: 'bold',
+                      lineHeight: 40,
+                    },
+                    name: {
+                      color: '#909399',
+                      lineHeight: 20
+                    },
+                  },
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '16',
+                    fontWeight: 'bold'
+                  }
+                }
+              },
+              data: [20,50]
+            }
+          ],
+          color: ['#410ADF','#F42850','#F6A93B','#7ED321','#282828']
+        },
         map: '', // 对象
         zoom: 14, // 地图的初始化级别，及放大比例
         centerLatitude:'30.2099178915',//中心纬度
@@ -634,10 +881,17 @@
   }
 </script>
 <style lang="scss" scoped>
-
+  .left_server{
+    position: fixed;
+    top: 13vh;
+    left: 20px;
+    z-index: 9999;
+    padding: 20px;
+  }
   .communityNum{
-    width: 30%;
+    /*width: 30%;*/
     li{
+      margin-right: 10%;
       height: 6vh;
       line-height: 6vh;
       background: url("./../../assets/image/communityNum_bg.png") left top no-repeat;
@@ -656,17 +910,17 @@
 
 
   }
-  .pieChart{
-    width: 70%;
-  }
-
-
 
   .enforcement_num{
     .flex-item{
-      padding: 20px 0;
+      padding: 10px 0;
+      .weui-cell__hd{
+        img{
+          width: 30px;
+        }
+      }
       &:nth-child(2){
-        margin: 0 20px;
+        margin: 0 5px;
       }
     }
   }

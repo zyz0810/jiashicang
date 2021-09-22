@@ -471,6 +471,10 @@ input[type="number"] {
 .mt_10{
  margin-top: 10px;
 }
+.mb_10{
+  margin-bottom: 10px;
+}
+
 .m0{
   margin: 0;
 }
@@ -962,6 +966,9 @@ input[type="number"] {
 .bg_blue{
   background: #081b3c;
 }
+.bg_blue01{
+  background: rgba(12,32,69,0.6);
+}
 iframe{
   border: none;
 }
@@ -983,4 +990,7 @@ iframe{
       }
     }
   }
+}
+.LH_2{
+  line-height: 2;
 }

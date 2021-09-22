@@ -127,8 +127,8 @@
               <div class="map_echart text-center">
                 <p class="f20 txtColor bold">今日案件热力图</p>
                 <!--                             <RingChart :chartData="mapData" :PieChartLegend="PieChartLegend" height="13vh"></RingChart>-->
-                <div id='mapDiv' class="mapDiv" style="width: 250px;height: 300px;"></div>
-                <!--<img src="./../../assets/image/map.png" class="my_map"/>-->
+<!--                <div id='mapDiv' class="mapDiv" style="width: 250px;height: 300px;"></div>-->
+                <img src="./../../assets/image/map.png" class="my_map"/>
               </div>
               <div class="anjian_genzong bold">
                 <p class="txtColor text-center bold f18">案件实时跟踪</p>
