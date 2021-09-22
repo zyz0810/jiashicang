@@ -3,68 +3,124 @@
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_content clr_white base_bg_left">
-      <div class="top clr_white">
-        <p class="f20 bold txt_linear">案件状况</p>
-        <div class="flex anjian_num">
-          <div class="flex-item">
-            <p class="f16 bold txtColor">今日受理量</p>
-            <div class="num flex text-center f26 bold mt_10">
-              <span></span>
-              <span>2</span>
-              <span>2</span>
-              <span>5</span>
-              <span>8</span>
-            </div>
-          </div>
-          <div class="flex-item">
-            <p class="f16 bold txtColor">今日及时结案量</p>
-            <div class="num flex text-center f26 bold mt_10">
-              <span></span>
-              <span>2</span>
-              <span>8</span>
-              <span>9</span>
-              <span>8</span>
-            </div>
-          </div>
-          <div class="flex-item">
-            <p class="f16 bold txtColor">今日结案量</p>
-            <div class="num flex text-center f26 bold mt_10">
-              <span></span>
-              <span>1</span>
-              <span>2</span>
-              <span>6</span>
-              <span>8</span>
-            </div>
-          </div>
+      <div class="left_server clr_white text-center f16 bold border base_bg shadow">
+        <div :class="['mb_20',activeIndex == 0 ? 'baseColor':'']" @click="activeIndex = 0">
+          <i class="iconfont icon-zaosheng f26"></i>
+          <p class="mt_10">数字城管</p>
         </div>
-        <el-row :gutter="20" class="pie_chart">
-          <el-col :span="12">
-            <PieChartTwo :chartData="chartData" :PieChartLegend="PieChartLegend" height="21vh" :divwidth="'100%'"></PieChartTwo>
-          </el-col>
-          <el-col :span="12">
-            <PieChartTwo :chartData="chartDataTwo" :PieChartLegend="PieChartLegend" height="21vh" :divwidth="'100%'"></PieChartTwo>
-          </el-col>
-        </el-row>
+        <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="activeIndex = 1">
+          <i class="iconfont icon-fengji f26"></i>
+          <p class="mt_10">信访投诉</p>
+        </div>
+        <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="activeIndex = 2">
+          <i class="iconfont icon-zaosheng f26"></i>
+          <p class="mt_10">二级指挥</p>
+        </div>
       </div>
-
-      <div class="mt_20">
-        <p class="f20 bold txt_linear mb_20">案件类型占比分析</p>
-        <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
-      </div>
-
+      <ul class="direct_option clr_white text-center" v-if="activeIndex == 2">
+        <li :class="['border','shadow','mb_10',directType==1?'baseColor':'']" @click="directType=1">AI上报</li>
+        <li :class="['border','shadow',directType==2?'baseColor':'']" @click="directType=2">后台录入</li>
+      </ul>
     </div>
     <div class="right_content clr_white base_bg_right">
       <div class="top clr_white">
-        <p class="f20 bold txt_linear">案件高发路段（top6）</p>
+        <p class="f20 bold txt_linear">今日案件高发路段（top6）</p>
         <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="26vh" divwidth="100%"></BarChartFour>
       </div>
       <div class="mt_20 ">
-        <p class="f20 bold txt_linear">部门案件处置分析</p>
+        <p class="f20 bold txt_linear">今日部门案件处置分析</p>
         <BarChartFive :chartData="BarData" height="30vh" divwidth="100%"></BarChartFive>
       </div>
 
     </div>
+    <div class="top_div top_one flex clr_white text-center f12 bold" v-if="activeIndex == 0">
+      <div class="flex-item border shadow">
+        今日上报量
+        <span class="txt_linear">66</span>
+      </div>
+      <div class="flex-item border shadow ml_10">
+        今日处理量
+        <span class="txt_linear">4</span>
+      </div>
+      <div class="flex-item border shadow ml_10">
+        今日未处理量
+        <span class="txt_linear">4</span>
+      </div>
+      <div class="flex-item border shadow ml_10">
+        今日黄灯件
+        <span class="txt_linear">4</span>
+      </div>
+      <div class="flex-item border shadow ml_10">
+        今日红灯件
+        <span class="txt_linear">4</span>
+      </div>
+    </div>
+    <div class="top_div flex clr_white text-center f12 bold" v-if="activeIndex == 1">
+      <div class="flex border shadow mr_20" style="width: 450px">
+        <div class="flex-item">
+          今日受理量
+          <span class="txt_linear">66</span>
+        </div>
+        <div class="flex-item">
+          同比下降
+          <span class="txt_linear">4</span>
+        </div>
+        <div class="flex-item">
+          环比下降
+          <span class="txt_linear">4</span>
+        </div>
+        <div class="flex-item">
+          满意率
+          <span class="txt_linear">4</span>
+        </div>
+      </div>
+      <div class="flex border shadow">
+        <div class="flex-item">
+          重复投诉件
+          <span class="txt_linear">4</span>
+        </div>
+      </div>
 
+    </div>
+    <div class="top_div flex clr_white text-center f12 bold" v-if="activeIndex == 2">
+      <div class="flex border shadow mr_20">
+        <div class="flex-item">
+          今日上报量
+          <span class="txt_linear">4</span>
+        </div>
+      </div>
+      <div class="flex border shadow mr_20">
+        <div class="flex-item">
+          今日受理量
+          <span class="txt_linear">4</span>
+        </div>
+      </div>
+      <div class="flex border shadow">
+        <div class="flex-item">
+          今日结案量
+          <span class="txt_linear">4</span>
+        </div>
+      </div>
+
+    </div>
+    <div class="mapBtn clr_white border shadow p20 LH_2" v-if="activeIndex != 2" @click="mapType == 1?mapType = 2:mapType = 1">
+      <p v-if="mapType == 1">重复件<br/>热力图</p>
+      <p v-if="mapType == 2">实时<br/>点位</p>
+    </div>
+    <ul class="point_intro bg_blue01 p20">
+      <li class="weui-cell text-center" v-if="mapType  == 2 && activeIndex == 0">
+        <div class="weui-cell__hd"><img src="./../../assets/image/point02.png"/></div>
+        <div class="weui-cell__bd baseColor">红灯件</div>
+      </li>
+      <li class="weui-cell text-center" v-if="mapType  == 2  && activeIndex != 2">
+        <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"/></div>
+        <div class="weui-cell__bd baseColor">黄灯件</div>
+      </li>
+      <li class="weui-cell text-center" v-if="(mapType  == 2  && activeIndex != 2) || activeIndex == 2">
+        <div class="weui-cell__hd"><img src="./../../assets/image/point03.png"/></div>
+        <div class="weui-cell__bd baseColor">正常件</div>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -82,12 +138,15 @@
   import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
 
   export default {
-    name: 'parameterList',
+    name: 'case',
     directives: {waves},
     mixins: [map],
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        directType:1,
+        mapType:1,
+        activeIndex:0,
         chartData: {
           color: ['#EB4B4B', 'rgb(245,245,245)'],
           title: [{
@@ -427,7 +486,7 @@
           },
           grid: {
             left: '0',
-            right: '0',
+            right: '50',
             bottom: '-20',
             top: '20',
             containLabel: true
@@ -583,13 +642,60 @@
   }
 </script>
 <style lang="scss" scoped>
+  .point_intro{
+    position: fixed;
+    bottom: 160px;
+    right: 30%;
+    z-index: 9999;
+    li{
+      width: 129px;
+      height: 51px;
+      background: url("./../../assets/image/intro_bg.png") no-repeat left center;
+      .weui-cell__hd{
+        width: 45px;
+        img{
+          width: 75%;
+        }
+      }
+    }
+  }
+  .top_div{
+    &.top_one{
+      width: 50%;
+      left: 20%;
+      .flex-item{
+        padding: 10px 0;
+      }
+    }
+
+  }
+  .mapBtn{
+    position: fixed;
+    top: 15vh;
+    left: 15%;
+    z-index: 999999;
+  }
   .left_content{
     padding: 20px;
-    width: 32%;
+    width: 20%;
     position: fixed;
     top: 10vh;
     left: 20px;
-    z-index: 9999;
+    z-index: 99999;
+    .left_server{
+      width: 100px;
+      padding: 20px 0;
+    }
+    .direct_option{
+      position: absolute;
+      left: 140px;
+      top: 20px;
+      z-index: 99999;
+      width: 80px;
+      li{
+        padding: 10px;
+      }
+    }
     .anjian_num{
       padding: 20px 0;
     }
