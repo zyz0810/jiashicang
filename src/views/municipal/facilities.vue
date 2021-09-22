@@ -3,41 +3,30 @@
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_content base_bg_left">
-        <div class="clr_white p20">
-          <p class="f20 bold txt_linear">亮灯概况</p>
-          <div class="weui-cell facilities_bg">
-            <div class="weui-cell__hd" style="width: 40%;">
-              <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'100%'"></PieChartTwo>
-            </div>
-            <div class="weui-cell__bd bold">
-              <p class="f20">当前亮灯情况</p>
-              <div class="progress_cont mt_10">
-                <el-progress :show-text="false" :stroke-width="15" :percentage="80"></el-progress>
-                <span class="progress_border"></span>
-                <span class="progress_border"></span>
-                <span class="progress_border"></span>
-                <span class="progress_border"></span>
-              </div>
-              <p class="mt_10">
-                亮灯数<span class="clr_yellow txt_shadow m_r30">226521</span>
-                总灯数<span class="clr_yellow txt_shadow">21596</span>
-              </p>
-            </div>
-          </div>
-
-
-<!--          <el-row :gutter="20" class="pie_chart">-->
-<!--            <el-col :span="12">-->
-<!--              &lt;!&ndash;<RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>&ndash;&gt;-->
+<!--        <div class="clr_white p20">-->
+<!--          <p class="f20 bold txt_linear">亮灯概况</p>-->
+<!--          <div class="weui-cell facilities_bg">-->
+<!--            <div class="weui-cell__hd" style="width: 40%;">-->
 <!--              <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'100%'"></PieChartTwo>-->
-<!--            </el-col>-->
-<!--            <el-col :span="12">-->
-<!--              <RingChart :chartData="chartData" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>-->
-<!--            </el-col>-->
-<!--          </el-row>-->
-        </div>
+<!--            </div>-->
+<!--            <div class="weui-cell__bd bold">-->
+<!--              <p class="f20">当前亮灯情况</p>-->
+<!--              <div class="progress_cont mt_10">-->
+<!--                <el-progress :show-text="false" :stroke-width="15" :percentage="80"></el-progress>-->
+<!--                <span class="progress_border"></span>-->
+<!--                <span class="progress_border"></span>-->
+<!--                <span class="progress_border"></span>-->
+<!--                <span class="progress_border"></span>-->
+<!--              </div>-->
+<!--              <p class="mt_10">-->
+<!--                亮灯数<span class="clr_yellow txt_shadow m_r30">226521</span>-->
+<!--                总灯数<span class="clr_yellow txt_shadow">21596</span>-->
+<!--              </p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
 
-      <div class="mt_20 clr_white">
+      <div class="clr_white">
         <p class="f20 bold txt_linear">市政管理信息总览</p>
         <div class="f16 bold flex mt_20 facilities_intro ml_10">
           <div>养护道路：103条</div>
@@ -160,7 +149,30 @@
       </div>
 
     </div>
-
+    <div class="top_div flex clr_white text-center">
+      <div class="flex f14 bold mr_20 border shadow" style="width: 400px;">
+        <div class="flex-item txt_linear">井盖设备</div>
+        <div class="flex-item">
+          总览
+          <span class="txt_linear">66</span>
+        </div>
+        <div class="flex-item">
+          离线
+          <span class="txt_linear">4</span>
+        </div>
+        <div class="flex-item">
+          故障
+          <span class="txt_linear">4</span>
+        </div>
+      </div>
+      <div class="flex border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">
+        设备点位
+        <div style="position: absolute;top: 35px;left: 0;width: 100%; line-height: 30px;" class="clr_white border shadow" v-if="showOption==1">
+          <p :class="showType == 1 ? 'baseColor':''" @click="showType = 1">井盖点位</p>
+          <p :class="showType == 2 ? 'baseColor':''" @click="showType = 2">江虹桥</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -185,6 +197,8 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        showOption:0,
+        showType:1,
         listQuery:{
           status:0
         },
@@ -519,12 +533,20 @@
           grid: {
             left: '0',
             right: '0',
-            bottom: '40',
+            bottom: '60',
             top: '10',
             containLabel: true
           },
           //----------------   图例 legend  -----------------
-          legend:{},
+          legend:{
+            bottom:0,
+            textStyle:{
+              color:'#fff',
+            },
+
+            data:['监测点读数','即时形变','累计变形'],
+          },
+          color:['rgb(3,235,252)','rgb(54,142,254)','rgb(31,205,159)'],
           xAxis: {
             // show:false,
             axisTick: {
@@ -575,16 +597,48 @@
             type: 'value'
           },
           series: [{
+            name:'监测点读数',
+            symbol:'circle',
+            symbolSize:8,
             itemStyle : {
               normal : {
+                color:'rgb(3,235,252)',
                 lineStyle:{
-                  color:'#F3E981'
+                  color:'rgb(3,235,252)'
                 }
               }
             },
             data: [820, 932, 901, 934, 1290, 1330, 1320],
             type: 'line'
-          }]
+          }, {
+            name:'即时形变',
+            symbol:'circle',
+            symbolSize:8,
+            itemStyle : {
+              normal : {
+                color:'rgb(54,142,254)',
+                lineStyle:{
+                  color:'rgb(54,142,254)'
+                }
+              }
+            },
+            data: [0, 0, 0, 0, 0, 50, 0],
+            type: 'line'
+            },{
+            name:'累计变形',
+            symbol:'circle',
+            symbolSize:8,
+            itemStyle : {
+              normal : {
+                color:'rgb(31,205,159)',
+                lineStyle:{
+                  color:'rgb(31,205,159)'
+                }
+              }
+            },
+            data: [80, 32, 1, 34, 290, 330, 320],
+            type: 'line'
+            }]
         },
         BarData:{
           title: {},
@@ -858,6 +912,10 @@
   }
 </script>
 <style lang="scss" scoped>
+  .top_div{
+    width: 50%;
+    left: 20%;
+  }
   .facilitiesWarning_num{
     .flex-item{
       &:nth-child(1){

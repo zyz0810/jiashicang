@@ -86,38 +86,81 @@
       </div>
 
     </div>
-    <div class="water_survey flex">
-      <div class="flex f14 bold mr_20">
-        <div class="survey_name text-center"><span class="txt_linear f18">设备管理</span></div>
+    <div class="top_div flex clr_white text-center">
+      <div class="flex f14 bold mr_20 border shadow" style="width: 300px;">
+        <div class="flex-item txt_linear">视频管理</div>
         <div class="flex-item">
-          <p class="baseColor">总览</p>
-          <p class="f20 clr_yellow mt_5 ml_10">66</p>
+          正常
+          <span class="txt_linear">66</span>
         </div>
         <div class="flex-item">
-          <p class="baseColor">离线</p>
-          <p class="f20 clr_yellow mt_5 ml_10">0</p>
+          离线
+          <span class="txt_linear">4</span>
         </div>
         <div class="flex-item">
-          <p class="baseColor">故障</p>
-          <p class="f20 clr_yellow mt_5 ml_10">0</p>
+          故障
+          <span class="txt_linear">4</span>
         </div>
       </div>
-      <div class="flex f14 bold">
-        <div class="survey_name text-center"><span class="txt_linear f18">视频监控</span></div>
+      <div class="flex f14 bold mr_20 border shadow" style="width: 350px;">
+        <div class="flex-item txt_linear">设备管理</div>
         <div class="flex-item">
-          <p class="baseColor">正常</p>
-          <p class="f20 clr_yellow mt_5 ml_10">1836</p>
+          总览
+          <span class="txt_linear">66</span>
         </div>
         <div class="flex-item">
-          <p class="baseColor">离线</p>
-          <p class="f20 clr_yellow mt_5 ml_10">0</p>
+          离线
+          <span class="txt_linear">4</span>
         </div>
         <div class="flex-item">
-          <p class="baseColor">故障</p>
-          <p class="f20 clr_yellow mt_5 ml_10">0</p>
+          故障
+          <span class="txt_linear">4</span>
+        </div>
+
+      </div>
+      <div class="flex border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">
+        设备点位
+        <div style="position: absolute;top: 35px;left: 0;width: 100%; line-height: 30px;" class="clr_white border shadow" v-if="showOption==1">
+          <p :class="showType == 1 ? 'baseColor':''" @click="showType = 1">河道水质</p>
+          <p :class="showType == 2 ? 'baseColor':''" @click="showType = 2">河道水量</p>
+          <p :class="showType == 3 ? 'baseColor':''" @click="showType = 3">河道水位</p>
+          <p :class="showType == 4 ? 'baseColor':''" @click="showType = 4">易积水点</p>
+          <p :class="showType == 5 ? 'baseColor':''" @click="showType = 5">视频点位</p>
         </div>
       </div>
     </div>
+<!--    <div class="water_survey flex">-->
+<!--      <div class="flex f14 bold mr_20">-->
+<!--        <div class="survey_name text-center"><span class="txt_linear f18">设备管理</span></div>-->
+<!--        <div class="flex-item">-->
+<!--          <p class="baseColor">总览</p>-->
+<!--          <p class="f20 clr_yellow mt_5 ml_10">66</p>-->
+<!--        </div>-->
+<!--        <div class="flex-item">-->
+<!--          <p class="baseColor">离线</p>-->
+<!--          <p class="f20 clr_yellow mt_5 ml_10">0</p>-->
+<!--        </div>-->
+<!--        <div class="flex-item">-->
+<!--          <p class="baseColor">故障</p>-->
+<!--          <p class="f20 clr_yellow mt_5 ml_10">0</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="flex f14 bold">-->
+<!--        <div class="survey_name text-center"><span class="txt_linear f18">视频监控</span></div>-->
+<!--        <div class="flex-item">-->
+<!--          <p class="baseColor">正常</p>-->
+<!--          <p class="f20 clr_yellow mt_5 ml_10">1836</p>-->
+<!--        </div>-->
+<!--        <div class="flex-item">-->
+<!--          <p class="baseColor">离线</p>-->
+<!--          <p class="f20 clr_yellow mt_5 ml_10">0</p>-->
+<!--        </div>-->
+<!--        <div class="flex-item">-->
+<!--          <p class="baseColor">故障</p>-->
+<!--          <p class="f20 clr_yellow mt_5 ml_10">0</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -141,6 +184,8 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        showOption:0,
+        showType:1,
         abnormalIndex:0,
         lineData:{
           title: {},
@@ -638,6 +683,10 @@
 </script>
 <style lang="scss" scoped>
   @import '@/styles/variables.scss';
+  .top_div{
+    width: 50%;
+    left: 20%;
+  }
   .abnormal_tab{
 
   }

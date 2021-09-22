@@ -74,7 +74,7 @@
           </div>
         </div>
       </div>
-      <div class="flex bold enforcement_num text-center mt_20">
+      <div class="flex bold enforcement_num text-center mt_20 reset_w">
         <div class="flex-item bg_blue01 weui-cell">
           <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"></div>
           <div class="weui-cell__bd">
@@ -97,29 +97,27 @@
       </div>
       <div class="mt_20">
         <p class="f20 bold txt_linear">社会监督</p>
-        <div class="bg_blue01 text-center">
-          <div class="flex p20">
+        <div class="bg_blue01 text-center p20 mt_10">
+          <div class="flex">
             <div class="flex-item">
               <p>社会关注度</p>
-              <p class="f26 bold txt_linear mt_10 mb_10">65562</p>
-              <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>
-            </div>
-            <div class="flex-item">
-              <p>社会关注度</p>
-              <p class="f26 bold txt_linear mt_10 mb_10">65562</p>
-              <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>
-            </div>
-          </div>
-          <div class="flex p20">
-            <div class="flex-item">
-              <p>社会关注度</p>
-              <p class="f26 bold txt_linear mt_10 mb_10">65562</p>
+              <p class="f26 bold txt_linear LH_2">65562</p>
               <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>
             </div>
             <div class="flex-item">
               <p>社会关注度</p>
               <p class="f26 bold txt_linear LH_2">65562</p>
-              <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>
+              <p class="baseColor">已处理5%</p>
+            </div>
+          </div>
+          <div class="flex mt_20">
+            <div class="flex-item">
+              <p>信访统计</p>
+              <p class="f26 bold txt_linear LH_2">337</p>
+            </div>
+            <div class="flex-item">
+              <p>平安问答</p>
+              <p class="f26 bold txt_linear LH_2">65562</p>
             </div>
           </div>
         </div>
@@ -149,7 +147,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
-        activeIndex:0,
+        activeIndex:2,
         pieChartOne:{
           color: ['#75E4E3', '#E5AF45', '#9941E2'],
           // 预警值 环中的数据显示
@@ -704,8 +702,8 @@
           title: {
             zlevel: 0,
             text: [
-              '{value|￥' + '}',
-              '{name|总金额}',
+              '2222',
+              '{name|申请次数}',
             ].join('\n'),
             rich: {
               value: {
@@ -744,11 +742,14 @@
           legend: {
             orient: 'vertical',
             x: 'right',
-            data: ['访问来源'],
+            data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎'],
             itemGap: 30,
             top: 'middle',
             align: 'left',
             icon: 'circle',
+            textStyle:{
+              color:'#fff'
+            },
             formatter: function (name) {
               return name;
             }
@@ -757,43 +758,50 @@
             {
               name: '访问来源',
               type: 'pie',
-              radius: ['80%', '84%'],
+              radius: ['60%', '84%'],
               center: [150, '50%'],
               stillShowZeroSum: false,
               avoidLabelOverlap: false,
               zlevel: 1,
               label: {
-                normal: {
-                  padding: [30, 30, 30, 30],
-                  backgroundColor: '#fff',
-                  show: false,
-                  position: 'center',
-                  formatter: [
-                    '{value|￥{c}}',
-                    '{name|{b}}'
-                  ].join('\n'),
-                  rich: {
-                    value: {
-                      color: '#303133',
-                      fontSize: 40,
-                      fontWeight: 'bold',
-                      lineHeight: 40,
-                    },
-                    name: {
-                      color: '#909399',
-                      lineHeight: 20
-                    },
-                  },
+                labelLine:{
+                  show:false
                 },
-                emphasis: {
-                  show: true,
-                  textStyle: {
-                    fontSize: '16',
-                    fontWeight: 'bold'
-                  }
+                normal: {
+              //     padding: [30, 30, 30, 30],
+              //     backgroundColor: '#fff',
+                  show: false,
+              //     position: 'center',
+              //     formatter: [
+              //       '{value|￥{c}}',
+              //       '{name|{b}}'
+              //     ].join('\n'),
+              //     rich: {
+              //       value: {
+              //         color: '#303133',
+              //         fontSize: 40,
+              //         fontWeight: 'bold',
+              //         lineHeight: 40,
+              //       },
+              //       name: {
+              //         color: '#909399',
+              //         lineHeight: 20
+              //       },
+              //     },
+              //   },
+              //   emphasis: {
+              //     show: true,
+              //     textStyle: {
+              //       fontSize: '16',
+              //       fontWeight: 'bold'
+              //     }
                 }
               },
-              data: [20,50]
+              data: [{value: 335, name: '直接访问'},
+                {value: 310, name: '邮件营销'},
+                {value: 234, name: '联盟广告'},
+                {value: 135, name: '视频广告'},
+                {value: 548, name: '搜索引擎'}]
             }
           ],
           color: ['#410ADF','#F42850','#F6A93B','#7ED321','#282828']
@@ -907,11 +915,13 @@
         }
       }
     }
-
-
   }
 
   .enforcement_num{
+    &.reset_w{
+      width: 67%;
+      margin: 10px auto 0;
+    }
     .flex-item{
       padding: 10px 0;
       .weui-cell__hd{
