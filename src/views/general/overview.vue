@@ -7,7 +7,7 @@
             <div class="title_index f18 bold text-center"><span class="txt_linear">数字城管</span></div>
             <div class="flex anjian_num clr_white mt_20">
               <div class="flex-item">
-                <p class="f16 bold txtColor">今日受理量</p>
+                <p class="f16 bold txtColor">今日上报量</p>
                 <div class="num flex text-center f26 bold mt_10">
                   <span></span>
                   <span>2</span>
@@ -17,7 +17,7 @@
                 </div>
               </div>
               <div class="flex-item">
-                <p class="f16 bold txtColor">今日及时结案量</p>
+                <p class="f16 bold txtColor">今日处理量</p>
                 <div class="num flex text-center f26 bold mt_10">
                   <span></span>
                   <span>2</span>
@@ -27,7 +27,7 @@
                 </div>
               </div>
               <div class="flex-item">
-                <p class="f16 bold txtColor">今日结案量</p>
+                <p class="f16 bold txtColor">今日未处理量</p>
                 <div class="num flex text-center f26 bold mt_10">
                   <span></span>
                   <span></span>
@@ -113,11 +113,11 @@
               <ul class="f16 clr_white bold anjian_cegory">
                 <li class="flex">
                   <span class="block f26 text-center">268</span>
-                  <p>今日受理案件</p>
+                  <p>今日上报案件</p>
                 </li>
                 <li class="flex mt_10">
                   <span class="block f26 text-center">228</span>
-                  <p>今日审理案件</p>
+                  <p>今日受理案件</p>
                 </li>
                 <li class="flex mt_10">
                   <span class="block f26 text-center">198</span>
