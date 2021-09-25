@@ -103,7 +103,7 @@
       </div>
 
     </div>
-    <div class="mapBtn clr_white border shadow p20 LH_2" v-if="activeIndex != 2" @click="mapType == 1?mapType = 2:mapType = 1">
+    <div class="mapBtn clr_white border shadow p20 LH_2" v-if="activeIndex != 2" @click="changeMap">
       <p v-if="mapType == 1">重复件<br/>热力图</p>
       <p v-if="mapType == 2">实时<br/>点位</p>
     </div>
@@ -136,7 +136,7 @@
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
-
+  let heatmapOverlay;
   export default {
     name: 'case',
     directives: {waves},
@@ -576,17 +576,70 @@
       // this.$nextTick(function() {
       //
       // })
-      this.onLoad()
+      this.onLoad();
+      this.getHeatMap();
     },
     methods: {
-      onLoad() {
-        let T = window.T
-        this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
-        // 添加地图类型控件
-        this.addCtrl()
+      changeMap(){
+        if(this.mapType == 1){
+          this.mapType  = 2
+          this.getMaker();
+        }else{
+          this.mapType  = 1
+          this.getHeatMap();
 
+        }
+      },
+      getHeatMap(){
+        this.map.clearOverLays();
+        console.log('热力图')
+        var data = [
+          {name: '海门', value: 899},
+          {name: '鄂尔多斯', value: 312},
+          {name: '招远', value: 512},
+          {name: '舟山', value: 142},
+          {name: '齐齐哈尔', value: 514},
+          {name: '盐城', value: 615},
+          {name: '盐城1', value: 914},
+          {name: '赤峰1', value: 315},
+          {name: '赤峰2', value: 315},
+        ];
+        var geoCoordMap = {
+          '海门': [120.217470,30.202110],
+          '招远': [120.223820,30.199590],
+          '舟山': [120.217210,30.195440],
+          '盐城': [120.207510,30.206050],
+          '赤峰': [120.237720,30.199590],
+          '盐城1': [120.219350,30.192690],
+          '赤峰1': [120.218150,30.190840],
+          '赤峰2': [120.226140,30.196250],
+
+        };
+        var convertData = function (data) {
+          var res = [];
+          for (var i = 0; i < data.length; i++) {
+            var geoCoord = geoCoordMap[data[i].name];
+            if (geoCoord) {
+              res.push({
+                name: data[i].name,
+                lat: geoCoord[1],
+                lng: geoCoord[0],
+                count: data[i].value
+              });
+            }
+          }
+          return res;
+        };
+        var points = convertData(data);
+        heatmapOverlay = new T.HeatmapOverlay({
+          "radius": 50,
+        });
+        this.map.addOverLay(heatmapOverlay);
+        heatmapOverlay.setDataSet({data: points, max: 300});
+        console.log(points)
+      },
+      getMaker(){
+        this.map.clearOverLays();
         // // 普通标注
         let site = [
           { lng: 117.283042, lat: 31.86119 },
@@ -629,10 +682,18 @@
           '<p ref="enterpriseName">地址描述：人民路就简单三</p>' +
           '<p style="text-align: right"><a style="cursor: pointer;" onclick="openInfo()"> 查看详情</a></p>' +
           '</div></div>';
-          infoWin1.setContent(sContent);
-          marker.addEventListener("click", function () {
+        infoWin1.setContent(sContent);
+        marker.addEventListener("click", function () {
           marker.openInfoWindow(infoWin1);
         });// 将标注添加到地图中
+      },
+      onLoad() {
+        let T = window.T
+        this.map = new T.Map('mapDiv')
+        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
+        // 添加地图类型控件
+        // this.addCtrl()
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
         this.map.setStyle('indigo')
 
