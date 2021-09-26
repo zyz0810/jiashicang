@@ -28,30 +28,30 @@
 
       <div class="clr_white">
         <p class="f20 bold txt_linear">市政管理信息总览</p>
-        <div class="f16 bold flex mt_20 facilities_intro ml_10">
+        <div class="f14 bold flex mt_20 facilities_intro ml_10">
           <div>养护道路：103条</div>
           <div>排水管线长度：5625米</div>
         </div>
-        <div class="f16 bold flex mt_20 facilities_intro ml_10">
+        <div class="f14 bold flex mt_20 facilities_intro ml_10">
           <div>养护单位：14家</div>
           <div>智能感应井盖：103个</div>
         </div>
-        <div class="f16 bold flex mt_20 mb_20 facilities_intro ml_10">
+        <div class="f14 bold flex mt_20 mb_20 facilities_intro ml_10">
           <div>管道水位监测：24个</div>
           <div>管道流量监测：2个</div>
         </div>
 <!--        <RingChart :class="'transformChart'" :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>-->
-        <div class="flex facilitiesWarning_num bold text-center">
-          <div class="flex-item f16">
+        <div class="flex facilitiesWarning_num f14 bold text-center">
+          <div class="flex-item">
             <div class="facilities_bg01"><span class="f26">12</span> 件</div>
             <p class="mt_10">流量报警</p>
           </div>
-          <div class="flex-item f16">
+          <div class="flex-item">
             <div class="facilities_bg02"><span class="f26">36</span> 件</div>
             <p class="mt_10">水位报警</p>
           </div>
         </div>
-        <div class="facilitiesWarning_num text-center f16 bold">
+        <div class="facilitiesWarning_num text-center bold">
           <div class="facilities_bg03"><span class="f26">12</span> 件</div>
           <p class="mt_10">井盖报警</p>
         </div>
@@ -65,17 +65,17 @@
         <div class="flex bold text-center mt_10">
           <div class="flex-item equipment_normal">
             <div class="f26 num">46</div>
-            <p class="f18 mt_10">正常设备</p>
+            <p class="f16 mt_10">正常设备</p>
           </div>
           <div class="flex-item equipment_abnormal">
             <div class="f26 num">46</div>
-            <p class="f18 mt_10">正常设备</p>
+            <p class="f16 mt_10">正常设备</p>
           </div>
           <div class="flex-item rate_abnormal">
             <div class="f26 num">
               <ring-chart :chartData="pieData" :PieChartLegend="PieChartLegend" height="60px" divwidth="100%"></ring-chart>
             </div>
-            <p class="f18 mt_10">异常率</p>
+            <p class="f16 mt_10">异常率</p>
           </div>
         </div>
 
@@ -188,8 +188,10 @@
   import waves from '@/directive/waves';
   import { mapState } from 'vuex';
   import map from '@/components/Map/map.js'; // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point01.png'; // 引入刚才的map.js 注意路径
-
+  import point08 from '@/assets/image/point08.png'; // 引入刚才的map.js 注意路径
+  import point09 from '@/assets/image/point09.png';
+  import point10 from '@/assets/image/point10.png';
+  import point11 from '@/assets/image/point11.png';
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -865,26 +867,53 @@
         ]
         // this.markerPoint(site)
         //创建图片对象
-        var icon = new T.Icon({
-          iconUrl: point01,
-          iconSize: new T.Point(19, 27),
+        var icon1 = new T.Icon({
+          iconUrl: point08,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(10, 25)
+        });
+        var icon2 = new T.Icon({
+          iconUrl: point09,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(10, 25)
+        });
+        var icon3 = new T.Icon({
+          iconUrl: point10,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(10, 25)
+        });
+        var icon4 = new T.Icon({
+          iconUrl: point11,
+          iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(10, 25)
         });
         //创建信息窗口对象
         // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
-        this.map.addOverLay(marker);
+        // let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
+        // this.map.addOverLay(marker);
         // 随机向地图添加25个标注
-        // let bounds = this.map.getBounds();
-        // let sw = bounds.getSouthWest();
-        // let ne = bounds.getNorthEast();
-        // let lngSpan = Math.abs(sw.lng - ne.lng);
-        // let latSpan = Math.abs(ne.lat - sw.lat);
-        // for (let i = 0; i < 25; i++) {
-        //   let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-        //   var marker = new T.Marker(point, {icon: icon});// 创建标注
-        //   this.map.addOverLay(marker);
-        // }
+        let bounds = this.map.getBounds();
+        let sw = bounds.getSouthWest();
+        let ne = bounds.getNorthEast();
+        let lngSpan = Math.abs(sw.lng - ne.lng);
+        let latSpan = Math.abs(ne.lat - sw.lat);
+        for (let i = 0; i < 25; i++) {
+          if(i<4){
+            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+            var marker = new T.Marker(point, {icon: icon1});// 创建标注
+          }else if(i>4&&i<8){
+            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+            var marker = new T.Marker(point, {icon: icon2});// 创建标注
+          }else if(i>8&&i<12){
+            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+            var marker = new T.Marker(point, {icon: icon3});// 创建标注
+          }else if(i>12&&i<16){
+            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+            var marker = new T.Marker(point, {icon: icon4});// 创建标注
+          }
+
+          this.map.addOverLay(marker);
+        }
 
         var infoWin1 = new T.InfoWindow();
         let sContent =

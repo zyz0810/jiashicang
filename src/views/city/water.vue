@@ -87,7 +87,7 @@
 
     </div>
     <div class="top_div flex clr_white text-center">
-      <div class="flex f14 bold mr_20 border shadow" style="width: 300px;">
+      <div class="flex f14 bold mr_20 border shadow" style="width: 350px;">
         <div class="flex-item txt_linear">视频管理</div>
         <div class="flex-item">
           正常
@@ -175,7 +175,7 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point12.png' // 引入刚才的map.js 注意路径
 
   export default {
     name: 'parameterList',
@@ -356,27 +356,27 @@
         },
         listLoading:false,
         list:[{
-          name:'20201211号…',
+          name:'202012…',
           name2:'850000',
           end:'5000'
         },{
-          name:'20201211号…',
+          name:'2020121…',
           name2:'850000',
           end:'5000'
         },{
-          name:'20201211号…',
+          name:'20201211…',
           name2:'850000',
           end:'5000'
         },{
-          name:'20201211号…',
+          name:'20201211…',
           name2:'850000',
           end:'5000'
         },{
-          name:'20201211号…',
+          name:'20201211…',
           name2:'850000',
           end:'5000'
         },{
-          name:'20201211号…',
+          name:'20201211…',
           name2:'850000',
           end:'5000'
         }],
@@ -637,7 +637,7 @@
         //创建图片对象
         var icon = new T.Icon({
           iconUrl: point01,
-          iconSize: new T.Point(19, 27),
+          iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(10, 25)
         });
         //创建信息窗口对象

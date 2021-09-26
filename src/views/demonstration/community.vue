@@ -39,20 +39,20 @@
 
     <div class="right_content clr_white base_bg_right">
         <p class="f20 bold txt_linear">智能识别概况</p>
-        <div class="flex text-center mt_20">
-          <ul class="bold communityNum">
-            <li class="flex">
+        <div class="text-center">
+          <ul class="bold communityNum flex mt_10">
+            <li class="flex flex-item">
               <span class="f26 baseColor block">32</span>
               <span class="f16 clr_white block">监控点位</span>
             </li>
-            <li class="flex mt_20">
+            <li class="flex flex-item">
               <span class="f26 baseColor block">1</span>
               <span class="f16 clr_white block">监控路段</span>
             </li>
           </ul>
-          <div class="pieChart">
-<!--            <PieChartTwo :chartData="pieChart" :PieChartLegend="PieChartLegend" height="200px"></PieChartTwo>-->
-            <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" height="20vh" :divwidth="'50%'"></PieChartTwo>
+          <div class="pieChart mt_10">
+            <!--              <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="16vh"></RingChart>-->
+            <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" height="16vh" :divwidth="'100%'"></PieChartTwo>
           </div>
         </div>
         <p class="f20 bold txt_linear mt_20">今日违规场景概况</p>
@@ -75,7 +75,7 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point13.png' // 引入刚才的map.js 注意路径
 
   export default {
     name: 'parameterList',
@@ -436,7 +436,7 @@
           },
           grid: {
             left: '0',
-            right: '0',
+            right: '50',
             bottom: '-20',
             top: '20',
             containLabel: true
@@ -547,7 +547,7 @@
         //创建图片对象
         var icon = new T.Icon({
           iconUrl: point01,
-          iconSize: new T.Point(19, 27),
+          iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(10, 25)
         });
         //创建信息窗口对象
@@ -632,32 +632,25 @@
   }
 }
 
-
-  .communityNum{
-    width: 32%;
-    margin-right: 3%;
-    li{
-      height: 7vh;
-      line-height: 7vh;
-      background: url("./../../assets/image/communityNum_bg.png") left top no-repeat;
-      background-size: 100% 100%;
-      & > span{
-        &:nth-child(1){
-          width: 40%;
-          height: 7vh;
-        }
-        &:nth-child(2){
-          width: 60%;
-          height: 7vh;
-        }
+.communityNum{
+  /*width: 30%;*/
+  li{
+    margin-right: 10%;
+    height: 6vh;
+    line-height: 6vh;
+    background: url("./../../assets/image/communityNum_bg.png") left top no-repeat;
+    background-size: 100% 100%;
+    & > span{
+      &:nth-child(1){
+        width: 40%;
+        height: 6vh;
+      }
+      &:nth-child(2){
+        width: 60%;
+        height: 6vh;
       }
     }
-
-
   }
-  .pieChart{
-    width: 60%;
-  }
-
+}
 
 </style>

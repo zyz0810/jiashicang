@@ -125,7 +125,7 @@ export default {
       } else if(route.path == '/record/approval'){
         this.title = '备案审批数字驾驶舱'
       } else if(route.path == '/garbage/link'){
-        this.title = '垃圾全链路数字驾驶舱'
+        this.title = '环卫作业数字驾驶舱'
       } else if(route.path == '/digital/services'){
         this.title = '数字服务驾驶舱'
       } else if(route.path == '/demonstration/community'){

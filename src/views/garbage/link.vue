@@ -101,7 +101,7 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
+  import car from '@/assets/image/car.png' // 引入刚才的map.js 注意路径
 
   export default {
     name: 'parameterList',
@@ -518,8 +518,8 @@
         // this.markerPoint(site)
         //创建图片对象
         var icon = new T.Icon({
-          iconUrl: point01,
-          iconSize: new T.Point(19, 27),
+          iconUrl: car,
+          iconSize: new T.Point(50, 50),
           iconAnchor: new T.Point(10, 25)
         });
         //创建信息窗口对象

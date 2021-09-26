@@ -6,7 +6,7 @@
 
         <div class="txt_linear f18 bold">备案审批概况</div>
         <div class="mt_20 clr_white">
-          <div class="f26 bold text-center approval_num txt_shadow">审核总数：600</div>
+          <div class="f20 bold text-center approval_num txt_shadow">审核总数：600</div>
 
           <div class="circle_num text-center">
             <img src="./../../assets/image/approval_circle.png" class="circle_img">
@@ -31,7 +31,7 @@
         </div>
 
       <div class="mt_20">
-        <p class="f20 bold txt_linear">审批类型数量排名（top8）</p>
+        <p class="f20 bold txt_linear">审批类型数量排名（top6）</p>
         <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
       </div>
 
@@ -299,7 +299,7 @@
           },
           grid: {
             left: '0',
-            right: '0',
+            right: '50',
             bottom: '-20',
             top: '20',
             containLabel: true
@@ -326,7 +326,7 @@
                 show: true,
                 textStyle: {
                   color: '#fff',
-                  fontSize:'15',
+                  fontSize:'13',
                   fontWeight:'bold'
                 }
               },
@@ -368,7 +368,7 @@
 
                 }
               },
-              data: [320, 332, 301,230,56,963]
+              data: [123,156,230,301,320, 332,]
             },
           ]
         },

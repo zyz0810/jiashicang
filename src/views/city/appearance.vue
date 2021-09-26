@@ -137,7 +137,8 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point13.png' // 引入刚才的map.js 注意路径
+  import point02 from '@/assets/image/point14.png'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
 
   export default {
@@ -194,7 +195,7 @@
           series: [// 主要展示层的
             {
               name: '',
-              radius: ['55%', '70%'],
+              radius: ['50%', '65%'],
               center: ['50%', '50%'],
               type: 'pie',
               data: [{ value: 80, name: '违规立案' },
@@ -842,26 +843,41 @@
         ]
         // this.markerPoint(site)
         //创建图片对象
-        var icon = new T.Icon({
+        var icon1 = new T.Icon({
           iconUrl: point01,
-          iconSize: new T.Point(19, 27),
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(10, 25)
+        });
+        var icon2 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(10, 25)
         });
         //创建信息窗口对象
         // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
-        this.map.addOverLay(marker);
+        // let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
+        // this.map.addOverLay(marker);
         // 随机向地图添加25个标注
-        // let bounds = this.map.getBounds();
-        // let sw = bounds.getSouthWest();
-        // let ne = bounds.getNorthEast();
-        // let lngSpan = Math.abs(sw.lng - ne.lng);
-        // let latSpan = Math.abs(ne.lat - sw.lat);
+        let bounds = this.map.getBounds();
+        let sw = bounds.getSouthWest();
+        let ne = bounds.getNorthEast();
+        let lngSpan = Math.abs(sw.lng - ne.lng);
+        let latSpan = Math.abs(ne.lat - sw.lat);
         // for (let i = 0; i < 25; i++) {
         //   let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
         //   var marker = new T.Marker(point, {icon: icon});// 创建标注
         //   this.map.addOverLay(marker);
         // }
+        for (let i = 0; i < 25; i++) {
+          if(i<2){
+            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+            var marker = new T.Marker(point, {icon: icon1});// 创建标注
+          }else if(i>2&&i<4){
+            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
+            var marker = new T.Marker(point, {icon: icon2});// 创建标注
+          }
+          this.map.addOverLay(marker);
+        }
 
         var infoWin1 = new T.InfoWindow();
         let sContent =

@@ -63,7 +63,7 @@
 
 
       <div class="mt_20">
-        <p class="mb_20 f18 bold text-center">全区停车场数：1210</p>
+        <p class="mb_20 f16 bold text-center">全区停车场数：1210</p>
         <div  class="weui-cell">
           <div class="weui-cell__hd text-center" style="width: 90px;">
             <p class="f26 bold clr_yellow mb_20">25321</p>
@@ -87,7 +87,7 @@
     </div>
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 1">
       <p class="f20 bold txt_linear mb_20">车辆概况</p>
-      <div class="flex f16 bold clr_white bicycle text-center">
+      <div class="flex f14 bold clr_white bicycle text-center">
         <div class="flex-item flex_block_bg">
           <p>已备案车辆</p>
           <p class="clr_purple mt_10"><span class="f26">1.0</span>万</p>
@@ -142,15 +142,15 @@
         <el-row :gutter="10" class="mt_20 text-center">
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
             <p class="f16 bold txt_linear">节能率</p>
-            <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+            <PieChartTwo :chartData="PieData2" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
             <p class="f16 bold txt_linear">综合评价</p>
-            <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+            <PieChartTwo :chartData="PieData2" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
           </el-col>
           <div style="width:50%;margin: 0 auto 0;">
             <p class="f16 bold txt_linear">故障警告</p>
-            <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+            <PieChartTwo :chartData="PieData2" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
           </div>
         </el-row>
 
@@ -377,6 +377,83 @@
             },
           ]
         },
+        PieData2:{
+          tooltip: {
+            show: false,
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+          },
+          color: ['#7CDBFF', '#20437A'],
+          gird:{
+            top:0,
+            left:0,
+
+          },
+          // 80%是环中的数据显示
+          title: {
+            text: '80%',
+            left: 'center',
+            top: '40%',
+            textStyle: {
+              color: '#fff',
+              fontSize: 16,
+              align: 'center',
+            }
+          },
+          graphic: {
+            type: 'text',
+            left: 'center',
+            top: '58%',
+            style: {
+              text: '满意度',
+              textAlign: 'center',
+              fill: '#bfbfbf',
+              fontSize: 30,
+              fontWeight: 700
+            }
+          },
+          series: [
+            {
+              name: '单位工程评定',
+              type: 'pie',
+              radius: ['78%', '98%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+              },
+              data: [
+                { value: 80, name: '优良' },
+                { value: 20, name: '不及格' },
+              ]
+            },{
+              name: 'decorationOne',
+              type: 'pie',
+              color: ['#52D6FF'],
+              // center: ['30%', '50%'],
+              radius: ['65%', '64%'],
+              hoverAnimation: false,
+              lable: {
+                normal: {
+                  show: false,
+                },
+                emphasis: {
+                  show: false,
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false,
+                },
+              },
+              data: [
+                { value: 335, name: '' },
+              ],
+            },
+          ]
+        },
         activeIndex:0,
         chartData: {
           title:{},
@@ -451,7 +528,7 @@
             {
               name: '访问来源',
               type: 'pie',
-              radius: ['60%', '90%'],
+              radius: ['40%', '65%'],
               center: ['35%', '50%'],
               avoidLabelOverlap: false,
               label: {
@@ -605,7 +682,7 @@
           },
           grid: {
             left: '0',
-            right: '0',
+            right: '50',
             bottom: '-20',
             top: '20',
             containLabel: true
@@ -722,7 +799,7 @@
         //创建信息窗口对象
         // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
         let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
-        this.map.addOverLay(marker);
+        // this.map.addOverLay(marker);
         // 随机向地图添加25个标注
         // let bounds = this.map.getBounds();
         // let sw = bounds.getSouthWest();

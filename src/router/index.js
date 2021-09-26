@@ -156,10 +156,10 @@ export const asyncRoutes = [
     path: '/garbage',
     component: Layout,
     redirect: 'noRedirect',
-    name: '垃圾全链路',
+    name: '环卫作业',
     hidden: false,
     meta: {
-      title: '垃圾全链路',
+      title: '环卫作业',
       icon: '2',
       roles: [
         'admin',
@@ -172,7 +172,7 @@ export const asyncRoutes = [
         name: 'link',
         hidden: false,
         meta: {
-          title: '垃圾全链路',
+          title: '环卫作业',
           roles: [
             'admin',
           ]

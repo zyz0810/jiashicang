@@ -863,20 +863,22 @@ input[type="number"] {
 }
 .left_content{
   padding: 20px 0 20px 20px;
-  width: 26%;
+  width: 20%;
+  min-width: 400px;
   position: fixed;
   top: 10vh;
   left: 0px;
-  z-index: 9999;
+  z-index: 999999;
   height: 82%;
 }
 .right_content{
   padding: 20px 20px 20px 0;
-  width: 26%;
+  width: 20%;
+  min-width: 400px;
   position: fixed;
   top: 10vh;
   right: 0px;
-  z-index: 9999;
+  z-index: 999999;
   height: 82%;
 }
 .el-table tbody tr:hover>td {
