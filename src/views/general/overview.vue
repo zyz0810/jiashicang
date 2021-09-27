@@ -7,7 +7,7 @@
             <div class="title_index f18 bold text-center"><span class="txt_linear">数字城管</span></div>
             <div class="flex anjian_num clr_white mt_20">
               <div class="flex-item">
-                <p class="f16 bold txtColor">今日上报量</p>
+                <p class="f16 bold txtColor">本周上报量</p>
                 <div class="num flex text-center f26 bold mt_10">
                   <span>{{formData.city.shangbao[4]}}</span>
                   <span>{{formData.city.shangbao[3]}}</span>
@@ -17,7 +17,7 @@
                 </div>
               </div>
               <div class="flex-item">
-                <p class="f16 bold txtColor">今日处理量</p>
+                <p class="f16 bold txtColor">本周处理量</p>
                 <div class="num flex text-center f26 bold mt_10">
                   <span>{{formData.city.chuli[4]}}</span>
                   <span>{{formData.city.chuli[3]}}</span>
@@ -27,7 +27,7 @@
                 </div>
               </div>
               <div class="flex-item">
-                <p class="f16 bold txtColor">今日未处理量</p>
+                <p class="f16 bold txtColor">本周未处理量</p>
                 <div class="num flex text-center f26 bold mt_10">
                   <span>{{formData.city.undisposed[4]}}</span>
                   <span>{{formData.city.undisposed[3]}}</span>
@@ -39,7 +39,7 @@
             </div>
             <div class="weui-cell cityAdmin_cell mt_20">
               <div class="weui-cell__hd text-center">
-                <p class="clr_white">今日黄灯件</p>
+                <p class="clr_white">本周黄灯件</p>
                 <p class="f26 clr_yellow bold mb_20 mt_10">{{formData.city.yellow_num}}</p>
               </div>
               <div class="weui-cell__bd">
@@ -53,7 +53,7 @@
             </div>
             <div class="weui-cell cityAdmin_cell mt_20">
               <div class="weui-cell__hd text-center">
-                <p class="clr_white">今日红灯件</p>
+                <p class="clr_white">本周红灯件</p>
                 <p class="f26 clr_red bold mb_20 mt_10">{{formData.city.red_num}}</p>
               </div>
               <div class="weui-cell__bd">

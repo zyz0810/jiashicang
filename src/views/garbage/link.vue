@@ -102,7 +102,7 @@
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import car from '@/assets/image/car.png' // 引入刚才的map.js 注意路径
-  import {cleancarList,cleanCarAddressList} from '@/api/garbageLink'
+  import {cleancarList,cleanCarAddressList,lastGPS} from '@/api/garbageLink'
   import point01 from "@/assets/image/point15.png";
   import point02 from "@/assets/image/point16.png";
   import point03 from "@/assets/image/point17.png";
@@ -527,10 +527,10 @@
 
       },
       getList(){
-        cleancarList().then((res) => {
-          this.cleanCarList = res.data.data;
-          let card_no = res.data.data.map(item=> {return item.car_no}).join(',');
-          cleanCarAddressList({card_no:card_no}).then((res) => { });
+        cleanCarAddressList().then((res) => {
+          this.cleanCarList = res.data;
+          let card_no = res.data.map(item=> {return item.CarBrand}).join(',');
+          lastGPS({card_no:card_no}).then((res) => { });
           // this.mapPoint(this.cleanCarList)
         });
       },

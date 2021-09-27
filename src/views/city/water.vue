@@ -39,13 +39,29 @@
 <!--          <div :class="['flex-item','text-right',abnormalIndex == 2?'clr_yellow txt_shadow':'']" @click="abnormalIndex = 2">内涝预测：0</div>-->
 <!--        </div>-->
 <!--        <img src="./../../assets/image/water_bg.png" class="mt_10"/>-->
-        <el-table v-loading="listLoading" :data="abnormalList" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList1" class="f14 mt_20">
-          <el-table-column label="站点名称" align="center" prop="stnm"></el-table-column>
-          <el-table-column label="站点类型" align="center" prop="type" :formatter="formatType"></el-table-column>
-          <el-table-column label="异常状态" align="center" prop="status"></el-table-column>
-          <el-table-column label="上传时间" align="center" prop="createTime"></el-table-column>
+        <!--<el-table v-loading="listLoading" :data="abnormalList" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList1" class="f14 mt_20">-->
+          <!--<el-table-column label="站点名称" align="center" prop="stnm"></el-table-column>-->
+          <!--<el-table-column label="站点类型" align="center" prop="type" :formatter="formatType"></el-table-column>-->
+          <!--<el-table-column label="异常状态" align="center" prop="status"></el-table-column>-->
+          <!--<el-table-column label="上传时间" align="center" prop="createTime"></el-table-column>-->
 
-        </el-table>
+        <!--</el-table>-->
+
+        <ul class="flex table_ul text-center">
+          <li class="flex-item">站点名称</li>
+          <li class="flex-item">站点类型</li>
+          <li class="flex-item">异常状态</li>
+          <li class="flex-item">上传时间</li>
+        </ul>
+        <vueSeamlessScroll :data="abnormalList" class="seamless-warp text-center" :class-option="classOption">
+          <ul class="flex table_ul" v-for="item in abnormalList" :key="item.id">
+            <li class="flex-item">{{item.stnm}}</li>
+            <li class="flex-item">{{item.type | formatType}}</li>
+            <li class="flex-item">{{item.status}}</li>
+            <li class="flex-item">{{item.createTime}}</li>
+          </ul>
+        </vueSeamlessScroll>
+
 <!--        <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList2" v-show="abnormalIndex == 1" class="f14 mt_20">-->
 <!--          <el-table-column type="index" label="站点名称" width="50" align="center">-->
 <!--            &lt;!&ndash;            <template slot-scope="scope">&ndash;&gt;-->
@@ -79,12 +95,28 @@
       </div>
       <div class="mt_20">
         <p class="f20 bold txt_linear mb_20">告警站点</p>
-        <el-table v-loading="listLoading" :data="warnList" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList1" class="f14 mt_20">
-          <el-table-column label="站点名称" align="center" prop="stnm"></el-table-column>
-          <el-table-column label="站点类型" align="center" prop="type" :formatter="formatType"></el-table-column>
-          <el-table-column label="告警级别" align="center" prop="alarmLevel" :formatter="formatLevel"></el-table-column>
-          <el-table-column label="告警时间" align="center" prop="alarmTime"></el-table-column>
-        </el-table>
+        <!--<el-table v-loading="listLoading" :data="warnList" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList1" class="f14 mt_20">-->
+          <!--<el-table-column label="站点名称" align="center" prop="stnm"></el-table-column>-->
+          <!--<el-table-column label="站点类型" align="center" prop="type" :formatter="formatType"></el-table-column>-->
+          <!--<el-table-column label="告警级别" align="center" prop="alarmLevel" :formatter="formatLevel"></el-table-column>-->
+          <!--<el-table-column label="告警时间" align="center" prop="alarmTime"></el-table-column>-->
+        <!--</el-table>-->
+
+        <ul class="flex table_ul text-center">
+          <li class="flex-item">站点名称</li>
+          <li class="flex-item">站点类型</li>
+          <li class="flex-item">告警级别</li>
+          <li class="flex-item">告警时间</li>
+        </ul>
+        <vueSeamlessScroll :data="warnList" class="seamless-warp text-center" :class-option="classOption">
+          <ul class="flex table_ul" v-for="item in warnList" :key="item.id">
+            <li class="flex-item">{{item.stnm}}</li>
+            <li class="flex-item">{{item.type | formatType}}</li>
+            <li class="flex-item">{{item.alarmLevel | formatLevel}}</li>
+            <li class="flex-item">{{item.alarmTime}}</li>
+          </ul>
+        </vueSeamlessScroll>
+
       </div>
 
     </div>
@@ -134,12 +166,12 @@
   import point03 from "@/assets/image/point21.png";
   import point04 from "@/assets/image/point22.png";
   import {findSite,abnormalSite,warnSite} from "@/api/water"; // 引入刚才的map.js 注意路径
-
+  import vueSeamlessScroll from 'vue-seamless-scroll'
   export default {
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,vueSeamlessScroll},
     data() {
       return {
         showOption:0,
@@ -572,6 +604,18 @@
       ...mapState({
         roles: state => state.user.roles,
       }),
+      classOption () {
+        return {
+          step: 0.2, // 数值越大速度滚动越快
+          limitMoveNum: this.warnList.length, // 开始无缝滚动的数据量 this.dataList.length
+          hoverStop: true, // 是否开启鼠标悬停stop
+          direction: 1, // 0向下 1向上 2向左 3向右
+          openWatch: true, // 开启数据实时监控刷新dom
+          singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+          singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+          waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
+        }
+      }
     },
     mounted() {
       // 挂载完成后渲染地图
@@ -724,6 +768,21 @@
 </script>
 <style lang="scss" scoped>
   @import '@/styles/variables.scss';
+  .seamless-warp{
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    .table_ul{
+      &:nth-child(2n+1){
+        background-color: #12374b !important;
+        border-radius: 10px;
+      }
+    }
+  }
+  .table_ul{
+    padding: 5px;
+    line-height: 1.6;
+  }
   /deep/.tdt-infowindow-content-wrapper{
     width: auto;
     color: #fff;
@@ -733,7 +792,7 @@
     border: 1px solid rgb(15,50,53) !important;
   }
   /deep/.tdt-infowindow-tip{
-    background: rgb(15,50,53) !important;;
+    background: #0a1f44 !important;
   }
   .top_div{
     width: 50%;

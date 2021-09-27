@@ -41,27 +41,27 @@
           <div>管道流量监测：2个</div>
         </div>
 <!--        <RingChart :class="'transformChart'" :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>-->
-        <div class="flex facilitiesWarning_num f14 bold text-center">
-          <div class="flex-item">
-            <div class="facilities_bg01"><span class="f26">12</span> 件</div>
-            <p class="mt_10">流量报警</p>
-          </div>
-          <div class="flex-item">
-            <div class="facilities_bg02"><span class="f26">36</span> 件</div>
-            <p class="mt_10">水位报警</p>
-          </div>
-        </div>
-        <div class="facilitiesWarning_num text-center bold">
-          <div class="facilities_bg03"><span class="f26">12</span> 件</div>
-          <p class="mt_10">井盖报警</p>
-        </div>
+        <!--<div class="flex facilitiesWarning_num f14 bold text-center">-->
+          <!--<div class="flex-item">-->
+            <!--<div class="facilities_bg01"><span class="f26">12</span> 件</div>-->
+            <!--<p class="mt_10">流量报警</p>-->
+          <!--</div>-->
+          <!--<div class="flex-item">-->
+            <!--<div class="facilities_bg02"><span class="f26">36</span> 件</div>-->
+            <!--<p class="mt_10">水位报警</p>-->
+          <!--</div>-->
+        <!--</div>-->
+        <!--<div class="facilitiesWarning_num text-center bold">-->
+          <!--<div class="facilities_bg03"><span class="f26">12</span> 件</div>-->
+          <!--<p class="mt_10">井盖报警</p>-->
+        <!--</div>-->
 
       </div>
 
     </div>
     <div class="right_content base_bg_right">
       <div class="clr_white">
-        <p class="f20 bold txt_linear">设备异常情况</p>
+        <p class="f20 bold txt_linear">江虹桥异常情况</p>
         <div class="flex bold text-center mt_10">
           <div class="flex-item equipment_normal">
             <div class="f26 num">46</div>
@@ -81,7 +81,7 @@
 
       </div>
       <div class="mt_20 ">
-        <p class="f20 bold txt_linear">预警信息</p>
+        <p class="f20 bold txt_linear">江虹桥预警信息</p>
         <div class="flex warning_intro clr_white mt_10">
           <div class="flex m_r30"><span class="block warning_circle bg_green"></span>正常</div>
           <div class="flex m_r30"><span class="block warning_circle bg_blue"></span>一级预警</div>
@@ -127,18 +127,16 @@
         </div>
       </div>
       <div class="mt_20">
-        <p class="f20 bold clr_white txt_linear mb_20">实时曲线</p>
+        <p class="f20 bold clr_white txt_linear mb_20">江虹桥实时曲线</p>
         <el-form :inline="true" :model="listQuery" class="facilities_form">
           <el-form-item label="检测项类型">
-            <el-select v-model="listQuery.status">
-              <el-option label="启用" value="1"></el-option>
-              <el-option label="禁用" value="0"></el-option>
+            <el-select v-model="listQuery.type">
+              <el-option v-for="item in typeList" :label="item.item_name" :value="item.item_name" :key="item.item_name"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="监测线">
-            <el-select v-model="listQuery.status" placeholder="">
-              <el-option label="启用" value="1"></el-option>
-              <el-option label="禁用" value="0"></el-option>
+            <el-select v-model="listQuery.monitorlineid" placeholder="">
+              <el-option v-for="item in dataLine" :label="item.name" :value="item.id" :key="item.id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -149,30 +147,30 @@
       </div>
 
     </div>
-    <div class="top_div flex clr_white text-center">
-      <div class="flex f14 bold mr_20 border shadow" style="width: 400px;">
-        <div class="flex-item txt_linear">井盖设备</div>
-        <div class="flex-item">
-          总览
-          <span class="txt_linear">66</span>
-        </div>
-        <div class="flex-item">
-          离线
-          <span class="txt_linear">4</span>
-        </div>
-        <div class="flex-item">
-          故障
-          <span class="txt_linear">4</span>
-        </div>
-      </div>
-      <div class="flex border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">
-        设备点位
-        <div style="position: absolute;top: 35px;left: 0;width: 100%; line-height: 30px;" class="clr_white border shadow" v-if="showOption==1">
-          <p :class="showType == 1 ? 'baseColor':''" @click="showType = 1">井盖点位</p>
-          <p :class="showType == 2 ? 'baseColor':''" @click="showType = 2">江虹桥</p>
-        </div>
-      </div>
-    </div>
+    <!--<div class="top_div flex clr_white text-center">-->
+      <!--<div class="flex f14 bold mr_20 border shadow" style="width: 400px;">-->
+        <!--<div class="flex-item txt_linear">井盖设备</div>-->
+        <!--<div class="flex-item">-->
+          <!--总览-->
+          <!--<span class="txt_linear">66</span>-->
+        <!--</div>-->
+        <!--<div class="flex-item">-->
+          <!--离线-->
+          <!--<span class="txt_linear">4</span>-->
+        <!--</div>-->
+        <!--<div class="flex-item">-->
+          <!--故障-->
+          <!--<span class="txt_linear">4</span>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="flex border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">-->
+        <!--设备点位-->
+        <!--<div style="position: absolute;top: 35px;left: 0;width: 100%; line-height: 30px;" class="clr_white border shadow" v-if="showOption==1">-->
+          <!--<p :class="showType == 1 ? 'baseColor':''" @click="showType = 1">井盖点位</p>-->
+          <!--<p :class="showType == 2 ? 'baseColor':''" @click="showType = 2">江虹桥</p>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -188,10 +186,8 @@
   import waves from '@/directive/waves';
   import { mapState } from 'vuex';
   import map from '@/components/Map/map.js'; // 引入刚才的map.js 注意路径
-  import point08 from '@/assets/image/point08.png'; // 引入刚才的map.js 注意路径
-  import point09 from '@/assets/image/point09.png';
-  import point10 from '@/assets/image/point10.png';
-  import point11 from '@/assets/image/point11.png';
+  import point01 from '@/assets/image/point10.png'; // 引入刚才的map.js 注意路径
+  import {warring,typeData,dataLine,dataPoint,currentData,historicalData} from '@/api/municipalFacilities'
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -202,7 +198,8 @@
         showOption:0,
         showType:1,
         listQuery:{
-          status:0
+          monitorlineid:'',
+          type:'',
         },
         PieDataTwo:{
           color: ['#EB4B4B', 'rgb(245,245,245)'],
@@ -602,6 +599,7 @@
             name:'监测点读数',
             symbol:'circle',
             symbolSize:8,
+            smooth:false,
             itemStyle : {
               normal : {
                 color:'rgb(3,235,252)',
@@ -616,6 +614,7 @@
             name:'即时形变',
             symbol:'circle',
             symbolSize:8,
+            smooth:false,
             itemStyle : {
               normal : {
                 color:'rgb(54,142,254)',
@@ -630,6 +629,7 @@
             name:'累计变形',
             symbol:'circle',
             symbolSize:8,
+            smooth:false,
             itemStyle : {
               normal : {
                 color:'rgb(31,205,159)',
@@ -835,6 +835,8 @@
         zoom: 14, // 地图的初始化级别，及放大比例
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
+        typeList:[],
+        dataLine:[]
       }
     },
 
@@ -848,99 +850,113 @@
       // this.$nextTick(function() {
       //
       // })
-      this.onLoad()
+      this.getWarring()
+      this.onLoad();
+      this.getTypeData();
+
     },
     methods: {
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
         this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
-
-        // // 普通标注
-        let site = [
-          { lng: 117.283042, lat: 31.86119 },
-          { lng: 116.41238, lat: 40.07689 },
-          { lng: 116.34143, lat: 40.03403 },
-        ]
-        // this.markerPoint(site)
+        this.map.setStyle('indigo');
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
+        this.mapPoint();
+      },
+      mapPoint(){
+        console.log('点位')
         //创建图片对象
-        var icon1 = new T.Icon({
-          iconUrl: point08,
+        this.map.clearOverLays();
+        let icon01 = new T.Icon({
+          iconUrl: point01,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(10, 25)
+          iconAnchor: new T.Point(34, 59)
         });
-        var icon2 = new T.Icon({
-          iconUrl: point09,
-          iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(10, 25)
-        });
-        var icon3 = new T.Icon({
-          iconUrl: point10,
-          iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(10, 25)
-        });
-        var icon4 = new T.Icon({
-          iconUrl: point11,
-          iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(10, 25)
-        });
-        //创建信息窗口对象
-        // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        // let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
-        // this.map.addOverLay(marker);
-        // 随机向地图添加25个标注
-        let bounds = this.map.getBounds();
-        let sw = bounds.getSouthWest();
-        let ne = bounds.getNorthEast();
-        let lngSpan = Math.abs(sw.lng - ne.lng);
-        let latSpan = Math.abs(ne.lat - sw.lat);
-        for (let i = 0; i < 25; i++) {
-          if(i<4){
-            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-            var marker = new T.Marker(point, {icon: icon1});// 创建标注
-          }else if(i>4&&i<8){
-            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-            var marker = new T.Marker(point, {icon: icon2});// 创建标注
-          }else if(i>8&&i<12){
-            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-            var marker = new T.Marker(point, {icon: icon3});// 创建标注
-          }else if(i>12&&i<16){
-            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-            var marker = new T.Marker(point, {icon: icon4});// 创建标注
-          }
+        let markers = []
+        let point = new T.LngLat(120.208896,30.203874);
+        markers[0] = drawTMaker(point, icon01,this,{name:'江虹桥',address:'江虹桥位于杭州市滨江区江虹路和滨河路交叉口以北处'});
 
-          this.map.addOverLay(marker);
+
+        //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
+        function drawTMaker(lnglat,icon,that,txt){
+          console.log('获取')
+          var marker =  new T.Marker(lnglat, {icon: icon});
+          that.map.addOverLay(marker);
+          marker.addEventListener("click", function (m) {
+            let infoWin1 = new T.InfoWindow();
+            let sContent =
+              '<div class="point_info">' +
+              '<p class="f12 time">名称：' + txt.name + '</p>' +
+              '<p class="f12 time">地址：' + txt.address + '</p>' +
+              '</div>';
+            infoWin1.setContent(sContent);
+            marker.openInfoWindow(infoWin1);
+
+          });// 将标注添加到地图中
+          return marker;
         }
 
-        var infoWin1 = new T.InfoWindow();
-        let sContent =
-          '<div style=" color: #fff;font-size:14px;font-weight:bold;width:100%">' +
-          '<div>' +
-          '<p ref="enterpriseName">任务号：20210566121511</p>' +
-          '<p ref="enterpriseName">任务来源：数字集群</p>' +
-          '<p ref="enterpriseName">事件类型：电动车乱停放</p>' +
-          '<p style="color:red" ref="enterpriseName">任务状态：超时</p>' +
-          '<p style="font-size:16px;font-weight:bold;padding-bottom:5px;" ref="enterpriseName">发生时间：2021-05-12 12:05:19</p>' +
-          '<p ref="enterpriseName">所属辖区：烟曲街道</p>' +
-          '<p ref="enterpriseName">地址描述：人民路就简单三</p>' +
-          '<p style="text-align: right"><a style="cursor: pointer;" onclick="openInfo()"> 查看详情</a></p>' +
-          '</div></div>';
-          infoWin1.setContent(sContent);
-          marker.addEventListener("click", function () {
-          marker.openInfoWindow(infoWin1);
-        });// 将标注添加到地图中
-        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
-        this.map.setStyle('indigo')
-
       },
+      // 获取当前项目所有监测项
+      getTypeData(){
+        typeData().then((res) => {
+          this.typeList = res.data;
+          this.listQuery.type = res.data[0].item_name;
+          this.getDataLine(res.data[0].item_name)
+        });
+      },
+      // 获取监测项下面的监测线
+      getDataLine(type){
+        dataLine({type:type}).then((res) => {
+          this.dataLine = res.data;
+          this.listQuery.monitorlineid = res.data[0].id;
+          this.getDataPoint(res.data[0].id)
+        });
+      },
+      // 获取监测线下面的测点
+      getDataPoint(id){
+        dataPoint({monitorlineid:id}).then((res) => {
+          for(let i = 0;i<res.data.length;i++){
+            console.log('循环 55')
+            this.getCurrentData(res.data[i].id);
+          }
+        });
+      },
+      // 获取实时数据
+      getCurrentData(id){
+      // * monitorlineid 监测线id
+      //   * type 监测项
+      //   * pointid 测点id
+        console.log('循环 '+id)
+        currentData({monitorlineid:this.listQuery.monitorlineid,type:this.listQuery.type,pointid:id}).then((res) => {
+          // this.dataLine = res.data;
+        });
+      },
+      getWarring(){
+        warring().then((res) => {
+          // this.dataLine = res.data;
+        });
+      },
+
 
     }
   }
 </script>
 <style lang="scss" scoped>
+  /deep/.tdt-infowindow-content-wrapper{
+    width: auto;
+    color: #fff;
+    background: #0a1f44;
+  }
+  .progress_cont{
+    border: 1px solid rgb(15,50,53) !important;
+  }
+  /deep/.tdt-infowindow-tip{
+    background: #0a1f44 !important;
+  }
   .top_div{
     width: 50%;
     left: 20%;

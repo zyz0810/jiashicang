@@ -237,7 +237,7 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/city',
+    path: '/city/appearance',
     component: Layout,
     redirect: 'noRedirect',
     name: '市容市貌',
@@ -251,7 +251,7 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'appearance',
+        path: 'index',
         component: () => import('@/views/city/appearance'),
         name: 'appearance',
         hidden: false,
@@ -378,7 +378,7 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/law',
+    path: '/low',
     component: Layout,
     redirect: 'noRedirect',
     name: '案件归集',

@@ -21,6 +21,7 @@ import './utils/error-log' // error log
 import commonComponents from '@/components/index'
 import * as filters from './filters' // global filters
 
+
 import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
