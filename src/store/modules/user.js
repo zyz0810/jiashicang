@@ -1,5 +1,4 @@
 import { login, logout, getInfo } from '@/api/user'
-import { findMenuByRole } from '@/api/menu'
 import { getToken, setToken, removeToken,getId,setId,removeId,getName,setName,removeName,getMobile,setMobile,removeMobile} from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 

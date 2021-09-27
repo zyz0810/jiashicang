@@ -9,8 +9,7 @@
           <span class="color_block" :style="{background:item.color}"></span>
           {{item.name}}
         </div>
-        <p class="mt_5">20%</p>
-
+        <p class="mt_5">{{item.val}}%</p>
       </div>
     </div>
 

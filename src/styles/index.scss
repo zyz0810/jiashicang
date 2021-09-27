@@ -100,7 +100,7 @@ div:focus {
 }
 
 .inlineBlock {
-  display: block;
+  display: inline-block;
 }
 
 .clearfix {
@@ -131,7 +131,9 @@ div:focus {
 .clr_blue03{
   color: rgba(77,244,250,1);
 }
-
+.clr_green{
+  color: #30ab6a;
+}
 
 .gray01{
   color: #ccc;

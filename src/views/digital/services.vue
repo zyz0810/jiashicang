@@ -131,28 +131,31 @@
             <span class="progress_border"></span>
           </div>
           <p class="mt_10">
-            亮灯数<span class="baseColor txt_shadow m_r30">188</span>
-            总灯数<span class="baseColor txt_shadow">188</span>
+            亮灯数<span class="clr_green txt_shadow m_r30"> {{lightNum.num}}</span>
+            总灯数<span class="clr_green txt_shadow"> {{lightNum.count}}</span>
           </p>
         </div>
       </div>
-
-
       <div class="mt_20">
         <el-row :gutter="10" class="mt_20 text-center">
-          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-            <p class="f16 bold txt_linear">节能率</p>
-            <PieChartTwo :chartData="PieData2" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="text-center clearfix">
+            <p class="f16 bold txt_linear mb_10">节能率</p>
+            <PieChartTwo :chartData="PieData2" :PieChartLegend="PieChartLegend" height="110px" divwidth="50%"></PieChartTwo>
           </el-col>
-          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
-            <p class="f16 bold txt_linear">综合评价</p>
-            <PieChartTwo :chartData="PieData2" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+          <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="text-center clearfix">
+            <p class="f16 bold txt_linear mb_10">综合评价</p>
+<!--            <PieChartTwo :chartData="PieData2" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>-->
+<!--            <span :class="['inlineBlock','bor_circle','flex','bor_blue',   ]"><span class="circle_two inlineBlock">{{formData.evaluate}}</span></span>-->
+            <span v-if="formData.evaluate == '优'" class="inlineBlock bor_circle flex bor_green"><span class="circle_two inlineBlock flex f20">{{formData.evaluate}}</span></span>
+            <span v-if="formData.evaluate == '差'" class="inlineBlock bor_circle flex bor_red"><span class="circle_two inlineBlock flex f20">{{formData.evaluate}}</span></span>
+            <span v-else class="inlineBlock bor_circle flex bor_blue"><span class="circle_two inlineBlock flex f20">{{formData.evaluate}}</span></span>
           </el-col>
-          <div style="width:50%;margin: 0 auto 0;">
-            <p class="f16 bold txt_linear">故障警告</p>
-            <PieChartTwo :chartData="PieData2" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
-          </div>
         </el-row>
+          <div class="text-center" style="width:50%;margin: 0 auto 0;">
+            <p class="f16 bold txt_linear mb_10">故障警告</p>
+            <span class="inlineBlock bor_circle bor_red flex"><span class="circle_two inlineBlock f26 flex">{{formData.warnNum}}</span></span>
+          </div>
+
 
       </div>
 
@@ -193,8 +196,8 @@
       <div class="flex border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">
         设备点位
         <div style="position: absolute;top: 35px;left: 0;width: 100%; line-height: 30px;" class="clr_white border shadow" v-if="showOption==1">
-          <p :class="showType == 1 ? 'baseColor':''" @click="showType = 1">亮灯杆</p>
-          <p :class="showType == 2 ? 'baseColor':''" @click="showType = 2">控制柜</p>
+          <p :class="showType == 1 ? 'baseColor':''" @click="handleTypeLight(1)">亮灯杆</p>
+          <p :class="showType == 2 ? 'baseColor':''" @click="handleTypeLight(2)">控制柜</p>
         </div>
       </div>
     </div>
@@ -212,9 +215,14 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point15.png' // 引入刚才的map.js 注意路径
+  import point02 from '@/assets/image/point16.png' // 引入刚才的map.js 注意路径
+  import point03 from '@/assets/image/point17.png' // 引入刚才的map.js 注意路径
+  import point04 from '@/assets/image/point18.png' // 引入刚才的map.js 注意路径
   import toolTipBg from '@/assets/image/digital-bg.png' // 引入刚才的map.js 注意路径
   import PieChartTwo from '@/components/Charts/PieChartTwo'
+  import {getLampPostList,getcontrolcabinetlist,getevaluate} from '@/api/digitalServices'
+  import {generalIndex} from "@/api/overView";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -222,6 +230,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        lampPostList:[],
         showType:1,
         showOption:0,
         chartDataTwo: {
@@ -300,63 +309,69 @@
           ]
         },
         PieData:{
-          tooltip: {
-            show: false,
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          color: ['#7CDBFF', '#20437A'],
-          gird:{
-            top:0,
-            left:0,
-
-          },
-          // 80%是环中的数据显示
-          title: {
-            text: '80%',
-            left: 'center',
-            top: '40%',
+          color: ['#EB4B4B', 'rgb(245,245,245)'],
+          title: [{
+            text: '%',
+            x: '45%',
+            y: '35%',
+            textAlign: 'center',
             textStyle: {
+              fontSize: '20',
+              fontWeight: '500',
               color: '#fff',
-              fontSize: 26,
-              align: 'center',
-            }
-          },
-          graphic: {
-            type: 'text',
-            left: 'center',
-            top: '58%',
-            style: {
-              text: '满意度',
-
               textAlign: 'center',
-              fill: '#bfbfbf',
-              fontSize: 30,
-              fontWeight: 700
-            }
+            },
+          }],
+          polar: {
+            radius: ['95%', '80%'],
+            center: ['50%', '50%'],
+          },
+          angleAxis: {
+            max: 100,
+            show: false,
+            // startAngle: 0,
+          },
+          radiusAxis: {
+            type: 'category',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false
+            },
           },
           series: [
             {
-              name: '单位工程评定',
-              type: 'pie',
-              radius: ['68%', '78%'],
-              avoidLabelOverlap: false,
-              label: {
+              name: '',
+              type: 'bar',
+              roundCap: true,
+              barWidth: 60,
+              showBackground: true,
+              data: [],
+              coordinateSystem: 'polar',
+              itemStyle: {
                 normal: {
-                  show: false,
-                  position: 'center'
-                },
-              },
-              data: [
-                { value: 80, name: '优良' },
-                { value: 20, name: '不及格' },
-              ]
-            },{
+                  // color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                  //   offset: 0,
+                  //   color: 'rgba(252,209,82,1)'
+                  // }, {
+                  //   offset: 1,
+                  //   // color: 'red'
+                  //   color: 'rgba(248,211,91,1)'
+                  // }]),
+                  color:'rgba(48,177,106,1)'
+                }
+              }
+            },{//里面细圈
               name: 'decorationOne',
               type: 'pie',
-              color: ['#52D6FF'],
+              color: ['rgba(48,177,106,1)'],
               // center: ['30%', '50%'],
-              radius: ['60%', '59%'],
+              radius: ['74%', '72%'],
               hoverAnimation: false,
               lable: {
                 normal: {
@@ -371,69 +386,74 @@
                   show: false,
                 },
               },
-              data: [
-                { value: 335, name: '' },
-              ],
+              data: ['59'],
             },
           ]
         },
         PieData2:{
-          tooltip: {
-            show: false,
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          color: ['#7CDBFF', '#20437A'],
-          gird:{
-            top:0,
-            left:0,
-
-          },
-          // 80%是环中的数据显示
-          title: {
-            text: '80%',
-            left: 'center',
-            top: '40%',
+          color: ['#EB4B4B', 'rgb(245,245,245)'],
+          title: [{
+            text: '%',
+            x: '45%',
+            y: '35%',
+            textAlign: 'center',
             textStyle: {
+              fontSize: '20',
+              fontWeight: '500',
               color: '#fff',
-              fontSize: 16,
-              align: 'center',
-            }
-          },
-          graphic: {
-            type: 'text',
-            left: 'center',
-            top: '58%',
-            style: {
-              text: '满意度',
               textAlign: 'center',
-              fill: '#bfbfbf',
-              fontSize: 30,
-              fontWeight: 700
-            }
+            },
+          }],
+          polar: {
+            radius: ['95%', '80%'],
+            center: ['50%', '50%'],
+          },
+          angleAxis: {
+            max: 100,
+            show: false,
+            // startAngle: 0,
+          },
+          radiusAxis: {
+            type: 'category',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false
+            },
           },
           series: [
             {
-              name: '单位工程评定',
-              type: 'pie',
-              radius: ['78%', '98%'],
-              avoidLabelOverlap: false,
-              label: {
+              name: '',
+              type: 'bar',
+              roundCap: true,
+              barWidth: 60,
+              showBackground: true,
+              data: [],
+              coordinateSystem: 'polar',
+              itemStyle: {
                 normal: {
-                  show: false,
-                  position: 'center'
-                },
-              },
-              data: [
-                { value: 80, name: '优良' },
-                { value: 20, name: '不及格' },
-              ]
-            },{
+                  color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                    offset: 0,
+                    color: 'rgba(252,209,82,1)'
+                  }, {
+                    offset: 1,
+                    // color: 'red'
+                    color: 'rgba(248,211,91,1)'
+                  }]),
+                  // color:'rgba(78,239,254,1)'
+                }
+              }
+            },{//里面细圈
               name: 'decorationOne',
               type: 'pie',
-              color: ['#52D6FF'],
+              color: ['rgba(252,209,82,1)'],
               // center: ['30%', '50%'],
-              radius: ['65%', '64%'],
+              radius: ['74%', '72%'],
               hoverAnimation: false,
               lable: {
                 normal: {
@@ -448,13 +468,11 @@
                   show: false,
                 },
               },
-              data: [
-                { value: 335, name: '' },
-              ],
+              data: ['59'],
             },
           ]
         },
-        activeIndex:0,
+        activeIndex:2,
         chartData: {
           title:{},
           tooltip: {
@@ -759,6 +777,9 @@
         zoom: 14, // 地图的初始化级别，及放大比例
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
+        formData:{},
+        lightNum:{},
+        controlList:[],
       }
     },
 
@@ -772,78 +793,194 @@
       // this.$nextTick(function() {
       //
       // })
-      this.onLoad()
+      this.onLoad();
+      this.getLampPostList();
+      this.getChartData();
+      this.getData();
     },
     methods: {
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
         this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
-
-        // // 普通标注
-        let site = [
-          { lng: 117.283042, lat: 31.86119 },
-          { lng: 116.41238, lat: 40.07689 },
-          { lng: 116.34143, lat: 40.03403 },
-        ]
-        // this.markerPoint(site)
-        //创建图片对象
-        var icon = new T.Icon({
-          iconUrl: point01,
-          iconSize: new T.Point(19, 27),
-          iconAnchor: new T.Point(10, 25)
-        });
-        //创建信息窗口对象
-        // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
-        // this.map.addOverLay(marker);
-        // 随机向地图添加25个标注
-        // let bounds = this.map.getBounds();
-        // let sw = bounds.getSouthWest();
-        // let ne = bounds.getNorthEast();
-        // let lngSpan = Math.abs(sw.lng - ne.lng);
-        // let latSpan = Math.abs(ne.lat - sw.lat);
-        // for (let i = 0; i < 25; i++) {
-        //   let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-        //   var marker = new T.Marker(point, {icon: icon});// 创建标注
-        //   this.map.addOverLay(marker);
-        // }
-
-        var infoWin1 = new T.InfoWindow();
-        let sContent =
-          '<div style=" color: #fff;font-size:14px;font-weight:bold;width:100%">' +
-          '<div>' +
-          '<p ref="enterpriseName">任务号：20210566121511</p>' +
-          '<p ref="enterpriseName">任务来源：数字集群</p>' +
-          '<p ref="enterpriseName">事件类型：电动车乱停放</p>' +
-          '<p style="color:red" ref="enterpriseName">任务状态：超时</p>' +
-          '<p style="font-size:16px;font-weight:bold;padding-bottom:5px;" ref="enterpriseName">发生时间：2021-05-12 12:05:19</p>' +
-          '<p ref="enterpriseName">所属辖区：烟曲街道</p>' +
-          '<p ref="enterpriseName">地址描述：人民路就简单三</p>' +
-          '<p style="text-align: right"><a style="cursor: pointer;" onclick="openInfo()"> 查看详情</a></p>' +
-          '</div></div>';
-          infoWin1.setContent(sContent);
-          marker.addEventListener("click", function () {
-          marker.openInfoWindow(infoWin1);
-        });// 将标注添加到地图中
+        this.map.setStyle('indigo');
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
-        this.map.setStyle('indigo')
 
       },
+      mapPoint(type,list){
+        console.log('点位')
+        //创建图片对象
+        this.map.clearOverLays();
+        let icon01 = new T.Icon({
+          iconUrl: point01,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon02 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon03 = new T.Icon({
+          iconUrl: point03,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon04 = new T.Icon({
+          iconUrl: point04,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let markers = []
 
+if(type == 'control'){
+
+  for (let i = 0; i < list.length; i++) {
+    // var marker
+    // 0：关  1：开
+    if(list[i].status == 0){
+      let point = new T.LngLat(list[i].longitude,list[i].latitude);
+      markers[i]  = drawTMaker(point, icon03,this,list[i]);
+    }else if(list[i].status == 1){
+      let point = new T.LngLat(list[i].longitude,list[i].latitude);
+      markers[i]  = drawTMaker(point, icon04,this,list[i]);
+    }
+
+  }
+}else{
+
+  for (let i = 0; i < list.length; i++) {
+    // var marker
+    // 0：关  1：开
+    if(list[i].status == 0){
+      let point = new T.LngLat(list[i].longitude,list[i].latitude);
+      markers[i]  = drawTMaker(point, icon01,this,list[i]);
+    }else if(list[i].status == 1){
+      let point = new T.LngLat(list[i].longitude,list[i].latitude);
+      markers[i]  = drawTMaker(point, icon02,this,list[i]);
+    }
+
+  }
+}
+
+
+          //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
+          function drawTMaker(lnglat,icon,that,txt){
+            console.log('获取')
+            var marker =  new T.Marker(lnglat, {icon: icon});
+            that.map.addOverLay(marker);
+            marker.addEventListener("click", function (m) {
+              console.log(m)
+              let infoWin1 = new T.InfoWindow();
+              console.log(txt)
+              let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
+              let status = txt.status==0?'关':'开';
+              let sContent =
+                '<div class="point_info">' +
+                '<p class="f12 time">监控名称：' + txt.name + '</p>' +
+                '<p class="f12 time">状态：' + status + '</p>' +
+                '</div>';
+              infoWin1.setContent(sContent);
+              marker.openInfoWindow(infoWin1);
+
+            });// 将标注添加到地图中
+            return marker;
+          }
+
+      },
+      handleTypeLight(val){
+        this.showType = val
+        if(val == 1){
+          this.getLampPostList();
+        }else{
+          this.getControlCabinetlist();
+        }
+      },
+      //亮灯杆列表
+      getLampPostList(){
+        getLampPostList().then((res) => {
+          this.lampPostList = res.data.list;
+          this.mapPoint('lamp',this.lampPostList)
+        });
+      },
+      //控制柜列表
+      getControlCabinetlist(){
+        getcontrolcabinetlist().then((res) => {
+          this.controlList = res.data.list;
+          this.mapPoint('control',this.controlList)
+        });
+      },
+      getChartData(){
+        getevaluate({year:this.$moment().format('YYYY')}).then((res) => {
+          this.formData = res.data;
+          this.PieData2.series[0].data = [((Number(res.data.powerRate))*100).toFixed(2)];
+          this.PieData2.title[0].text = ((Number(res.data.powerRate))*100).toFixed(2)+'%';
+          this.PieData.series[0].data = [((Number(res.data.lightRate))*100).toFixed(2)];
+          this.PieData.title[0].text = ((Number(res.data.lightRate))*100).toFixed(2)+'%';
+        });
+      },
+      //获取灯总数及亮灯数
+      getData(){
+        generalIndex().then((res) => {
+          this.lightNum={
+            num:res.data.light.num,
+            count:res.data.light.count
+          };
+        });
+      },
     }
   }
 </script>
 <style lang="scss" scoped>
+  /deep/.tdt-infowindow-content-wrapper{
+    width: auto;
+    color: #fff;
+    background: #0a1f44;
+  }
+  .progress_cont{
+    border: 1px solid rgb(15,50,53) !important;
+  }
+  /deep/.tdt-infowindow-tip{
+    background: rgb(15,50,53) !important;;
+  }
 .progress_light{
+
   /deep/.el-progress-bar__inner{
-    background-image: linear-gradient(to left,rgba(63,219,234,1) ,  rgba(48,164,104,0)) !important; /* 标准的语法（必须放在最后） */
+    background-image: linear-gradient(to left,rgba(48,171,106,1) ,  rgba(48,164,104,0)) !important; /* 标准的语法（必须放在最后） */
   }
 }
-
+.bor_circle{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 0 auto;
+  &.bor_red{
+    border:10px solid red;
+    .circle_two{
+      border:1px solid red;
+    }
+  }
+  &.bor_blue{
+    border:10px solid rgb(5,139,224);
+    .circle_two{
+      border:1px solid rgb(5,139,224);
+    }
+  }
+  &.bor_green{
+    border:10px solid rgb(49,174,106);
+    .circle_two{
+      border:1px solid rgb(49,174,106);
+    }
+  }
+  .circle_two{
+    width: 70px;
+    height:70px;
+    border-radius: 50%;
+    line-height: 100px;
+  }
+ }
   .left_server{
     position: fixed;
     top: 13vh;

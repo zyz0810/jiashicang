@@ -102,6 +102,12 @@
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import car from '@/assets/image/car.png' // 引入刚才的map.js 注意路径
+  import {cleancarList,cleanCarAddressList} from '@/api/garbageLink'
+  import point01 from "@/assets/image/point15.png";
+  import point02 from "@/assets/image/point16.png";
+  import point03 from "@/assets/image/point17.png";
+  import point04 from "@/assets/image/point18.png";
+  import {getLampPostList} from "@/api/digitalServices";
 
   export default {
     name: 'parameterList',
@@ -110,6 +116,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        cleanCarList:[],
         divwidth:'30%',
         pieHeight:'300px',
         chartData: {
@@ -343,61 +350,6 @@
               data: [5, 20, ]
             }]
         },
-        // PieData:{
-        //   tooltip: {
-        //     show: false,
-        //     trigger: 'item',
-        //     formatter: '{a} <br/>{b}: {c} ({d}%)'
-        //   },
-        //   color: ['#7CDBFF', '#20437A'],
-        //   gird:{
-        //     top:0,
-        //     left:0,
-        //
-        //   },
-        //   // 80%是环中的数据显示
-        //   title: {
-        //     text: '80%',
-        //     left: 'center',
-        //     top: '34%',
-        //     textStyle: {
-        //       color: '#fff',
-        //       fontSize: 26,
-        //       align: 'center',
-        //     }
-        //   },
-        //   graphic: {
-        //     type: 'text',
-        //     left: 'center',
-        //     top: '58%',
-        //     style: {
-        //       text: '满意度',
-        //
-        //       textAlign: 'center',
-        //       fill: '#bfbfbf',
-        //       fontSize: 30,
-        //       fontWeight: 700
-        //     }
-        //   },
-        //   series: [
-        //     {
-        //       name: '单位工程评定',
-        //       type: 'pie',
-        //       radius: ['85%', '100%'],
-        //       avoidLabelOverlap: false,
-        //       label: {
-        //         normal: {
-        //           show: false,
-        //           position: 'center'
-        //         },
-        //       },
-        //       data: [
-        //         { value: 80, name: '优良' },
-        //         { value: 20, name: '不及格' },
-        //       ]
-        //     }
-        //   ]
-        // },
         PieData:{
           color: ['#EB4B4B', 'rgb(245,245,245)'],
           title: [{
@@ -495,89 +447,93 @@
     },
     mounted() {
       // 挂载完成后渲染地图
-      // this.$nextTick(function() {
-      //
-      // })
-      this.onLoad()
+      this.$nextTick(function() {
+        this.onLoad();
+        this.getList();
+      })
+
     },
     methods: {
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
         this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
-
-        // // 普通标注
-        let site = [
-          { lng: 117.283042, lat: 31.86119 },
-          { lng: 116.41238, lat: 40.07689 },
-          { lng: 116.34143, lat: 40.03403 },
-        ]
-        // this.markerPoint(site)
-        //创建图片对象
-        var icon = new T.Icon({
-          iconUrl: car,
-          iconSize: new T.Point(50, 50),
-          iconAnchor: new T.Point(10, 25)
-        });
-        //创建信息窗口对象
-        // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
-        this.map.addOverLay(marker);
-        // 随机向地图添加25个标注
-        // let bounds = this.map.getBounds();
-        // let sw = bounds.getSouthWest();
-        // let ne = bounds.getNorthEast();
-        // let lngSpan = Math.abs(sw.lng - ne.lng);
-        // let latSpan = Math.abs(ne.lat - sw.lat);
-        // for (let i = 0; i < 25; i++) {
-        //   let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-        //   var marker = new T.Marker(point, {icon: icon});// 创建标注
-        //   this.map.addOverLay(marker);
-        // }
-
-        var infoWin1 = new T.InfoWindow();
-        let sContent =
-          '<div style=" color: #fff;font-size:14px;font-weight:bold;width:100%">' +
-          '<div>' +
-          '<p ref="enterpriseName">任务号：20210566121511</p>' +
-          '<p ref="enterpriseName">任务来源：数字集群</p>' +
-          '<p ref="enterpriseName">事件类型：电动车乱停放</p>' +
-          '<p style="color:red" ref="enterpriseName">任务状态：超时</p>' +
-          '<p style="font-size:16px;font-weight:bold;padding-bottom:5px;" ref="enterpriseName">发生时间：2021-05-12 12:05:19</p>' +
-          '<p ref="enterpriseName">所属辖区：烟曲街道</p>' +
-          '<p ref="enterpriseName">地址描述：人民路就简单三</p>' +
-          '<p style="text-align: right"><a style="cursor: pointer;" onclick="openInfo()"> 查看详情</a></p>' +
-          '</div></div>';
-          infoWin1.setContent(sContent);
-          marker.addEventListener("click", function () {
-          marker.openInfoWindow(infoWin1);
-        });// 将标注添加到地图中
-        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
         this.map.setStyle('indigo');
-        let path=[
-          {num:1,arr:[{lng:120.212120,lat:30.211440},{lng:120.212270,lat:30.208720}]},
-          {num:2,arr:[{lng:120.213240,lat:30.207230},{lng:120.217510,lat:30.207700}]},
-          {num:3,arr:[{lng:120.208670,lat:30.208050},{lng:120.209140,lat:30.206290}]},
-        ];
-        for (let i=0;i<path.length;i++){
-          if(path[i].num==1){
-            var line = new T.Polyline(path[i].arr, {color:'#fe6247',weight: 8,opacity: 0.7}); //path为天地图经纬度数组，第二个参数为配置项
-            this.map.addOverLay(line);  // 绘制线到地图上
-          }else if(path[i].num==2){
-            var line = new T.Polyline(path[i].arr, {color:'#dec215',weight: 8,opacity: 0.7}); //path为天地图经纬度数组，第二个参数为配置项
-            this.map.addOverLay(line);  // 绘制线到地图上
-          }else if(path[i].num==3){
-            var line = new T.Polyline(path[i].arr, {color:'#e760c4',weight: 8,opacity: 0.7}); //path为天地图经纬度数组，第二个参数为配置项
-            this.map.addOverLay(line);  // 绘制线到地图上
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
+      },
+      mapPoint(list){
+        console.log('点位')
+        //创建图片对象
+        this.map.clearOverLays();
+        let icon01 = new T.Icon({
+          iconUrl: point01,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon02 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon03 = new T.Icon({
+          iconUrl: point03,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon04 = new T.Icon({
+          iconUrl: point04,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let markers = []
+
+        console.log(list)
+        for (let i = 0; i < list.length; i++) {
+          // var marker
+          if(list[i].status == 1){
+            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          }else if(list[i].status == 0){
+            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            markers[i]  = drawTMaker(point, icon02,this,list[i]);
           }
 
         }
 
-      },
 
+        //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
+        function drawTMaker(lnglat,icon,that,txt){
+          console.log('获取')
+          var marker =  new T.Marker(lnglat, {icon: icon});
+          that.map.addOverLay(marker);
+          marker.addEventListener("click", function (m) {
+            console.log(m)
+            let infoWin1 = new T.InfoWindow();
+            console.log(txt)
+            let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
+            let sContent =
+              '<div class="point_info">' +
+              '<p class="f12 time">监控名称：' + txt.name + '</p>' +
+              '<p class="f12 time">状态：' + txt.status + '</p>' +
+              '</div>';
+            infoWin1.setContent(sContent);
+            marker.openInfoWindow(infoWin1);
+
+          });// 将标注添加到地图中
+          return marker;
+        }
+
+      },
+      getList(){
+        cleancarList().then((res) => {
+          this.cleanCarList = res.data.data;
+          let card_no = res.data.data.map(item=> {return item.car_no}).join(',');
+          cleanCarAddressList({card_no:card_no}).then((res) => { });
+          // this.mapPoint(this.cleanCarList)
+        });
+      },
     }
   }
 </script>

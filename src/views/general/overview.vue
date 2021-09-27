@@ -9,46 +9,44 @@
               <div class="flex-item">
                 <p class="f16 bold txtColor">今日上报量</p>
                 <div class="num flex text-center f26 bold mt_10">
-                  <span></span>
-                  <span>2</span>
-                  <span>2</span>
-                  <span>5</span>
-                  <span>8</span>
+                  <span>{{formData.city.shangbao[4]}}</span>
+                  <span>{{formData.city.shangbao[3]}}</span>
+                  <span>{{formData.city.shangbao[2]}}</span>
+                  <span>{{formData.city.shangbao[1]}}</span>
+                  <span>{{formData.city.shangbao[0]}}</span>
                 </div>
               </div>
               <div class="flex-item">
                 <p class="f16 bold txtColor">今日处理量</p>
                 <div class="num flex text-center f26 bold mt_10">
-                  <span></span>
-                  <span>2</span>
-                  <span>8</span>
-                  <span>9</span>
-                  <span>8</span>
+                  <span>{{formData.city.chuli[4]}}</span>
+                  <span>{{formData.city.chuli[3]}}</span>
+                  <span>{{formData.city.chuli[2]}}</span>
+                  <span>{{formData.city.chuli[1]}}</span>
+                  <span>{{formData.city.chuli[0]}}</span>
                 </div>
               </div>
               <div class="flex-item">
                 <p class="f16 bold txtColor">今日未处理量</p>
                 <div class="num flex text-center f26 bold mt_10">
-                  <span></span>
-                  <span></span>
-                  <span>3</span>
-                  <span>5</span>
-                  <span>8</span>
+                  <span>{{formData.city.undisposed[4]}}</span>
+                  <span>{{formData.city.undisposed[3]}}</span>
+                  <span>{{formData.city.undisposed[2]}}</span>
+                  <span>{{formData.city.undisposed[1]}}</span>
+                  <span>{{formData.city.undisposed[0]}}</span>
                 </div>
               </div>
             </div>
             <div class="weui-cell cityAdmin_cell mt_20">
               <div class="weui-cell__hd text-center">
                 <p class="clr_white">今日黄灯件</p>
-                <p class="f26 clr_yellow bold mb_20 mt_10">5</p>
+                <p class="f26 clr_yellow bold mb_20 mt_10">{{formData.city.yellow_num}}</p>
               </div>
               <div class="weui-cell__bd">
                 <div class="weui-cell">
                   <div class="weui-cell__hd text-center"><span class="block adminTxt_linear">黄灯件情况</span></div>
                   <div class="weui-cell__bd clr_white f14">
-                    <p>久久建设工程有限公司（市政）1件</p>
-                    <p>西湖区市政工程3件</p>
-                    <p>建管中心2件</p>
+                    <p>{{formData.city.yellow_detail}}</p>
                   </div>
                 </div>
               </div>
@@ -56,13 +54,13 @@
             <div class="weui-cell cityAdmin_cell mt_20">
               <div class="weui-cell__hd text-center">
                 <p class="clr_white">今日红灯件</p>
-                <p class="f26 clr_red bold mb_20 mt_10">0</p>
+                <p class="f26 clr_red bold mb_20 mt_10">{{formData.city.red_num}}</p>
               </div>
               <div class="weui-cell__bd">
                 <div class="weui-cell">
                   <div class="weui-cell__hd text-center"><span class="block adminTxt_linear">红灯件情况</span></div>
                   <div class="weui-cell__bd clr_white f14">
-                    <p>无红灯件</p>
+                    <p>{{formData.city.red_detail}}</p>
                   </div>
                 </div>
               </div>
@@ -230,33 +228,31 @@
 <!--                <PieChartTwo :chartData="PieDataOne" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo>-->
 <!--              </div>-->
 <!--            </div>-->
-            <p class="f16 baseColor bold text-center mt_10">7月受理件<span class="f20">1393</span></p>
+            <p class="f16 baseColor bold text-center mt_10">{{formData.letter.input_time}}受理件<span class="f20">{{formData.letter.month_deal_num}}</span></p>
             <div class="flex bold text-center clr_white mt_10 mb_10 bg_blue" style="padding: 10px 0; border-radius: 10px;">
               <div class="flex-item">
-                <p class="f26">34.85%</p>
-                <p class="mt_5">同比下降</p>
+                <p class="f26">{{formData.letter.basis_num}}%</p>
+                <p class="mt_5">同比<span>{{formData.letter.basis_direction == 1?'上升':'下降'}}</span></p>
               </div>
               <div class="flex-item">
-                <p class="f26">1.04%</p>
-                <p class="mt_5">环比下降</p>
+                <p class="f26">{{formData.letter.comparative_num}}%</p>
+                <p class="mt_5">环比<span>{{formData.letter.comparative_direction == 1?'上升':'下降'}}</span></p>
               </div>
               <div class="flex-item clr_yellow">
-                <p class="f26">99.44%</p>
+                <p class="f26">{{formData.letter.satisfaction_rate}}%</p>
                 <p class="mt_5">满意率</p>
               </div>
             </div>
             <div class="weui-cell cityAdmin_cell mt_20">
               <div class="weui-cell__hd text-center">
                 <p class="clr_white mb_20">重复投诉件</p>
-                <p class="f26 clr_red bold mb_20 mt_10">175</p>
+                <p class="f26 clr_red bold mb_20 mt_10">{{formData.letter.rep_num}}</p>
               </div>
               <div class="weui-cell__bd">
                 <div class="weui-cell">
                   <div class="weui-cell__hd text-center"><span class="block adminTxt_linear">重复投诉情况</span></div>
                   <div class="weui-cell__bd clr_white f14">
-                    <p>无证摊贩：135件</p>
-                    <p>施工噪声：3件</p>
-                    <p>违章停车：2件</p>
+                    <p>{{formData.letter.rep_detail}}</p>
                   </div>
                 </div>
               </div>
@@ -267,7 +263,7 @@
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">行政审批</span></div>
             <div class="clr_white mt_20">
-              <div class="f20 bold text-center baseColor approval_num">审批总数：600</div>
+              <div class="f20 bold text-center baseColor approval_num">审批总数：{{formData.check.count}}</div>
 
               <div class="circle_num text-center">
                 <img src="./../../assets/image/approval_circle.png" class="circle_img">
@@ -296,38 +292,38 @@
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">服务视图</span></div>
             <div class="clr_white f14 bold">
-              <div class="flex">
-                <div class="flex-item text-center">
-                  <div class="flex">
-                    <div class="flex-item">
-                      <p>清扫完成</p>
-                      <div class="clean_rate clr_blue03 f20">95.6%</div>
-                    </div>
-                    <div class="flex-item">
-                      <p>洒水完成</p>
-                      <div class="clean_rate clr_blue03 f20">95.6%</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="flex-item">
-                  <div class="weui-cell server_cell">
-                    <div class="weui-cell__hd">   <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo></div>
-                    <div class="weui-cell__bd">
-                      <p>占用厕位<span class="clr_blue03 ml_10">18961</span></p>
-                      <p>总厕位数<span class="clr_blue03 ml_10">19651</span></p>
-                    </div>
-                  </div>
-                  <p class="text-center chart_width">厕位占用率</p>
-                </div>
+<!--              <div class="flex">-->
+<!--                <div class="flex-item text-center">-->
+<!--                  <div class="flex">-->
+<!--                    <div class="flex-item">-->
+<!--                      <p>清扫完成</p>-->
+<!--                      <div class="clean_rate clr_blue03 f20">95.6%</div>-->
+<!--                    </div>-->
+<!--                    <div class="flex-item">-->
+<!--                      <p>洒水完成</p>-->
+<!--                      <div class="clean_rate clr_blue03 f20">95.6%</div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="flex-item">-->
+<!--                  <div class="weui-cell server_cell">-->
+<!--                    <div class="weui-cell__hd">   <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo></div>-->
+<!--                    <div class="weui-cell__bd">-->
+<!--                      <p>占用厕位<span class="clr_blue03 ml_10">18961</span></p>-->
+<!--                      <p>总厕位数<span class="clr_blue03 ml_10">19651</span></p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <p class="text-center chart_width">厕位占用率</p>-->
+<!--                </div>-->
 
-              </div>
+<!--              </div>-->
               <div class="flex">
                 <div class="flex-item" style="padding-left: 20px;">
                   <div class="weui-cell server_cell">
                     <div class="weui-cell__hd"><PieChartTwo :chartData="PieDataThree" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo></div>
                     <div class="weui-cell__bd">
-                      <p>亮灯数<span class="clr_yellow ml_10">22961</span></p>
-                      <p>总灯数<span class="clr_yellow ml_10">23961</span></p>
+                      <p>亮灯数<span class="clr_yellow ml_10">{{formData.light.num}}</span></p>
+                      <p>总灯数<span class="clr_yellow ml_10">{{formData.light.count}}</span></p>
                     </div>
                   </div>
                   <p class="text-center chart_width ml_10">亮灯率</p>
@@ -364,7 +360,7 @@
   import RingChart from '@/components/Charts/RingChart'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import xinjiang from "echarts/map/js/province/xinjiang";//必须要导入
-
+  import {generalIndex} from '@/api/overView'
   export default {
     name: 'Dashboard',
     components: {
@@ -375,6 +371,7 @@
     },
     data() {
       return {
+        formData:{},
         mapData:{
 
         },
@@ -465,7 +462,7 @@
         PieDataThree:{
           color: ['#EB4B4B', 'rgb(245,245,245)'],
           title: [{
-            text: '75%',
+            text: '%',
             x: '45%',
             y: '35%',
             textAlign: 'center',
@@ -505,7 +502,7 @@
               roundCap: true,
               barWidth: 60,
               showBackground: true,
-              data: [75],
+              data: [],
               coordinateSystem: 'polar',
               itemStyle: {
                 normal: {
@@ -514,12 +511,13 @@
                     color: 'rgba(252,209,82,1)'
                   }, {
                     offset: 1,
+                    // color: 'red'
                     color: 'rgba(248,211,91,1)'
                   }]),
                   // color:'rgba(78,239,254,1)'
                 }
               }
-            },{
+            },{//里面细圈
               name: 'decorationOne',
               type: 'pie',
               color: ['rgba(252,209,82,1)'],
@@ -539,9 +537,7 @@
                   show: false,
                 },
               },
-              data: [
-                { value: 335, name: '' },
-              ],
+              data: ['59'],
             },
           ]
         },
@@ -952,12 +948,10 @@
         centerLongitude:'120.21194',//中心经度
       }
     },
-    created() {
-
-    },
     mounted(){
       // this.mapChart();
-      this.onLoad();
+      // this.onLoad();
+      this.getData();
     },
     methods: {
       onLoad() {
@@ -968,6 +962,29 @@
         // this.addCtrl()
         // this.map.setStyle('indigo');
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
+
+        let that = this;
+        let wmsLayer;
+        function getWMS(url, config) {
+          if (wmsLayer) {
+            that.map.removeLayer(wmsLayer);
+          }
+          wmsLayer = new T.TileLayer.WMS(url, config);
+          that.map.addLayer(wmsLayer);
+        }
+
+        function addWmsLayer(layers, url) {
+          let config = {
+            version: "1.1.1",	//请求服务的版本
+            layers: layers,
+            transparent: true,	//输出图像背景是否透明
+            styles: "",			//每个请求图层的用","分隔的描述样式
+            format: "image/png"	//输出图像的类型
+          };
+          getWMS(url, config);
+        }
+
+        addWmsLayer('demo_city,demo_road,demo_anno','http://gisserver.tianditu.com/tiandituService/wms')
 
       },
       mapChart(){
@@ -1099,6 +1116,17 @@
         console.log( this.mapData)
       },
 
+      getData(){
+        generalIndex().then((res) => {
+          this.formData=res.data;
+          this.PieDataThree.series[0].data = [((Number(res.data.light.num)/Number(res.data.light.count))*100).toFixed(2)];
+          this.formData.city.shangbao = this.formData.city.shangbao.toString().split('').map(Number).reverse();
+          this.formData.city.chuli = this.formData.city.chuli.toString().split('').map(Number).reverse();
+          this.formData.city.undisposed = this.formData.city.undisposed.toString().split('').map(Number).reverse();;
+          // this.formData.city.undisposed = '1234'.toString().split('').map(Number).reverse();
+          this.PieDataThree.title[0].text = ((Number(res.data.light.num)/Number(res.data.light.count))*100).toFixed(2)+'%';
+        });
+      },
     }
   }
 </script>

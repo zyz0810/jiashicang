@@ -32,46 +32,43 @@
         </div>
 
       <div class="mt_20">
-        <p class="f20 bold txt_linear">异常报警</p>
-        <div class="flex abnormal_tab bold f16 mt_20">
-          <div :class="['flex-item',abnormalIndex == 0?'clr_yellow txt_shadow':'']" @click="abnormalIndex = 0">水质告警：6</div>
-          <div :class="['flex-item','text-center',abnormalIndex == 1?'clr_yellow txt_shadow':'']" @click="abnormalIndex = 1">配水方案</div>
-          <div :class="['flex-item','text-right',abnormalIndex == 2?'clr_yellow txt_shadow':'']" @click="abnormalIndex = 2">内涝预测：0</div>
-        </div>
-        <img src="./../../assets/image/water_bg.png" class="mt_10"/>
-        <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList1" v-show="abnormalIndex == 0" class="f14 mt_20">
-          <el-table-column type="index" label="序号" width="50" align="center">
-            <!--            <template slot-scope="scope">-->
-            <!--             <span class="block sqaer">{{index}}</span>-->
-            <!--            </template>-->
-          </el-table-column>
-          <el-table-column label="水质告警" align="center" prop="name"></el-table-column>
-          <el-table-column label="配水量" align="center" prop="name2"></el-table-column>
-          <el-table-column label="排水量" align="center" prop="end"></el-table-column>
+        <p class="f20 bold txt_linear">异常站点</p>
+<!--        <div class="flex abnormal_tab bold f16 mt_20">-->
+<!--          <div :class="['flex-item',abnormalIndex == 0?'clr_yellow txt_shadow':'']" @click="abnormalIndex = 0">水质告警：6</div>-->
+<!--          <div :class="['flex-item','text-center',abnormalIndex == 1?'clr_yellow txt_shadow':'']" @click="abnormalIndex = 1">配水方案</div>-->
+<!--          <div :class="['flex-item','text-right',abnormalIndex == 2?'clr_yellow txt_shadow':'']" @click="abnormalIndex = 2">内涝预测：0</div>-->
+<!--        </div>-->
+<!--        <img src="./../../assets/image/water_bg.png" class="mt_10"/>-->
+        <el-table v-loading="listLoading" :data="abnormalList" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList1" class="f14 mt_20">
+          <el-table-column label="站点名称" align="center" prop="stnm"></el-table-column>
+          <el-table-column label="站点类型" align="center" prop="type" :formatter="formatType"></el-table-column>
+          <el-table-column label="异常状态" align="center" prop="status"></el-table-column>
+          <el-table-column label="上传时间" align="center" prop="createTime"></el-table-column>
 
         </el-table>
-        <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList2" v-show="abnormalIndex == 1" class="f14 mt_20">
-          <el-table-column type="index" label="序号" width="50" align="center">
-            <!--            <template slot-scope="scope">-->
-            <!--             <span class="block sqaer">{{index}}</span>-->
-            <!--            </template>-->
-          </el-table-column>
-          <el-table-column label="方案名称" align="center" prop="name"></el-table-column>
-          <el-table-column label="配水量" align="center" prop="name2"></el-table-column>
-          <el-table-column label="排水量" align="center" prop="end"></el-table-column>
+<!--        <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList2" v-show="abnormalIndex == 1" class="f14 mt_20">-->
+<!--          <el-table-column type="index" label="站点名称" width="50" align="center">-->
+<!--            &lt;!&ndash;            <template slot-scope="scope">&ndash;&gt;-->
+<!--            &lt;!&ndash;             <span class="block sqaer">{{index}}</span>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </template>&ndash;&gt;-->
+<!--          </el-table-column>-->
+<!--          <el-table-column label="方案名称" align="center" prop="name"></el-table-column>-->
+<!--          <el-table-column label="配水量" align="center" prop="name2"></el-table-column>-->
+<!--          <el-table-column label="排水量" align="center" prop="end"></el-table-column>-->
 
-        </el-table>
-        <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList3" v-show="abnormalIndex == 2" class="f14 mt_20">
-          <el-table-column type="index" label="序号" width="50" align="center">
-            <!--            <template slot-scope="scope">-->
-            <!--             <span class="block sqaer">{{index}}</span>-->
-            <!--            </template>-->
-          </el-table-column>
-          <el-table-column label="内涝预测" align="center" prop="name"></el-table-column>
-          <el-table-column label="配水量" align="center" prop="name2"></el-table-column>
-          <el-table-column label="排水量" align="center" prop="end"></el-table-column>
+<!--        </el-table>-->
+<!--        <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList3" v-show="abnormalIndex == 2" class="f14 mt_20">-->
+<!--          <el-table-column type="index" label="序号" width="50" align="center">-->
+<!--            &lt;!&ndash;            <template slot-scope="scope">&ndash;&gt;-->
+<!--            &lt;!&ndash;             <span class="block sqaer">{{index}}</span>&ndash;&gt;-->
+<!--            &lt;!&ndash;            </template>&ndash;&gt;-->
+<!--          </el-table-column>-->
+<!--          <el-table-column label="内涝预测" align="center" prop="name"></el-table-column>-->
+<!--          <el-table-column label="配水量" align="center" prop="name2"></el-table-column>-->
+<!--          <el-table-column label="排水量" align="center" prop="end"></el-table-column>-->
 
-        </el-table>
+<!--        </el-table>-->
+<!--     -->
       </div>
 
     </div>
@@ -81,27 +78,17 @@
         <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="25vh" divwidth="100%"></PieChartTwo>
       </div>
       <div class="mt_20">
-        <p class="f20 bold txt_linear mb_20">河道水位</p>
-        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="30vh" divwidth="100%"></LineChart>
+        <p class="f20 bold txt_linear mb_20">告警站点</p>
+        <el-table v-loading="listLoading" :data="warnList" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList1" class="f14 mt_20">
+          <el-table-column label="站点名称" align="center" prop="stnm"></el-table-column>
+          <el-table-column label="站点类型" align="center" prop="type" :formatter="formatType"></el-table-column>
+          <el-table-column label="告警级别" align="center" prop="alarmLevel" :formatter="formatLevel"></el-table-column>
+          <el-table-column label="告警时间" align="center" prop="alarmTime"></el-table-column>
+        </el-table>
       </div>
 
     </div>
     <div class="top_div flex clr_white text-center">
-      <div class="flex f14 bold mr_20 border shadow" style="width: 350px;">
-        <div class="flex-item txt_linear">视频管理</div>
-        <div class="flex-item">
-          正常
-          <span class="txt_linear">66</span>
-        </div>
-        <div class="flex-item">
-          离线
-          <span class="txt_linear">4</span>
-        </div>
-        <div class="flex-item">
-          故障
-          <span class="txt_linear">4</span>
-        </div>
-      </div>
       <div class="flex f14 bold mr_20 border shadow" style="width: 350px;">
         <div class="flex-item txt_linear">设备管理</div>
         <div class="flex-item">
@@ -121,46 +108,13 @@
       <div class="flex border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">
         设备点位
         <div style="position: absolute;top: 35px;left: 0;width: 100%; line-height: 30px;" class="clr_white border shadow" v-if="showOption==1">
-          <p :class="showType == 1 ? 'baseColor':''" @click="showType = 1">河道水质</p>
-          <p :class="showType == 2 ? 'baseColor':''" @click="showType = 2">河道水量</p>
-          <p :class="showType == 3 ? 'baseColor':''" @click="showType = 3">河道水位</p>
-          <p :class="showType == 4 ? 'baseColor':''" @click="showType = 4">易积水点</p>
-          <p :class="showType == 5 ? 'baseColor':''" @click="showType = 5">视频点位</p>
+          <p :class="showType == 2 ? 'baseColor':''" @click="handleTypeLight(2)">河道水质</p>
+          <p :class="showType == 3 ? 'baseColor':''" @click="handleTypeLight(3)">河道水量</p>
+          <p :class="showType == 0 ? 'baseColor':''" @click="handleTypeLight(0)">河道水位</p>
+          <p :class="showType == 4 ? 'baseColor':''" @click="handleTypeLight(4)">视频点位（类型值？？）</p>
         </div>
       </div>
     </div>
-<!--    <div class="water_survey flex">-->
-<!--      <div class="flex f14 bold mr_20">-->
-<!--        <div class="survey_name text-center"><span class="txt_linear f18">设备管理</span></div>-->
-<!--        <div class="flex-item">-->
-<!--          <p class="baseColor">总览</p>-->
-<!--          <p class="f20 clr_yellow mt_5 ml_10">66</p>-->
-<!--        </div>-->
-<!--        <div class="flex-item">-->
-<!--          <p class="baseColor">离线</p>-->
-<!--          <p class="f20 clr_yellow mt_5 ml_10">0</p>-->
-<!--        </div>-->
-<!--        <div class="flex-item">-->
-<!--          <p class="baseColor">故障</p>-->
-<!--          <p class="f20 clr_yellow mt_5 ml_10">0</p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="flex f14 bold">-->
-<!--        <div class="survey_name text-center"><span class="txt_linear f18">视频监控</span></div>-->
-<!--        <div class="flex-item">-->
-<!--          <p class="baseColor">正常</p>-->
-<!--          <p class="f20 clr_yellow mt_5 ml_10">1836</p>-->
-<!--        </div>-->
-<!--        <div class="flex-item">-->
-<!--          <p class="baseColor">离线</p>-->
-<!--          <p class="f20 clr_yellow mt_5 ml_10">0</p>-->
-<!--        </div>-->
-<!--        <div class="flex-item">-->
-<!--          <p class="baseColor">故障</p>-->
-<!--          <p class="f20 clr_yellow mt_5 ml_10">0</p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
   </div>
 </template>
 
@@ -175,7 +129,11 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point12.png' // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point19.png'
+  import point02 from "@/assets/image/point20.png";
+  import point03 from "@/assets/image/point21.png";
+  import point04 from "@/assets/image/point22.png";
+  import {findSite,abnormalSite,warnSite} from "@/api/water"; // 引入刚才的map.js 注意路径
 
   export default {
     name: 'parameterList',
@@ -444,10 +402,10 @@
               center: ['50%', '50%'],
               data: [
                 {value: 0, name: 'Ⅰ类水'},
-                {value: 310, name: 'Ⅱ类水'},
-                {value: 234, name: 'Ⅲ类水'},
-                {value: 135, name: 'Ⅳ类水'},
-                {value: 135, name: '不达标'},
+                {value: 6.3, name: 'Ⅱ类水'},
+                {value: 12.5, name: 'Ⅲ类水'},
+                {value: 37.5, name: 'Ⅳ类水'},
+                {value: 43.7, name: '不达标'},
               ],
               label: {
                 show: false,
@@ -466,7 +424,8 @@
             }
           ]
         },
-        PieChartLegend:[{name:'Ⅰ类水',color:'#20BB76'},{name:'Ⅱ类水',color:'#247DF5'}, {name:'Ⅲ类水',color:'#24D0F4'},{name:'Ⅳ类水',color:'#13F3F5'},{name:'不达标',color:'#FA6C24'}],
+        PieChartLegend:[{name:'Ⅰ类水',color:'#20BB76',val:0},{name:'Ⅱ类水',color:'#247DF5',val:6.3}, {name:'Ⅲ类水',color:'#24D0F4',val:12.5},
+          {name:'Ⅳ类水',color:'#13F3F5',val:37.5},{name:'不达标',color:'#FA6C24',val:43.7}],
         BarChartLegend:[],
         BarData:{
           title: {},
@@ -603,6 +562,9 @@
         zoom: 14, // 地图的初始化级别，及放大比例
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
+        waterList:[],
+        warnList:[],
+        abnormalList:[],
       }
     },
 
@@ -616,73 +578,163 @@
       // this.$nextTick(function() {
       //
       // })
-      this.onLoad()
+      this.onLoad();
+      this.getList(2);
+      this.getAbnormal(3);
+      this.getWarn(2);
     },
     methods: {
+      formatType(row, column, cellValue, index) {
+        return cellValue == 0
+          ? "河道水位"
+            : cellValue == 2
+              ? "河道水质"
+              : cellValue == 3
+                ? "河道流量"
+                : cellValue == 4
+                  ? "AI监控"
+                  : cellValue == 5
+                    ? "非AI监控"
+                  : cellValue == 6
+                    ? "雨水管网液位"
+                    : cellValue == 7
+                      ? "雨水管网水质"
+                    : "--";
+      },
+      formatLevel(row, column, cellValue, index) {
+        return cellValue == 0
+          ? "一般"
+          : cellValue == 1
+            ? "严重"
+                      : "--";
+      },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
         this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
-        this.addCtrl()
-
-        // // 普通标注
-        let site = [
-          { lng: 117.283042, lat: 31.86119 },
-          { lng: 116.41238, lat: 40.07689 },
-          { lng: 116.34143, lat: 40.03403 },
-        ]
-        // this.markerPoint(site)
-        //创建图片对象
-        var icon = new T.Icon({
-          iconUrl: point01,
-          iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(10, 25)
-        });
-        //创建信息窗口对象
-        // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
-        this.map.addOverLay(marker);
-        // 随机向地图添加25个标注
-        // let bounds = this.map.getBounds();
-        // let sw = bounds.getSouthWest();
-        // let ne = bounds.getNorthEast();
-        // let lngSpan = Math.abs(sw.lng - ne.lng);
-        // let latSpan = Math.abs(ne.lat - sw.lat);
-        // for (let i = 0; i < 25; i++) {
-        //   let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-        //   var marker = new T.Marker(point, {icon: icon});// 创建标注
-        //   this.map.addOverLay(marker);
-        // }
-
-        var infoWin1 = new T.InfoWindow();
-        let sContent =
-          '<div style=" color: #fff;font-size:14px;font-weight:bold;width:100%">' +
-          '<div>' +
-          '<p ref="enterpriseName">任务号：20210566121511</p>' +
-          '<p ref="enterpriseName">任务来源：数字集群</p>' +
-          '<p ref="enterpriseName">事件类型：电动车乱停放</p>' +
-          '<p style="color:red" ref="enterpriseName">任务状态：超时</p>' +
-          '<p style="font-size:16px;font-weight:bold;padding-bottom:5px;" ref="enterpriseName">发生时间：2021-05-12 12:05:19</p>' +
-          '<p ref="enterpriseName">所属辖区：烟曲街道</p>' +
-          '<p ref="enterpriseName">地址描述：人民路就简单三</p>' +
-          '<p style="text-align: right"><a style="cursor: pointer;" onclick="openInfo()"> 查看详情</a></p>' +
-          '</div></div>';
-          infoWin1.setContent(sContent);
-          marker.addEventListener("click", function () {
-          marker.openInfoWindow(infoWin1);
-        });// 将标注添加到地图中
+        // this.addCtrl()
+        this.map.setStyle('indigo');
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
-        this.map.setStyle('indigo')
 
       },
+      mapPoint(type,list){
+        console.log('点位')
+        //创建图片对象
+        this.map.clearOverLays();
+        let icon01 = new T.Icon({
+          iconUrl: point01,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon02 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon03 = new T.Icon({
+          iconUrl: point03,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon04 = new T.Icon({
+          iconUrl: point04,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let markers = []
 
+        console.log(list)
+        for (let i = 0; i < list.length; i++) {
+          // var marker
+          // 0：关  1：开
+          if(type == 2){
+            let point = new T.LngLat(list[i].lgtd,list[i].lttd);
+            markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          }else if(type == 3){
+            let point = new T.LngLat(list[i].lgtd,list[i].lttd);
+            markers[i]  = drawTMaker(point, icon02,this,list[i]);
+          }else if(type == 0){
+            let point = new T.LngLat(list[i].lgtd,list[i].lttd);
+            markers[i]  = drawTMaker(point, icon03,this,list[i]);
+          }else if(type == 4){
+            let point = new T.LngLat(list[i].lgtd,list[i].lttd);
+            markers[i]  = drawTMaker(point, icon04,this,list[i]);
+          }
+
+        }
+
+
+        //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
+        function drawTMaker(lnglat,icon,that,txt){
+          console.log('获取')
+          var marker =  new T.Marker(lnglat, {icon: icon});
+          that.map.addOverLay(marker);
+          marker.addEventListener("click", function (m) {
+            console.log(m)
+            let infoWin1 = new T.InfoWindow();
+            console.log(txt)
+            let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
+            let type ;
+            if(txt.type == 2){
+              type = '河道水质'
+            }else if(txt.type == 3){
+              type = '河道水量'
+            }else if(txt.type == 0){
+              type = '河道水位'
+            }else if(txt.type == 4){
+              type = '视频点位'
+            }
+            let sContent =
+              '<div class="point_info">' +
+              '<p class="f12 time">站点名称：' + txt.stnm + '</p>' +
+              '<p class="f12 time">站点类型：' + type + '</p>' +
+              '<p class="f12 time">地址：' + txt.address + '</p>' +
+              '</div>';
+            infoWin1.setContent(sContent);
+            marker.openInfoWindow(infoWin1);
+
+          });// 将标注添加到地图中
+          return marker;
+        }
+
+      },
+      handleTypeLight(val){
+        this.showType = val
+        this.getList(val);
+      },
+      getAbnormal(type){
+        abnormalSite({type:type}).then((res) => {
+          this.abnormalList = res.data.exceptionStations;
+        });
+      },
+      getWarn(type){
+        warnSite({type:type}).then((res) => {
+          this.warnList = res.data;
+        });
+      },
+      getList(type){
+        findSite({type:type}).then((res) => {
+          this.waterList = res.data;
+          this.mapPoint(type,this.waterList)
+        });
+      },
     }
   }
 </script>
 <style lang="scss" scoped>
   @import '@/styles/variables.scss';
+  /deep/.tdt-infowindow-content-wrapper{
+    width: auto;
+    color: #fff;
+    background: #0a1f44;
+  }
+  .progress_cont{
+    border: 1px solid rgb(15,50,53) !important;
+  }
+  /deep/.tdt-infowindow-tip{
+    background: rgb(15,50,53) !important;;
+  }
   .top_div{
     width: 50%;
     left: 20%;
