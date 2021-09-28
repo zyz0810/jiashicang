@@ -268,19 +268,19 @@
               <div class="circle_num text-center">
                 <img src="./../../assets/image/approval_circle.png" class="circle_img">
                 <div class="circle_num_item">
-                  <span class="clr_white f20 bold circleNum_left_bg block">180/15%</span>
+                  <span class="clr_white f20 bold circleNum_left_bg block">{{formData.check.quanzhi}}/{{((Number(formData.check.quanzhi)/Number(formData.check.count))*100).toFixed(2)}}%</span>
                   <p class="clr_yellow bold">犬只审批</p>
                 </div>
                 <div class="circle_num_item">
-                  <span class="clr_white f20 bold circleNum_left_bg block">120/10%</span>
+                  <span class="clr_white f20 bold circleNum_left_bg block">{{formData.check.gongcheng}}/{{((Number(formData.check.gongcheng)/Number(formData.check.count))*100).toFixed(2)}}%</span>
                   <p class="clr_yellow bold">工程车审批</p>
                 </div>
                 <div class="circle_num_item">
-                  <span class="clr_white f20 bold circleNum_right_bg block">18/1%</span>
+                  <span class="clr_white f20 bold circleNum_right_bg block">{{formData.check.guanggao}}/{{((Number(formData.check.guanggao)/Number(formData.check.count))*100).toFixed(2)}}%</span>
                   <p class="clr_yellow bold">广告审批</p>
                 </div>
                 <div class="circle_num_item">
-                  <span class="clr_white f20 bold circleNum_right_bg block">260/50%</span>
+                  <span class="clr_white f20 bold circleNum_right_bg block">{{formData.check.qita}}/{{((Number(formData.check.qita)/Number(formData.check.count))*100).toFixed(2)}}%</span>
                   <p class="clr_yellow bold">其他审批</p>
                 </div>
               </div>
@@ -360,7 +360,8 @@
   import RingChart from '@/components/Charts/RingChart'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import xinjiang from "echarts/map/js/province/xinjiang";//必须要导入
-  import {generalIndex} from '@/api/overView'
+  import {generalIndex,generalCaseCount} from '@/api/overView'
+  import {generalApprove} from "@/api/recordApproval";
   export default {
     name: 'Dashboard',
     components: {
@@ -372,6 +373,7 @@
     data() {
       return {
         formData:{},
+        approveData:{},
         mapData:{
 
         },
@@ -952,6 +954,7 @@
       // this.mapChart();
       // this.onLoad();
       this.getData();
+      this.getApprove();
     },
     methods: {
       onLoad() {
@@ -1127,6 +1130,12 @@
           this.PieDataThree.title[0].text = ((Number(res.data.light.num)/Number(res.data.light.count))*100).toFixed(2)+'%';
         });
       },
+
+      // getApprove(){
+      //   generalCaseCount().then((res) => {
+      //     this.approveData = res.data;
+      //   });
+      // },
     }
   }
 </script>
@@ -1299,19 +1308,19 @@
       position: absolute;
       &:nth-child(2){
         top: 1.6vh;
-        left: -80px;
+        right: 196px;
       }
       &:nth-child(3){
         top: 11vh;
-        left: -80px;
+        right: 196px;
       }
       &:nth-child(4){
         top: 1.6vh;
-        right: -60px;
+        left: 196px;
       }
       &:nth-child(5){
         top: 11vh;
-        right: -80px;
+        left: 196px;
       }
     }
   }

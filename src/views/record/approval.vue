@@ -6,30 +6,29 @@
 
         <div class="txt_linear f18 bold">备案审批概况</div>
         <div class="mt_20 clr_white">
-          <div class="f20 bold text-center approval_num txt_shadow">审核总数：600</div>
+          <div class="f20 bold text-center approval_num txt_shadow">审核总数：{{formData.count}}</div>
 
           <div class="circle_num text-center">
             <img src="./../../assets/image/approval_circle.png" class="circle_img">
             <div class="circle_num_item">
-              <span class="clr_white f20 bold circleNum_left_bg block">180/15%</span>
+              <span class="clr_white f20 bold circleNum_left_bg block">{{formData.quanzhi}}/{{((Number(formData.quanzhi)/Number(formData.count))*100).toFixed(2)}}%</span>
               <p class="clr_yellow bold">犬只审批</p>
             </div>
             <div class="circle_num_item">
-              <span class="clr_white f20 bold circleNum_left_bg block">120/10%</span>
+              <span class="clr_white f20 bold circleNum_left_bg block">{{formData.gongcheng}}/{{((Number(formData.gongcheng)/Number(formData.count))*100).toFixed(2)}}%</span>
               <p class="clr_yellow bold">工程车审批</p>
             </div>
             <div class="circle_num_item">
-              <span class="clr_white f20 bold circleNum_right_bg block">18/1%</span>
+              <span class="clr_white f20 bold circleNum_right_bg block">{{formData.guanggao}}/{{((Number(formData.guanggao)/Number(formData.count))*100).toFixed(2)}}%</span>
               <p class="clr_yellow bold">广告审批</p>
             </div>
             <div class="circle_num_item">
-              <span class="clr_white f20 bold circleNum_right_bg block">260/50%</span>
+              <span class="clr_white f20 bold circleNum_right_bg block">{{formData.qita}}/{{((Number(formData.qita)/Number(formData.count))*100).toFixed(2)}}%</span>
               <p class="clr_yellow bold">其他审批</p>
             </div>
           </div>
 
         </div>
-
       <div class="mt_20">
         <p class="f20 bold txt_linear">审批类型数量排名（top6）</p>
         <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
@@ -75,6 +74,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   import echarts from 'echarts'
   import RingChart from '@/components/Charts/RingChart'
   import BarChartFive from '@/components/Charts/BarChartFive'
@@ -88,6 +88,10 @@
   import point01 from '@/assets/image/point04.png' // 引入刚才的map.js 注意路径
   import point02 from '@/assets/image/point05.png' // 引入刚才的map.js 注意路径
   import point03 from '@/assets/image/point06.png' // 引入刚才的map.js 注意路径
+  import {generalApprove} from '@/api/recordApproval'
+  import {cleanCarAddressList, lastGPS} from "@/api/garbageLink";
+  import {cos} from "@/utils/translate";
+  import point04 from "@/assets/image/point22.png";
 
   export default {
     name: 'parameterList',
@@ -376,6 +380,8 @@
         zoom: 14, // 地图的初始化级别，及放大比例
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
+        formData:{},
+        pointList:[],
       }
     },
 
@@ -389,87 +395,207 @@
       // this.$nextTick(function() {
       //
       // })
-      this.onLoad()
+      this.onLoad();
+      this.getData();
     },
     methods: {
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
         this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
-
-        // // 普通标注
-        let site = [
-          { lng: 117.283042, lat: 31.86119 },
-          { lng: 116.41238, lat: 31.07689 },
-          { lng: 116.34143, lat: 31.03403 },
-        ]
-        // this.markerPoint(site)
-        //创建图片对象
-        var icon01 = new T.Icon({
-          iconUrl: point01,
-          iconSize: new T.Point(31, 52),
-          iconAnchor: new T.Point(10, 25)
-        });
-        var icon02 = new T.Icon({
-          iconUrl: point02,
-          iconSize: new T.Point(31, 52),
-          iconAnchor: new T.Point(10, 25)
-        });
-        var icon03 = new T.Icon({
-          iconUrl: point03,
-          iconSize: new T.Point(31, 52),
-          iconAnchor: new T.Point(10, 25)
-        });
-        //创建信息窗口对象
-        // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119), {icon: icon});// 创建标注
-        // this.map.addOverLay(marker);
-        // 随机向地图添加25个标注
-        let bounds = this.map.getBounds();
-        let sw = bounds.getSouthWest();
-        let ne = bounds.getNorthEast();
-        let lngSpan = Math.abs(sw.lng - ne.lng);
-        let latSpan = Math.abs(ne.lat - sw.lat);
-        for (let i = 0; i < 5; i++) {
-          let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-          var marker = new T.Marker(point, {icon: icon01});// 创建标注
-          this.map.addOverLay(marker);
-        }
-        for (let i = 0; i < 5; i++) {
-          let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-          var marker = new T.Marker(point, {icon: icon03});// 创建标注
-          this.map.addOverLay(marker);
-        }
-        for (let i = 0; i < site.length; i++) {
-          let point = new T.LngLat(site[i].lng, site[i].lat);
-          var marker = new T.Marker(point, {icon: icon02});// 创建标注
-          this.map.addOverLay(marker);
-        }
-        var infoWin1 = new T.InfoWindow();
-        let sContent =
-          '<div style=" color: #fff;font-size:14px;font-weight:bold;width:100%">' +
-          '<div>' +
-          '<p ref="enterpriseName">任务号：20210566121511</p>' +
-          '<p ref="enterpriseName">任务来源：数字集群</p>' +
-          '<p ref="enterpriseName">事件类型：电动车乱停放</p>' +
-          '<p style="color:red" ref="enterpriseName">任务状态：超时</p>' +
-          '<p style="font-size:16px;font-weight:bold;padding-bottom:5px;" ref="enterpriseName">发生时间：2021-05-12 12:05:19</p>' +
-          '<p ref="enterpriseName">所属辖区：烟曲街道</p>' +
-          '<p ref="enterpriseName">地址描述：人民路就简单三</p>' +
-          '<p style="text-align: right"><a style="cursor: pointer;" onclick="openInfo()"> 查看详情</a></p>' +
-          '</div></div>';
-          infoWin1.setContent(sContent);
-          marker.addEventListener("click", function () {
-          marker.openInfoWindow(infoWin1);
-        });// 将标注添加到地图中
+        this.map.setStyle('indigo');
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
-        this.map.setStyle('indigo')
 
       },
+      getData(){
+        this.getList().then(val => {
+          console.log('dierbu222')
+          console.log(val)
+          this.mapPoint(val);
+        });
+      },
+      getList(){
+        return new Promise((resolve, reject) => {
+          //你的逻辑代码
+          let pointList2 = [];
+          generalApprove().then((res) => {
+            this.pointList = [];
+            const {count,gongcheng,guanggao,qita,quanzhi} = res.data;
+            this.formData = {count,gongcheng,guanggao,qita,quanzhi};
+            // let pointList = res.data.data.filter((item,index)=>{
+            //   let that = this;
+            //   let lat;
+            //   let lng;
+            //   axios({
+            //     url:"http://api.tianditu.gov.cn/geocoder",
+            //     method:'get',
+            //     params:{
+            //       tk:"09c212e85ea968b8789e2111963c819a",
+            //       ds:{"keyWord":item.address}
+            //     }
+            //   }).then((data)=>{
+            //     if(data.data.location.lat && data.data.location.lon){
+            //       // if(index == 0){
+            //         item.lat = data.data.location.lat
+            //         item.lon = data.data.location.lon
+            //         // that.$set(item,'lat',data.data.location.lat);
+            //         // that.$set(item,'lon',data.data.location.lon);
+            //         that.pointList.push(item);
+            //         return item;
+            //       // }
+            //       // lat =  data.data.location.lat
+            //       // lng = data.data.location.lon
+            //       // item.lat = data.data.location.lat
+            //       // item.lon = data.data.location.lon
+            //       // return item;
+            //     }
+            //
+            //   }).catch((err) => {
+            //     console.log(err)
+            //     // alert("获取失败");
+            //   })
+            //
+            //
+            // })
 
+
+            this.pointList = res.data.data.filter((item,index)=>{
+              if(item.address != ''){
+                axios({
+                  url:"http://api.tianditu.gov.cn/geocoder",
+                  method:'get',
+                  params:{
+                    tk:"09c212e85ea968b8789e2111963c819a",
+                    ds:{"keyWord":item.address}
+                  }
+                }).then((data)=>{
+                  // item.lat = data.data.location.lat;
+                  // item.lon = data.data.location.lon;
+
+                  // console.log(location)
+                  // debugger
+                  let lat;
+                  let lon;
+                  if(data.data.msg == 'ok'){
+                    // console.log(data.data.location)
+                    if(data.data.location){
+                      console.log('11111111')
+                      lat = data.data.location.lat;
+                      lon = data.data.location.lon;
+                      this.$set(item,'lon1',lon);
+                      this.$set(item,'lat',lat);
+                      pointList2.push(item)
+                      return item
+                    }
+                  }else{
+                    console.log('cuowu'+index)
+                    console.log(data)
+                    console.log(item)
+                  }
+
+                  // return item
+                }).catch((err) => {
+                  console.log(err)
+                  // alert("获取失败");
+                })
+              }
+
+            });
+
+          });
+          console.log('dierbu111')
+          resolve(pointList2)
+        });
+
+      },
+      mapPoint(list){
+        return new Promise((resolve, reject) => {
+        console.log('点位333')
+        //创建图片对象
+        this.map.clearOverLays();
+        let icon01 = new T.Icon({
+          iconUrl: point01,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon02 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon03 = new T.Icon({
+          iconUrl: point03,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon04 = new T.Icon({
+          iconUrl: point04,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let markers = []
+
+        console.log('点位点位点位点位')
+        console.log(list.length)
+        for (let i = 0; i < list.length; i++) {
+          // var marker
+          // 0：关  1：开
+          console.log('犬只审批100000'+list[i].lon,list[i].lat)
+          console.log(list[i].type)
+          let point = new T.LngLat(list[i].lon,list[i].lat);
+          if(list[i].type == '犬只审批'){
+            console.log('犬只审批1'+list[i].lon,list[i].lat)
+            markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          }else if(list[i].type == '广告审批'){
+            console.log('犬只审批2')
+            markers[i]  = drawTMaker(point, icon02,this,list[i]);
+          }else if(list[i].type == '工程车审批'){
+            console.log('犬只审批3')
+            markers[i]  = drawTMaker(point, icon03,this,list[i]);
+          }else if(list[i].type == '其它审批'){
+            console.log('犬只审批4')
+            markers[i]  = drawTMaker(point, icon04,this,list[i]);
+          }
+
+        }
+
+        //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
+        function drawTMaker(lnglat,icon,that,txt){
+          console.log('获取')
+          var marker =  new T.Marker(lnglat, {icon: icon});
+          that.map.addOverLay(marker);
+          marker.addEventListener("click", function (m) {
+            console.log(m)
+            let infoWin1 = new T.InfoWindow();
+            console.log(txt)
+            let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
+            let type ;
+            if(txt.type == 2){
+              type = '河道水质'
+            }else if(txt.type == 3){
+              type = '河道水量'
+            }else if(txt.type == 0){
+              type = '河道水位'
+            }else if(txt.type == 4){
+              type = '视频点位'
+            }
+            let sContent =
+              '<div class="point_info">' +
+              '<p class="f12 time">站点名称：' + txt.stnm + '</p>' +
+              '<p class="f12 time">站点类型：' + type + '</p>' +
+              '<p class="f12 time">地址：' + txt.address + '</p>' +
+              '</div>';
+            infoWin1.setContent(sContent);
+            marker.openInfoWindow(infoWin1);
+
+          });// 将标注添加到地图中
+          return marker;
+        }
+          resolve()
+        });
+      },
     }
   }
 </script>
@@ -504,19 +630,19 @@
       position: absolute;
       &:nth-child(2){
         top: 1.6vh;
-        left: -80px;
+        right: 196px;
       }
       &:nth-child(3){
         top: 11vh;
-        left: -80px;
+        right: 196px;
       }
       &:nth-child(4){
         top: 1.6vh;
-        right: -60px;
+        left: 196px;
       }
       &:nth-child(5){
         top: 11vh;
-        right: -80px;
+        left: 196px;
       }
     }
   }

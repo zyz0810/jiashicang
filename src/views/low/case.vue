@@ -4,22 +4,22 @@
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_content clr_white base_bg_left">
       <div class="left_server clr_white text-center f16 bold border base_bg shadow">
-        <div :class="['mb_20',activeIndex == 0 ? 'baseColor':'']" @click="activeIndex = 0">
+        <div :class="['mb_20',activeIndex == 0 ? 'baseColor':'']" @click="handlePageType(0)">
           <i class="iconfont icon-zaosheng f26"></i>
           <p class="mt_10">数字城管</p>
         </div>
-        <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="activeIndex = 1">
+        <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="handlePageType(1)">
           <i class="iconfont icon-fengji f26"></i>
           <p class="mt_10">信访投诉</p>
         </div>
-        <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="activeIndex = 2">
+        <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="handlePageType(2)">
           <i class="iconfont icon-zaosheng f26"></i>
           <p class="mt_10">二级指挥</p>
         </div>
       </div>
       <ul class="direct_option clr_white text-center" v-if="activeIndex == 2">
-        <li :class="['border','shadow','mb_10',directType==1?'baseColor':'']" @click="directType=1">AI上报</li>
-        <li :class="['border','shadow',directType==2?'baseColor':'']" @click="directType=2">后台录入</li>
+        <li :class="['border','shadow','mb_10',directType==1?'baseColor':'']" @click="handleDirectType(1)">AI上报</li>
+        <li :class="['border','shadow',directType==2?'baseColor':'']" @click="handleDirectType(2)">后台录入</li>
       </ul>
     </div>
     <div class="right_content clr_white base_bg_right">
@@ -35,70 +35,91 @@
     </div>
     <div class="top_div top_one flex clr_white text-center f12 bold" v-if="activeIndex == 0">
       <div class="flex-item border shadow">
-        今日上报量
-        <span class="txt_linear">66</span>
+        本周上报量
+        <span class="txt_linear">{{formData.shangBao}}</span>
       </div>
       <div class="flex-item border shadow ml_10">
-        今日处理量
-        <span class="txt_linear">4</span>
+        本周处理量
+        <span class="txt_linear">{{formData.chuLi}}</span>
       </div>
       <div class="flex-item border shadow ml_10">
-        今日未处理量
-        <span class="txt_linear">4</span>
+        本周未处理量
+        <span class="txt_linear">{{formData.undisposed}}</span>
       </div>
       <div class="flex-item border shadow ml_10">
-        今日黄灯件
-        <span class="txt_linear">4</span>
+        本周黄灯件
+        <span class="txt_linear">{{formData.yellow_num}}</span>
       </div>
       <div class="flex-item border shadow ml_10">
-        今日红灯件
-        <span class="txt_linear">4</span>
+        本周红灯件
+        <span class="txt_linear">{{formData.red_num}}</span>
       </div>
     </div>
     <div class="top_div flex clr_white text-center f12 bold" v-if="activeIndex == 1">
       <div class="flex border shadow mr_20" style="width: 450px">
         <div class="flex-item">
-          今日受理量
-          <span class="txt_linear">66</span>
+          本周受理量
+          <span class="txt_linear">{{formData.month_deal_num}}</span>
         </div>
         <div class="flex-item">
-          同比下降
-          <span class="txt_linear">4</span>
+          同比{{formData.basis_direction == 1?'上升':'下降'}}
+          <span class="txt_linear">{{formData.basis_num}}%</span>
         </div>
         <div class="flex-item">
-          环比下降
-          <span class="txt_linear">4</span>
+          环比{{formData.comparative_direction == 1?'上升':'下降'}}
+          <span class="txt_linear">{{formData.comparative_num}}%</span>
         </div>
         <div class="flex-item">
           满意率
-          <span class="txt_linear">4</span>
+          <span class="txt_linear">{{formData.satisfaction_rate}}%</span>
         </div>
       </div>
       <div class="flex border shadow">
         <div class="flex-item">
           重复投诉件
-          <span class="txt_linear">4</span>
+          <span class="txt_linear">{{formData.rep_num}}</span>
         </div>
       </div>
 
     </div>
-    <div class="top_div flex clr_white text-center f12 bold" v-if="activeIndex == 2">
+    <div class="top_div flex clr_white text-center f12 bold" v-if="activeIndex == 2 && directType == 1">
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           今日上报量
-          <span class="txt_linear">4</span>
+          <span class="txt_linear">{{AIData.count}}</span>
         </div>
       </div>
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           今日受理量
-          <span class="txt_linear">4</span>
+          <span class="txt_linear">{{AIData.chuli}}</span>
         </div>
       </div>
       <div class="flex border shadow">
         <div class="flex-item">
           今日结案量
-          <span class="txt_linear">4</span>
+          <span class="txt_linear">{{AIData.end}}</span>
+        </div>
+      </div>
+
+    </div>
+    <div class="top_div flex clr_white text-center f12 bold" v-if="activeIndex == 2 && directType == 2">
+      <div class="flex border shadow mr_20">
+        <div class="flex-item">
+          今日上报量
+          <span class="txt_linear">{{directData.count}}</span>
+        </div>
+      </div>
+      <div class="flex border shadow mr_20">
+        <div class="flex-item">
+          今日受理量
+          <span class="txt_linear">{{directData.chuli}}</span>
+        </div>
+      </div>
+      <div class="flex border shadow">
+        <div class="flex-item">
+          今日结案量
+          <span class="txt_linear">{{directData.end}}</span>
         </div>
       </div>
 
@@ -107,20 +128,29 @@
       <p v-if="mapType == 1">重复件<br/>热力图</p>
       <p v-if="mapType == 2">实时<br/>点位</p>
     </div>
-    <ul class="point_intro bg_blue01 p20">
-      <li class="weui-cell text-center" v-if="mapType  == 2 && activeIndex == 0">
-        <div class="weui-cell__hd"><img src="./../../assets/image/point02.png"/></div>
-        <div class="weui-cell__bd baseColor">红灯件</div>
-      </li>
-      <li class="weui-cell text-center" v-if="mapType  == 2  && activeIndex != 2">
-        <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"/></div>
-        <div class="weui-cell__bd baseColor">黄灯件</div>
-      </li>
-      <li class="weui-cell text-center" v-if="(mapType  == 2  && activeIndex != 2) || activeIndex == 2">
-        <div class="weui-cell__hd"><img src="./../../assets/image/point03.png"/></div>
-        <div class="weui-cell__bd baseColor">正常件</div>
-      </li>
-    </ul>
+<!--    <ul class="point_intro bg_blue01 p20">-->
+<!--      <li class="weui-cell text-center" v-if="mapType  == 2 && activeIndex == 0">-->
+<!--        <div class="weui-cell__hd"><img src="./../../assets/image/point02.png"/></div>-->
+<!--        <div class="weui-cell__bd baseColor">红灯件</div>-->
+<!--      </li>-->
+<!--      <li class="weui-cell text-center" v-if="mapType  == 2  && activeIndex != 2">-->
+<!--        <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"/></div>-->
+<!--        <div class="weui-cell__bd baseColor">黄灯件</div>-->
+<!--      </li>-->
+<!--      <li class="weui-cell text-center" v-if="(mapType  == 2  && activeIndex != 2) || activeIndex == 2">-->
+<!--        <div class="weui-cell__hd"><img src="./../../assets/image/point03.png"/></div>-->
+<!--        <div class="weui-cell__bd baseColor">正常件</div>-->
+<!--      </li>-->
+<!--    </ul>-->
+
+
+
+    <myDialog :visible.sync="showImgDialog"
+               title="查看图片"
+               :append-to-body="true">
+      <img v-for="item in imgArr" width="100%" :src="item" alt />
+    </myDialog>
+
   </div>
 </template>
 
@@ -135,7 +165,12 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point01.png' // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point01.png'
+  import {abnormalSite} from "@/api/water"; // 引入刚才的map.js 注意路径
+  import {caseCount,commandCase} from "@/api/lowCase";
+  import point02 from "@/assets/image/point20.png";
+  import point03 from "@/assets/image/point21.png";
+  import point04 from "@/assets/image/point22.png"; // 引入刚才的map.js 注意路径
   let heatmapOverlay;
   export default {
     name: 'case',
@@ -144,6 +179,8 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        imgArr:[],
+        formData:{},
         directType:1,
         mapType:1,
         activeIndex:0,
@@ -563,6 +600,13 @@
         zoom: 14, // 地图的初始化级别，及放大比例
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
+        pointOne:[],
+        pointTwo:[],
+        AIData:{},
+        directData:{},
+        pointThree:[],
+        pointFour:[],
+        showImgDialog:false,
       }
     },
 
@@ -578,16 +622,35 @@
       // })
       this.onLoad();
       this.getHeatMap();
+      this.getPointOne();
+      window.handleVideo = this.handleVideo;
     },
     methods: {
+      handlePageType(val){
+        this.activeIndex = val;
+        if(val == 2){
+          this.getPointThree();
+        }else{
+          this.getPointOne();
+        }
+      },
+      //指挥平台
+      handleDirectType(val){
+        this.directType = val;
+        if(val == 1){
+          this.mapPoint(2,this.pointThree)
+        }else{
+          this.mapPoint(2,this.pointFour)
+        }
+      },
       changeMap(){
         if(this.mapType == 1){
           this.mapType  = 2
-          this.getMaker();
+          // this.getMaker();
+          this.mapPoint(0,this.pointOne)
         }else{
           this.mapType  = 1
           this.getHeatMap();
-
         }
       },
       getHeatMap(){
@@ -698,11 +761,159 @@
         this.map.setStyle('indigo')
 
       },
+      getPointOne(){
+        caseCount().then((res) => {
+          const {chuLi,shangBao,undisposed,yellow_detail,yellow_num,red_num}=res.data.city
+          const {basis_direction,basis_num,comparative_direction,comparative_num,satisfaction_rate,rep_num,month_deal_num}=res.data.letter
+          this.formData = {chuLi,shangBao,undisposed,yellow_detail,yellow_num,red_num,basis_direction,basis_num,comparative_direction,comparative_num,satisfaction_rate,rep_num,month_deal_num}
+          this.pointOne = res.data.city.list;
+          if(this.activeIndex == 0){
+            this.mapPoint(0,this.pointOne)
+          }else{
+            this.mapPoint(1,this.pointOne)
+          }
 
+        });
+      },
+      getPointThree(){
+        commandCase().then((res) => {
+          this.directData = {
+            chuli:res.data.dj.chuli,
+            count:res.data.dj.count,
+            end:res.data.dj.end
+          }
+          this.AIData = {
+            chuli:res.data.ai.chuli,
+            count:res.data.ai.count,
+            end:res.data.ai.end
+          }
+          this.pointThree = res.data.ai.data;
+          this.pointFour = res.data.dj.data;
+          this.mapPoint(2,this.pointThree)
+        });
+      },
+      mapPoint(type,list){
+        console.log('点位')
+        //创建图片对象
+        this.map.clearOverLays();
+        let icon01 = new T.Icon({
+          iconUrl: point01,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon02 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon03 = new T.Icon({
+          iconUrl: point03,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon04 = new T.Icon({
+          iconUrl: point04,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let markers = []
+
+        console.log(list)
+        for (let i = 0; i < list.length; i++) {
+          // var marker
+          // 0：关  1：开
+          if(type == 2){
+            let point = new T.LngLat(list[i].log,list[i].lat);
+            markers[i]  = drawTMaker(point, icon03,this,list[i]);
+          }else{
+            let point = new T.LngLat(list[i].x_line,list[i].y_line);
+            markers[i]  = drawTMaker(point, icon03,this,list[i]);
+          }
+
+          // if(list[i].type == 2){
+          //   markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          // }else if(list[i].type == 3){
+          //   markers[i]  = drawTMaker(point, icon02,this,list[i]);
+          // }else if(list[i].type == 0){
+          //   markers[i]  = drawTMaker(point, icon03,this,list[i]);
+          // }else if(list[i].type == 4){
+          //   markers[i]  = drawTMaker(point, icon04,this,list[i]);
+          // }
+
+
+        }
+
+
+        //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
+        function drawTMaker(lnglat,icon,that,txt){
+          console.log('获取')
+          var marker =  new T.Marker(lnglat, {icon: icon});
+          that.map.addOverLay(marker);
+          marker.addEventListener("click", function (m) {
+            console.log(m)
+            let infoWin1 = new T.InfoWindow();
+            console.log(txt)
+            let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
+            // 数字城管：任务号、问题来源、问题状态、小类名称、上报时间、问题描述、所属区域；
+            // 信访投诉：受理单编号、工单状态、投诉来源、详细类型、反映内容、违法地址
+            // 指挥平台（AI上报，问题登记）：案件编号、事件来源、小类、上报时间、问题描述、事件位置；图片
+            let sContent = ''
+            if(type == 0){
+              sContent =
+                '<div class="point_info">' +
+                '<p class="f12 time">任务号：' + txt.number_no + '</p>' +
+                '<p class="f12 time">问题来源：' + txt.source + '</p>' +
+                '<p class="f12 time">问题状态：' + txt.status + '</p>' +
+                '<p class="f12 time">小类名称：' + txt.small_category + '</p>' +
+                '<p class="f12 time">上报时间：' + txt.create_time + '</p>' +
+                '<p class="f12 time">问题描述：' + txt.description + '</p>' +
+                '<p class="f12 time">所属区域：' + txt.professional_department_belongs + '</p>' +
+                '</div>';
+            }else if(type == 1){
+              sContent =
+                '<div class="point_info">' +
+                '<p class="f12 time">受理单编号：' + txt.number_no + '</p>' +
+                '<p class="f12 time">工单状态：' + txt.source + '</p>' +
+                '<p class="f12 time">投诉来源：' + txt.status + '</p>' +
+                '<p class="f12 time">详细类型：' + txt.small_category + '</p>' +
+                '<p class="f12 time">反映内容：' + txt.create_time + '</p>' +
+                '<p class="f12 time">违法地址：' + txt.description + '</p>' +
+                '</div>';
+            }else if(type == 2){
+              // 指挥平台（AI上报，问题登记）：案件编号、事件来源、小类、上报时间、问题描述、事件位置；图片
+              sContent =
+                '<div class="point_info">' +
+                '<p class="f12 time">案件编号：' + txt.number_no + '</p>' +
+                '<p class="f12 time">事件来源：' + txt.source + '</p>' +
+                '<p class="f12 time">小类：' + txt.status + '</p>' +
+                '<p class="f12 time">上报时间：' + txt.small_category + '</p>' +
+                '<p class="f12 time">问题描述：' + txt.create_time + '</p>' +
+                '<p class="f12 time">事件位置：' + txt.description + '</p>' +
+                '<p class="f12 time text-right" onClick="handleVideo('+aa+')">图片</p>' +
+                '</div>';
+
+            }
+
+
+            infoWin1.setContent(sContent);
+            marker.openInfoWindow(infoWin1);
+
+          });// 将标注添加到地图中
+          return marker;
+        }
+
+      },
+      handleVideo(txt){
+        this.showImgDialog = true
+        this.imgArr = txt.question_images.spit(',')
+      },
     }
   }
 </script>
 <style lang="scss" scoped>
+  /deep/.tdt-infowindow-content-wrapper{
+    color: #fff;
+  }
   .point_intro{
     position: fixed;
     bottom: 160px;

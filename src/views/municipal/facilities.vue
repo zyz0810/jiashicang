@@ -913,7 +913,8 @@
         dataLine({type:type}).then((res) => {
           this.dataLine = res.data;
           this.listQuery.monitorlineid = res.data[0].id;
-          this.getDataPoint(res.data[0].id)
+          // this.getDataPoint(res.data[0].id)
+          this.getCurrentData();
         });
       },
       // 获取监测线下面的测点
@@ -931,7 +932,7 @@
       //   * type 监测项
       //   * pointid 测点id
         console.log('循环 '+id)
-        currentData({monitorlineid:this.listQuery.monitorlineid,type:this.listQuery.type,pointid:id}).then((res) => {
+        currentData({monitorlineid:this.listQuery.monitorlineid,type:this.listQuery.type,}).then((res) => {
           // this.dataLine = res.data;
         });
       },
