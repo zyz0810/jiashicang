@@ -3,15 +3,15 @@
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_server clr_white text-center f16 bold border base_bg shadow">
-      <div :class="['mb_20',activeIndex == 0 ? 'baseColor':'']" @click="activeIndex = 0">
+      <div :class="['mb_20',activeIndex == 0 ? 'baseColor':'']" @click="handlePageType(0)">
         <i class="iconfont icon-zaosheng f26"></i>
         <p class="mt_10">数字停车</p>
       </div>
-      <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="activeIndex = 1">
+      <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="handlePageType(1)">
         <i class="iconfont icon-fengji f26"></i>
         <p class="mt_10">共享单车</p>
       </div>
-      <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="activeIndex = 2">
+      <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="handlePageType(2)">
         <i class="iconfont icon-zaosheng f26"></i>
         <p class="mt_10">城市亮灯</p>
       </div>
@@ -60,30 +60,28 @@
           </p>
         </div>
       </div>
+      <!--<div class="mt_20">-->
+        <!--<p class="mb_20 f16 bold text-center">全区停车场数：1210</p>-->
+        <!--<div  class="weui-cell">-->
+          <!--<div class="weui-cell__hd text-center" style="width: 90px;">-->
+            <!--<p class="f26 bold clr_yellow mb_20">25321</p>-->
+            <!--<p class="f18">普查泊位</p>-->
+          <!--</div>-->
+          <!--<div class="weui-cell__bd">-->
+            <!--<RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>-->
+          <!--</div>-->
+        <!--</div>-->
 
-
-      <div class="mt_20">
-        <p class="mb_20 f16 bold text-center">全区停车场数：1210</p>
-        <div  class="weui-cell">
-          <div class="weui-cell__hd text-center" style="width: 90px;">
-            <p class="f26 bold clr_yellow mb_20">25321</p>
-            <p class="f18">普查泊位</p>
-          </div>
-          <div class="weui-cell__bd">
-            <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
-          </div>
-        </div>
-
-      </div>
-      <div  class="weui-cell">
-        <div class="weui-cell__hd text-center" style="width: 90px;">
-          <p class="f26 bold clr_yellow mb_20">25321</p>
-          <p class="f18">接入泊位</p>
-        </div>
-        <div class="weui-cell__bd">
-          <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>
-        </div>
-      </div>
+      <!--</div>-->
+      <!--<div  class="weui-cell">-->
+        <!--<div class="weui-cell__hd text-center" style="width: 90px;">-->
+          <!--<p class="f26 bold clr_yellow mb_20">25321</p>-->
+          <!--<p class="f18">接入泊位</p>-->
+        <!--</div>-->
+        <!--<div class="weui-cell__bd">-->
+          <!--<RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>-->
+        <!--</div>-->
+      <!--</div>-->
     </div>
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 1">
       <p class="f20 bold txt_linear mb_20">车辆概况</p>
@@ -160,37 +158,37 @@
       </div>
 
     </div>
-
     <div class="top_div flex clr_white text-center" v-if="activeIndex == 2">
       <div class="flex f14 bold mr_20 border shadow" style="width: 300px;">
         <div class="flex-item txt_linear">控制柜</div>
         <div class="flex-item">
           总览
-          <span class="txt_linear">66</span>
+          <span class="txt_linear">{{totalData.controlCabinetNum}}</span>
         </div>
-        <div class="flex-item">
-          离线
-          <span class="txt_linear">4</span>
-        </div>
-        <div class="flex-item">
-          故障
-          <span class="txt_linear">4</span>
-        </div>
+        <!--<div class="flex-item">-->
+          <!--离线-->
+          <!--<span class="txt_linear">4</span>-->
+        <!--</div>-->
+        <!--<div class="flex-item">-->
+          <!--故障-->
+          <!--<span class="txt_linear">4</span>-->
+        <!--</div>-->
       </div>
       <div class="flex f14 bold mr_20 border shadow" style="width: 350px;">
         <div class="flex-item txt_linear">亮灯设备</div>
         <div class="flex-item">
           总览
-          <span class="txt_linear">66</span>
+          <!--<span class="txt_linear">{{totalData.lampPostNum}}</span>-->
+          <span class="txt_linear">11012</span>
         </div>
-        <div class="flex-item">
-          离线
-          <span class="txt_linear">4</span>
-        </div>
-        <div class="flex-item">
-          故障
-          <span class="txt_linear">4</span>
-        </div>
+        <!--<div class="flex-item">-->
+          <!--离线-->
+          <!--<span class="txt_linear">4</span>-->
+        <!--</div>-->
+        <!--<div class="flex-item">-->
+          <!--故障-->
+          <!--<span class="txt_linear">4</span>-->
+        <!--</div>-->
 
       </div>
       <div class="flex border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">
@@ -219,9 +217,11 @@
   import point02 from '@/assets/image/point16.png' // 引入刚才的map.js 注意路径
   import point03 from '@/assets/image/point17.png' // 引入刚才的map.js 注意路径
   import point04 from '@/assets/image/point18.png' // 引入刚才的map.js 注意路径
+  import point05 from '@/assets/image/point13.png' // 引入刚才的map.js 注意路径
   import toolTipBg from '@/assets/image/digital-bg.png' // 引入刚才的map.js 注意路径
+  import {pointList} from '@/api/system'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
-  import {getLampPostList,getcontrolcabinetlist,getevaluate} from '@/api/digitalServices'
+  import {getLampPostList,getcontrolcabinetlist,getevaluate,parkList} from '@/api/digitalServices'
   import {generalIndex} from "@/api/overView";
   export default {
     name: 'parameterList',
@@ -231,7 +231,7 @@
     data() {
       return {
         lampPostList:[],
-        showType:1,
+        showType:2,
         showOption:0,
         chartDataTwo: {
           title:{},
@@ -472,7 +472,7 @@
             },
           ]
         },
-        activeIndex:2,
+        activeIndex:0,
         chartData: {
           title:{},
           tooltip: {
@@ -778,8 +778,14 @@
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
         formData:{},
+        totalData:{
+          lampPostNum:'',//杆
+          controlCabinetNum:'',
+        },
         lightNum:{},
         controlList:[],
+        parkList:[],
+        pointList:[],
       }
     },
 
@@ -794,11 +800,29 @@
       //
       // })
       this.onLoad();
-      this.getLampPostList();
+      // this.getLampPostList();
       this.getChartData();
       this.getData();
+      this.getControlCabinetlist();
+      this.getParkList();
     },
     methods: {
+      handlePageType(val){
+        this.activeIndex = val;
+        if(val == 0){
+          this.getParkList();
+        }else if(val == 2){
+          this.getControlCabinetlist();
+        }else if(val == 1){
+          this.getPointList();
+        }
+      },
+      getPointList(){
+        pointList({type:'allList'}).then((res) => {
+          this.pointList = res.data;
+          this.mapPoint('point',this.pointList)
+        });
+      },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
@@ -833,38 +857,68 @@
           iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
+        let icon05 = new T.Icon({
+          iconUrl: point05,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
         let markers = []
+        if(type == 'control'){
 
-if(type == 'control'){
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            // 0：关  1：开
+            if(list[i].status == 0){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon03,this,list[i]);
+            }else if(list[i].status == 1){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon04,this,list[i]);
+            }
+          }
+        }else if(type == 'park'){
 
-  for (let i = 0; i < list.length; i++) {
-    // var marker
-    // 0：关  1：开
-    if(list[i].status == 0){
-      let point = new T.LngLat(list[i].longitude,list[i].latitude);
-      markers[i]  = drawTMaker(point, icon03,this,list[i]);
-    }else if(list[i].status == 1){
-      let point = new T.LngLat(list[i].longitude,list[i].latitude);
-      markers[i]  = drawTMaker(point, icon04,this,list[i]);
-    }
+          console.log('jjjj:'+list.length)
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            // 0：关  1：开
 
-  }
-}else{
+            if(list[i].way_longitude  && list[i].way_latitude){
+              console.log(list[i].way_longitude,list[i].way_latitude);
+              console.log('停车场')
+              let point = new T.LngLat(list[i].way_longitude,list[i].way_latitude);
+              markers[i]  = drawTMaker(point, icon04,this,list[i]);
+            }else{
+              console.log(list[i]);
+              console.log(list[i].longitude,list[i].latitude);
+              console.log('是哦皮 ')
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon05,this,list[i]);
+            }
 
-  for (let i = 0; i < list.length; i++) {
-    // var marker
-    // 0：关  1：开
-    if(list[i].status == 0){
-      let point = new T.LngLat(list[i].longitude,list[i].latitude);
-      markers[i]  = drawTMaker(point, icon01,this,list[i]);
-    }else if(list[i].status == 1){
-      let point = new T.LngLat(list[i].longitude,list[i].latitude);
-      markers[i]  = drawTMaker(point, icon02,this,list[i]);
-    }
 
-  }
-}
+          }
+        }else if(type == 'point'){
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            markers[i]  = drawTMaker(point, icon05,this,list[i]);
+          }
+        }else{
 
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            // 0：关  1：开
+            if(list[i].status == 0){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon01,this,list[i]);
+            }else if(list[i].status == 1){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon02,this,list[i]);
+            }
+
+          }
+        }
 
           //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
           function drawTMaker(lnglat,icon,that,txt){
@@ -877,11 +931,39 @@ if(type == 'control'){
               console.log(txt)
               let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
               let status = txt.status==0?'关':'开';
-              let sContent =
-                '<div class="point_info">' +
-                '<p class="f12 time">监控名称：' + txt.name + '</p>' +
-                '<p class="f12 time">状态：' + status + '</p>' +
-                '</div>';
+              let sContent = '';
+              if(type == 'park'){
+               if(txt.way_longitude  && txt.way_latitude){
+                 sContent =
+                   '<div class="point_info">' +
+                   '<p class="f12 time">停车场名称：' + txt.park_name + '</p>' +
+                   '<p class="f12 time">停车场类型：' + txt.park_type_name + '</p>' +
+                   '<p class="f12 time">停车场地址：' + txt.address + '</p>' +
+                   '</div>';
+               }else{
+                 sContent =
+                   '<div class="point_info">' +
+                   '<p class="f12 time">监控名称：' + txt.name + '</p>' +
+                   '<p class="f12 time">所属区域：' + txt.depart_name + '</p>' +
+                   '<p class="f12 time">来源区域：' + txt.community_name + '</p>' +
+                   '<p class="f12 time">所在地址：' + txt.install_place + '</p>' +
+                   '</div>';
+               }
+              }else if(type == 'point'){
+                sContent =
+                  '<div class="point_info">' +
+                  '<p class="f12 time">监控名称：' + txt.name + '</p>' +
+                  '<p class="f12 time">所属区域：' + txt.depart_name + '</p>' +
+                  '<p class="f12 time">来源区域：' + txt.community_name + '</p>' +
+                  '<p class="f12 time">所在地址：' + txt.install_place + '</p>' +
+                  '</div>';
+              }else{
+                sContent =
+                  '<div class="point_info">' +
+                  '<p class="f12 time">监控名称：' + txt.name + '</p>' +
+                  '<p class="f12 time">状态：' + status + '</p>' +
+                  '</div>';
+              }
               infoWin1.setContent(sContent);
               marker.openInfoWindow(infoWin1);
 
@@ -901,6 +983,7 @@ if(type == 'control'){
       //亮灯杆列表
       getLampPostList(){
         getLampPostList().then((res) => {
+          this.formData.lampPostNum = res.data.total;
           this.lampPostList = res.data.list;
           this.mapPoint('lamp',this.lampPostList)
         });
@@ -908,6 +991,7 @@ if(type == 'control'){
       //控制柜列表
       getControlCabinetlist(){
         getcontrolcabinetlist().then((res) => {
+          this.totalData.controlCabinetNum =  res.data.total;
           this.controlList = res.data.list;
           this.mapPoint('control',this.controlList)
         });
@@ -930,6 +1014,21 @@ if(type == 'control'){
           };
         });
       },
+      //获取停车场点位及视频点位
+      getParkList(){
+        parkList().then((res) => {
+          // this.parkList = res.data.data;
+          let a = res.data.data;
+          pointList({type:'allList'}).then((res) => {
+            // this.pointList = res.data;
+            let b = a.concat(res.data);
+            this.parkList = b;
+            this.mapPoint('park',this.parkList)
+          });
+
+        });
+      },
+
     }
   }
 </script>

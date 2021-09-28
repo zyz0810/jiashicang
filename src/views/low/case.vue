@@ -149,6 +149,13 @@
                title="查看图片"
                :append-to-body="true">
       <img v-for="item in imgArr" width="100%" :src="item" alt />
+
+      <el-carousel :interval="5000" arrow="always">
+        <el-carousel-item v-for="item in 4" :key="item">
+          <h3>{{ item }}</h3>
+        </el-carousel-item>
+      </el-carousel>
+
     </myDialog>
 
   </div>
@@ -647,7 +654,7 @@
         if(this.mapType == 1){
           this.mapType  = 2
           // this.getMaker();
-          this.mapPoint(0,this.pointOne)
+          this.getPointOne();
         }else{
           this.mapType  = 1
           this.getHeatMap();
@@ -701,55 +708,6 @@
         heatmapOverlay.setDataSet({data: points, max: 300});
         console.log(points)
       },
-      getMaker(){
-        this.map.clearOverLays();
-        // // 普通标注
-        let site = [
-          { lng: 117.283042, lat: 31.86119 },
-          { lng: 116.41238, lat: 40.07689 },
-          { lng: 116.34143, lat: 40.03403 },
-        ]
-        // this.markerPoint(site)
-        //创建图片对象
-        var icon = new T.Icon({
-          iconUrl: point01,
-          iconSize: new T.Point(57, 52),
-          iconAnchor: new T.Point(10, 25)
-        });
-        //创建信息窗口对象
-        // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
-        this.map.addOverLay(marker);
-        // 随机向地图添加25个标注
-        // let bounds = this.map.getBounds();
-        // let sw = bounds.getSouthWest();
-        // let ne = bounds.getNorthEast();
-        // let lngSpan = Math.abs(sw.lng - ne.lng);
-        // let latSpan = Math.abs(ne.lat - sw.lat);
-        // for (let i = 0; i < 25; i++) {
-        //   let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-        //   var marker = new T.Marker(point, {icon: icon});// 创建标注
-        //   this.map.addOverLay(marker);
-        // }
-
-        var infoWin1 = new T.InfoWindow();
-        let sContent =
-          '<div style=" color: #fff;font-size:14px;font-weight:bold;width:100%">' +
-          '<div>' +
-          '<p ref="enterpriseName">任务号：20210566121511</p>' +
-          '<p ref="enterpriseName">任务来源：数字集群</p>' +
-          '<p ref="enterpriseName">事件类型：电动车乱停放</p>' +
-          '<p style="color:red" ref="enterpriseName">任务状态：超时</p>' +
-          '<p style="font-size:16px;font-weight:bold;padding-bottom:5px;" ref="enterpriseName">发生时间：2021-05-12 12:05:19</p>' +
-          '<p ref="enterpriseName">所属辖区：烟曲街道</p>' +
-          '<p ref="enterpriseName">地址描述：人民路就简单三</p>' +
-          '<p style="text-align: right"><a style="cursor: pointer;" onclick="openInfo()"> 查看详情</a></p>' +
-          '</div></div>';
-        infoWin1.setContent(sContent);
-        marker.addEventListener("click", function () {
-          marker.openInfoWindow(infoWin1);
-        });// 将标注添加到地图中
-      },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
@@ -767,10 +725,16 @@
           const {basis_direction,basis_num,comparative_direction,comparative_num,satisfaction_rate,rep_num,month_deal_num}=res.data.letter
           this.formData = {chuLi,shangBao,undisposed,yellow_detail,yellow_num,red_num,basis_direction,basis_num,comparative_direction,comparative_num,satisfaction_rate,rep_num,month_deal_num}
           this.pointOne = res.data.city.list;
-          if(this.activeIndex == 0){
-            this.mapPoint(0,this.pointOne)
-          }else{
-            this.mapPoint(1,this.pointOne)
+          this.pointTwo = res.data.letter.list;
+          if((this.activeIndex == 0 || this.activeIndex == 1) && this.mapType == 1){
+            // this.mapPoint(0,this.pointOne)
+            // 热力图
+            this.getHeatMap();
+          }else if(this.activeIndex == 0 && this.mapType == 2) {
+            this.mapPoint(0, this.pointOne)
+          } else{
+            console.log('第二个列表第二个列表第二个列表第二个列表')
+            this.mapPoint(1,this.pointTwo)
           }
 
         });
@@ -781,19 +745,23 @@
             chuli:res.data.dj.chuli,
             count:res.data.dj.count,
             end:res.data.dj.end
-          }
+          };
           this.AIData = {
             chuli:res.data.ai.chuli,
             count:res.data.ai.count,
             end:res.data.ai.end
-          }
+          };
           this.pointThree = res.data.ai.data;
           this.pointFour = res.data.dj.data;
           this.mapPoint(2,this.pointThree)
+          if(this.directType == 1){
+            this.mapPoint(2,this.pointThree)
+          }else{
+            this.mapPoint(2,this.pointFour)
+          }
         });
       },
       mapPoint(type,list){
-        console.log('点位')
         //创建图片对象
         this.map.clearOverLays();
         let icon01 = new T.Icon({
@@ -816,37 +784,25 @@
           iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
-        let markers = []
+        let markers = [];
 
-        console.log(list)
+        console.log(list);
         for (let i = 0; i < list.length; i++) {
           // var marker
           // 0：关  1：开
-          if(type == 2){
-            let point = new T.LngLat(list[i].log,list[i].lat);
-            markers[i]  = drawTMaker(point, icon03,this,list[i]);
-          }else{
+          if(type == 0){
             let point = new T.LngLat(list[i].x_line,list[i].y_line);
             markers[i]  = drawTMaker(point, icon03,this,list[i]);
+          }else{
+            let point = new T.LngLat(list[i].log,list[i].lat);
+            markers[i]  = drawTMaker(point, icon03,this,list[i]);
           }
-
-          // if(list[i].type == 2){
-          //   markers[i]  = drawTMaker(point, icon01,this,list[i]);
-          // }else if(list[i].type == 3){
-          //   markers[i]  = drawTMaker(point, icon02,this,list[i]);
-          // }else if(list[i].type == 0){
-          //   markers[i]  = drawTMaker(point, icon03,this,list[i]);
-          // }else if(list[i].type == 4){
-          //   markers[i]  = drawTMaker(point, icon04,this,list[i]);
-          // }
-
 
         }
 
 
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){
-          console.log('获取')
           var marker =  new T.Marker(lnglat, {icon: icon});
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {
@@ -873,24 +829,44 @@
               sContent =
                 '<div class="point_info">' +
                 '<p class="f12 time">受理单编号：' + txt.number_no + '</p>' +
-                '<p class="f12 time">工单状态：' + txt.source + '</p>' +
-                '<p class="f12 time">投诉来源：' + txt.status + '</p>' +
-                '<p class="f12 time">详细类型：' + txt.small_category + '</p>' +
-                '<p class="f12 time">反映内容：' + txt.create_time + '</p>' +
-                '<p class="f12 time">违法地址：' + txt.description + '</p>' +
+                '<p class="f12 time">工单状态：' + txt.status + '</p>' +
+                '<p class="f12 time">投诉来源：' + txt.source + '</p>' +
+                '<p class="f12 time">详细类型：' + txt.detail_type + '</p>' +
+                '<p class="f12 time">反映内容：' + txt.react_content + '</p>' +
+                '<p class="f12 time">违法地址：' + txt.Illegal_address + '</p>' +
                 '</div>';
             }else if(type == 2){
               // 指挥平台（AI上报，问题登记）：案件编号、事件来源、小类、上报时间、问题描述、事件位置；图片
-              sContent =
-                '<div class="point_info">' +
-                '<p class="f12 time">案件编号：' + txt.number_no + '</p>' +
-                '<p class="f12 time">事件来源：' + txt.source + '</p>' +
-                '<p class="f12 time">小类：' + txt.status + '</p>' +
-                '<p class="f12 time">上报时间：' + txt.small_category + '</p>' +
-                '<p class="f12 time">问题描述：' + txt.create_time + '</p>' +
-                '<p class="f12 time">事件位置：' + txt.description + '</p>' +
-                '<p class="f12 time text-right" onClick="handleVideo('+aa+')">图片</p>' +
-                '</div>';
+              let source;
+              if(txt.source == 1){
+                source='问题登记'
+              }else{
+                source='AI上报'
+              }
+              let create_at = that.$moment(Number(txt.create_at)*1000).format("YYYY-MM-DD HH:mm:ss");
+              if(txt.source == 1){
+                sContent =
+                  '<div class="point_info">' +
+                  '<p class="f12 time">案件编号：' + txt.number_no + '</p>' +
+                  '<p class="f12 time">事件来源：' + source + '</p>' +
+                  '<p class="f12 time">小类：' + txt.small_category_name + '</p>' +
+                  '<p class="f12 time">上报时间：' + create_at + '</p>' +
+                  '<p class="f12 time">问题描述：' + txt.description + '</p>' +
+                  '<p class="f12 time">事件位置：' + txt.address + '</p>' +
+                  '<p class="f12 time text-right" onClick="handleVideo('+aa+')">查看图片</p>' +
+                  '</div>';
+              }else{
+                sContent =
+                  '<div class="point_info">' +
+                  '<p class="f12 time">案件编号：' + txt.number_no + '</p>' +
+                  '<p class="f12 time">事件来源：' + source + '</p>' +
+                  '<p class="f12 time">小类：' + txt.small_category_name + '</p>' +
+                  '<p class="f12 time">上报时间：' + create_at + '</p>' +
+                  '<p class="f12 time">问题描述：' + txt.description + '</p>' +
+                  '<p class="f12 time">事件位置：' + txt.address + '</p>' +
+                  '</div>';
+              }
+
 
             }
 
@@ -904,8 +880,8 @@
 
       },
       handleVideo(txt){
-        this.showImgDialog = true
-        this.imgArr = txt.question_images.spit(',')
+        this.showImgDialog = true;
+        this.imgArr = txt.images_arr;
       },
     }
   }

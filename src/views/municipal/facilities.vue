@@ -69,11 +69,12 @@
           </div>
           <div class="flex-item equipment_abnormal">
             <div class="f26 num">46</div>
-            <p class="f16 mt_10">正常设备</p>
+            <p class="f16 mt_10">异常设备</p>
           </div>
           <div class="flex-item rate_abnormal">
-            <div class="f26 num">
-              <ring-chart :chartData="pieData" :PieChartLegend="PieChartLegend" height="60px" divwidth="100%"></ring-chart>
+            <div class="num">
+              <span class="f26">0</span>%
+              <!--<ring-chart :chartData="pieData" :PieChartLegend="PieChartLegend" height="60px" divwidth="100%"></ring-chart>-->
             </div>
             <p class="f16 mt_10">异常率</p>
           </div>
@@ -913,8 +914,8 @@
         dataLine({type:type}).then((res) => {
           this.dataLine = res.data;
           this.listQuery.monitorlineid = res.data[0].id;
-          // this.getDataPoint(res.data[0].id)
-          this.getCurrentData();
+          this.getDataPoint(res.data[0].id)
+          // this.getCurrentData();
         });
       },
       // 获取监测线下面的测点
@@ -932,7 +933,7 @@
       //   * type 监测项
       //   * pointid 测点id
         console.log('循环 '+id)
-        currentData({monitorlineid:this.listQuery.monitorlineid,type:this.listQuery.type,}).then((res) => {
+        currentData({monitorlineid:this.listQuery.monitorlineid,type:this.listQuery.type,pointid:id}).then((res) => {
           // this.dataLine = res.data;
         });
       },
@@ -1049,17 +1050,24 @@
    }
   }
   .equipment_abnormal{
-    color: #F8F19F;
+    color:rgb(255,76,70);
     .num{
       width: 60px;
       height: 60px;
       line-height: 60px;
       border-radius: 50%;
-      border: 3px dotted #F8F19F;
+      border: 3px dotted rgb(255,76,70);
       margin: 0 auto;
     }
   }
   .rate_abnormal{
-  color:#3EFEBC
+    color:rgb(255,76,70);
+    .num{
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      background: url("./../../assets/image/chart_bg.png") no-repeat center center;
+      margin: 0 auto;
+    }
   }
 </style>

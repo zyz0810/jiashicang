@@ -130,7 +130,7 @@ export default {
         this.title = '数字服务驾驶舱'
       } else if(route.path == '/demonstration/community'){
         this.title = '示范小区数字驾驶舱'
-      } else if(route.path == '/city/appearance'){
+      } else if(route.path == '/city/appearance/index'){
         this.title = '市容市貌数字驾驶舱'
       } else if(route.path == '/law/soldier'){
         this.title = '执法单兵数字驾驶舱'

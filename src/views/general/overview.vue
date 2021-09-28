@@ -110,97 +110,46 @@
             <div class="flex mt_10" style=" align-items: stretch;">
               <ul class="f16 clr_white bold anjian_cegory">
                 <li class="flex">
-                  <span class="block f26 text-center">268</span>
+                  <span class="block f26 text-center">{{formData.case.count}}</span>
                   <p>今日上报案件</p>
                 </li>
                 <li class="flex mt_10">
-                  <span class="block f26 text-center">228</span>
+                  <span class="block f26 text-center">{{formData.case.chuli}}</span>
                   <p>今日受理案件</p>
                 </li>
                 <li class="flex mt_10">
-                  <span class="block f26 text-center">198</span>
+                  <span class="block f26 text-center">{{formData.case.end}}</span>
                   <p>今日结案案件</p>
                 </li>
               </ul>
               <div class="map_echart text-center">
                 <p class="f20 txtColor bold">今日案件热力图</p>
                 <!--                             <RingChart :chartData="mapData" :PieChartLegend="PieChartLegend" height="13vh"></RingChart>-->
-<!--                <div id='mapDiv' class="mapDiv" style="width: 250px;height: 300px;"></div>-->
+                <!--<div id='mapDiv' class="mapDiv" style="width: 250px;height: 300px;"></div>-->
                 <img src="./../../assets/image/map.png" class="my_map"/>
               </div>
               <div class="anjian_genzong bold">
                 <p class="txtColor text-center bold f18">案件实时跟踪</p>
                 <div class="weui-cells clr_white">
-                  <div class="weui-cell">
-                    <div class="weui-cell__hd flex">
-                      <span class="bg_red f12 tag">市容</span>
-                      <img class="anjian_img" src="./../../assets/image/img01.png"/>
+
+                  <vueSeamlessScroll :data="formData.case.list" class="seamless-warp text-center" :class-option="classOption">
+                    <div class="weui-cell" v-for="item in formData.case.list">
+                      <div class="weui-cell__hd flex">
+                        <span :class="['tag f12',item.source==1?'bg_purple':'bg_blue02']">{{item.source == '1'?'问题登记':'AI上报'}}</span>
+                        <img class="anjian_img" :src="item.images_arr?item.images_arr[0]:''"/>
+                      </div>
+                      <div class="weui-cell__bd">
+                        <p class="f14">{{item.big_category_name}}</p>
+                        <p class="f12">{{item.small_category_name}}</p>
+                      </div>
+                      <div class="weui-cell__ft f12">
+                        <p><span class="ml_10">{{item.wz_status}}</span></p>
+                        <p>{{$moment(Number(item.create_at)*1000).format("YYYY-MM-DD HH:mm:ss")}}</p>
+                      </div>
                     </div>
-                    <div class="weui-cell__bd">
-                      <p class="f14">市容环境-暴露垃圾</p>
-                      <p class="f12">有暴露垃圾，请处理</p>
-                    </div>
-                    <div class="weui-cell__ft f12">
-                      <p>上报<span class="ml_10">王先军</span></p>
-                      <p>16:23:05</p>
-                    </div>
-                  </div>
-                  <div class="weui-cell">
-                    <div class="weui-cell__hd flex">
-                      <span class="bg_blue f12 tag">执法</span>
-                      <img class="anjian_img" src="./../../assets/image/img01.png"/>
-                    </div>
-                    <div class="weui-cell__bd">
-                      <p class="f14">市容环境-暴露垃圾</p>
-                      <p class="f12">有暴露垃圾，请处理</p>
-                    </div>
-                    <div class="weui-cell__ft f12">
-                      <p>上报<span class="ml_10">王先军</span></p>
-                      <p>16:23:05</p>
-                    </div>
-                  </div>
-                  <div class="weui-cell">
-                    <div class="weui-cell__hd flex">
-                      <span class="bg_purple f12 tag">市容</span>
-                      <img class="anjian_img" src="./../../assets/image/img01.png"/>
-                    </div>
-                    <div class="weui-cell__bd">
-                      <p class="f14">市容环境-暴露垃圾</p>
-                      <p class="f12">有暴露垃圾，请处理</p>
-                    </div>
-                    <div class="weui-cell__ft f12">
-                      <p>上报<span class="ml_10">王先军</span></p>
-                      <p>16:23:05</p>
-                    </div>
-                  </div>
-                  <div class="weui-cell">
-                    <div class="weui-cell__hd flex">
-                      <span class="bg_red f12 tag">市容</span>
-                      <img class="anjian_img" src="./../../assets/image/img01.png"/>
-                    </div>
-                    <div class="weui-cell__bd">
-                      <p class="f14">市容环境-暴露垃圾</p>
-                      <p class="f12">有暴露垃圾，请处理</p>
-                    </div>
-                    <div class="weui-cell__ft f12">
-                      <p>上报<span class="ml_10">王先军</span></p>
-                      <p>16:23:05</p>
-                    </div>
-                  </div>
-                  <div class="weui-cell">
-                    <div class="weui-cell__hd flex">
-                      <span class="bg_red f12 tag">市容</span>
-                      <img class="anjian_img" src="./../../assets/image/img01.png"/>
-                    </div>
-                    <div class="weui-cell__bd">
-                      <p class="f14">市容环境-暴露垃圾</p>
-                      <p class="f12">有暴露垃圾，请处理</p>
-                    </div>
-                    <div class="weui-cell__ft f12">
-                      <p>上报<span class="ml_10">王先军</span></p>
-                      <p>16:23:05</p>
-                    </div>
-                  </div>
+                  </vueSeamlessScroll>
+
+
                 </div>
               </div>
             </div>
@@ -229,7 +178,7 @@
 <!--              </div>-->
 <!--            </div>-->
             <p class="f16 baseColor bold text-center mt_10">{{formData.letter.input_time}}受理件<span class="f20">{{formData.letter.month_deal_num}}</span></p>
-            <div class="flex bold text-center clr_white mt_10 mb_10 bg_blue" style="padding: 10px 0; border-radius: 10px;">
+            <div class="flex bold text-center clr_white mt_10 mb_10 bg_blue03" style="padding: 10px 0; border-radius: 10px;">
               <div class="flex-item">
                 <p class="f26">{{formData.letter.basis_num}}%</p>
                 <p class="mt_5">同比<span>{{formData.letter.basis_direction == 1?'上升':'下降'}}</span></p>
@@ -362,13 +311,15 @@
   import xinjiang from "echarts/map/js/province/xinjiang";//必须要导入
   import {generalIndex,generalCaseCount} from '@/api/overView'
   import {generalApprove} from "@/api/recordApproval";
+  import vueSeamlessScroll from 'vue-seamless-scroll'
   export default {
     name: 'Dashboard',
     components: {
       PieChart,
       BarChartThree,
       RingChart,
-      PieChartTwo
+      PieChartTwo,
+      vueSeamlessScroll
     },
     data() {
       return {
@@ -950,11 +901,25 @@
         centerLongitude:'120.21194',//中心经度
       }
     },
+    computed: {
+      classOption () {
+        return {
+          step: 0.2, // 数值越大速度滚动越快
+          limitMoveNum: this.formData.case.list.length, // 开始无缝滚动的数据量 this.dataList.length
+          hoverStop: true, // 是否开启鼠标悬停stop
+          direction: 1, // 0向下 1向上 2向左 3向右
+          openWatch: true, // 开启数据实时监控刷新dom
+          singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+          singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+          waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
+        }
+      }
+    },
     mounted(){
       // this.mapChart();
       // this.onLoad();
       this.getData();
-      this.getApprove();
+      // this.getApprove();
     },
     methods: {
       onLoad() {
@@ -1142,6 +1107,11 @@
 
 <style lang="scss" scoped>
   @import '@/styles/variables.scss';
+  .seamless-warp{
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
   .content_index{
     width: 100%;
     height: 100%;

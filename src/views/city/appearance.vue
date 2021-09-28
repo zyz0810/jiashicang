@@ -4,15 +4,15 @@
     <div id='mapDiv' class="mapDiv"></div>
 
     <div class="left_server clr_white text-center f16 bold border base_bg shadow">
-      <div :class="['mb_20',activeIndex == 0 ? 'baseColor':'']" @click="activeIndex = 0">
+      <div :class="['mb_20',activeIndex == 0 ? 'baseColor':'']" @click="handlePageType(0)">
         <i class="iconfont icon-zaosheng f26"></i>
         <p class="mt_10">AI视频</p>
       </div>
-      <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="activeIndex = 1">
+      <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="handlePageType(1)">
         <i class="iconfont icon-fengji f26"></i>
         <p class="mt_10">油烟监测</p>
       </div>
-      <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="activeIndex = 2">
+      <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="handlePageType(2)">
         <i class="iconfont icon-zaosheng f26"></i>
         <p class="mt_10">工地监测</p>
       </div>
@@ -140,6 +140,7 @@
   import point01 from '@/assets/image/point13.png' // 引入刚才的map.js 注意路径
   import point02 from '@/assets/image/point14.png'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
+  import {pointList} from '@/api/system'
 
   export default {
     name: 'appearance',
@@ -148,7 +149,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
-        activeIndex:2,
+        activeIndex:0,
         pieChartOne:{
           color: ['#75E4E3', '#E5AF45', '#9941E2'],
           // 预警值 环中的数据显示
@@ -811,6 +812,7 @@
         zoom: 14, // 地图的初始化级别，及放大比例
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
+        pointList:[],
       }
     },
 
@@ -824,83 +826,77 @@
       // this.$nextTick(function() {
       //
       // })
-      this.onLoad()
+      this.onLoad();
+      this.getList();
     },
     methods: {
+      handlePageType(val){
+        this.activeIndex = val;
+        if(val == 0){
+          this.getList();
+        }
+      },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
         this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
+        this.map.setStyle('indigo');
+        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
 
-        // // 普通标注
-        let site = [
-          { lng: 117.283042, lat: 31.86119 },
-          { lng: 116.41238, lat: 40.07689 },
-          { lng: 116.34143, lat: 40.03403 },
-        ]
-        // this.markerPoint(site)
+      },
+      mapPoint(list){
+        console.log('点位');
         //创建图片对象
-        var icon1 = new T.Icon({
+        this.map.clearOverLays();
+        let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(10, 25)
+          iconAnchor: new T.Point(34, 59)
         });
-        var icon2 = new T.Icon({
-          iconUrl: point02,
-          iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(10, 25)
-        });
-        //创建信息窗口对象
-        // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
-        // let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
-        // this.map.addOverLay(marker);
-        // 随机向地图添加25个标注
-        let bounds = this.map.getBounds();
-        let sw = bounds.getSouthWest();
-        let ne = bounds.getNorthEast();
-        let lngSpan = Math.abs(sw.lng - ne.lng);
-        let latSpan = Math.abs(ne.lat - sw.lat);
-        // for (let i = 0; i < 25; i++) {
-        //   let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-        //   var marker = new T.Marker(point, {icon: icon});// 创建标注
-        //   this.map.addOverLay(marker);
-        // }
-        for (let i = 0; i < 25; i++) {
-          if(i<2){
-            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-            var marker = new T.Marker(point, {icon: icon1});// 创建标注
-          }else if(i>2&&i<4){
-            let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-            var marker = new T.Marker(point, {icon: icon2});// 创建标注
-          }
-          this.map.addOverLay(marker);
-        }
 
-        var infoWin1 = new T.InfoWindow();
-        let sContent =
-          '<div style=" color: #fff;font-size:14px;font-weight:bold;width:100%">' +
-          '<div>' +
-          '<p ref="enterpriseName">任务号：20210566121511</p>' +
-          '<p ref="enterpriseName">任务来源：数字集群</p>' +
-          '<p ref="enterpriseName">事件类型：电动车乱停放</p>' +
-          '<p style="color:red" ref="enterpriseName">任务状态：超时</p>' +
-          '<p style="font-size:16px;font-weight:bold;padding-bottom:5px;" ref="enterpriseName">发生时间：2021-05-12 12:05:19</p>' +
-          '<p ref="enterpriseName">所属辖区：烟曲街道</p>' +
-          '<p ref="enterpriseName">地址描述：人民路就简单三</p>' +
-          '<p style="text-align: right"><a style="cursor: pointer;" onclick="openInfo()"> 查看详情</a></p>' +
-          '</div></div>';
-          infoWin1.setContent(sContent);
-          marker.addEventListener("click", function () {
-          marker.openInfoWindow(infoWin1);
-        });// 将标注添加到地图中
-        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
-        this.map.setStyle('indigo')
+        let markers = [];
+        console.log(list);
+        for (let i = 0; i < list.length; i++) {
+          // var marker
+          let point = new T.LngLat(list[i].longitude,list[i].latitude);
+          markers[i]  = drawTMaker(point, icon01,this,list[i]);
+        }
+        //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
+        function drawTMaker(lnglat,icon,that,txt){
+          console.log('获取')
+          var marker =  new T.Marker(lnglat, {icon: icon});
+          that.map.addOverLay(marker);
+          marker.addEventListener("click", function (m) {
+            console.log(m)
+            let infoWin1 = new T.InfoWindow();
+            console.log(txt)
+            let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
+            let type ;
+            let sContent =
+              '<div class="point_info">' +
+              '<p class="f12 time">监控名称：' + txt.name + '</p>' +
+              '<p class="f12 time">所属区域：' + txt.depart_name + '</p>' +
+              '<p class="f12 time">来源区域：' + txt.community_name + '</p>' +
+              '<p class="f12 time">所在地址：' + txt.install_place + '</p>' +
+              '</div>';
+            infoWin1.setContent(sContent);
+            marker.openInfoWindow(infoWin1);
+
+          });// 将标注添加到地图中
+          return marker;
+        }
 
       },
 
+      getList(){
+        console.log('好久好久')
+        pointList({type:'allList',class:1}).then((res) => {
+          this.pointList = res.data;
+          this.mapPoint(this.pointList)
+        });
+      },
     }
   }
 </script>

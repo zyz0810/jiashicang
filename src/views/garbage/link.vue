@@ -102,7 +102,7 @@
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import car from '@/assets/image/car.png' // 引入刚才的map.js 注意路径
-  import {cleancarList,cleanCarAddressList,lastGPS} from '@/api/garbageLink'
+  import {cleancarList,cleanCarAddressList,lastGPS,carHistory} from '@/api/garbageLink'
   import point01 from "@/assets/image/point15.png";
   import point02 from "@/assets/image/point16.png";
   import point03 from "@/assets/image/point17.png";
@@ -468,55 +468,48 @@
         //创建图片对象
         this.map.clearOverLays();
         let icon01 = new T.Icon({
-          iconUrl: point01,
-          iconSize: new T.Point(30, 51),
+          iconUrl: car,
+          iconSize: new T.Point(50, 51),
           iconAnchor: new T.Point(34, 59)
         });
-        let icon02 = new T.Icon({
-          iconUrl: point02,
-          iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
-        });
-        let icon03 = new T.Icon({
-          iconUrl: point03,
-          iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
-        });
-        let icon04 = new T.Icon({
-          iconUrl: point04,
-          iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
-        });
-        let markers = []
+        let markers = [];
 
         console.log(list)
         for (let i = 0; i < list.length; i++) {
           // var marker
-          if(list[i].status == 1){
-            let point = new T.LngLat(list[i].longitude,list[i].latitude);
-            markers[i]  = drawTMaker(point, icon01,this,list[i]);
-          }else if(list[i].status == 0){
-            let point = new T.LngLat(list[i].longitude,list[i].latitude);
-            markers[i]  = drawTMaker(point, icon02,this,list[i]);
-          }
+          // if(list[i].status == 1){
+          //   let point = new T.LngLat(list[i].longitude,list[i].latitude1);
+          //   markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          // }else if(list[i].status == 0){
+          //   let point = new T.LngLat(list[i].longitude,list[i].longitude1);
+          //   markers[i]  = drawTMaker(point, icon02,this,list[i]);
+          // }
 
+
+          let point = new T.LngLat(list[i].PACK.longitude1,list[i].PACK.latitude1);
+          markers[i]  = drawTMaker(point, icon01,this,list[i]);
         }
 
 
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){
-          console.log('获取')
           var marker =  new T.Marker(lnglat, {icon: icon});
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {
-            console.log(m)
+
+
+            carHistory({card_no:txt.Vehicle,start:that.$moment().format('YYYY-MM-DD'),end:that.$moment().format('YYYY-MM-DD')}).then((res) => {
+
+
+            });
+
             let infoWin1 = new T.InfoWindow();
             console.log(txt)
             let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
             let sContent =
               '<div class="point_info">' +
-              '<p class="f12 time">监控名称：' + txt.name + '</p>' +
-              '<p class="f12 time">状态：' + txt.status + '</p>' +
+              '<p class="f12 time">车牌号：' + txt.Vehicle + '</p>' +
+              '<p class="f12 time">地址：' + txt.Address + '</p>' +
               '</div>';
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
@@ -527,11 +520,12 @@
 
       },
       getList(){
-        cleanCarAddressList().then((res) => {
+        cleanCarAddressList({type:'allList'}).then((res) => {
           this.cleanCarList = res.data;
           let card_no = res.data.map(item=> {return item.CarBrand}).join(',');
-          lastGPS({card_no:card_no}).then((res) => { });
-          // this.mapPoint(this.cleanCarList)
+          lastGPS({card_no:card_no}).then((res) => {
+            this.mapPoint(res.data)
+          });
         });
       },
     }

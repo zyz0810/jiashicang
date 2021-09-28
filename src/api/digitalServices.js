@@ -29,3 +29,13 @@ export function getevaluate(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+/* 停车场列表
+ * park_name 停车场名称
+ */
+export function parkList(data) {
+  return request({
+    url: `/api/park/list`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}

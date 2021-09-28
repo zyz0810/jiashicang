@@ -396,7 +396,7 @@
       //
       // })
       this.onLoad();
-      this.getData();
+      this.getList();
     },
     methods: {
       onLoad() {
@@ -409,109 +409,16 @@
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
 
       },
-      getData(){
-        this.getList().then(val => {
-          console.log('dierbu222')
-          console.log(val)
-          this.mapPoint(val);
-        });
-      },
       getList(){
-        return new Promise((resolve, reject) => {
-          //你的逻辑代码
-          let pointList2 = [];
-          generalApprove().then((res) => {
-            this.pointList = [];
-            const {count,gongcheng,guanggao,qita,quanzhi} = res.data;
-            this.formData = {count,gongcheng,guanggao,qita,quanzhi};
-            // let pointList = res.data.data.filter((item,index)=>{
-            //   let that = this;
-            //   let lat;
-            //   let lng;
-            //   axios({
-            //     url:"http://api.tianditu.gov.cn/geocoder",
-            //     method:'get',
-            //     params:{
-            //       tk:"09c212e85ea968b8789e2111963c819a",
-            //       ds:{"keyWord":item.address}
-            //     }
-            //   }).then((data)=>{
-            //     if(data.data.location.lat && data.data.location.lon){
-            //       // if(index == 0){
-            //         item.lat = data.data.location.lat
-            //         item.lon = data.data.location.lon
-            //         // that.$set(item,'lat',data.data.location.lat);
-            //         // that.$set(item,'lon',data.data.location.lon);
-            //         that.pointList.push(item);
-            //         return item;
-            //       // }
-            //       // lat =  data.data.location.lat
-            //       // lng = data.data.location.lon
-            //       // item.lat = data.data.location.lat
-            //       // item.lon = data.data.location.lon
-            //       // return item;
-            //     }
-            //
-            //   }).catch((err) => {
-            //     console.log(err)
-            //     // alert("获取失败");
-            //   })
-            //
-            //
-            // })
-
-
-            this.pointList = res.data.data.filter((item,index)=>{
-              if(item.address != ''){
-                axios({
-                  url:"http://api.tianditu.gov.cn/geocoder",
-                  method:'get',
-                  params:{
-                    tk:"09c212e85ea968b8789e2111963c819a",
-                    ds:{"keyWord":item.address}
-                  }
-                }).then((data)=>{
-                  // item.lat = data.data.location.lat;
-                  // item.lon = data.data.location.lon;
-
-                  // console.log(location)
-                  // debugger
-                  let lat;
-                  let lon;
-                  if(data.data.msg == 'ok'){
-                    // console.log(data.data.location)
-                    if(data.data.location){
-                      console.log('11111111')
-                      lat = data.data.location.lat;
-                      lon = data.data.location.lon;
-                      this.$set(item,'lon1',lon);
-                      this.$set(item,'lat',lat);
-                      pointList2.push(item)
-                      return item
-                    }
-                  }else{
-                    console.log('cuowu'+index)
-                    console.log(data)
-                    console.log(item)
-                  }
-
-                  // return item
-                }).catch((err) => {
-                  console.log(err)
-                  // alert("获取失败");
-                })
-              }
-
-            });
-
-          });
-          console.log('dierbu111')
-          resolve(pointList2)
+        generalApprove().then((res) => {
+          this.pointList = [];
+          const {count,gongcheng,guanggao,qita,quanzhi} = res.data;
+          this.formData = {count,gongcheng,guanggao,qita,quanzhi};
+          this.pointList = res.data.data;
+          this.mapPoint(this.pointList);
         });
-
       },
       mapPoint(list){
-        return new Promise((resolve, reject) => {
         console.log('点位333')
         //创建图片对象
         this.map.clearOverLays();
@@ -537,14 +444,9 @@
         });
         let markers = []
 
-        console.log('点位点位点位点位')
-        console.log(list.length)
         for (let i = 0; i < list.length; i++) {
           // var marker
-          // 0：关  1：开
-          console.log('犬只审批100000'+list[i].lon,list[i].lat)
-          console.log(list[i].type)
-          let point = new T.LngLat(list[i].lon,list[i].lat);
+          let point = new T.LngLat(list[i].log,list[i].lat);
           if(list[i].type == '犬只审批'){
             console.log('犬只审批1'+list[i].lon,list[i].lat)
             markers[i]  = drawTMaker(point, icon01,this,list[i]);
@@ -569,23 +471,19 @@
           marker.addEventListener("click", function (m) {
             console.log(m)
             let infoWin1 = new T.InfoWindow();
-            console.log(txt)
-            let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
-            let type ;
-            if(txt.type == 2){
-              type = '河道水质'
-            }else if(txt.type == 3){
-              type = '河道水量'
-            }else if(txt.type == 0){
-              type = '河道水位'
-            }else if(txt.type == 4){
-              type = '视频点位'
-            }
+
+            // 办件编号、申请人/单位、电话、地址、申请日期、办结日期、办理结果、权力名称、所属类型
             let sContent =
               '<div class="point_info">' +
-              '<p class="f12 time">站点名称：' + txt.stnm + '</p>' +
-              '<p class="f12 time">站点类型：' + type + '</p>' +
+              '<p class="f12 time">办件编号：' + txt.number_no + '</p>' +
+              '<p class="f12 time">申请人/单位：' + txt.statutory_people + '</p>' +
+              '<p class="f12 time">电话：' + txt.phone + '</p>' +
               '<p class="f12 time">地址：' + txt.address + '</p>' +
+              '<p class="f12 time">申请日期：' + txt.apply_date + '</p>' +
+              '<p class="f12 time">办结日期：' + txt.end_date + '</p>' +
+              '<p class="f12 time">办理结果：' + txt.result + '</p>' +
+              '<p class="f12 time">权力名称：' + txt.apply_name + '</p>' +
+              '<p class="f12 time">所属类型：' + txt.type + '</p>' +
               '</div>';
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
@@ -593,8 +491,6 @@
           });// 将标注添加到地图中
           return marker;
         }
-          resolve()
-        });
       },
     }
   }
