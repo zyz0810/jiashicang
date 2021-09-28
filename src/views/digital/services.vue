@@ -218,6 +218,7 @@
   import point03 from '@/assets/image/point17.png' // 引入刚才的map.js 注意路径
   import point04 from '@/assets/image/point18.png' // 引入刚才的map.js 注意路径
   import point05 from '@/assets/image/point13.png' // 引入刚才的map.js 注意路径
+  import point06 from '@/assets/image/point23.png' // 引入刚才的map.js 注意路径
   import toolTipBg from '@/assets/image/digital-bg.png' // 引入刚才的map.js 注意路径
   import {pointList} from '@/api/system'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
@@ -803,7 +804,7 @@
       // this.getLampPostList();
       this.getChartData();
       this.getData();
-      this.getControlCabinetlist();
+      // this.getControlCabinetlist();
       this.getParkList();
     },
     methods: {
@@ -862,6 +863,11 @@
           iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
+        let icon06 = new T.Icon({
+          iconUrl: point06,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
         let markers = []
         if(type == 'control'){
 
@@ -887,7 +893,7 @@
               console.log(list[i].way_longitude,list[i].way_latitude);
               console.log('停车场')
               let point = new T.LngLat(list[i].way_longitude,list[i].way_latitude);
-              markers[i]  = drawTMaker(point, icon04,this,list[i]);
+              markers[i]  = drawTMaker(point, icon06,this,list[i]);
             }else{
               console.log(list[i]);
               console.log(list[i].longitude,list[i].latitude);

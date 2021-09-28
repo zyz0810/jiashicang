@@ -176,7 +176,7 @@
   import {abnormalSite} from "@/api/water"; // 引入刚才的map.js 注意路径
   import {caseCount,commandCase} from "@/api/lowCase";
   import point02 from "@/assets/image/point20.png";
-  import point03 from "@/assets/image/point21.png";
+  import point03 from "@/assets/image/point24.png";
   import point04 from "@/assets/image/point22.png"; // 引入刚才的map.js 注意路径
   let heatmapOverlay;
   export default {
@@ -764,26 +764,12 @@
       mapPoint(type,list){
         //创建图片对象
         this.map.clearOverLays();
-        let icon01 = new T.Icon({
-          iconUrl: point01,
-          iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
-        });
-        let icon02 = new T.Icon({
-          iconUrl: point02,
-          iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
-        });
         let icon03 = new T.Icon({
           iconUrl: point03,
           iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
-        let icon04 = new T.Icon({
-          iconUrl: point04,
-          iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
-        });
+
         let markers = [];
 
         console.log(list);

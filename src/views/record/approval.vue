@@ -16,7 +16,7 @@
             </div>
             <div class="circle_num_item">
               <span class="clr_white f20 bold circleNum_left_bg block">{{formData.gongcheng}}/{{((Number(formData.gongcheng)/Number(formData.count))*100).toFixed(2)}}%</span>
-              <p class="clr_yellow bold">工程车审批</p>
+              <p class="clr_yellow bold">工程渣土</p>
             </div>
             <div class="circle_num_item">
               <span class="clr_white f20 bold circleNum_right_bg block">{{formData.guanggao}}/{{((Number(formData.guanggao)/Number(formData.count))*100).toFixed(2)}}%</span>
@@ -55,21 +55,21 @@
         </el-table>
       </div>
     </div>
-    <div class="center_content clr_white text-center">
-      <div class="map_intro f14 bold flex baseColor">
-        <img src="./../../assets/image/point05.png"/>
-        <div>广告审批</div>
-      </div>
+    <!--<div class="center_content clr_white text-center">-->
       <!--<div class="map_intro f14 bold flex baseColor">-->
         <!--<img src="./../../assets/image/point05.png"/>-->
-        <!--<div>工程车审批</div>-->
+        <!--<div>广告审批</div>-->
       <!--</div>-->
-      <!--<div class="map_intro f14 bold flex baseColor">-->
-        <!--<img src="./../../assets/image/point06.png"/>-->
-        <!--<div>犬只审批</div>-->
-      <!--</div>-->
-      <!--<p class="text-right baseColor f16 bold mt_20">说明</p>-->
-    </div>
+      <!--&lt;!&ndash;<div class="map_intro f14 bold flex baseColor">&ndash;&gt;-->
+        <!--&lt;!&ndash;<img src="./../../assets/image/point05.png"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div>工程车审批</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;<div class="map_intro f14 bold flex baseColor">&ndash;&gt;-->
+        <!--&lt;!&ndash;<img src="./../../assets/image/point06.png"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div>犬只审批</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;<p class="text-right baseColor f16 bold mt_20">说明</p>&ndash;&gt;-->
+    <!--</div>-->
   </div>
 </template>
 

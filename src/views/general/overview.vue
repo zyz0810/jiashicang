@@ -7,7 +7,7 @@
             <div class="title_index f18 bold text-center"><span class="txt_linear">数字城管</span></div>
             <div class="flex anjian_num clr_white mt_20">
               <div class="flex-item">
-                <p class="f16 bold txtColor">本周上报量</p>
+                <p class="f16 bold txtColor">周上报量</p>
                 <div class="num flex text-center f26 bold mt_10">
                   <span>{{formData.city.shangbao[4]}}</span>
                   <span>{{formData.city.shangbao[3]}}</span>
@@ -17,7 +17,7 @@
                 </div>
               </div>
               <div class="flex-item">
-                <p class="f16 bold txtColor">本周处理量</p>
+                <p class="f16 bold txtColor">周处理量</p>
                 <div class="num flex text-center f26 bold mt_10">
                   <span>{{formData.city.chuli[4]}}</span>
                   <span>{{formData.city.chuli[3]}}</span>
@@ -27,7 +27,7 @@
                 </div>
               </div>
               <div class="flex-item">
-                <p class="f16 bold txtColor">本周未处理量</p>
+                <p class="f16 bold txtColor">周未处理量</p>
                 <div class="num flex text-center f26 bold mt_10">
                   <span>{{formData.city.undisposed[4]}}</span>
                   <span>{{formData.city.undisposed[3]}}</span>
@@ -39,7 +39,7 @@
             </div>
             <div class="weui-cell cityAdmin_cell mt_20">
               <div class="weui-cell__hd text-center">
-                <p class="clr_white">本周黄灯件</p>
+                <p class="clr_white">周黄灯件</p>
                 <p class="f26 clr_yellow bold mb_20 mt_10">{{formData.city.yellow_num}}</p>
               </div>
               <div class="weui-cell__bd">
@@ -53,7 +53,7 @@
             </div>
             <div class="weui-cell cityAdmin_cell mt_20">
               <div class="weui-cell__hd text-center">
-                <p class="clr_white">本周红灯件</p>
+                <p class="clr_white">周红灯件</p>
                 <p class="f26 clr_red bold mb_20 mt_10">{{formData.city.red_num}}</p>
               </div>
               <div class="weui-cell__bd">
@@ -210,7 +210,7 @@
         </el-col>
         <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
           <div class="content_index">
-            <div class="title_index f18 bold text-center"><span class="txt_linear">行政审批</span></div>
+            <div class="title_index f18 bold text-center"><span class="txt_linear">备案审批</span></div>
             <div class="clr_white mt_20">
               <div class="f20 bold text-center baseColor approval_num">审批总数：{{formData.check.count}}</div>
 
@@ -222,7 +222,7 @@
                 </div>
                 <div class="circle_num_item">
                   <span class="clr_white f20 bold circleNum_left_bg block">{{formData.check.gongcheng}}/{{((Number(formData.check.gongcheng)/Number(formData.check.count))*100).toFixed(2)}}%</span>
-                  <p class="clr_yellow bold">工程车审批</p>
+                  <p class="clr_yellow bold">工程渣土</p>
                 </div>
                 <div class="circle_num_item">
                   <span class="clr_white f20 bold circleNum_right_bg block">{{formData.check.guanggao}}/{{((Number(formData.check.guanggao)/Number(formData.check.count))*100).toFixed(2)}}%</span>
