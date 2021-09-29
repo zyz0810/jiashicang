@@ -1003,3 +1003,52 @@ iframe{
 .LH_2{
   line-height: 1.4;
 }
+.center_content{
+  padding: 25px;
+  background: rgba(8,19,41,0.6);
+  border-radius: 10px;
+  position: fixed;
+  bottom: 120px;
+  right: 28%;
+  z-index: 99999999;
+  .map_intro{
+    width: 129px;
+    height: 51px;
+    line-height: 51px;
+    margin: 0 auto;
+    background: url("./../assets/image/intro_bg.png") center bottom no-repeat;
+    background-size: 100% 100%;
+    .weui-cell__hd{
+      width: 40px;
+      img{
+        width: 18px;
+        //height: 30px;
+      }
+    }
+
+  }
+  &.yy_center_content{
+    .map_intro{
+      .weui-cell__hd{
+        img{
+          width: 30px;
+          //height: 30px;
+        }
+      }
+    }
+  }
+}
+.left_server{
+  position: fixed;
+  top: 13vh;
+  left: 20px;
+  z-index: 9999;
+  padding: 20px 5px;
+  .nav_img{
+    width: 100px;
+    margin-top: -20px;
+  }
+  .nav_txt{
+    margin-top: -20px;
+  }
+}

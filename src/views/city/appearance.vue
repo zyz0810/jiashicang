@@ -5,46 +5,49 @@
 
     <div class="left_server clr_white text-center f16 bold border base_bg shadow">
       <div :class="['mb_20',activeIndex == 0 ? 'baseColor':'']" @click="handlePageType(0)">
-        <i class="iconfont icon-zaosheng f26"></i>
-        <p class="mt_10">AI视频</p>
+        <img v-if="activeIndex == 0" src="./../../assets/image/appearance_nav01_active.png" class="nav_img"/>
+        <img v-else src="./../../assets/image/appearance_nav01.png" class="nav_img"/>
+        <p class="nav_txt">AI视频</p>
       </div>
       <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="handlePageType(1)">
-        <i class="iconfont icon-fengji f26"></i>
-        <p class="mt_10">油烟监测</p>
+        <img v-if="activeIndex == 1" src="./../../assets/image/appearance_nav02_active.png" class="nav_img"/>
+        <img v-else src="./../../assets/image/appearance_nav02.png" class="nav_img"/>
+        <p class="nav_txt">油烟监测</p>
       </div>
       <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="handlePageType(2)">
-        <i class="iconfont icon-zaosheng f26"></i>
-        <p class="mt_10">工地监测</p>
+        <img v-if="activeIndex == 2" src="./../../assets/image/appearance_nav03_active.png" class="nav_img"/>
+        <img v-else src="./../../assets/image/appearance_nav03.png" class="nav_img"/>
+        <p class="nav_txt">工地监测</p>
       </div>
     </div>
 
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 0">
-      <p class="f20 bold txt_linear">智能识别概况</p>
+      <p class="f20 bold txt_linear">智能识别概况（日）</p>
       <div class="text-center">
-        <ul class="bold communityNum flex mt_10">
+        <ul class="bold communityNum flex mt_10" style="width: 160px;margin-left: 20px;">
           <li class="flex flex-item">
-            <span class="f26 baseColor block">32</span>
+            <span class="f26 baseColor block">186</span>
             <span class="f16 clr_white block">监控点位</span>
           </li>
-          <li class="flex flex-item">
-            <span class="f26 baseColor block">1</span>
-            <span class="f16 clr_white block">监控路段</span>
-          </li>
+          <!--<li class="flex flex-item">-->
+            <!--<span class="f26 baseColor block">1</span>-->
+            <!--<span class="f16 clr_white block">监控路段</span>-->
+          <!--</li>-->
         </ul>
         <div class="pieChart mt_10">
           <!--              <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="16vh"></RingChart>-->
-          <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" height="16vh" :divwidth="'50%'"></PieChartTwo>
+          <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" height="25vh" :divwidth="'50%'"></PieChartTwo>
         </div>
       </div>
-      <p class="f20 bold txt_linear mt_20">今日违规场景概况</p>
-      <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="42vh" divwidth="100%"></BarChartFour>
+      <p class="f20 bold txt_linear mt_20">违规场景概况（日）</p>
+      <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="30vh" divwidth="100%"></BarChartFour>
 
     </div>
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 1">
       <p class="f20 bold txt_linear">辖区报警工单数占比分析</p>
-      <RingChart :chartData="chartDataFour" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+      <RingChart :chartData="chartDataFour" :PieChartLegend="PieChartLegend" height="250px"></RingChart>
       <div class="mt_20">
-        <p class="f20 bold txt_linear">油烟超标时长（top8）</p>
+        <p class="f20 bold txt_linear">餐企油烟超标时长分析</p>
         <BarChartFive :chartData="BarData" height="30vh" divwidth="100%"></BarChartFive>
       </div>
 
@@ -53,40 +56,40 @@
       <p class="f20 bold txt_linear">工地五色治理</p>
       <div class="flex bold enforcement_num text-center mt_20">
         <div class="flex-item bg_blue01 weui-cell">
-          <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"></div>
+          <div class="weui-cell__hd ml_10"><img src="./../../assets/image/appearance_icon01.png"></div>
           <div class="weui-cell__bd">
             <p class="f14">低风险</p>
             <p class="f18 txt_linear mt_5">26</p>
           </div>
         </div>
         <div class="flex-item bg_blue01 weui-cell">
-          <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"></div>
+          <div class="weui-cell__hd ml_10"><img src="./../../assets/image/appearance_icon02.png"></div>
           <div class="weui-cell__bd">
             <p class="f14">一般风险</p>
-            <p class="f18 txt_linear mt_5">26</p>
+            <p class="f18 txt_linear mt_5">43</p>
           </div>
         </div>
         <div class="flex-item bg_blue01 weui-cell">
-          <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"></div>
+          <div class="weui-cell__hd ml_10"><img src="./../../assets/image/appearance_icon03.png"></div>
           <div class="weui-cell__bd">
             <p class="f14">中风险</p>
-            <p class="f18 txt_linear mt_5">26</p>
+            <p class="f18 txt_linear mt_5">65</p>
           </div>
         </div>
       </div>
       <div class="flex bold enforcement_num text-center mt_20 reset_w">
         <div class="flex-item bg_blue01 weui-cell">
-          <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"></div>
+          <div class="weui-cell__hd ml_10"><img src="./../../assets/image/appearance_icon04.png"></div>
           <div class="weui-cell__bd">
             <p class="f14">较高风险</p>
-            <p class="f18 txt_linear mt_5">26</p>
+            <p class="f18 txt_linear mt_5">33</p>
           </div>
         </div>
         <div class="flex-item bg_blue01 weui-cell">
-          <div class="weui-cell__hd"><img src="./../../assets/image/point01.png"></div>
+          <div class="weui-cell__hd ml_10"><img src="./../../assets/image/appearance_icon05.png"></div>
           <div class="weui-cell__bd">
             <p class="f14">高风险</p>
-            <p class="f18 txt_linear mt_5">26</p>
+            <p class="f18 txt_linear mt_5">14</p>
           </div>
         </div>
       </div>
@@ -105,9 +108,9 @@
               <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>
             </div>
             <div class="flex-item">
-              <p>社会关注度</p>
-              <p class="f26 bold txt_linear LH_2">65562</p>
-              <p class="baseColor">已处理5%</p>
+              <p>投诉建议</p>
+              <p class="f26 bold txt_linear LH_2">699</p>
+              <p class="baseColor">已处理596</p>
             </div>
           </div>
           <div class="flex mt_20">
@@ -124,6 +127,32 @@
       </div>
 
     </div>
+
+    <div class="center_content clr_white text-center" v-if="activeIndex == 0">
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>
+        <div class="weui-cell__bd">AI视频</div>
+      </div>
+    </div>
+    <div class="center_content yy_center_content clr_white text-center" v-if="activeIndex == 1">
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_01.png"/></div>
+        <div class="weui-cell__bd">油烟正常</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_04.png"/></div>
+        <div class="weui-cell__bd">油烟超标</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_03.png"/></div>
+        <div class="weui-cell__bd">设备故障</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_02.png"/></div>
+        <div class="weui-cell__bd">设备离线</div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -137,8 +166,11 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point13.png' // 引入刚才的map.js 注意路径
-  import point02 from '@/assets/image/point14.png'
+  import point01 from '@/assets/image/point36.png' // 引入刚才的map.js 注意路径
+  import point02 from '@/assets/image/point_yy_01.png' // 引入刚才的map.js 注意路径
+  import point03 from '@/assets/image/point_yy_02.png' // 引入刚才的map.js 注意路径
+  import point04 from '@/assets/image/point_yy_03.png' // 引入刚才的map.js 注意路径
+  import point05 from '@/assets/image/point_yy_04.png' // 引入刚才的map.js 注意路径
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import {pointList} from '@/api/system'
 
@@ -199,9 +231,9 @@
               radius: ['50%', '65%'],
               center: ['50%', '50%'],
               type: 'pie',
-              data: [{ value: 80, name: '违规立案' },
+              data: [{ value: 80, name: '通过' },
                 { value: 20, name: '待审核' },
-                { value: 30, name: '违规不立案' }],
+                { value: 30, name: '不通过' }],
               labelLine: {
                 normal: {
                   show: false,
@@ -502,7 +534,7 @@
               },
               splitLine: { show: false },//去除网格线
               type: 'category',
-              data:['出店经营','无照商贩','占道经营','乱堆物料','非机动车违停','占道经营','乱堆物料','非机动车违停']
+              data:['非法小广告','占道经营','店外经营','占道经营','乱堆物料','非机动车违停']
             }
           ],
           series: [
@@ -538,7 +570,7 @@
 
                 }
               },
-              data: [320, 332, 301,230,56, 301,230,56]
+              data: [ 301,230,56, 301,230,56]
             },
           ]
         },
@@ -639,7 +671,7 @@
             {
               name: '访问来源',
               type: 'pie',
-              radius: ['65%', '80%'],
+              radius: ['45%', '70%'],
               avoidLabelOverlap: false,
               // label: {
               //   show: false,
@@ -677,7 +709,7 @@
                 //   '{b}',
                 //   '{d}'
                 // ].join('\n'),
-                formatter: '{c}<\n>{b}{d}%',
+                formatter: '{c}\n{b}{d}%',
                 verticalAlign :'bottom',
                 position:'outside',
                 textShadowOffsetY :10,
@@ -694,8 +726,9 @@
                 }
               },
               data: [
-                {value: 520, name: '数字城管'},
-                {value: 205, name: '信访投诉'},
+                {value: 2, name: '浦沿中队'},
+                {value: 5, name: '长河中队'},
+                {value: 3, name: '西兴中队'},
               ]
             }
           ]
@@ -704,18 +737,18 @@
           title: {
             zlevel: 0,
             text: [
-              '2222',
+              '1788',
               '{name|申请次数}',
             ].join('\n'),
             rich: {
               value: {
-                color: '#303133',
+                color: '#fff',
                 fontSize: 40,
                 fontWeight: 'bold',
                 lineHeight: 40,
               },
               name: {
-                color: '#909399',
+                color: '#fff',
                 lineHeight: 20
               },
             },
@@ -725,13 +758,13 @@
             textStyle: {
               rich: {
                 value: {
-                  color: '#303133',
-                  fontSize: 40,
+                  color: '#fff',
+                  fontSize: '50',
                   fontWeight: 'bold',
                   lineHeight: 40,
                 },
                 name: {
-                  color: '#909399',
+                  color: '#fff',
                   lineHeight: 20
                 },
               },
@@ -744,7 +777,7 @@
           legend: {
             orient: 'vertical',
             x: 'right',
-            data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎'],
+            data: ['过程验收','工验收','安全考评','完工评价','危大备案','机械登记','拆卸告知'],
             itemGap: 30,
             top: 'middle',
             align: 'left',
@@ -799,14 +832,15 @@
               //     }
                 }
               },
-              data: [{value: 335, name: '直接访问'},
-                {value: 310, name: '邮件营销'},
-                {value: 234, name: '联盟广告'},
-                {value: 135, name: '视频广告'},
-                {value: 548, name: '搜索引擎'}]
+              // ['过程验收','工验收','安全考评','完工评价','危大备案','机械登记','拆卸告知'],
+              data: [{value: 320, name: '过程验收'},
+                {value: 86, name: '工验收'},
+                {value: 206, name: '安全考评'},
+                {value: 80, name: '完工评价'},
+                {value: 244, name: '危大备案'},{value: 689, name: '机械登记'},{value: 163, name: '拆卸告知'}]
             }
           ],
-          color: ['#410ADF','#F42850','#F6A93B','#7ED321','#282828']
+          color: ['rgb(188,86,64)','rgb(83,155,141)','rgb(255,156,18)','rgb(254,112,26)','rgb(72,109,180)','rgb(110,87,167)','rgb(81,140,182)']
         },
         map: '', // 对象
         zoom: 14, // 地图的初始化级别，及放大比例
@@ -834,6 +868,51 @@
         this.activeIndex = val;
         if(val == 0){
           this.getList();
+        }else{
+          this.pointList = [{
+            name:'建德人家',
+            status:'正常',
+            address:'杭州市滨江区江陵路与启智街交汇处附近西',
+            longitude:'120.126305',
+            latitude:'30.182287',
+          },{
+            name:'物美',
+            status:'故障',
+            address:'杭州市滨江区江陵路与启智街交汇处附近西',
+            longitude:'120.14547',
+            latitude:'30.160213',
+          },{
+            name:'物美',
+            status:'离线',
+            address:'杭州市滨江区江陵路与启智街交汇处附近西',
+            longitude:'120.205925',
+            latitude:'30.145908',
+          },{
+            name:'佰味佳',
+            status:'超标',
+            address:'杭州市滨江区江陵路与启智街交汇处附近西',
+            longitude:'120.203186',
+            latitude:'30.214312',
+          },{
+            name:'建德人家',
+            status:'正常',
+            address:'杭州市滨江区江陵路与启智街交汇处附近西',
+            longitude:'120.19772',
+            latitude:'30.20525',
+          },{
+            name:'建德人家',
+            status:'正常',
+            address:'杭州市滨江区江陵路与启智街交汇处附近西',
+            longitude:'120.180405',
+            latitude:'30.174658',
+          },{
+            name:'建德人家',
+            status:'正常',
+            address:'杭州市滨江区江陵路与启智街交汇处附近西',
+            longitude:'120.19302',
+            latitude:'30.194742',
+          }];
+          this.mapPoint(this.pointList,'yy');
         }
       },
       onLoad() {
@@ -846,7 +925,7 @@
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
 
       },
-      mapPoint(list){
+      mapPoint(list,type){
         console.log('点位');
         //创建图片对象
         this.map.clearOverLays();
@@ -855,13 +934,51 @@
           iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
-
+        let icon02 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(66, 59),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon03 = new T.Icon({
+          iconUrl: point03,
+          iconSize: new T.Point(66, 59),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon04 = new T.Icon({
+          iconUrl: point04,
+          iconSize: new T.Point(66, 59),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon05 = new T.Icon({
+          iconUrl: point05,
+          iconSize: new T.Point(66, 59),
+          iconAnchor: new T.Point(34, 59)
+        });
         let markers = [];
         console.log(list);
         for (let i = 0; i < list.length; i++) {
           // var marker
-          let point = new T.LngLat(list[i].longitude,list[i].latitude);
-          markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          if(type == 'yy'){
+            if(list[i].status == '正常'){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon02,this,list[i]);
+            }else if(list[i].status == '离线'){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon03,this,list[i]);
+            }else if(list[i].status == '故障'){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon04,this,list[i]);
+            }else if(list[i].status == '超标'){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon05,this,list[i]);
+            }
+
+          }else{
+
+            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          }
+
         }
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){
@@ -873,14 +990,24 @@
             let infoWin1 = new T.InfoWindow();
             console.log(txt)
             let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
-            let type ;
-            let sContent =
-              '<div class="point_info">' +
-              '<p class="f12 time">监控名称：' + txt.name + '</p>' +
-              '<p class="f12 time">所属区域：' + txt.depart_name + '</p>' +
-              '<p class="f12 time">来源区域：' + txt.community_name + '</p>' +
-              '<p class="f12 time">所在地址：' + txt.install_place + '</p>' +
-              '</div>';
+            let sContent;
+            if(type == 'yy'){
+              sContent =
+                '<div class="point_info">' +
+                '<p class="f14 time">名称：' + txt.name + '</p>' +
+                '<p class="f14 time">状态：' + txt.status + '</p>' +
+                '<p class="f14 time">地址：' + txt.address + '</p>' +
+                '</div>';
+            }else{
+              sContent =
+                '<div class="point_info">' +
+                '<p class="f14 time">监控名称：' + txt.name + '</p>' +
+                '<p class="f14 time">所属区域：' + txt.depart_name + '</p>' +
+                '<p class="f14 time">来源区域：' + txt.community_name + '</p>' +
+                '<p class="f14 time">所在地址：' + txt.install_place + '</p>' +
+                '<p class="f14 baseColor text-right">查看视频</p>' +
+                '</div>';
+            }
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
 
@@ -901,13 +1028,7 @@
   }
 </script>
 <style lang="scss" scoped>
-  .left_server{
-    position: fixed;
-    top: 13vh;
-    left: 20px;
-    z-index: 9999;
-    padding: 20px;
-  }
+
   .communityNum{
     /*width: 30%;*/
     li{
@@ -938,7 +1059,7 @@
       padding: 10px 0;
       .weui-cell__hd{
         img{
-          width: 30px;
+          width: 20px;
         }
       }
       &:nth-child(2){

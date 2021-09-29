@@ -553,7 +553,7 @@
         //创建信息窗口对象
         // let marker = new T.Marker(new T.LngLat(117.283042, 31.86119));// 创建标注
         let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
-        this.map.addOverLay(marker);
+        // this.map.addOverLay(marker);
         // 随机向地图添加25个标注
         // let bounds = this.map.getBounds();
         // let sw = bounds.getSouthWest();

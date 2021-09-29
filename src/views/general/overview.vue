@@ -44,7 +44,7 @@
               </div>
               <div class="weui-cell__bd">
                 <div class="weui-cell">
-                  <div class="weui-cell__hd text-center"><span class="block adminTxt_linear">黄灯件情况</span></div>
+                  <div class="weui-cell__hd text-center"><span class="block adminTxt_linear">黄灯件</span></div>
                   <div class="weui-cell__bd clr_white f14">
                     <p>{{formData.city.yellow_detail}}</p>
                   </div>
@@ -58,7 +58,7 @@
               </div>
               <div class="weui-cell__bd">
                 <div class="weui-cell">
-                  <div class="weui-cell__hd text-center"><span class="block adminTxt_linear">红灯件情况</span></div>
+                  <div class="weui-cell__hd text-center"><span class="block adminTxt_linear">红灯件</span></div>
                   <div class="weui-cell__bd clr_white f14">
                     <p>{{formData.city.red_detail}}</p>
                   </div>
@@ -199,7 +199,7 @@
               </div>
               <div class="weui-cell__bd">
                 <div class="weui-cell">
-                  <div class="weui-cell__hd text-center"><span class="block adminTxt_linear">重复投诉情况</span></div>
+                  <div class="weui-cell__hd text-center"><span class="block adminTxt_linear">重复投诉</span></div>
                   <div class="weui-cell__bd clr_white f14">
                     <p>{{formData.letter.rep_detail}}</p>
                   </div>
@@ -210,9 +210,9 @@
         </el-col>
         <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
           <div class="content_index">
-            <div class="title_index f18 bold text-center"><span class="txt_linear">备案审批</span></div>
+            <div class="title_index f18 bold text-center"><span class="txt_linear">行政审批</span></div>
             <div class="clr_white mt_20">
-              <div class="f20 bold text-center baseColor approval_num">审批总数：{{formData.check.count}}</div>
+              <div class="f20 bold text-center baseColor approval_num">周审批总量：{{formData.check.count}}</div>
 
               <div class="circle_num text-center">
                 <img src="./../../assets/image/approval_circle.png" class="circle_img">
@@ -266,10 +266,10 @@
 <!--                </div>-->
 
 <!--              </div>-->
-              <div class="flex">
+              <div class="flex" style="margin-top: 40px;">
                 <div class="flex-item" style="padding-left: 20px;">
                   <div class="weui-cell server_cell">
-                    <div class="weui-cell__hd"><PieChartTwo :chartData="PieDataThree" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo></div>
+                    <div class="weui-cell__hd"><PieChartTwo :chartData="PieDataThree" :PieChartLegend="PieChartLegend" height="12vh" :divwidth="'100%'"></PieChartTwo></div>
                     <div class="weui-cell__bd">
                       <p>亮灯数<span class="clr_yellow ml_10">{{formData.light.num}}</span></p>
                       <p>总灯数<span class="clr_yellow ml_10">{{formData.light.count}}</span></p>
@@ -281,7 +281,7 @@
                   <div class="weui-cell server_cell">
                     <div class="weui-cell__hd">
                       <!--                    <RingChart :chartData="PieDataOne" :PieChartLegend="PieChartLegend" height="10vh"></RingChart>-->
-                      <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo>
+                      <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="12vh" :divwidth="'100%'"></PieChartTwo>
                       <!--                 <PieChartTwo :chartData="PieData3" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo>-->
                     </div>
                     <div class="weui-cell__bd">

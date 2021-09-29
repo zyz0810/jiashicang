@@ -4,50 +4,46 @@
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_content clr_white base_bg_left ">
 
-        <div class="txt_linear f18 bold">备案审批概况</div>
+        <div class="txt_linear f18 bold">备案审批概况（周）</div>
         <div class="mt_20 clr_white">
-          <div class="f20 bold text-center approval_num txt_shadow">审核总数：{{formData.count}}</div>
+          <div class="f18 bold text-center approval_num txt_shadow">审批总数：{{formData.count}}</div>
 
           <div class="circle_num text-center">
             <img src="./../../assets/image/approval_circle.png" class="circle_img">
             <div class="circle_num_item">
-              <span class="clr_white f20 bold circleNum_left_bg block">{{formData.quanzhi}}/{{((Number(formData.quanzhi)/Number(formData.count))*100).toFixed(2)}}%</span>
+              <span class="clr_white f18 bold circleNum_left_bg block">{{formData.quanzhi}}/{{((Number(formData.quanzhi)/Number(formData.count))*100).toFixed(2)}}%</span>
               <p class="clr_yellow bold">犬只审批</p>
             </div>
             <div class="circle_num_item">
-              <span class="clr_white f20 bold circleNum_left_bg block">{{formData.gongcheng}}/{{((Number(formData.gongcheng)/Number(formData.count))*100).toFixed(2)}}%</span>
+              <span class="clr_white f18 bold circleNum_left_bg block">{{formData.gongcheng}}/{{((Number(formData.gongcheng)/Number(formData.count))*100).toFixed(2)}}%</span>
               <p class="clr_yellow bold">工程渣土</p>
             </div>
             <div class="circle_num_item">
-              <span class="clr_white f20 bold circleNum_right_bg block">{{formData.guanggao}}/{{((Number(formData.guanggao)/Number(formData.count))*100).toFixed(2)}}%</span>
+              <span class="clr_white f18 bold circleNum_right_bg block">{{formData.guanggao}}/{{((Number(formData.guanggao)/Number(formData.count))*100).toFixed(2)}}%</span>
               <p class="clr_yellow bold">广告审批</p>
             </div>
             <div class="circle_num_item">
-              <span class="clr_white f20 bold circleNum_right_bg block">{{formData.qita}}/{{((Number(formData.qita)/Number(formData.count))*100).toFixed(2)}}%</span>
+              <span class="clr_white f18 bold circleNum_right_bg block">{{formData.qita}}/{{((Number(formData.qita)/Number(formData.count))*100).toFixed(2)}}%</span>
               <p class="clr_yellow bold">其他审批</p>
             </div>
           </div>
 
         </div>
       <div class="mt_20">
-        <p class="f20 bold txt_linear">审批类型数量排名（top6）</p>
+        <p class="f20 bold txt_linear">备案审批类型分析（周）</p>
         <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
       </div>
 
     </div>
     <div class="right_content clr_white base_bg_right">
       <div class="top clr_white">
-        <p class="f20 bold txt_linear mb_20">审批走势（一周）</p>
+        <p class="f20 bold txt_linear mb_20">备案审批走势（周）</p>
         <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></LineChart>
       </div>
       <div class="mt_20">
-        <p class="f20 bold txt_linear mb_20">审批详情</p>
+        <p class="f20 bold txt_linear mb_20">备案审批详情（周）</p>
         <el-table v-loading="listLoading" :data="list" :height="300"  stripe element-loading-text="拼命加载中" fit ref="tableList" class="f14">
-          <el-table-column type="index" label="序号" width="80" align="center">
-<!--            <template slot-scope="scope">-->
-<!--             <span class="block sqaer">{{index}}</span>-->
-<!--            </template>-->
-          </el-table-column>
+          <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
           <el-table-column label="申请人/单位" align="center" prop="name"></el-table-column>
           <el-table-column label="权力名称" align="center" prop="name"></el-table-column>
           <el-table-column label="办理结果" align="center" prop="end"></el-table-column>
@@ -55,21 +51,25 @@
         </el-table>
       </div>
     </div>
-    <!--<div class="center_content clr_white text-center">-->
-      <!--<div class="map_intro f14 bold flex baseColor">-->
-        <!--<img src="./../../assets/image/point05.png"/>-->
-        <!--<div>广告审批</div>-->
-      <!--</div>-->
-      <!--&lt;!&ndash;<div class="map_intro f14 bold flex baseColor">&ndash;&gt;-->
-        <!--&lt;!&ndash;<img src="./../../assets/image/point05.png"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div>工程车审批</div>&ndash;&gt;-->
-      <!--&lt;!&ndash;</div>&ndash;&gt;-->
-      <!--&lt;!&ndash;<div class="map_intro f14 bold flex baseColor">&ndash;&gt;-->
-        <!--&lt;!&ndash;<img src="./../../assets/image/point06.png"/>&ndash;&gt;-->
-        <!--&lt;!&ndash;<div>犬只审批</div>&ndash;&gt;-->
-      <!--&lt;!&ndash;</div>&ndash;&gt;-->
-      <!--&lt;!&ndash;<p class="text-right baseColor f16 bold mt_20">说明</p>&ndash;&gt;-->
-    <!--</div>-->
+    <div class="center_content clr_white text-center">
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point25.png"/></div>
+        <div class="weui-cell__bd">广告审批</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point26.png"/></div>
+        <div class="weui-cell__bd">犬只审批</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point27.png"/></div>
+        <div class="weui-cell__bd">工程渣土</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point28.png"/></div>
+        <div class="weui-cell__bd">其他审批</div>
+      </div>
+      <!--<p class="text-right baseColor f16 bold mt_20">说明</p>-->
+    </div>
   </div>
 </template>
 
@@ -85,13 +85,13 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point04.png' // 引入刚才的map.js 注意路径
-  import point02 from '@/assets/image/point05.png' // 引入刚才的map.js 注意路径
-  import point03 from '@/assets/image/point06.png' // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point25.png' // 引入刚才的map.js 注意路径
+  import point02 from '@/assets/image/point26.png' // 引入刚才的map.js 注意路径
+  import point03 from '@/assets/image/point27.png' // 引入刚才的map.js 注意路径
+  import point04 from '@/assets/image/point28.png' // 引入刚才的map.js 注意路径
   import {generalApprove} from '@/api/recordApproval'
   import {cleanCarAddressList, lastGPS} from "@/api/garbageLink";
   import {cos} from "@/utils/translate";
-  import point04 from "@/assets/image/point22.png";
 
   export default {
     name: 'parameterList',
@@ -102,28 +102,44 @@
       return {
         listLoading:false,
         list:[{
-          name:'发你辅导费',
-          name2:'丰富的爽肤水',
+          name:'倪维绞',
+          name2:'养犬许可-个人申请',
           end:'审批通过'
         },{
-          name:'发你辅导费',
-          name2:'丰富的爽肤水',
+          name:'杭州市滨江区尔似便利店',
+          name2:'设置其他户外广告设施和招牌、指示牌备案',
           end:'审批通过'
         },{
-          name:'发你辅导费',
-          name2:'丰富的爽肤水',
+          name:'杭州市滨江区羽炫食品便利店',
+          name2:'设置其他户外广告设施和招牌、指示牌备案',
           end:'审批通过'
         },{
-          name:'发你辅导费',
-          name2:'丰富的爽肤水',
+          name:'杭州市滨江区教育局',
+          name2:'城市建筑垃圾处置核准（处置）',
           end:'审批通过'
         },{
-          name:'发你辅导费',
-          name2:'丰富的爽肤水',
+          name:'张潆心',
+          name2:'养犬许可-个人申请',
           end:'审批通过'
         },{
-          name:'发你辅导费',
-          name2:'丰富的爽肤水',
+          name:'刘欢',
+          name2:'养犬许可-个人申请',
+          end:'审批通过'
+        },{
+          name:'钱旦玮',
+          name2:'养犬许可-个人申请',
+          end:'审批通过'
+        },{
+          name:'陈俊边',
+          name2:'养犬许可-个人申请',
+          end:'审批通过'
+        },{
+          name:'唐根霞',
+          name2:'养犬许可-个人申请',
+          end:'审批通过'
+        },{
+          name:'陈青霞',
+          name2:'养犬许可-个人申请',
           end:'审批通过'
         }],
         chartData: {
@@ -243,7 +259,7 @@
             },
             splitLine: { show: false },//去除网格线
             type: 'category',
-            data: ['5.13', '5.14', '5.15', '5.16', '5.17', '5.18', '5.19']
+            data: ['9.22', '9.23', '9.24', '9.25', '9.26', '9.27', '9.28']
           },
           yAxis: {
             axisTick: {
@@ -289,7 +305,7 @@
                 }
               }
             },
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: [11, 12, 12, 12, 17, 18, 17],
             type: 'line'
           }]
         },
@@ -336,7 +352,7 @@
               },
               splitLine: { show: false },//去除网格线
               type: 'category',
-              data:['设置其他外网','设置其他外网','设置其他外网','设置其他外网','工程渣土准运证核准','养犬许可']
+              data:['工程渣土','广告审批','其他审批','犬只审批',]
             }
           ],
           series: [
@@ -372,7 +388,7 @@
 
                 }
               },
-              data: [123,156,230,301,320, 332,]
+              data: [7,13,19,60,]
             },
           ]
         },
@@ -446,18 +462,16 @@
 
         for (let i = 0; i < list.length; i++) {
           // var marker
+          console.log(list[i].type)
           let point = new T.LngLat(list[i].log,list[i].lat);
           if(list[i].type == '犬只审批'){
-            console.log('犬只审批1'+list[i].lon,list[i].lat)
-            markers[i]  = drawTMaker(point, icon01,this,list[i]);
-          }else if(list[i].type == '广告审批'){
-            console.log('犬只审批2')
             markers[i]  = drawTMaker(point, icon02,this,list[i]);
-          }else if(list[i].type == '工程车审批'){
-            console.log('犬只审批3')
+          }else if(list[i].type == '广告审批'){
+            markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          }else if(list[i].type == '工程渣土'){
             markers[i]  = drawTMaker(point, icon03,this,list[i]);
-          }else if(list[i].type == '其它审批'){
-            console.log('犬只审批4')
+          }else if(list[i].type == '其他审批'){
+
             markers[i]  = drawTMaker(point, icon04,this,list[i]);
           }
 
@@ -475,15 +489,15 @@
             // 办件编号、申请人/单位、电话、地址、申请日期、办结日期、办理结果、权力名称、所属类型
             let sContent =
               '<div class="point_info">' +
-              '<p class="f12 time">办件编号：' + txt.number_no + '</p>' +
-              '<p class="f12 time">申请人/单位：' + txt.statutory_people + '</p>' +
-              '<p class="f12 time">电话：' + txt.phone + '</p>' +
-              '<p class="f12 time">地址：' + txt.address + '</p>' +
-              '<p class="f12 time">申请日期：' + txt.apply_date + '</p>' +
-              '<p class="f12 time">办结日期：' + txt.end_date + '</p>' +
-              '<p class="f12 time">办理结果：' + txt.result + '</p>' +
-              '<p class="f12 time">权力名称：' + txt.apply_name + '</p>' +
-              '<p class="f12 time">所属类型：' + txt.type + '</p>' +
+              '<p class="f14 time">办件编号：' + txt.number_no + '</p>' +
+              '<p class="f14 time">申请人/单位：' + txt.statutory_people + '</p>' +
+              '<p class="f14 time">电话：' + txt.phone + '</p>' +
+              '<p class="f14 time">地址：' + txt.address + '</p>' +
+              '<p class="f14 time">申请日期：' + txt.apply_date + '</p>' +
+              '<p class="f14 time">办结日期：' + txt.end_date + '</p>' +
+              '<p class="f14 time">办理结果：' + txt.result + '</p>' +
+              '<p class="f14 time">权力名称：' + txt.apply_name + '</p>' +
+              '<p class="f14 time">所属类型：' + txt.type + '</p>' +
               '</div>';
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
@@ -558,26 +572,5 @@
     width: 20px;
     height: 20px;
     border: 2px solid #ccc;
-  }
-  .center_content{
-    padding: 30px;
-    background: rgba(8,19,41,0.6);
-    position: fixed;
-    bottom: 120px;
-    right: 35%;
-    z-index: 99999999;
-  }
-  .map_intro{
-    width: 129px;
-    height: 51px;
-    line-height: 51px;
-    margin: 0 auto;
-    background: url("./../../assets/image/intro_bg.png") center bottom no-repeat;
-    background-size: 100% 100%;
-    img{
-      width: 18px;
-      height: 30px;
-      margin-right: 22px;
-    }
   }
 </style>

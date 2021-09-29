@@ -3,42 +3,45 @@
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_server clr_white text-center f16 bold border base_bg shadow">
-      <div :class="['mb_20',activeIndex == 0 ? 'baseColor':'']" @click="handlePageType(0)">
-        <i class="iconfont icon-zaosheng f26"></i>
-        <p class="mt_10">数字停车</p>
+      <div :class="[activeIndex == 0 ? 'baseColor':'']" @click="handlePageType(0)">
+        <img v-if="activeIndex == 0" src="./../../assets/image/services_nav01_active.png" class="nav_img"/>
+        <img v-else src="./../../assets/image/services_nav01.png" class="nav_img"/>
+        <p class="nav_txt">数字停车</p>
       </div>
-      <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="handlePageType(1)">
-        <i class="iconfont icon-fengji f26"></i>
-        <p class="mt_10">共享单车</p>
+      <div :class="[activeIndex == 1 ? 'baseColor':'']" @click="handlePageType(1)">
+        <img v-if="activeIndex == 1" src="./../../assets/image/services_nav02_active.png" class="nav_img"/>
+        <img v-else src="./../../assets/image/services_nav02.png" class="nav_img"/>
+        <p class="nav_txt">共享单车</p>
       </div>
       <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="handlePageType(2)">
-        <i class="iconfont icon-zaosheng f26"></i>
-        <p class="mt_10">城市亮灯</p>
+        <img v-if="activeIndex == 2" src="./../../assets/image/services_nav03_active.png" class="nav_img"/>
+        <img v-else src="./../../assets/image/services_nav03.png" class="nav_img"/>
+        <p class="nav_txt">城市亮灯</p>
       </div>
     </div>
-    <ul class="f16 clr_white bold text-center link_intro" v-if="activeIndex == 0">
-      <li class="mb_20 f14">空闲泊位等级</li>
-      <li>
-        <p>5级</p>
-        <span class="block color_bg01"></span>
-      </li>
-      <li>
-        <p>4级</p>
-        <span class="block color_bg02"></span>
-      </li>
-      <li>
-        <p>3级</p>
-        <span class="block color_bg03"></span>
-      </li>
-      <li>
-        <p>2级</p>
-        <span class="block color_bg04"></span>
-      </li>
-      <li>
-        <p>1级</p>
-        <span class="block color_bg05"></span>
-      </li>
-    </ul>
+    <!--<ul class="f16 clr_white bold text-center link_intro" v-if="activeIndex == 0">-->
+      <!--<li class="mb_20 f14">空闲泊位等级</li>-->
+      <!--<li>-->
+        <!--<p>5级</p>-->
+        <!--<span class="block color_bg01"></span>-->
+      <!--</li>-->
+      <!--<li>-->
+        <!--<p>4级</p>-->
+        <!--<span class="block color_bg02"></span>-->
+      <!--</li>-->
+      <!--<li>-->
+        <!--<p>3级</p>-->
+        <!--<span class="block color_bg03"></span>-->
+      <!--</li>-->
+      <!--<li>-->
+        <!--<p>2级</p>-->
+        <!--<span class="block color_bg04"></span>-->
+      <!--</li>-->
+      <!--<li>-->
+        <!--<p>1级</p>-->
+        <!--<span class="block color_bg05"></span>-->
+      <!--</li>-->
+    <!--</ul>-->
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 0">
       <p class="f20 bold txt_linear">泊位概况</p>
       <div class="weui-cell">
@@ -200,6 +203,58 @@
       </div>
     </div>
 
+
+    <div class="center_content clr_white text-center" v-if="activeIndex == 0">
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point29.png"/></div>
+        <div class="weui-cell__bd">停车场</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>
+        <div class="weui-cell__bd">AI视频</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
+        <div class="weui-cell__bd">普通视频</div>
+      </div>
+    </div>
+    <div class="center_content clr_white text-center" v-if="activeIndex == 1">
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point30.png"/></div>
+        <div class="weui-cell__bd">共享单车</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>
+        <div class="weui-cell__bd">AI视频</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
+        <div class="weui-cell__bd">普通视频</div>
+      </div>
+    </div>
+    <div class="center_content clr_white text-center" v-if="activeIndex == 2">
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point35.png"/></div>
+        <div class="weui-cell__bd">亮灯设备开</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point34.png"/></div>
+        <div class="weui-cell__bd">亮灯设备关</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point33.png"/></div>
+        <div class="weui-cell__bd">控制柜开</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point32.png"/></div>
+        <div class="weui-cell__bd">控制柜关</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point31.png"/></div>
+        <div class="weui-cell__bd">控制柜故障</div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -213,12 +268,15 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point15.png' // 引入刚才的map.js 注意路径
-  import point02 from '@/assets/image/point16.png' // 引入刚才的map.js 注意路径
-  import point03 from '@/assets/image/point17.png' // 引入刚才的map.js 注意路径
-  import point04 from '@/assets/image/point18.png' // 引入刚才的map.js 注意路径
-  import point05 from '@/assets/image/point13.png' // 引入刚才的map.js 注意路径
-  import point06 from '@/assets/image/point23.png' // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point29.png' // 停车位
+  import point02 from '@/assets/image/point30.png' // 共享单车
+  import point03 from '@/assets/image/point31.png' // 控制柜故障
+  import point04 from '@/assets/image/point32.png' // 控制柜关
+  import point05 from '@/assets/image/point33.png' // 控制柜开
+  import point06 from '@/assets/image/point34.png' // 亮灯关
+  import point07 from '@/assets/image/point35.png' // 亮灯开
+  import point08 from '@/assets/image/point36.png' // AI视频
+  import point09 from '@/assets/image/point38.png' // 普通视频
   import toolTipBg from '@/assets/image/digital-bg.png' // 引入刚才的map.js 注意路径
   import {pointList} from '@/api/system'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
@@ -248,7 +306,7 @@
             {
               name: '',
               type: 'pie',
-              radius: ['60%', '80%'],
+              radius: ['50%', '70%'],
               avoidLabelOverlap: false,
               // label: {
               //   show: false,
@@ -868,47 +926,68 @@
           iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
+        let icon07 = new T.Icon({
+          iconUrl: point07,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon08 = new T.Icon({
+          iconUrl: point08,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon09 = new T.Icon({
+          iconUrl: point09,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
         let markers = []
         if(type == 'control'){
-
           for (let i = 0; i < list.length; i++) {
             // var marker
             // 0：关  1：开
             if(list[i].status == 0){
               let point = new T.LngLat(list[i].longitude,list[i].latitude);
-              markers[i]  = drawTMaker(point, icon03,this,list[i]);
+              markers[i]  = drawTMaker(point, point04,this,list[i]);
             }else if(list[i].status == 1){
               let point = new T.LngLat(list[i].longitude,list[i].latitude);
-              markers[i]  = drawTMaker(point, icon04,this,list[i]);
+              markers[i]  = drawTMaker(point, icon05,this,list[i]);
+            }else if(list[i].status == 2){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon03,this,list[i]);
             }
           }
         }else if(type == 'park'){
-
           console.log('jjjj:'+list.length)
           for (let i = 0; i < list.length; i++) {
             // var marker
             // 0：关  1：开
-
             if(list[i].way_longitude  && list[i].way_latitude){
               console.log(list[i].way_longitude,list[i].way_latitude);
               console.log('停车场')
               let point = new T.LngLat(list[i].way_longitude,list[i].way_latitude);
-              markers[i]  = drawTMaker(point, icon06,this,list[i]);
+              markers[i]  = drawTMaker(point, icon01,this,list[i]);
             }else{
-              console.log(list[i]);
-              console.log(list[i].longitude,list[i].latitude);
-              console.log('是哦皮 ')
-              let point = new T.LngLat(list[i].longitude,list[i].latitude);
-              markers[i]  = drawTMaker(point, icon05,this,list[i]);
+              if(list[i].class==1){
+                let point = new T.LngLat(list[i].longitude,list[i].latitude);
+                markers[i]  = drawTMaker(point, icon08,this,list[i]);
+              }else if(list[i].class==3){
+                let point = new T.LngLat(list[i].longitude,list[i].latitude);
+                markers[i]  = drawTMaker(point, icon09,this,list[i]);
+              }
             }
-
-
           }
         }else if(type == 'point'){
           for (let i = 0; i < list.length; i++) {
             // var marker
-            let point = new T.LngLat(list[i].longitude,list[i].latitude);
-            markers[i]  = drawTMaker(point, icon05,this,list[i]);
+            if(list[i].class==1){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon08,this,list[i]);
+            }else if(list[i].class==3){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon09,this,list[i]);
+            }
+
           }
         }else{
 
@@ -936,38 +1015,47 @@
               let infoWin1 = new T.InfoWindow();
               console.log(txt)
               let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
-              let status = txt.status==0?'关':'开';
+              let status;
+              if(txt.status == 0){
+                status = '关'
+              }else  if(txt.status == 1){
+                status = '开'
+              }else {
+                status = '故障'
+              }
               let sContent = '';
               if(type == 'park'){
                if(txt.way_longitude  && txt.way_latitude){
                  sContent =
                    '<div class="point_info">' +
-                   '<p class="f12 time">停车场名称：' + txt.park_name + '</p>' +
-                   '<p class="f12 time">停车场类型：' + txt.park_type_name + '</p>' +
-                   '<p class="f12 time">停车场地址：' + txt.address + '</p>' +
+                   '<p class="f14 time">停车场名称：' + txt.park_name + '</p>' +
+                   '<p class="f14 time">停车场类型：' + txt.park_type_name + '</p>' +
+                   '<p class="f14 time">停车场地址：' + txt.address + '</p>' +
                    '</div>';
                }else{
                  sContent =
                    '<div class="point_info">' +
-                   '<p class="f12 time">监控名称：' + txt.name + '</p>' +
-                   '<p class="f12 time">所属区域：' + txt.depart_name + '</p>' +
-                   '<p class="f12 time">来源区域：' + txt.community_name + '</p>' +
-                   '<p class="f12 time">所在地址：' + txt.install_place + '</p>' +
+                   '<p class="f14 time">监控名称：' + txt.name + '</p>' +
+                   '<p class="f14 time">所属区域：' + txt.depart_name + '</p>' +
+                   '<p class="f14 time">来源区域：' + txt.community_name + '</p>' +
+                   '<p class="f14 time">所在地址：' + txt.install_place + '</p>' +
+                   '<p class="f14 baseColor text-right">查看视频</p>' +
                    '</div>';
                }
               }else if(type == 'point'){
                 sContent =
                   '<div class="point_info">' +
-                  '<p class="f12 time">监控名称：' + txt.name + '</p>' +
-                  '<p class="f12 time">所属区域：' + txt.depart_name + '</p>' +
-                  '<p class="f12 time">来源区域：' + txt.community_name + '</p>' +
-                  '<p class="f12 time">所在地址：' + txt.install_place + '</p>' +
+                  '<p class="f14 time">监控名称：' + txt.name + '</p>' +
+                  '<p class="f14 time">所属区域：' + txt.depart_name + '</p>' +
+                  '<p class="f14 time">来源区域：' + txt.community_name + '</p>' +
+                  '<p class="f14 time">所在地址：' + txt.install_place + '</p>' +
+                  '<p class="f14 baseColor text-right">查看视频</p>' +
                   '</div>';
               }else{
                 sContent =
                   '<div class="point_info">' +
-                  '<p class="f12 time">监控名称：' + txt.name + '</p>' +
-                  '<p class="f12 time">状态：' + status + '</p>' +
+                  '<p class="f14 time">监控名称：' + txt.name + '</p>' +
+                  '<p class="f14 time">状态：' + status + '</p>' +
                   '</div>';
               }
               infoWin1.setContent(sContent);
@@ -998,7 +1086,20 @@
       getControlCabinetlist(){
         getcontrolcabinetlist().then((res) => {
           this.totalData.controlCabinetNum =  res.data.total;
-          this.controlList = res.data.list;
+          let b= res.data.list;
+          let a = [{
+            address: "长江西路湘湖34北路",
+            latitude: 30.188826,
+            longitude:120.198799,
+            name: "长湘109",
+            status: 2,},{
+            address: "长江西路湘湖北23路",
+            latitude: 30.183412,
+            longitude: 120.220823,
+            name: "长湘109",
+            status: 2,}]
+          b = b.concat(a);
+          this.controlList = b
           this.mapPoint('control',this.controlList)
         });
       },
@@ -1041,15 +1142,11 @@
 <style lang="scss" scoped>
   /deep/.tdt-infowindow-content-wrapper{
     width: auto;
-    color: #fff;
-    background: #0a1f44;
   }
   .progress_cont{
     border: 1px solid rgb(15,50,53) !important;
   }
-  /deep/.tdt-infowindow-tip{
-    background: rgb(15,50,53) !important;;
-  }
+
 .progress_light{
 
   /deep/.el-progress-bar__inner{
@@ -1086,13 +1183,7 @@
     line-height: 100px;
   }
  }
-  .left_server{
-    position: fixed;
-    top: 13vh;
-    left: 20px;
-    z-index: 9999;
-    padding: 20px;
-  }
+
   .bicycle{
     .flex-item{
       padding: 20px 0;

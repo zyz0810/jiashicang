@@ -77,11 +77,11 @@
 
       </div>
       <div class="mt_20">
-        <p class="f20 bold txt_linear">作业里程统计</p>
+        <p class="f20 bold txt_linear">作业里程</p>
         <BarChartFive :chartData="BarData" height="150px" divwidth="100%"></BarChartFive>
       </div>
       <div class="mt_20">
-        <p class="f20 bold txt_linear">实际作业车辆统计</p>
+        <p class="f20 bold txt_linear">实际作业车辆</p>
         <BarChartFive :chartData="BarDataTwo" height="150px" divwidth="100%"></BarChartFive>
       </div>
 

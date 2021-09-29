@@ -19,9 +19,18 @@
            <router-link :to="{path:'/general/overview'}">
 <!--         <a href=" http://192.168.2.3:8090/">-->
            <img src="./../../assets/image/index_icon01.png"/>
-           <p class="mt_10">局驾驶舱</p>
+           <p class="mt_10">驾驶舱</p>
            </router-link>
 <!--         </a>-->
+       </li>
+       <li>
+         <!--         <a href="http://jsc.susongzhijia.com/#/general/overview" target="_blank">-->
+         <a href="/zhuanxiang/index.html#/electron/map">
+           <!--         <a href=" http://192.168.2.3:8090/">-->
+           <img src="./../../assets/image/index_icon01.png"/>
+           <p class="mt_10">电子地图</p>
+         </a>
+         <!--         </a>-->
        </li>
      </ul>
      <div class="index_title text-center">

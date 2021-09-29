@@ -19,11 +19,11 @@
     <div class="flex baseColor nav">
       <div class="flex clr_white bold warning_num">
         <div class="flex-item">
-          <span class="yellow_bg f16 block"><i class="el-icon-message-solid clr_white"></i> 22</span>
+          <span class="yellow_bg f16 block"><i class="el-icon-message-solid clr_white"></i> 5</span>
           <p class="f14">黄色预警</p>
         </div>
         <div class="flex-item">
-          <span class="red_bg f16 block"><i class="el-icon-message-solid clr_white"></i> 22</span>
+          <span class="red_bg f16 block"><i class="el-icon-message-solid clr_white"></i> 1</span>
           <p class="f14">红色预警</p>
         </div>
       </div>

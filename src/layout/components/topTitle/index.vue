@@ -140,7 +140,7 @@ export default {
         this.title = '城市治水数字驾驶舱'
       } else if(route.path == '/municipal/facilities'){
         this.title = '市政设施数字驾驶舱'
-      } else if(route.path == '/law/case'){
+      } else if(route.path == '/low/case'){
         this.title = '案件归集数字驾驶舱'
       }
     }

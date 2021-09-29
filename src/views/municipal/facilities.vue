@@ -68,7 +68,7 @@
             <p class="f16 mt_10">正常设备</p>
           </div>
           <div class="flex-item equipment_abnormal">
-            <div class="f26 num">46</div>
+            <div class="f26 num">0</div>
             <p class="f16 mt_10">异常设备</p>
           </div>
           <div class="flex-item rate_abnormal">

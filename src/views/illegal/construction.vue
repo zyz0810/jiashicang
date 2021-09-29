@@ -9,9 +9,9 @@
             <p class="txt_linear f20 mt_10">违建概况</p>
           </div>
           <ul class="ml_10">
-            <li><span class="f16">本月新增违建</span><span class="clr_blue03 f26">1</span></li>
-            <li><span class="f16">存量违建</span><span class="clr_blue03 f26">11</span></li>
-            <li><span class="f16">完成进度</span><span class="clr_blue03 f26">46%</span></li>
+            <li><span class="f16">违法建筑总宗数</span><span class="clr_blue03 f26">2881</span></li>
+            <li><span class="f16">违法占地总面积</span><span class="clr_blue03 f26">194246.83</span></li>
+            <li><span class="f16">违法建筑总面积</span><span class="clr_blue03 f26">285742.53</span></li>
           </ul>
         </div>
     </div>
@@ -30,7 +30,7 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point07 from '@/assets/image/point07.png' // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point39.png' // 引入刚才的map.js 注意路径
 
   export default {
     name: 'parameterList',
@@ -323,67 +323,85 @@
       // this.$nextTick(function() {
       //
       // })
-      this.onLoad()
+      this.onLoad();
+      this.getList();
     },
     methods: {
+      getList(){
+        let pointList = [{
+          name:'西兴中队',
+          num01:'840',
+          num02:'85233.83',
+          num03:'121661.83',
+          longitude:'120.203186',
+          latitude:'30.214312',
+        },{
+          name:'长河中队',
+          num01:'458',
+          num02:'16213',
+          num03:'26080.7',
+          longitude:'120.19302',
+          latitude:'30.194742',
+        },{
+          name:'浦沿中队',
+          num01:'1583',
+          num02:'138000',
+          num03:'138000',
+          longitude:'120.19772',
+          latitude:'30.20525',
+        }];
+        this.mapPoint(pointList);
+      },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
         this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
-
-        // // 普通标注
-        let site = [
-          { lng: 117.283042, lat: 31.86119 },
-          { lng: 116.41238, lat: 40.07689 },
-          { lng: 116.34143, lat: 40.03403 },
-        ]
-        // this.markerPoint(site)
-        //创建图片对象
-        var icon = new T.Icon({
-          iconUrl: point07,
-          iconSize: new T.Point(59, 53),
-          iconAnchor: new T.Point(10, 25)
-        });
-        //创建信息窗口对象
-        // let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude));// 创建标注
-        let marker = new T.Marker(new T.LngLat(this.centerLongitude, this.centerLatitude), {icon: icon});// 创建标注
-        // this.map.addOverLay(marker);
-        // 随机向地图添加25个标注
-        // let bounds = this.map.getBounds();
-        // let sw = bounds.getSouthWest();
-        // let ne = bounds.getNorthEast();
-        // let lngSpan = Math.abs(sw.lng - ne.lng);
-        // let latSpan = Math.abs(ne.lat - sw.lat);
-        // for (let i = 0; i < 25; i++) {
-        //   let point = new T.LngLat(sw.lng + lngSpan * (Math.random() * 0.7), ne.lat - latSpan * (Math.random() * 0.7));
-        //   var marker = new T.Marker(point, {icon: icon});// 创建标注
-        //   this.map.addOverLay(marker);
-        // }
-
-        var infoWin1 = new T.InfoWindow();
-        let sContent =
-          '<div style=" color: #fff;font-size:14px;font-weight:bold;width:100%">' +
-          '<div>' +
-          '<p ref="enterpriseName"><span class="f20 clr_yellow">王杰</span>（执法队员）</p>' +
-          '<p ref="enterpriseName">电话：1519832321</p>' +
-          '<p ref="enterpriseName">所属中队：浦沿中队</p>' +
-          '<p style="color:green" ref="enterpriseName">在线状态：在线</p>' +
-          '<p ref="enterpriseName">今日上报案件：2件</p>' +
-          '<p ref="enterpriseName">当前位置：人民路就简单三</p>' +
-          '<p style="text-align: right"><a style="cursor: pointer;" onclick="openInfo()"> 查看轨迹</a></p>' +
-          '</div></div>';
-        infoWin1.setContent(sContent);
-        marker.addEventListener("click", function () {
-          marker.openInfoWindow(infoWin1);
-        });// 将标注添加到地图中
+        this.map.setStyle('indigo');
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
-        this.map.setStyle('indigo')
 
       },
+      mapPoint(list){
+        console.log('点位333')
+        //创建图片对象
+        this.map.clearOverLays();
+        let icon01 = new T.Icon({
+          iconUrl: point01,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let markers = []
 
+        for (let i = 0; i < list.length; i++) {
+          console.log(list[i].type)
+          let point = new T.LngLat(list[i].longitude,list[i].latitude);
+          markers[i]  = drawTMaker(point, icon01,this,list[i]);
+        }
+
+        //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
+        function drawTMaker(lnglat,icon,that,txt){
+          var marker =  new T.Marker(lnglat, {icon: icon});
+          that.map.addOverLay(marker);
+          marker.addEventListener("click", function (m) {
+            console.log(m)
+            let infoWin1 = new T.InfoWindow();
+
+            // 办件编号、申请人/单位、电话、地址、申请日期、办结日期、办理结果、权力名称、所属类型
+            let sContent =
+              '<div class="point_info">' +
+              '<p class="f14 time">名称：' + txt.name + '</p>' +
+              '<p class="f14 time">违法建筑总宗数：' + txt.num01 + '</p>' +
+              '<p class="f14 time">违法占地总面积：' + txt.num02 + '</p>' +
+              '<p class="f14 time">违法建筑总面积：' + txt.num03 + '</p>' +
+              '</div>';
+            infoWin1.setContent(sContent);
+            marker.openInfoWindow(infoWin1);
+
+          });// 将标注添加到地图中
+          return marker;
+        }
+      },
     }
   }
 </script>
@@ -401,7 +419,7 @@
         span{
           &:nth-child(1){
             display: inline-block;
-            width: 200px;
+            width: 150px;
           }
         }
       }

@@ -21,7 +21,16 @@
        </li>
      </ul>
     </div>
-
+    <div class="center_content clr_white text-center" v-if="activeIndex == 0">
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>
+        <div class="weui-cell__bd">AI视频</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
+        <div class="weui-cell__bd">普通视频</div>
+      </div>
+    </div>
   </div>
 
 </template>
@@ -36,8 +45,8 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point07 from '@/assets/image/point07.png' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point13.png' // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point36.png' // 引入刚才的map.js 注意路径
+  import point02 from '@/assets/image/point38.png' // 引入刚才的map.js 注意路径
   import {pointList} from '@/api/system'
   export default {
     name: 'parameterList',
@@ -359,12 +368,16 @@
         console.log(list);
         for (let i = 0; i < list.length; i++) {
           // var marker
-          let point = new T.LngLat(list[i].longitude,list[i].latitude);
-          markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          if(list[i].class==1){
+            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          }else if(list[i].class==3){
+            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            markers[i]  = drawTMaker(point, icon02,this,list[i]);
+          }
         }
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){
-          console.log('获取')
           var marker =  new T.Marker(lnglat, {icon: icon});
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {

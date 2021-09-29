@@ -5,16 +5,19 @@
     <div class="left_content clr_white base_bg_left">
       <div class="left_server clr_white text-center f16 bold border base_bg shadow">
         <div :class="['mb_20',activeIndex == 0 ? 'baseColor':'']" @click="handlePageType(0)">
-          <i class="iconfont icon-zaosheng f26"></i>
-          <p class="mt_10">数字城管</p>
+          <img v-if="activeIndex == 0" src="./../../assets/image/case_nav01_active.png" class="nav_img"/>
+          <img v-else src="./../../assets/image/case_nav01.png" class="nav_img"/>
+          <p class="nav_txt">数字城管</p>
         </div>
         <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="handlePageType(1)">
-          <i class="iconfont icon-fengji f26"></i>
-          <p class="mt_10">信访投诉</p>
+          <img v-if="activeIndex == 1" src="./../../assets/image/case_nav01_active.png" class="nav_img"/>
+          <img v-else src="./../../assets/image/case_nav01.png" class="nav_img"/>
+          <p class="nav_txt">信访投诉</p>
         </div>
         <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="handlePageType(2)">
-          <i class="iconfont icon-zaosheng f26"></i>
-          <p class="mt_10">二级指挥</p>
+          <img v-if="activeIndex == 2" src="./../../assets/image/case_nav01_active.png" class="nav_img"/>
+          <img v-else src="./../../assets/image/case_nav01.png" class="nav_img"/>
+          <p class="nav_txt">指挥平台</p>
         </div>
       </div>
       <ul class="direct_option clr_white text-center" v-if="activeIndex == 2">
@@ -22,43 +25,44 @@
         <li :class="['border','shadow',directType==2?'baseColor':'']" @click="handleDirectType(2)">后台录入</li>
       </ul>
     </div>
-    <div class="right_content clr_white base_bg_right">
+    <div class="right_content clr_white base_bg_right" v-if="activeIndex == 2">
       <div class="top clr_white">
-        <p class="f20 bold txt_linear">今日案件高发路段（top6）</p>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="26vh" divwidth="100%"></BarChartFour>
+        <p class="f20 bold txt_linear">案件高发时段分析</p>
+        <!--<BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="26vh" divwidth="100%"></BarChartFour>-->
+        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></LineChart>
       </div>
       <div class="mt_20 ">
-        <p class="f20 bold txt_linear">今日部门案件处置分析</p>
+        <p class="f20 bold txt_linear">部门案件处置分析</p>
         <BarChartFive :chartData="BarData" height="30vh" divwidth="100%"></BarChartFive>
       </div>
 
     </div>
     <div class="top_div top_one flex clr_white text-center f12 bold" v-if="activeIndex == 0">
       <div class="flex-item border shadow">
-        本周上报量
+        周上报量
         <span class="txt_linear">{{formData.shangBao}}</span>
       </div>
       <div class="flex-item border shadow ml_10">
-        本周处理量
+        周处理量
         <span class="txt_linear">{{formData.chuLi}}</span>
       </div>
       <div class="flex-item border shadow ml_10">
-        本周未处理量
+        周未处理量
         <span class="txt_linear">{{formData.undisposed}}</span>
       </div>
       <div class="flex-item border shadow ml_10">
-        本周黄灯件
+        周黄灯件
         <span class="txt_linear">{{formData.yellow_num}}</span>
       </div>
       <div class="flex-item border shadow ml_10">
-        本周红灯件
+        周红灯件
         <span class="txt_linear">{{formData.red_num}}</span>
       </div>
     </div>
     <div class="top_div flex clr_white text-center f12 bold" v-if="activeIndex == 1">
       <div class="flex border shadow mr_20" style="width: 450px">
         <div class="flex-item">
-          本周受理量
+          受理量
           <span class="txt_linear">{{formData.month_deal_num}}</span>
         </div>
         <div class="flex-item">
@@ -125,7 +129,7 @@
 
     </div>
     <div class="mapBtn clr_white border shadow p20 LH_2" v-if="activeIndex != 2" @click="changeMap">
-      <p v-if="mapType == 1">重复件<br/>热力图</p>
+      <p v-if="mapType == 1">反复件<br/>热力图</p>
       <p v-if="mapType == 2">实时<br/>点位</p>
     </div>
 <!--    <ul class="point_intro bg_blue01 p20">-->
@@ -186,6 +190,95 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        lineData:{
+          title: {},
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '5',
+            top: '20',
+            containLabel: true
+          },
+          //----------------   图例 legend  -----------------
+          legend:{},
+          xAxis: {
+            // show:false,
+            axisTick: {
+              show: false,
+              alignWithLabel: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#26CBE2',
+                fontSize:'16',
+                fontWeight:'bold'
+              }
+            },
+            axisLine: {
+              // show: false
+              lineStyle: {
+                color: 'rgb(31,67,88,1)'
+              }
+            },
+            splitLine: { show: false },//去除网格线
+            type: 'category',
+            data: ['滨文路', '长河路', '江陵路', '江虹路', '秋溢路', '滨湖路']
+          },
+          yAxis: {
+            axisTick: {
+              show: true
+            },
+            axisLine: {
+              // show: false
+              lineStyle: {
+                color: 'rgb(31,67,88,1)'
+              }
+            },
+            splitArea : {show : false},//保留网格区域
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#26CBE2',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            splitLine: {
+              show: true,//去除网格线
+              lineStyle:{
+                color: ['rgb(31,67,88,1)'],
+                width: 1,
+                type: 'solid',
+              },
+              textStyle: {
+                color: 'rgb(31,67,88,1)',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            type: 'value'
+          },
+          series: [{
+            smooth: false,
+            symbol: 'none',
+            itemStyle : {
+              normal : {
+                lineStyle:{
+                  color:'#F3E981'
+                }
+              }
+            },
+            data: [332, 320, 301, 230, 156, 98,],
+            type: 'line'
+          }]
+        },
         imgArr:[],
         formData:{},
         directType:1,
