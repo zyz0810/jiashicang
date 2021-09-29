@@ -37,7 +37,7 @@
       </div>
 
     </div>
-    <div class="top_div top_one flex clr_white text-center f12 bold" v-if="activeIndex == 0">
+    <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 0">
       <div class="flex-item border shadow">
         周上报量
         <span class="txt_linear">{{formData.shangBao}}</span>
@@ -59,8 +59,8 @@
         <span class="txt_linear">{{formData.red_num}}</span>
       </div>
     </div>
-    <div class="top_div flex clr_white text-center f12 bold" v-if="activeIndex == 1">
-      <div class="flex border shadow mr_20" style="width: 450px">
+    <div class="top_div flex clr_white text-center f16 bold" v-if="activeIndex == 1">
+      <div class="flex border shadow mr_20" style="width: 650px">
         <div class="flex-item">
           受理量
           <span class="txt_linear">{{formData.month_deal_num}}</span>
@@ -86,7 +86,7 @@
       </div>
 
     </div>
-    <div class="top_div flex clr_white text-center f12 bold" v-if="activeIndex == 2 && directType == 1">
+    <div class="top_div flex clr_white text-center f16 bold" v-if="activeIndex == 2 && directType == 1">
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           今日上报量
@@ -107,7 +107,7 @@
       </div>
 
     </div>
-    <div class="top_div flex clr_white text-center f12 bold" v-if="activeIndex == 2 && directType == 2">
+    <div class="top_div flex clr_white text-center f16 bold" v-if="activeIndex == 2 && directType == 2">
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           今日上报量

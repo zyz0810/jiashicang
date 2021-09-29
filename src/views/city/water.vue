@@ -121,7 +121,7 @@
 
     </div>
     <div class="top_div flex clr_white text-center">
-      <div class="flex f14 bold mr_20 border shadow" style="width: 350px;">
+      <div class="flex f16 bold mr_20 border shadow" style="width: 400px;">
         <div class="flex-item txt_linear">设备管理</div>
         <div class="flex-item">
           总览
@@ -137,13 +137,13 @@
         </div>
 
       </div>
-      <div class="flex border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">
+      <div class="flex f16 border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">
         设备点位
         <div style="position: absolute;top: 35px;left: 0;width: 100%; line-height: 30px;" class="clr_white border shadow" v-if="showOption==1">
           <p :class="showType == 2 ? 'baseColor':''" @click="handleTypeLight(2)">河道水质</p>
           <p :class="showType == 3 ? 'baseColor':''" @click="handleTypeLight(3)">河道水量</p>
           <p :class="showType == 0 ? 'baseColor':''" @click="handleTypeLight(0)">河道水位</p>
-          <p :class="showType == 4 ? 'baseColor':''" @click="handleTypeLight(4)">视频点位（类型值？？）</p>
+          <p :class="showType == 4 ? 'baseColor':''" @click="handleTypeLight(4)">视频点位</p>
         </div>
       </div>
     </div>

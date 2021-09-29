@@ -161,8 +161,8 @@
       </div>
 
     </div>
-    <div class="top_div flex clr_white text-center" v-if="activeIndex == 2">
-      <div class="flex f14 bold mr_20 border shadow" style="width: 300px;">
+    <div class="top_div flex clr_white text-center f16" v-if="activeIndex == 2">
+      <div class="flex f16 bold mr_20 border shadow" style="width: 300px;">
         <div class="flex-item txt_linear">控制柜</div>
         <div class="flex-item">
           总览
@@ -177,7 +177,7 @@
           <!--<span class="txt_linear">4</span>-->
         <!--</div>-->
       </div>
-      <div class="flex f14 bold mr_20 border shadow" style="width: 350px;">
+      <div class="flex f16 bold mr_20 border shadow" style="width: 350px;">
         <div class="flex-item txt_linear">亮灯设备</div>
         <div class="flex-item">
           总览
