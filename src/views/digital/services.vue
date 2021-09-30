@@ -254,7 +254,7 @@
         <div class="weui-cell__bd">控制柜故障</div>
       </div>
     </div>
-
+        <videoView :showDialog.sync="showVideoDialog" :caseData={}></videoView>
   </div>
 </template>
 
@@ -278,6 +278,7 @@
   import point08 from '@/assets/image/point36.png' // AI视频
   import point09 from '@/assets/image/point38.png' // 普通视频
   import toolTipBg from '@/assets/image/digital-bg.png' // 引入刚才的map.js 注意路径
+  import videoView from "./videoView";
   import {pointList} from '@/api/system'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import {getLampPostList,getcontrolcabinetlist,getevaluate,parkList} from '@/api/digitalServices'
@@ -286,7 +287,7 @@
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,videoView},
     data() {
       return {
         lampPostList:[],
@@ -845,6 +846,7 @@
         controlList:[],
         parkList:[],
         pointList:[],
+        showVideoDialog:false,
       }
     },
 
@@ -864,8 +866,18 @@
       this.getData();
       // this.getControlCabinetlist();
       this.getParkList();
+      window.handleVideo = this.handleVideo;
     },
     methods: {
+      handleVideo(txt){
+        this.showVideoDialog = true
+        // this.videoData={
+        //   source:txt.org_name,
+        //   code:txt.index_code,
+        //   address:txt.name,
+        //   video:'https://vd3.bdstatic.com/mda-mi6yu6w39518uykg/cae_h264/1631056499817188563/mda-mi6yu6w39518uykg.mp4?v_from_s=hkapp-haokan-tucheng&auth_key=1631080314-0-0-bafac110cf549f9655d005c67eb8dbe4&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=3000186_2'
+        // }
+      },
       handlePageType(val){
         this.activeIndex = val;
         if(val == 0){
@@ -1039,7 +1051,7 @@
                    '<p class="f14 time">所属区域：' + txt.depart_name + '</p>' +
                    '<p class="f14 time">来源区域：' + txt.community_name + '</p>' +
                    '<p class="f14 time">所在地址：' + txt.install_place + '</p>' +
-                   '<p class="f14 baseColor text-right">查看视频</p>' +
+                   '<p class="f14 baseColor text-right" onClick="handleVideo()">查看视频</p>' +
                    '</div>';
                }
               }else if(type == 'point'){
@@ -1049,7 +1061,7 @@
                   '<p class="f14 time">所属区域：' + txt.depart_name + '</p>' +
                   '<p class="f14 time">来源区域：' + txt.community_name + '</p>' +
                   '<p class="f14 time">所在地址：' + txt.install_place + '</p>' +
-                  '<p class="f14 baseColor text-right">查看视频</p>' +
+                  '<p class="f14 baseColor text-right" onClick="handleVideo()">查看视频</p>' +
                   '</div>';
               }else{
                 sContent =
