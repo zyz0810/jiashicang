@@ -127,25 +127,25 @@
           </div>
         </div>
       </div>
-      <div class="mt_20">
-        <p class="f20 bold clr_white txt_linear mb_20">江虹桥实时曲线</p>
-        <el-form :inline="true" :model="listQuery" class="facilities_form">
-          <el-form-item label="检测项类型">
-            <el-select v-model="listQuery.type">
-              <el-option v-for="item in typeList" :label="item.item_name" :value="item.item_name" :key="item.item_name"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="监测线">
-            <el-select v-model="listQuery.monitorlineid" placeholder="">
-              <el-option v-for="item in dataLine" :label="item.name" :value="item.id" :key="item.id"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item>
-            <el-button v-waves class="filter-item" type="primary">生成曲线</el-button>
-          </el-form-item>
-        </el-form>
-        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" :divwidth="'100%'"></LineChart>
-      </div>
+<!--      <div class="mt_20">-->
+<!--        <p class="f20 bold clr_white txt_linear mb_20">江虹桥实时曲线</p>-->
+<!--        <el-form :inline="true" :model="listQuery" class="facilities_form">-->
+<!--          <el-form-item label="检测项类型">-->
+<!--            <el-select v-model="listQuery.type">-->
+<!--              <el-option v-for="item in typeList" :label="item.item_name" :value="item.item_name" :key="item.item_name"></el-option>-->
+<!--            </el-select>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="监测线">-->
+<!--            <el-select v-model="listQuery.monitorlineid" placeholder="">-->
+<!--              <el-option v-for="item in dataLine" :label="item.name" :value="item.id" :key="item.id"></el-option>-->
+<!--            </el-select>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item>-->
+<!--            <el-button v-waves class="filter-item" type="primary">生成曲线</el-button>-->
+<!--          </el-form-item>-->
+<!--        </el-form>-->
+<!--        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" :divwidth="'100%'"></LineChart>-->
+<!--      </div>-->
 
     </div>
     <!--<div class="top_div flex clr_white text-center">-->

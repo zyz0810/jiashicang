@@ -147,6 +147,24 @@
         </div>
       </div>
     </div>
+    <div class="center_content yy_center_content clr_white text-center">
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_01.png"/></div>
+        <div class="weui-cell__bd">河道水位</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_04.png"/></div>
+        <div class="weui-cell__bd">河道水量</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_04.png"/></div>
+        <div class="weui-cell__bd">河道水质</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_04.png"/></div>
+        <div class="weui-cell__bd">视频</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -768,21 +786,7 @@
 </script>
 <style lang="scss" scoped>
   @import '@/styles/variables.scss';
-  .seamless-warp{
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-    .table_ul{
-      &:nth-child(2n+1){
-        background-color: #12374b !important;
-        border-radius: 10px;
-      }
-    }
-  }
-  .table_ul{
-    padding: 5px;
-    line-height: 1.6;
-  }
+
   /deep/.tdt-infowindow-content-wrapper{
     width: auto;
     color: #fff;

@@ -42,77 +42,78 @@
         <!--<span class="block color_bg05"></span>-->
       <!--</li>-->
     <!--</ul>-->
-    <div class="right_content clr_white base_bg_right" v-if="activeIndex == 0">
-      <p class="f20 bold txt_linear">泊位概况</p>
-      <div class="weui-cell">
-        <div class="weui-cell__hd" style="width: 40%;">
-          <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="18vh" divwidth="100%"></PieChartTwo>
-        </div>
-        <div class="weui-cell__bd bold">
-          <p class="f16">当前占用泊位</p>
-          <div class="progress_cont mt_10">
-            <el-progress :show-text="false" :stroke-width="15" :percentage="80"></el-progress>
-            <span class="progress_border"></span>
-            <span class="progress_border"></span>
-            <span class="progress_border"></span>
-            <span class="progress_border"></span>
-          </div>
-          <p class="mt_10">
-            占用泊位<span class="baseColor txt_shadow m_r30">188</span>
-            占用泊位<span class="baseColor txt_shadow">188</span>
-          </p>
-        </div>
-      </div>
-      <!--<div class="mt_20">-->
-        <!--<p class="mb_20 f16 bold text-center">全区停车场数：1210</p>-->
-        <!--<div  class="weui-cell">-->
-          <!--<div class="weui-cell__hd text-center" style="width: 90px;">-->
-            <!--<p class="f26 bold clr_yellow mb_20">25321</p>-->
-            <!--<p class="f18">普查泊位</p>-->
-          <!--</div>-->
-          <!--<div class="weui-cell__bd">-->
-            <!--<RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>-->
-          <!--</div>-->
-        <!--</div>-->
+<!--    <div class="right_content clr_white base_bg_right" v-if="activeIndex == 0">-->
+<!--      <p class="f20 bold txt_linear">泊位概况</p>-->
+<!--      <div class="weui-cell">-->
+<!--        <div class="weui-cell__hd" style="width: 40%;">-->
+<!--          <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="18vh" divwidth="100%"></PieChartTwo>-->
+<!--        </div>-->
+<!--        <div class="weui-cell__bd bold">-->
+<!--          <p class="f16">当前占用泊位</p>-->
+<!--          <div class="progress_cont mt_10">-->
+<!--            <el-progress :show-text="false" :stroke-width="15" :percentage="80"></el-progress>-->
+<!--            <span class="progress_border"></span>-->
+<!--            <span class="progress_border"></span>-->
+<!--            <span class="progress_border"></span>-->
+<!--            <span class="progress_border"></span>-->
+<!--          </div>-->
+<!--          <p class="mt_10">-->
+<!--            占用泊位<span class="baseColor txt_shadow m_r30">188</span>-->
+<!--            占用泊位<span class="baseColor txt_shadow">188</span>-->
+<!--          </p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      &lt;!&ndash;<div class="mt_20">&ndash;&gt;-->
+<!--        &lt;!&ndash;<p class="mb_20 f16 bold text-center">全区停车场数：1210</p>&ndash;&gt;-->
+<!--        &lt;!&ndash;<div  class="weui-cell">&ndash;&gt;-->
+<!--          &lt;!&ndash;<div class="weui-cell__hd text-center" style="width: 90px;">&ndash;&gt;-->
+<!--            &lt;!&ndash;<p class="f26 bold clr_yellow mb_20">25321</p>&ndash;&gt;-->
+<!--            &lt;!&ndash;<p class="f18">普查泊位</p>&ndash;&gt;-->
+<!--          &lt;!&ndash;</div>&ndash;&gt;-->
+<!--          &lt;!&ndash;<div class="weui-cell__bd">&ndash;&gt;-->
+<!--            &lt;!&ndash;<RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>&ndash;&gt;-->
+<!--          &lt;!&ndash;</div>&ndash;&gt;-->
+<!--        &lt;!&ndash;</div>&ndash;&gt;-->
 
-      <!--</div>-->
-      <!--<div  class="weui-cell">-->
-        <!--<div class="weui-cell__hd text-center" style="width: 90px;">-->
-          <!--<p class="f26 bold clr_yellow mb_20">25321</p>-->
-          <!--<p class="f18">接入泊位</p>-->
-        <!--</div>-->
-        <!--<div class="weui-cell__bd">-->
-          <!--<RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>-->
-        <!--</div>-->
-      <!--</div>-->
-    </div>
+<!--      &lt;!&ndash;</div>&ndash;&gt;-->
+<!--      &lt;!&ndash;<div  class="weui-cell">&ndash;&gt;-->
+<!--        &lt;!&ndash;<div class="weui-cell__hd text-center" style="width: 90px;">&ndash;&gt;-->
+<!--          &lt;!&ndash;<p class="f26 bold clr_yellow mb_20">25321</p>&ndash;&gt;-->
+<!--          &lt;!&ndash;<p class="f18">接入泊位</p>&ndash;&gt;-->
+<!--        &lt;!&ndash;</div>&ndash;&gt;-->
+<!--        &lt;!&ndash;<div class="weui-cell__bd">&ndash;&gt;-->
+<!--          &lt;!&ndash;<RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="20vh"></RingChart>&ndash;&gt;-->
+<!--        &lt;!&ndash;</div>&ndash;&gt;-->
+<!--      &lt;!&ndash;</div>&ndash;&gt;-->
+<!--    </div>-->
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 1">
       <p class="f20 bold txt_linear mb_20">车辆概况</p>
-      <div class="flex f14 bold clr_white bicycle text-center">
-        <div class="flex-item flex_block_bg">
-          <p>已备案车辆</p>
-          <p class="clr_purple mt_10"><span class="f26">1.0</span>万</p>
-        </div>
-        <div class="flex-item flex_block_bg">
-          <p>活跃车辆</p>
-          <p class="clr_blue01 f26 mt_10">3287</p>
-        </div>
-        <div class="flex-item flex_block_bg">
-          <p>按规停放车辆</p>
-          <p class="clr_blue02 f26 mt_10">7892</p>
-        </div>
-        <div class="flex-item flex_block_bg">
-          <p>违规停放</p>
-          <p class="clr_yellow f26 mt_10">1887</p>
-        </div>
-      </div>
-      <div class="top clr_white mt_20 ">
-        <p class="f20 bold txt_linear">区域统计</p>
-        <RingChart :chartData="chartDataTwo" :PieChartLegend="PieChartLegend" height="200px" divwidth="100%"></RingChart>
-      </div>
+<!--      <div class="flex f14 bold clr_white bicycle text-center">-->
+<!--        <div class="flex-item flex_block_bg">-->
+<!--          <p>已备案车辆</p>-->
+<!--          <p class="clr_purple mt_10"><span class="f26">1.0</span>万</p>-->
+<!--        </div>-->
+<!--        <div class="flex-item flex_block_bg">-->
+<!--          <p>活跃车辆</p>-->
+<!--          <p class="clr_blue01 f26 mt_10">3287</p>-->
+<!--        </div>-->
+<!--        <div class="flex-item flex_block_bg">-->
+<!--          <p>按规停放车辆</p>-->
+<!--          <p class="clr_blue02 f26 mt_10">7892</p>-->
+<!--        </div>-->
+<!--        <div class="flex-item flex_block_bg">-->
+<!--          <p>违规停放</p>-->
+<!--          <p class="clr_yellow f26 mt_10">1887</p>-->
+<!--        </div>-->
+<!--      </div>-->
+      <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
+<!--      <div class="top clr_white mt_20 ">-->
+<!--        <p class="f20 bold txt_linear">区域统计</p>-->
+<!--        <RingChart :chartData="chartDataTwo" :PieChartLegend="PieChartLegend" height="200px" divwidth="100%"></RingChart>-->
+<!--      </div>-->
       <div class="left_bottom mt_20">
         <p class="f20 bold txt_linear">违规次数</p>
-        <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="200px" divwidth="100%"></BarChartFour>
+        <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="25vh" divwidth="100%"></PieChartTwo>
       </div>
 
     </div>
@@ -161,75 +162,130 @@
       </div>
 
     </div>
-    <div class="top_div flex clr_white text-center f16" v-if="activeIndex == 2">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 300px;">
-        <div class="flex-item txt_linear">控制柜</div>
-        <div class="flex-item">
-          总览
-          <span class="txt_linear">{{totalData.controlCabinetNum}}</span>
+<!--    <div class="top_div flex clr_white text-center f16" v-if="activeIndex == 2">-->
+<!--      <div class="flex f16 bold mr_20 border shadow" style="width: 300px;">-->
+<!--        <div class="flex-item txt_linear">控制柜</div>-->
+<!--        <div class="flex-item">-->
+<!--          总览-->
+<!--          <span class="txt_linear">{{totalData.controlCabinetNum}}</span>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;<div class="flex-item">&ndash;&gt;-->
+<!--          &lt;!&ndash;离线&ndash;&gt;-->
+<!--          &lt;!&ndash;<span class="txt_linear">4</span>&ndash;&gt;-->
+<!--        &lt;!&ndash;</div>&ndash;&gt;-->
+<!--        &lt;!&ndash;<div class="flex-item">&ndash;&gt;-->
+<!--          &lt;!&ndash;故障&ndash;&gt;-->
+<!--          &lt;!&ndash;<span class="txt_linear">4</span>&ndash;&gt;-->
+<!--        &lt;!&ndash;</div>&ndash;&gt;-->
+<!--      </div>-->
+<!--      <div class="flex f16 bold mr_20 border shadow" style="width: 350px;">-->
+<!--        <div class="flex-item txt_linear">亮灯设备</div>-->
+<!--        <div class="flex-item">-->
+<!--          总览-->
+<!--          <span class="txt_linear">11012</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="flex border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">-->
+<!--        设备点位-->
+<!--        <div style="position: absolute;top: 35px;left: 0;width: 100%; line-height: 30px;" class="clr_white border shadow" v-if="showOption==1">-->
+<!--          <p :class="showType == 1 ? 'baseColor':''" @click="handleTypeLight(1)">亮灯杆</p>-->
+<!--          <p :class="showType == 2 ? 'baseColor':''" @click="handleTypeLight(2)">控制柜</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+        <div class="top_div flex clr_white text-center f16" v-if="activeIndex == 0">
+          <div class="flex f16 bold mr_20 border shadow" style="width: 500px;" @click="handlePointType(1)">
+            <div class="flex-item">
+              总泊位数（没接口）
+              <span class="txt_linear">{{totalData.controlCabinetNum}}</span>
+            </div>
+            <div class="flex-item">占用泊位数（没接口)  <span class="txt_linear">{{totalData.controlCabinetNum}}</span></div>
+            <div class="flex-item">占用率（没接口)  <span class="txt_linear">{{totalData.controlCabinetNum}}</span></div>
+          </div>
+          <div class="flex f16 bold mr_20 border shadow" style="width: 200px;" @click="handlePointType(2)">
+            <div class="flex-item">
+              视频（没接口)
+              <span class="txt_linear">11012</span>
+            </div>
+          </div>
         </div>
-        <!--<div class="flex-item">-->
-          <!--离线-->
-          <!--<span class="txt_linear">4</span>-->
-        <!--</div>-->
-        <!--<div class="flex-item">-->
-          <!--故障-->
-          <!--<span class="txt_linear">4</span>-->
-        <!--</div>-->
+    <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 1">
+      <div class="flex f16 bold mr_20 border shadow">
+        <div class="flex-item">
+          总泊位数（没接口）
+          <span class="txt_linear">{{carData.shangBao}}</span>
+        </div>
+        <div class="flex-item">
+          允许投放数（没接口）
+          <span class="txt_linear">{{carData.chuLi}}</span>
+        </div>
+        <div class="flex-item">
+          车辆总数（没接口）
+          <span class="txt_linear">{{carData.undisposed}}</span>
+        </div>
       </div>
-      <div class="flex f16 bold mr_20 border shadow" style="width: 350px;">
-        <div class="flex-item txt_linear">亮灯设备</div>
+      <div class="flex f16 bold mr_20 border shadow">
         <div class="flex-item">
-          总览
-          <!--<span class="txt_linear">{{totalData.lampPostNum}}</span>-->
-          <span class="txt_linear">11012</span>
+          运维人员（没接口）
+          <span class="txt_linear">{{carData.yellow_num}}</span>
         </div>
-        <!--<div class="flex-item">-->
-          <!--离线-->
-          <!--<span class="txt_linear">4</span>-->
-        <!--</div>-->
-        <!--<div class="flex-item">-->
-          <!--故障-->
-          <!--<span class="txt_linear">4</span>-->
-        <!--</div>-->
+      </div>
+      <div class="flex f16 bold border shadow">
+        <div class="flex-item">
+          视频（没接口）
+          <span class="txt_linear">{{carData.yellow_num}}</span>
+        </div>
+      </div>
 
+
+
+    </div>
+    <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 2">
+      <div class="flex f16 bold mr_20 border shadow" style="width: 200px;" >
+        <div class="flex-item">
+          亮灯总数（没接口）
+          <span class="txt_linear">{{carData.shangBao}}</span>
+        </div>
       </div>
-      <div class="flex border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">
-        设备点位
-        <div style="position: absolute;top: 35px;left: 0;width: 100%; line-height: 30px;" class="clr_white border shadow" v-if="showOption==1">
-          <p :class="showType == 1 ? 'baseColor':''" @click="handleTypeLight(1)">亮灯杆</p>
-          <p :class="showType == 2 ? 'baseColor':''" @click="handleTypeLight(2)">控制柜</p>
+      <div class="flex f16 bold mr_20 border shadow" style="width: 450px;" >
+        <div class="flex-item">
+          控制柜总数（没接口）
+          <span class="txt_linear">{{carData.shangBao}}</span>
+        </div>
+        <div class="flex-item">
+          控制柜故障数（没接口）
+          <span class="txt_linear">{{carData.undisposed}}</span>
         </div>
       </div>
     </div>
-
-
-    <div class="center_content clr_white text-center" v-if="activeIndex == 0">
+    <div class="center_content clr_white text-center no_right" v-if="activeIndex == 0 && pointType == 1">
       <div class="map_intro f14 bold flex baseColor weui-cell">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point29.png"/></div>
         <div class="weui-cell__bd">停车场</div>
       </div>
+    </div>
+    <div class="center_content clr_white text-center no_right" v-if="activeIndex == 0 && pointType == 2">
       <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>
-        <div class="weui-cell__bd">AI视频</div>
-      </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
-        <div class="weui-cell__bd">普通视频</div>
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point42.png"/></div>
+        <div class="weui-cell__bd">停车场视频</div>
       </div>
     </div>
     <div class="center_content clr_white text-center" v-if="activeIndex == 1">
-      <div class="map_intro f14 bold flex baseColor weui-cell">
+      <div class="map_intro f12 bold flex baseColor weui-cell">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point30.png"/></div>
-        <div class="weui-cell__bd">共享单车</div>
+        <div class="weui-cell__bd">重点监控区域</div>
       </div>
       <div class="map_intro f14 bold flex baseColor weui-cell">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>
-        <div class="weui-cell__bd">AI视频</div>
+        <div class="weui-cell__bd">停车区域</div>
       </div>
       <div class="map_intro f14 bold flex baseColor weui-cell">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
-        <div class="weui-cell__bd">普通视频</div>
+        <div class="weui-cell__bd">禁停区域</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
+        <div class="weui-cell__bd">禁行区域</div>
       </div>
     </div>
     <div class="center_content clr_white text-center" v-if="activeIndex == 2">
@@ -290,6 +346,8 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,videoView},
     data() {
       return {
+        pointType:1,
+        carData:{},
         lampPostList:[],
         showType:2,
         showOption:0,
@@ -576,38 +634,18 @@
           title:{},
           tooltip: {
             trigger: 'item',
-            // formatter: '{a} <br/>{b}: {c} ({d}%)'
-            backgroundColor: "transparent",
-            borderWidth: 1,
-            padding: 10,
-            formatter: function(params) {
-              // var str =params['percent']+'%'+'<br/>'+params.data.value+'笔'
-              var str = `<div style = "background:url(" + toolTipBg + ") no-repeat center center ;width:60px;height:60px; ">${
-                params["percent"]
-              }%<br/> ${params.data.value}笔</div>`;
-              // parms.marker
-              console.log(str);
-              return str;
-            }
+            formatter: '{b}: {c} <br/> {d}%'
           },
           legend: {
-            // show:false
-            orient: 'vertical',
-            right: '0',
-            top:'10%',
-            textStyle: {
-              color: '#fff',          // 图例文字颜色
-              fontSize:15,
-              lineHeight:25
-            }
+            show:false
           },
-          color:['#BBF2F4','#8757DF','#2696E9','#4BADDC'],
+          color:['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'],
           series: [
             {
               name: '访问来源',
               type: 'pie',
-              radius: ['40%', '65%'],
-              center: ['35%', '50%'],
+              // center: ['30%', '50%'],
+              radius: ['70%', '90%'],
               avoidLabelOverlap: false,
               label: {
                 show: false,
@@ -623,23 +661,7 @@
               labelLine: {
                 show: false
               },
-              itemStyle : {
-                normal : {
-                  borderWidth:8, //设置border的宽度有多大
-                  // borderColor:'#2C8AF0',
-                  borderColor:'#061027',
-                },
-              },
-              // itemStyle:{
-              //   borderWidth:5, //设置border的宽度有多大
-              //   borderColor:'#fff',
-              // },
-              data: [
-                {value: 120, name: '公用泊位 20'},
-                {value: 105, name: '专用泊位 80'},
-                {value: 50, name: '道路泊位 65'},
-                {value: 305, name: '其他泊位 99'},
-              ]
+              data: [{name:'骑呗',value:1680},{name:'青桔',value:1180},{name:'摩拜',value:880},{name:'哈罗',value:880}]
             }
           ]
         },
@@ -758,11 +780,17 @@
               type: 'shadow'
             }
           },
+          legend:{
+            x:'center',
+            y:'bottom',
+            textStyle:{color:'#fff'},
+            data:['允许投放数','目前投放数']
+          },
           grid: {
             left: '0',
             right: '50',
-            bottom: '-20',
-            top: '20',
+            bottom: '0',
+            top: '0',
             containLabel: true
           },
           xAxis: [
@@ -796,12 +824,47 @@
               data:['哈罗','摩拜','青桔','骑呗',]
             }
           ],
-          series: [
+          series: [{
+            name:'允许投放数',
+            type: 'bar',
+            barWidth: 20,//柱图宽度
+            barGap:'20%',
+            barCategoryGap:'20%',/*多个并排柱子设置柱子之间的间距*/
+            // label: {
+            //   normal: {
+            //     color: 'red',
+            //     show: true,
+            //     position: 'top'
+            //   }
+            // },
+            itemStyle: {
+              normal: {
+                color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
+                  [
+                    { offset: 0, color: 'rgba(96,11,240,1)' },
+                    { offset: 1, color: 'rgba(204,171,242,1)' }
+                  ]
+                ),
+                label: {
+                  show : true,
+                  position : 'right',
+                  textStyle : {
+                    color: '#fff',
+                    fontSize:'16',
+                    fontWeight:'bold'
+                  }
+                }
+
+              }
+            },
+            data: [141, 134, 332,332,]
+          },
             {
+             name:'目前投放数',
               type: 'bar',
               barWidth: 20,//柱图宽度
-              barGap:'180%',
-              barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
+              barGap:'20%',
+              barCategoryGap:'20%',/*多个并排柱子设置柱子之间的间距*/
               // label: {
               //   normal: {
               //     color: 'red',
@@ -829,7 +892,7 @@
 
                 }
               },
-              data: [320, 332, 301,230,]
+              data: [1680, 1180, 880,880,]
             },
           ]
         },
@@ -869,6 +932,14 @@
       window.handleVideo = this.handleVideo;
     },
     methods: {
+      handlePointType(val){
+        this.pointType = val;
+        if(val == 1){
+          this.getParkList();
+        }else {
+          this.getParkVideoList();
+        }
+      },
       handleVideo(txt){
         this.showVideoDialog = true
         // this.videoData={
@@ -891,7 +962,7 @@
       getPointList(){
         pointList({type:'allList'}).then((res) => {
           this.pointList = res.data;
-          this.mapPoint('point',this.pointList)
+          this.mapPoint('point',this.pointList,this)
         });
       },
       onLoad() {
@@ -904,10 +975,9 @@
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
 
       },
-      mapPoint(type,list){
-        console.log('点位')
+      mapPoint(type,list,that){
         //创建图片对象
-        this.map.clearOverLays();
+        that.map.clearOverLays();
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
@@ -960,7 +1030,7 @@
             // 0：关  1：开
             if(list[i].status == 0){
               let point = new T.LngLat(list[i].longitude,list[i].latitude);
-              markers[i]  = drawTMaker(point, point04,this,list[i]);
+              markers[i]  = drawTMaker(point, icon04,this,list[i]);
             }else if(list[i].status == 1){
               let point = new T.LngLat(list[i].longitude,list[i].latitude);
               markers[i]  = drawTMaker(point, icon05,this,list[i]);
@@ -970,13 +1040,10 @@
             }
           }
         }else if(type == 'park'){
-          console.log('jjjj:'+list.length)
           for (let i = 0; i < list.length; i++) {
             // var marker
             // 0：关  1：开
             if(list[i].way_longitude  && list[i].way_latitude){
-              console.log(list[i].way_longitude,list[i].way_latitude);
-              console.log('停车场')
               let point = new T.LngLat(list[i].way_longitude,list[i].way_latitude);
               markers[i]  = drawTMaker(point, icon01,this,list[i]);
             }else{
@@ -1019,13 +1086,11 @@
 
           //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
           function drawTMaker(lnglat,icon,that,txt){
-            console.log('获取')
+
             var marker =  new T.Marker(lnglat, {icon: icon});
             that.map.addOverLay(marker);
             marker.addEventListener("click", function (m) {
-              console.log(m)
               let infoWin1 = new T.InfoWindow();
-              console.log(txt)
               let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
               let status;
               if(txt.status == 0){
@@ -1040,9 +1105,32 @@
                if(txt.way_longitude  && txt.way_latitude){
                  sContent =
                    '<div class="point_info">' +
-                   '<p class="f14 time">停车场名称：' + txt.park_name + '</p>' +
-                   '<p class="f14 time">停车场类型：' + txt.park_type_name + '</p>' +
-                   '<p class="f14 time">停车场地址：' + txt.address + '</p>' +
+                   '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                   '<tr>' +
+                   '<td>停车场名称</td><td>' + txt.park_name + '</td>' +
+                   '</tr>'+
+                   '<tr>' +
+                   '<td>总泊位数</td><td>' + '没接口' + '</td>'+
+                    '</tr>'+
+                   '<tr>' +
+                   '<td>剩余泊位数</td><td>' + '没接口' + '</td>'+
+                   '</tr>'+
+                   '<tr>' +
+                   '<td>性质</td><td>' + '没接口' + '</td>'+
+                   '</tr>'+
+                   '<tr>' +
+                   '<td>充电桩泊位</td><td>' + '没接口' + '</td>'+
+                   '</tr>'+
+                   '<tr>' +
+                   '<td>机械泊位</td><td>' + '没接口' + '</td>'+
+                   '</tr>'+
+                   '<tr>' +
+                   '<td>停车场详细地址</td><td>' + txt.address + '</td>'+
+                   '</tr>'+
+                   '</table>'+
+                   // '<p class="f14 time">停车场名称：' + txt.park_name + '</p>' +
+                   // '<p class="f14 time">停车场类型：' + txt.park_type_name + '</p>' +
+                   // '<p class="f14 time">停车场地址：' + txt.address + '</p>' +
                    '</div>';
                }else{
                  sContent =
@@ -1091,7 +1179,7 @@
         getLampPostList().then((res) => {
           this.formData.lampPostNum = res.data.total;
           this.lampPostList = res.data.list;
-          this.mapPoint('lamp',this.lampPostList)
+          this.mapPoint('lamp',this.lampPostList,this)
         });
       },
       //控制柜列表
@@ -1112,7 +1200,7 @@
             status: 2,}]
           b = b.concat(a);
           this.controlList = b
-          this.mapPoint('control',this.controlList)
+          this.mapPoint('control',this.controlList,this)
         });
       },
       getChartData(){
@@ -1142,12 +1230,25 @@
             // this.pointList = res.data;
             let b = a.concat(res.data);
             this.parkList = b;
-            this.mapPoint('park',this.parkList)
+            this.mapPoint('park',this.parkList,this)
           });
 
         });
       },
-
+      getParkVideoList(){
+        // parkList().then((res) => {
+        //   // this.parkList = res.data.data;
+        //   let a = res.data.data;
+        //   pointList({type:'allList'}).then((res) => {
+        //     // this.pointList = res.data;
+        //     let b = a.concat(res.data);
+        //     this.parkList = b;
+        //     this.mapPoint('park',this.parkList)
+        //   });
+        //
+        // });
+        this.mapPoint('point',[],this)
+      },
     }
   }
 </script>

@@ -29,6 +29,8 @@ import 'quill/dist/quill.bubble.css'
 import '@/styles/animate.css'
 // import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/reset.css'
+import VueAnimateNumber from 'vue-animate-number'
+Vue.use(VueAnimateNumber)
 
 import moment from 'moment'
 Vue.prototype.$moment = moment

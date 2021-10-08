@@ -2,13 +2,14 @@
   <div class="dashboard-container">
     <div class="dashboard-editor-container">
       <el-row :gutter="10" class="flex flex_stretch">
-        <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
+        <el-col :xs="24" :sm="7" :md="7" :lg="7" :xl="7">
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">数字城管</span></div>
             <div class="flex anjian_num clr_white mt_20">
               <div class="flex-item">
                 <p class="f16 bold txtColor">周上报量</p>
                 <div class="num flex text-center f26 bold mt_10">
+<!--                  <animate-number from="0" :to="formData.case.count" :key="formData.case.count" :duration="3000" class="f20"></animate-number>-->
                   <span>{{formData.city.shangbao[4]}}</span>
                   <span>{{formData.city.shangbao[3]}}</span>
                   <span>{{formData.city.shangbao[2]}}</span>
@@ -104,30 +105,30 @@
 <!--            </div>-->
           </div>
         </el-col>
-        <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
+        <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10">
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">执法办案</span></div>
             <div class="flex mt_10" style=" align-items: stretch;">
-              <ul class="f16 clr_white bold anjian_cegory">
+              <ul class="f16 clr_white bold anjian_cegory mr_20">
                 <li class="flex">
-                  <span class="block f26 text-center">{{formData.case.count}}</span>
+                  <span class="block f26 text-center"><animate-number from="0" :to="formData.case.count" :key="formData.case.count" :duration="3000" class="f20"></animate-number></span>
                   <p>今日上报案件</p>
                 </li>
                 <li class="flex mt_10">
-                  <span class="block f26 text-center">{{formData.case.chuli}}</span>
+                  <span class="block f26 text-center"><animate-number from="0" :to="formData.case.chuli" :key="formData.case.chuli" :duration="3000" class="f20"></animate-number></span>
                   <p>今日受理案件</p>
                 </li>
                 <li class="flex mt_10">
-                  <span class="block f26 text-center">{{formData.case.end}}</span>
+                  <span class="block f26 text-center"><animate-number from="0" :to="formData.case.end" :key="formData.case.end" :duration="3000" class="f20"></animate-number></span>
                   <p>今日结案案件</p>
                 </li>
               </ul>
-              <div class="map_echart text-center">
-                <p class="f20 txtColor bold">今日案件热力图</p>
-                <!--                             <RingChart :chartData="mapData" :PieChartLegend="PieChartLegend" height="13vh"></RingChart>-->
-                <!--<div id='mapDiv' class="mapDiv" style="width: 250px;height: 300px;"></div>-->
-                <img src="./../../assets/image/map.png" class="my_map"/>
-              </div>
+<!--              <div class="map_echart text-center">-->
+<!--                <p class="f20 txtColor bold">今日案件热力图</p>-->
+<!--                &lt;!&ndash;                             <RingChart :chartData="mapData" :PieChartLegend="PieChartLegend" height="13vh"></RingChart>&ndash;&gt;-->
+<!--                &lt;!&ndash;<div id='mapDiv' class="mapDiv" style="width: 250px;height: 300px;"></div>&ndash;&gt;-->
+<!--                <img src="./../../assets/image/map.png" class="my_map"/>-->
+<!--              </div>-->
               <div class="anjian_genzong bold">
                 <p class="txtColor text-center bold f18">案件实时跟踪</p>
                 <div class="weui-cells clr_white">
@@ -148,16 +149,24 @@
                       </div>
                     </div>
                   </vueSeamlessScroll>
-
-
                 </div>
               </div>
             </div>
           </div>
         </el-col>
+        <el-col :xs="24" :sm="7" :md="7" :lg="7" :xl="7">
+          <div class="content_index">
+            <div class="title_index f18 bold text-center"><span class="txt_linear">实时监控</span></div>
+            <div class="monitor_content text-center">
+              <img src="./../../assets/image/index_img01.gif" class=""/>
+              <div class="monitor_num clr_white f26 bold">1286</div>
+              <div class="monitor_detail clr_white bold">查看详情</div>
+            </div>
+          </div>
+        </el-col>
       </el-row>
       <el-row :gutter="10" class="mt_10 flex flex_stretch">
-        <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
+        <el-col :xs="24" :sm="7" :md="7" :lg="7" :xl="7">
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">信访投诉</span></div>
 <!--            <div class="flex bold text-center mt_20" style="margin-top: 30px">-->
@@ -177,7 +186,7 @@
 <!--                <PieChartTwo :chartData="PieDataOne" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo>-->
 <!--              </div>-->
 <!--            </div>-->
-            <p class="f16 baseColor bold text-center mt_10">{{formData.letter.input_time}}受理件<span class="f20">{{formData.letter.month_deal_num}}</span></p>
+            <p class="f16 baseColor bold text-center mt_10">{{formData.letter.input_time}}受理件<animate-number from="0" :to="formData.letter.month_deal_num" :key="formData.letter.month_deal_num" :duration="3000" class="f20"></animate-number></p>
             <div class="flex bold text-center clr_white mt_10 mb_10 bg_blue03" style="padding: 10px 0; border-radius: 10px;">
               <div class="flex-item">
                 <p class="f26">{{formData.letter.basis_num}}%</p>
@@ -208,14 +217,14 @@
             </div>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
+        <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10">
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">行政审批</span></div>
             <div class="clr_white mt_20">
-              <div class="f20 bold text-center baseColor approval_num">周审批总量：{{formData.check.count}}</div>
+              <div class="f20 bold text-center baseColor approval_num">周审批总量：<animate-number from="0" :to="formData.check.count" :key="formData.check.count" :duration="3000" class="f20"></animate-number></div>
 
               <div class="circle_num text-center">
-                <img src="./../../assets/image/approval_circle.png" class="circle_img">
+                <img src="./../../assets/image/approval_circle.gif" class="circle_img">
                 <div class="circle_num_item">
                   <span class="clr_white f20 bold circleNum_left_bg block">{{formData.check.quanzhi}}/{{((Number(formData.check.quanzhi)/Number(formData.check.count))*100).toFixed(2)}}%</span>
                   <p class="clr_yellow bold">犬只审批</p>
@@ -237,7 +246,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
+        <el-col :xs="24" :sm="7" :md="7" :lg="7" :xl="7">
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">服务视图</span></div>
             <div class="clr_white f14 bold">
@@ -324,10 +333,6 @@
     data() {
       return {
         formData:{},
-        approveData:{},
-        mapData:{
-
-        },
         PieDataOne:{
           color: ['#EB4B4B', 'rgb(245,245,245)'],
           title: [{
@@ -577,328 +582,7 @@
             },
           ]
         },
-        PieData:{
-          tooltip: {
-            show: false,
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          color: ['#7CDBFF', '#20437A'],
-          gird:{
-            top:0,
-            left:0,
-
-          },
-          // 80%是环中的数据显示
-          title: {
-            text: '80%',
-            left: 'center',
-            top: '34%',
-            textStyle: {
-              color: '#fff',
-              fontSize: 26,
-              align: 'center',
-            }
-          },
-          graphic: {
-            type: 'text',
-            left: 'center',
-            top: '58%',
-            style: {
-              text: '满意度',
-
-              textAlign: 'center',
-              fill: '#bfbfbf',
-              fontSize: 30,
-              fontWeight: 700
-            }
-          },
-          series: [
-            {
-              name: '单位工程评定',
-              type: 'pie',
-              color: ['red'],
-              radius: ['80%', '88%'],
-              avoidLabelOverlap: false,
-              label: {
-                normal: {
-                  show: false,
-                  position: 'center'
-                },
-              },
-              data: [
-                { value: 80, name: '优良' },
-              ]
-            },{
-              name: '单位工程评定',
-              type: 'pie',
-              radius: ['80%', '88%'],
-              avoidLabelOverlap: false,
-              label: {
-                normal: {
-                  show: false,
-                  position: 'center'
-                },
-              },
-              data: [
-                { value: 80, name: '优良' },
-                { value: 20, name: '不及格' },
-              ]
-            },{
-              name: 'decorationOne',
-              type: 'pie',
-              color: ['#52D6FF'],
-              // center: ['30%', '50%'],
-              radius: ['70%', '69%'],
-              hoverAnimation: false,
-              lable: {
-                normal: {
-                  show: false,
-                },
-                emphasis: {
-                  show: false,
-                },
-              },
-              labelLine: {
-                normal: {
-                  show: false,
-                },
-              },
-              data: [
-                { value: 335, name: '' },
-              ],
-            },
-          ]
-        },
-        PieData2:{
-          tooltip: {
-            show: false,
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          color: ['rgba(253,210,90,1)', '#20437A'],
-          gird:{
-            top:0,
-            left:0,
-
-          },
-          // 80%是环中的数据显示
-          title: {
-            text: '80%',
-            left: 'center',
-            top: '34%',
-            textStyle: {
-              color: '#fff',
-              fontSize: 26,
-              align: 'center',
-            }
-          },
-          graphic: {
-            type: 'text',
-            left: 'center',
-            top: '58%',
-            style: {
-              text: '满意度',
-
-              textAlign: 'center',
-              fill: '#bfbfbf',
-              fontSize: 30,
-              fontWeight: 700
-            }
-          },
-          series: [
-            {
-              name: '单位工程评定',
-              type: 'pie',
-              radius: ['80%', '88%'],
-              avoidLabelOverlap: false,
-              label: {
-                normal: {
-                  show: false,
-                  position: 'center'
-                },
-              },
-              data: [
-                { value: 80, name: '优良' },
-                { value: 20, name: '不及格' },
-              ]
-            },{
-              name: 'decorationOne',
-              type: 'pie',
-              color: ['rgba(253,210,90,1)'],
-              // center: ['30%', '50%'],
-              radius: ['70%', '69%'],
-              hoverAnimation: false,
-              lable: {
-                normal: {
-                  show: false,
-                },
-                emphasis: {
-                  show: false,
-                },
-              },
-              labelLine: {
-                normal: {
-                  show: false,
-                },
-              },
-              data: [
-                { value: 335, name: '' },
-              ],
-            },
-          ]
-        },
-        chartData: {
-          color: ['#EB4B4B', 'rgb(245,245,245)'],
-          title: [{
-            text: '75%',
-            x: '49%',
-            y: '35%',
-            textAlign: 'center',
-            textStyle: {
-              fontSize: '26',
-              fontWeight: '500',
-              color: '#fff',
-              textAlign: 'center',
-            },
-          }, {
-            text: '及时结案率',
-            left: '48%',
-            top: '52%',
-            textAlign: 'center',
-            textStyle: {
-              fontSize: '14',
-              fontWeight: '500',
-              color: 'rgba(255,255,255,1)',
-              textAlign: 'center',
-            },
-          }],
-          polar: {
-            radius: ['65%', '80%'],
-            center: ['50%', '50%'],
-          },
-          angleAxis: {
-            max: 100,
-            show: false,
-            // startAngle: 0,
-          },
-          radiusAxis: {
-            type: 'category',
-            show: true,
-            axisLabel: {
-              show: false,
-            },
-            axisLine: {
-              show: false,
-            },
-            axisTick: {
-              show: false
-            },
-          },
-          series: [
-            {
-              name: '',
-              type: 'bar',
-              roundCap: true,
-              barWidth: 60,
-              showBackground: true,
-              data: [75],
-              coordinateSystem: 'polar',
-              itemStyle: {
-                normal: {
-                  // color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
-                  //   offset: 0,
-                  //   color: '#EB4B4B'
-                  // }, {
-                  //   offset: 1,
-                  //   color: '#F47F7F'
-                  // }]),
-
-                  color:'rgba(6,183,225,1)',
-                  // borderWidth:3, //设置border的宽度有多大
-                  // borderColor:'#060c2a',
-                }
-              }
-            }
-          ]
-        },
-        chartDataTwo: {
-          color: ['#EB4B4B', 'rgb(245,245,245)'],
-          title: [{
-            text: '75%',
-            x: '49%',
-            y: '35%',
-            textAlign: 'center',
-            textStyle: {
-              fontSize: '26',
-              fontWeight: '500',
-              color: '#fff',
-              textAlign: 'center',
-            },
-          }, {
-            text: '结案率',
-            left: '48%',
-            top: '52%',
-            textAlign: 'center',
-            textStyle: {
-              fontSize: '14',
-              fontWeight: '500',
-              color: 'rgba(255,255,255,1)',
-              textAlign: 'center',
-            },
-          }],
-          polar: {
-            radius: ['65%', '80%'],
-            center: ['50%', '50%'],
-          },
-          angleAxis: {
-            max: 100,
-            show: false,
-            // startAngle: 0,
-          },
-          radiusAxis: {
-            type: 'category',
-            show: true,
-            axisLabel: {
-              show: false,
-            },
-            axisLine: {
-              show: false,
-            },
-            axisTick: {
-              show: false
-            },
-          },
-          series: [
-            {
-              name: '',
-              type: 'bar',
-              roundCap: true,
-              barWidth: 60,
-              showBackground: true,
-              data: [75],
-              coordinateSystem: 'polar',
-              itemStyle: {
-                normal: {
-                  // color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
-                  //   offset: 0,
-                  //   color: '#EB4B4B'
-                  // }, {
-                  //   offset: 1,
-                  //   color: '#F47F7F'
-                  // }]),
-
-                  color:'rgba(247,214,81,1)',
-                  // borderWidth:3, //设置border的宽度有多大
-                  // borderColor:'#060c2a',
-                }
-              }
-            }
-          ]
-        },
-        zoom:12,
-        centerLatitude:'30.20835',//中心纬度
-        centerLongitude:'120.21194',//中心经度
+        timer: '',
       }
     },
     computed: {
@@ -916,191 +600,26 @@
       }
     },
     mounted(){
-      // this.mapChart();
-      // this.onLoad();
       this.getData();
-      // this.getApprove();
+      this.timer = setInterval(this.getData,120000);
+    },
+    beforeDestroy() {
+      clearInterval(this.timer);
     },
     methods: {
-      onLoad() {
-        let T = window.T
-        this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
-        // 添加地图类型控件
-        // this.addCtrl()
-        // this.map.setStyle('indigo');
-        document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
-
-        let that = this;
-        let wmsLayer;
-        function getWMS(url, config) {
-          if (wmsLayer) {
-            that.map.removeLayer(wmsLayer);
-          }
-          wmsLayer = new T.TileLayer.WMS(url, config);
-          that.map.addLayer(wmsLayer);
-        }
-
-        function addWmsLayer(layers, url) {
-          let config = {
-            version: "1.1.1",	//请求服务的版本
-            layers: layers,
-            transparent: true,	//输出图像背景是否透明
-            styles: "",			//每个请求图层的用","分隔的描述样式
-            format: "image/png"	//输出图像的类型
-          };
-          getWMS(url, config);
-        }
-
-        addWmsLayer('demo_city,demo_road,demo_anno','http://gisserver.tianditu.com/tiandituService/wms')
-
-      },
-      mapChart(){
-        var cityMap = {
-          "杭州市": "330100"
-        };
-        var placeList = [
-          {name:'西湖区', geoCoord:[120.13, 30.27],count:10},
-          {name:'上城区', geoCoord:[120.17, 30.25],count:12},
-          {name:'下城区', geoCoord:[120.17, 30.28],count:14},
-          {name:'江干区', geoCoord:[120.20, 30.27],count:66},
-          {name:'拱墅区', geoCoord:[120.13, 30.32],count:34},
-          {name:'滨江区', geoCoord:[120.20, 30.20],count:88},
-          {name:'萧山区', geoCoord:[120.27, 30.17],count:3422},
-          {name:'余杭区', geoCoord:[120.30, 30.42],count:423},
-          {name:'桐庐县', geoCoord:[119.67, 29.80],count:3},
-          {name:'淳安县', geoCoord:[119.03, 29.60],count:44},
-          {name:'建德市', geoCoord:[119.28, 29.48],count:3},
-          {name:'富阳市', geoCoord:[119.95, 30.05],count:2},
-          {name:'临安市', geoCoord:[119.72, 30.23],count:1}
-        ];
-        console.log('地图')
-        let option = {
-          tooltip : {
-            trigger: 'item',
-            formatter: '{b}'
-          },
-
-          series : [
-            {
-              name: '杭州市地图',
-              type: 'map',
-              mapType: '杭州市',
-              roam:true,
-              itemStyle:{
-                normal:{label:{show:true}},
-                emphasis:{label:{show:true}}
-              },
-              data:[],
-              markPoint : {
-                symbol:'Circle',
-                symbolSize: 0.3,
-                large: true,
-                effect : {
-                  show: true
-                },
-                itemStyle:{
-                  normal:{color:"#FF3300"}
-                },
-                data : (function(){
-                  var data = [];
-                  for(var j=0;j<placeList.length;j++){
-
-                    var len = placeList[j].count;
-                    var x = parseInt(4*Math.random())%4;
-                    var geoCoord = placeList[j].geoCoord;
-                    while(len--) {
-                      if(x==0){
-                        data.push({
-                          name : placeList[j].name + len,
-                          value : 2000,
-                          geoCoord : [
-                            geoCoord[0] + Math.random()*0.05,
-                            geoCoord[1] + Math.random()*0.05
-                          ]
-                        })
-                      }
-                      if(x==1){
-                        data.push({
-                          name : placeList[j].name + len,
-                          value : 2000,
-                          geoCoord : [
-                            geoCoord[0] + Math.random()*0.05,
-                            geoCoord[1] - Math.random()*0.05
-                          ]
-                        })
-                      }
-                      if(x==2){
-                        data.push({
-                          name : placeList[j].name + len,
-                          value : 2000,
-                          geoCoord : [
-                            geoCoord[0] - Math.random()*0.05,
-                            geoCoord[1] - Math.random()*0.05
-                          ]
-                        })
-                      }
-                      if(x==3){
-                        data.push({
-                          name : placeList[j].name + len,
-                          value : 2000,
-                          geoCoord : [
-                            geoCoord[0] + Math.random()*0.05,
-                            geoCoord[1] - Math.random()*0.05
-                          ]
-                        })
-                      }
-                    }
-                  }
-
-                  return data;
-                })()
-              }
-            }
-          ],
-          backgroundColor: '#fffff'
-        };
-        var curIndx = 0;
-        var mapType = [];
-        // var mapGeoData = require('echarts/util/mapData/params');
-        //
-        // for (var city in cityMap) {
-        //   mapType.push(city);
-        //   // 自定义扩展图表类型
-        //   mapGeoData.params[city] = {
-        //     getGeoJson: (function (c) {
-        //       var geoJsonName = cityMap[c];
-        //       return function (callback) {
-        //         $.getJSON('${rc.contextPath}/common/plugs/echart/js/' + geoJsonName + '.json', callback);
-        //       }
-        //     })(city)
-        //   }
-        // }
-
-        // var ecConfig = require('echarts/config');
-        // var zrEvent = require('zrender/tool/event');
-
-        this.mapData =  option
-        console.log( this.mapData)
-      },
 
       getData(){
+        this.formData = {}
         generalIndex().then((res) => {
           this.formData=res.data;
           this.PieDataThree.series[0].data = [((Number(res.data.light.num)/Number(res.data.light.count))*100).toFixed(2)];
           this.formData.city.shangbao = this.formData.city.shangbao.toString().split('').map(Number).reverse();
           this.formData.city.chuli = this.formData.city.chuli.toString().split('').map(Number).reverse();
           this.formData.city.undisposed = this.formData.city.undisposed.toString().split('').map(Number).reverse();;
-          // this.formData.city.undisposed = '1234'.toString().split('').map(Number).reverse();
           this.PieDataThree.title[0].text = ((Number(res.data.light.num)/Number(res.data.light.count))*100).toFixed(2)+'%';
         });
       },
 
-      // getApprove(){
-      //   generalCaseCount().then((res) => {
-      //     this.approveData = res.data;
-      //   });
-      // },
     }
   }
 </script>
@@ -1118,6 +637,28 @@
     padding: 0 20px 20px !important;
     background: rgba(6,12,42,1);
     box-shadow: #0f39a0 0 0 18px inset;
+  }
+  .monitor_content{
+    position: relative;
+    img{
+      width: 67%;
+    }
+    .monitor_detail{
+      background: url("./../../assets/image/monitor.png") no-repeat center center;
+      background-size: 100% 100%;
+      width: 92px;
+      height: 34px;
+      line-height: 34px;
+      position: absolute;
+      bottom: 40px;
+      left:40%;
+    }
+    .monitor_num{
+      position: absolute;
+      bottom: 44%;
+      left:44%;
+      z-index: 999;
+    }
   }
   .cityAdmin_num{
     margin: 4vh 0;
@@ -1222,17 +763,18 @@
     }
   }
   .anjian_cegory{
-    width: 210px;
+    width: 190px;
     li{
-      height: 106px;
-      line-height: 106px;
+      height: 90px;
+      line-height: 90px;
       background: url("./../../assets/image/index-num-bg02.png") left top no-repeat;
+      background-size: 100% 100%;
       span{
-        width: 100px;
+        width: 90px;
       }
       p{
         width: 100px;
-        margin-left: 10px;
+        /*margin-left: 10px;*/
       }
     }
   }
@@ -1240,7 +782,8 @@
     width: 40%;
   }
   .anjian_genzong{
-    width: 40%;
+    /*width: 40%;*/
+    flex: 1;
     .anjian_img{
       width: 50px;
       height: 50px;
@@ -1260,14 +803,16 @@
     background: url("./../../assets/image/approvalTitle_bg.png") center bottom no-repeat;
   }
   .circle_num{
-    width: 21vh;
+    /*width: 21vh;*/
+    width: 30vh;
     height: 16vh;
     margin: 0 auto 10px;
     position: relative;
     /*background: url("./../../assets/image/approval_circle.png") center bottom no-repeat;*/
     background-size: 100% 100%;
     .circle_img{
-      width: 21vh;
+      /*width: 21vh;*/
+      width: 30vh;
       height: 15vh;
 
       /*position: ;*/
@@ -1278,32 +823,36 @@
       position: absolute;
       &:nth-child(2){
         top: 1.6vh;
-        right: 196px;
+        /*right: 196px;*/
+        right: 235px;
       }
       &:nth-child(3){
         top: 11vh;
-        right: 196px;
+        /*right: 196px;*/
+        right: 235px;
       }
       &:nth-child(4){
         top: 1.6vh;
-        left: 196px;
+        /*left: 196px;*/
+        left: 235px;
       }
       &:nth-child(5){
         top: 11vh;
-        left: 196px;
+        /*left: 196px;*/
+        left: 235px;
       }
     }
   }
   .circleNum_left_bg{
     padding-right: 3px;
     margin-bottom: 5px;
-    border-right: 2px solid $baseColor;
+    /*border-right: 2px solid $baseColor;*/
     background-image: linear-gradient(270deg,  rgba(39,73,167,1), rgba(39,73,167,0));
   }
   .circleNum_right_bg{
     padding-left: 3px;
     margin-bottom: 5px;
-    border-left: 2px solid $baseColor;
+    /*border-left: 2px solid $baseColor;*/
     background-image: linear-gradient(270deg,  rgba(39,73,167,0), rgba(39,73,167,1));
   }
   .complain_num{

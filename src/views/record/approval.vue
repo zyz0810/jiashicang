@@ -6,28 +6,28 @@
 
         <div class="txt_linear f18 bold">备案审批概况（周）</div>
         <div class="mt_20 clr_white">
-          <div class="f18 bold text-center approval_num txt_shadow">审批总数：{{formData.count}}</div>
+<!--          <div class="f18 bold text-center approval_num txt_shadow">审批总数：{{formData.count}}</div>-->
+<!--          <div class="circle_num text-center">-->
+<!--            <img src="./../../assets/image/approval_circle.png" class="circle_img">-->
+<!--            <div class="circle_num_item">-->
+<!--              <span class="clr_white f18 bold circleNum_left_bg block">{{formData.quanzhi}}/{{((Number(formData.quanzhi)/Number(formData.count))*100).toFixed(2)}}%</span>-->
+<!--              <p class="clr_yellow bold">犬只审批</p>-->
+<!--            </div>-->
+<!--            <div class="circle_num_item">-->
+<!--              <span class="clr_white f18 bold circleNum_left_bg block">{{formData.gongcheng}}/{{((Number(formData.gongcheng)/Number(formData.count))*100).toFixed(2)}}%</span>-->
+<!--              <p class="clr_yellow bold">工程渣土</p>-->
+<!--            </div>-->
+<!--            <div class="circle_num_item">-->
+<!--              <span class="clr_white f18 bold circleNum_right_bg block">{{formData.guanggao}}/{{((Number(formData.guanggao)/Number(formData.count))*100).toFixed(2)}}%</span>-->
+<!--              <p class="clr_yellow bold">广告审批</p>-->
+<!--            </div>-->
+<!--            <div class="circle_num_item">-->
+<!--              <span class="clr_white f18 bold circleNum_right_bg block">{{formData.qita}}/{{((Number(formData.qita)/Number(formData.count))*100).toFixed(2)}}%</span>-->
+<!--              <p class="clr_yellow bold">其他审批</p>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div class="circle_num text-center">
-            <img src="./../../assets/image/approval_circle.png" class="circle_img">
-            <div class="circle_num_item">
-              <span class="clr_white f18 bold circleNum_left_bg block">{{formData.quanzhi}}/{{((Number(formData.quanzhi)/Number(formData.count))*100).toFixed(2)}}%</span>
-              <p class="clr_yellow bold">犬只审批</p>
-            </div>
-            <div class="circle_num_item">
-              <span class="clr_white f18 bold circleNum_left_bg block">{{formData.gongcheng}}/{{((Number(formData.gongcheng)/Number(formData.count))*100).toFixed(2)}}%</span>
-              <p class="clr_yellow bold">工程渣土</p>
-            </div>
-            <div class="circle_num_item">
-              <span class="clr_white f18 bold circleNum_right_bg block">{{formData.guanggao}}/{{((Number(formData.guanggao)/Number(formData.count))*100).toFixed(2)}}%</span>
-              <p class="clr_yellow bold">广告审批</p>
-            </div>
-            <div class="circle_num_item">
-              <span class="clr_white f18 bold circleNum_right_bg block">{{formData.qita}}/{{((Number(formData.qita)/Number(formData.count))*100).toFixed(2)}}%</span>
-              <p class="clr_yellow bold">其他审批</p>
-            </div>
-          </div>
-
+          <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="25vh" divwidth="100%"></PieChartTwo>
         </div>
       <div class="mt_20">
         <p class="f20 bold txt_linear">备案审批类型分析（周）</p>
@@ -42,13 +42,27 @@
       </div>
       <div class="mt_20">
         <p class="f20 bold txt_linear mb_20">备案审批详情（周）</p>
-        <el-table v-loading="listLoading" :data="list" :height="300"  stripe element-loading-text="拼命加载中" fit ref="tableList" class="f14">
-          <el-table-column type="index" label="序号" width="80" align="center"></el-table-column>
-          <el-table-column label="申请人/单位" align="center" prop="name"></el-table-column>
-          <el-table-column label="权力名称" align="center" prop="name"></el-table-column>
-          <el-table-column label="办理结果" align="center" prop="end"></el-table-column>
+<!--        <el-table v-loading="listLoading" :data="list" :height="300"  stripe element-loading-text="拼命加载中" fit ref="tableList" class="f14">-->
+<!--          <el-table-column type="index" label="序号" width="80" align="center" class="ellipsisOne"></el-table-column>-->
+<!--          <el-table-column label="申请人/单位" align="center" prop="name" class="ellipsisOne"></el-table-column>-->
+<!--          <el-table-column label="权力名称" align="center" prop="name" class="ellipsisOne"></el-table-column>-->
+<!--          <el-table-column label="办理结果" align="center" prop="end" class="ellipsisOne"></el-table-column>-->
 
-        </el-table>
+<!--        </el-table>-->
+        <ul class="flex table_ul text-center">
+          <li style="width: 50px;">序号</li>
+          <li class="flex-item">申请人/单位</li>
+          <li class="flex-item">权力名称</li>
+          <li style="width: 80px;">办理结果</li>
+        </ul>
+        <vueSeamlessScroll :data="list" class="seamless-warp text-center" :class-option="classOption">
+          <ul class="flex table_ul" v-for="(item,index) in list" :key="item.id">
+            <li style="width: 50px;">{{index}}</li>
+            <li class="flex-item ellipsisOne">{{item.name}}</li>
+            <li class="flex-item ellipsisOne">{{item.name2}}</li>
+            <li style="width: 80px;" class="ellipsisOne">{{item.end}}</li>
+          </ul>
+        </vueSeamlessScroll>
       </div>
     </div>
     <div class="center_content clr_white text-center">
@@ -70,6 +84,32 @@
       </div>
       <!--<p class="text-right baseColor f16 bold mt_20">说明</p>-->
     </div>
+    <div class="top_div flex clr_white text-center f16 bold">
+      <div class="flex border shadow mr_20">
+        <div class="flex-item">
+          广告审批
+          <span class="txt_linear">{{formData.guanggao}}</span>
+        </div>
+      </div>
+      <div class="flex border shadow mr_20">
+        <div class="flex-item">
+          犬只审批
+          <span class="txt_linear">{{formData.quanzhi}}</span>
+        </div>
+      </div>
+      <div class="flex border shadow mr_20">
+        <div class="flex-item">
+          工程渣土
+          <span class="txt_linear">{{formData.gongcheng}}</span>
+        </div>
+      </div>
+      <div class="flex border shadow">
+        <div class="flex-item">
+          其他审批
+          <span class="txt_linear">{{formData.qita}}</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -83,6 +123,7 @@
   import BarChartFour from '@/components/Charts/BarChartFour'
   import LineChart from '@/components/Charts/LineChart'
   import waves from '@/directive/waves'
+  import PieChartTwo from '@/components/Charts/PieChartTwo'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import point01 from '@/assets/image/point25.png' // 引入刚才的map.js 注意路径
@@ -92,14 +133,15 @@
   import {generalApprove} from '@/api/recordApproval'
   import {cleanCarAddressList, lastGPS} from "@/api/garbageLink";
   import {cos} from "@/utils/translate";
-
+  import vueSeamlessScroll from 'vue-seamless-scroll'
   export default {
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,LineChart},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,LineChart,PieChartTwo,vueSeamlessScroll},
     data() {
       return {
+        approvalData:{},
         listLoading:false,
         list:[{
           name:'倪维绞',
@@ -142,65 +184,26 @@
           name2:'养犬许可-个人申请',
           end:'审批通过'
         }],
-        chartData: {
-          title:{},
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          legend: {
-            show:false
-          },
-          series: [
-            {
-              name: '访问来源',
-              type: 'pie',
-              radius: ['50%', '70%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: false,
-                position: 'center'
-              },
-              emphasis: {
-                label: {
-                  show: true,
-                  fontSize: '30',
-                  fontWeight: 'bold'
-                }
-              },
-              labelLine: {
-                show: false
-              },
-              data: [
-                {value: 335, name: '直接访问'},
-                {value: 310, name: '邮件营销'},
-                {value: 234, name: '联盟广告'},
-                {value: 135, name: '视频广告'},
-                {value: 1548, name: '搜索引擎'}
-              ]
-            }
-          ]
-        },
         chartDataThree: {
           title:{},
           tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+            formatter: '{b}: {c} <br/> {d}%'
           },
           legend: {
             show:false
           },
-          color:['#367CFD','#E20280'],
+          color:['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'],
           series: [
             {
               name: '访问来源',
               type: 'pie',
+              center: ['30%', '50%'],
               radius: ['70%', '90%'],
               avoidLabelOverlap: false,
               label: {
                 show: false,
                 position: 'center',
-
               },
               emphasis: {
                 label: {
@@ -212,10 +215,7 @@
               labelLine: {
                 show: false
               },
-              data: [
-                {value: 520, name: '直接访问'},
-                {value: 205, name: '邮件营销'},
-              ]
+              data: []
             }
           ]
         },
@@ -297,12 +297,13 @@
           },
           series: [{
             smooth: false,
-            symbol: 'none',
+            // symbol: 'none',
             itemStyle : {
               normal : {
                 lineStyle:{
                   color:'#F3E981'
-                }
+                },
+                label : {show: true, color:'#F3E981'}
               }
             },
             data: [11, 12, 12, 12, 17, 18, 17],
@@ -405,6 +406,18 @@
       ...mapState({
         roles: state => state.user.roles,
       }),
+      classOption () {
+        return {
+          step: 0.2, // 数值越大速度滚动越快
+          limitMoveNum: this.list.length, // 开始无缝滚动的数据量 this.dataList.length
+          hoverStop: true, // 是否开启鼠标悬停stop
+          direction: 1, // 0向下 1向上 2向左 3向右
+          openWatch: true, // 开启数据实时监控刷新dom
+          singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+          singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+          waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
+        }
+      }
     },
     mounted() {
       // 挂载完成后渲染地图
@@ -430,12 +443,21 @@
           this.pointList = [];
           const {count,gongcheng,guanggao,qita,quanzhi} = res.data;
           this.formData = {count,gongcheng,guanggao,qita,quanzhi};
+          // 犬只审批、工程渣土、广告审批、其他审批
+          this.chartDataThree.series[0].data = [{
+            name:'犬只审批',value:res.data.quanzhi
+          },{
+            name:'工程渣土',value:res.data.gongcheng
+          },{
+            name:'广告审批',value:res.data.guanggao
+          },{
+            name:'其他审批',value:res.data.qita
+          }];
           this.pointList = res.data.data;
           this.mapPoint(this.pointList);
         });
       },
       mapPoint(list){
-        console.log('点位333')
         //创建图片对象
         this.map.clearOverLays();
         let icon01 = new T.Icon({
@@ -462,7 +484,6 @@
 
         for (let i = 0; i < list.length; i++) {
           // var marker
-          console.log(list[i].type)
           let point = new T.LngLat(list[i].log,list[i].lat);
           if(list[i].type == '犬只审批'){
             markers[i]  = drawTMaker(point, icon02,this,list[i]);
@@ -479,11 +500,9 @@
 
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){
-          console.log('获取')
           var marker =  new T.Marker(lnglat, {icon: icon});
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {
-            console.log(m)
             let infoWin1 = new T.InfoWindow();
 
             // 办件编号、申请人/单位、电话、地址、申请日期、办结日期、办理结果、权力名称、所属类型

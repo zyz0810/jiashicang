@@ -6,6 +6,7 @@
     <div class="left_rate bold clr_white text-center">
       <div class="clean_rate flex">
         <p class="f20">95.6%</p>
+        <shui-qiu-chart :chartData="ShuiDataOne" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></shui-qiu-chart>
       </div>
       <p class="mb_10">清扫完成</p>
       <div class="watering_rate flex">
@@ -52,21 +53,21 @@
         </p>
         <el-row :gutter="10" class="mt_20">
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="flex">
-            <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+            <PieChartTwo :chartData="PieDataOne" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
             <div style="width: 250px; margin-left: 10px" class="f16 bold">
               <p>一类道路</p>
               <p class="mt_10">30条</p>
             </div>
           </el-col>
           <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="flex">
-            <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+            <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
             <div style="width: 250px; margin-left: 10px" class="f16 bold">
               <p>二类道路</p>
               <p class="mt_10">30条</p>
             </div>
           </el-col>
           <div class="flex" style="width:50%;margin: -50px auto 0;">
-            <PieChartTwo :chartData="PieData" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
+            <PieChartTwo :chartData="PieDataThree" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></PieChartTwo>
             <div style="width: 250px; margin-left: 10px" class="f16 bold">
               <p>三类道路</p>
               <p class="mt_10">30条</p>
@@ -86,39 +87,111 @@
       </div>
 
     </div>
+    <div class="top_div flex clr_white text-center f16 bold">
+      <div class="flex border shadow mr_20">
+        <div class="flex-item">
+          总车辆（没接口）
+          <span class="txt_linear">{{carData.count}}</span>
+        </div>
+      </div>
+      <div class="flex border shadow">
+        <div class="flex-item">
+          在线车辆（没接口）
+          <span class="txt_linear">{{carData.chuli}}</span>
+        </div>
+      </div>
 
+    </div>
+    <div class="center_content clr_white text-center">
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point40.png"/></div>
+        <div class="weui-cell__bd">洒水车</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point41.png"/></div>
+        <div class="weui-cell__bd">清扫车</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import echarts from 'echarts'
+
   import RingChart from '@/components/Charts/RingChart'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import BarChartFive from '@/components/Charts/BarChartFive'
   import BarChartTwo from '@/components/Charts/BarChartTwo'
   import BarChartThree from '@/components/Charts/BarChartThree'
   import BarChartFour from '@/components/Charts/BarChartFour'
+  import ShuiQiuChart from '@/components/Charts/ShuiQiuChart'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import car from '@/assets/image/car.png' // 引入刚才的map.js 注意路径
   import {cleancarList,cleanCarAddressList,lastGPS,carHistory} from '@/api/garbageLink'
-  import point01 from "@/assets/image/point15.png";
-  import point02 from "@/assets/image/point16.png";
-  import point03 from "@/assets/image/point17.png";
-  import point04 from "@/assets/image/point18.png";
+  import point01 from "@/assets/image/point40.png";
+  import point02 from "@/assets/image/point41.png";
   import {getLampPostList} from "@/api/digitalServices";
 
   export default {
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,ShuiQiuChart},
     data() {
       return {
+        carData:{},
         cleanCarList:[],
         divwidth:'30%',
         pieHeight:'300px',
+        ShuiDataOne:{
+          // x轴
+          xAxis: {
+            show: false, // 不显示
+          },
+          // y轴
+          yAxis: {
+            show: false, // 不显示
+          },
+          grid: {
+            top: '2.5%',
+              right: '40',
+              bottom: '2.5%',
+              left: 0,
+          },
+          series: [{
+            type: 'liquidFill',
+            radius: '96%', // 半径大小
+            center: ['50%', '50%'], // 布局位置
+            data: [20], // 水球波纹值
+            color: ['#36A989'],//设置颜色系列
+            label: {
+              normal: {
+                // color: '#FC7272',
+                color: '#36A989',
+                textStyle: {
+                  fontSize: 18
+                },
+                formatter: (params) => { //console.log(params)
+                  let newValue = params.value * 100;
+                  return newValue.toFixed(2) + '%\n联网车位数\n'
+                }
+              }
+            },
+            outline: { // 轮廓设置
+              show: true,
+              borderDistance: 2, // 轮廓间距
+              itemStyle: {
+                // borderColor: '#294D99', // 轮廓颜色
+                borderColor: '#36A989', // 轮廓颜色
+                borderWidth: 4, // 轮廓大小
+                shadowBlur: 'none', // 轮廓阴影
+              }
+            },
+          }
+          ]
+        },
         chartData: {
           title:{},
           tooltip: {
@@ -350,7 +423,7 @@
               data: [5, 20, ]
             }]
         },
-        PieData:{
+        PieDataOne:{
           color: ['#EB4B4B', 'rgb(245,245,245)'],
           title: [{
             text: '75%',
@@ -397,14 +470,180 @@
               coordinateSystem: 'polar',
               itemStyle: {
                 normal: {
-                  // color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
-                  //   offset: 0,
-                  //   color: '#EB4B4B'
-                  // }, {
-                  //   offset: 1,
-                  //   color: '#F47F7F'
-                  // }]),
-                  color:'rgba(78,239,254,1)'
+                  color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                    offset: 0,
+                    color: 'rgb(17,197,187)'
+                  }, {
+                    offset: 1,
+                    color: 'rgb(10,195,118)'
+                  }]),
+                  // color:'rgba(78,239,254,1)'
+                }
+              }
+            },{
+              name: 'decorationOne',
+              type: 'pie',
+              color: ['rgba(62,109,176,1)'],
+              // center: ['30%', '50%'],
+              radius: ['70%', '68%'],
+              hoverAnimation: false,
+              lable: {
+                normal: {
+                  show: false,
+                },
+                emphasis: {
+                  show: false,
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false,
+                },
+              },
+              data: [
+                { value: 335, name: '' },
+              ],
+            },
+          ]
+        },
+        PieDataTwo:{
+          color: ['#EB4B4B', 'rgb(245,245,245)'],
+          title: [{
+            text: '75%',
+            x: '45%',
+            y: '35%',
+            textAlign: 'center',
+            textStyle: {
+              fontSize: '26',
+              fontWeight: '500',
+              color: '#fff',
+              textAlign: 'center',
+            },
+          }],
+          polar: {
+            radius: ['95%', '80%'],
+            center: ['50%', '50%'],
+          },
+          angleAxis: {
+            max: 100,
+            show: false,
+            // startAngle: 0,
+          },
+          radiusAxis: {
+            type: 'category',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false
+            },
+          },
+          series: [
+            {
+              name: '',
+              type: 'bar',
+              roundCap: true,
+              barWidth: 60,
+              showBackground: true,
+              data: [75],
+              coordinateSystem: 'polar',
+              itemStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                    offset: 0,
+                    color: 'rgb(15,242,246)'
+                  }, {
+                    offset: 1,
+                    color: 'rgb(53,214,250)'
+                  }]),
+                  // color:'rgba(78,239,254,1)'
+                }
+              }
+            },{
+              name: 'decorationOne',
+              type: 'pie',
+              color: ['rgba(62,109,176,1)'],
+              // center: ['30%', '50%'],
+              radius: ['70%', '68%'],
+              hoverAnimation: false,
+              lable: {
+                normal: {
+                  show: false,
+                },
+                emphasis: {
+                  show: false,
+                },
+              },
+              labelLine: {
+                normal: {
+                  show: false,
+                },
+              },
+              data: [
+                { value: 335, name: '' },
+              ],
+            },
+          ]
+        },
+        PieDataThree:{
+          color: ['#EB4B4B', 'rgb(245,245,245)'],
+          title: [{
+            text: '75%',
+            x: '45%',
+            y: '35%',
+            textAlign: 'center',
+            textStyle: {
+              fontSize: '26',
+              fontWeight: '500',
+              color: '#fff',
+              textAlign: 'center',
+            },
+          }],
+          polar: {
+            radius: ['95%', '80%'],
+            center: ['50%', '50%'],
+          },
+          angleAxis: {
+            max: 100,
+            show: false,
+            // startAngle: 0,
+          },
+          radiusAxis: {
+            type: 'category',
+            show: true,
+            axisLabel: {
+              show: false,
+            },
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false
+            },
+          },
+          series: [
+            {
+              name: '',
+              type: 'bar',
+              roundCap: true,
+              barWidth: 60,
+              showBackground: true,
+              data: [75],
+              coordinateSystem: 'polar',
+              itemStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                    offset: 0,
+                    color: 'rgb(0,172,255)'
+                  }, {
+                    offset: 1,
+                    color: 'rgb(2,109,250)'
+                  }]),
+                  // color:'rgba(78,239,254,1)'
                 }
               }
             },{
@@ -464,17 +703,19 @@
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
       },
       mapPoint(list){
-        console.log('点位')
         //创建图片对象
         this.map.clearOverLays();
         let icon01 = new T.Icon({
-          iconUrl: car,
-          iconSize: new T.Point(50, 51),
+          iconUrl: point01,
+          iconSize: new T.Point(30, 52),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon02 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(30, 52),
           iconAnchor: new T.Point(34, 59)
         });
         let markers = [];
-
-        console.log(list)
         for (let i = 0; i < list.length; i++) {
           // var marker
           // if(list[i].status == 1){
@@ -497,18 +738,18 @@
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {
 
-
             carHistory({card_no:txt.Vehicle,start:that.$moment().format('YYYY-MM-DD'),end:that.$moment().format('YYYY-MM-DD')}).then((res) => {
-
 
             });
 
             let infoWin1 = new T.InfoWindow();
-            console.log(txt)
             let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
             let sContent =
               '<div class="point_info">' +
               '<p class="f12 time">车牌号：' + txt.Vehicle + '</p>' +
+              '<p class="f12 time">车型：' + '（没接口）' + '</p>' +
+              '<p class="f12 time">品牌类型：' + '（没接口）' + '</p>' +
+              '<p class="f12 time">车辆类型：' + '（没接口）' + '</p>' +
               '<p class="f12 time">地址：' + txt.Address + '</p>' +
               '</div>';
             infoWin1.setContent(sContent);
@@ -545,8 +786,8 @@
     .clean_rate{
       width: 15vh;
       height: 15vh;
-      background: url("./../../assets/image/cleanRate_bg.png") center center no-repeat;
-      background-size: 100% 100%;
+      /*background: url("./../../assets/image/cleanRate_bg.png") center center no-repeat;*/
+      /*background-size: 100% 100%;*/
     }
     .watering_rate{
       width: 15vh;

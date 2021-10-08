@@ -3,16 +3,16 @@
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_left_community">
-      <div class="left_server baseColor text-center f16 bold border shadow base_bg">
-        <div class="mb_20 clr_white">
-          <i class="iconfont icon-zaosheng f26"></i>
-          <p class="mt_10">滨江二区</p>
-        </div>
-      </div>
+<!--      <div class="left_server baseColor text-center f16 bold border shadow base_bg">-->
+<!--        <div class="mb_20 clr_white">-->
+<!--          <i class="iconfont icon-zaosheng f26"></i>-->
+<!--          <p class="mt_10">滨江二区</p>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="left_content clr_white border shadow base_bg">
         <p class="bold clearfix">
           <span class="f20 txt_linear fl">AI视频墙</span>
-          <span class="f14 fr">更多</span>
+<!--          <span class="f14 fr">更多</span>-->
         </p>
         <ul class="AI_list">
           <li class="mt_20">
@@ -605,7 +605,7 @@
     width: 15%;
     min-width: 260px;
     padding-right: 20px;
-    left: 150px;
+    left: 20px;
     .AI_list{
       li{
         border-radius: 20px;

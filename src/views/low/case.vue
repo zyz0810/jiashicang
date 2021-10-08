@@ -22,7 +22,7 @@
       </div>
       <ul class="direct_option clr_white text-center" v-if="activeIndex == 2">
         <li :class="['border','shadow','mb_10',directType==1?'baseColor':'']" @click="handleDirectType(1)">AI上报</li>
-        <li :class="['border','shadow',directType==2?'baseColor':'']" @click="handleDirectType(2)">后台录入</li>
+        <li :class="['border','shadow',directType==2?'baseColor':'']" @click="handleDirectType(2)">人工登记</li>
       </ul>
     </div>
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 2">
@@ -282,7 +282,7 @@
         imgArr:[],
         formData:{},
         directType:1,
-        mapType:1,
+        mapType:2,
         activeIndex:0,
         chartData: {
           color: ['#EB4B4B', 'rgb(245,245,245)'],
@@ -721,7 +721,7 @@
       //
       // })
       this.onLoad();
-      this.getHeatMap();
+      // this.getHeatMap();
       this.getPointOne();
       window.handleVideo = this.handleVideo;
     },

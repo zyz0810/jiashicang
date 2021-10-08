@@ -44,7 +44,7 @@
 
     </div>
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 1">
-      <p class="f20 bold txt_linear">辖区报警工单数占比分析</p>
+      <p class="f20 bold txt_linear">辖区异常报警数占比分析</p>
       <RingChart :chartData="chartDataFour" :PieChartLegend="PieChartLegend" height="250px"></RingChart>
       <div class="mt_20">
         <p class="f20 bold txt_linear">餐企油烟超标时长分析</p>
@@ -98,33 +98,33 @@
 <!--        <BarChartFour :chartData="BarDataThree" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></BarChartFour>-->
         <RingChart :chartData="chartDataFive" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
       </div>
-      <div class="mt_20">
-        <p class="f20 bold txt_linear">社会监督</p>
-        <div class="bg_blue01 text-center p20 mt_10">
-          <div class="flex">
-            <div class="flex-item">
-              <p>社会关注度</p>
-              <p class="f26 bold txt_linear LH_2">65562</p>
-              <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>
-            </div>
-            <div class="flex-item">
-              <p>投诉建议</p>
-              <p class="f26 bold txt_linear LH_2">699</p>
-              <p class="baseColor">已处理596</p>
-            </div>
-          </div>
-          <div class="flex mt_20">
-            <div class="flex-item">
-              <p>信访统计</p>
-              <p class="f26 bold txt_linear LH_2">337</p>
-            </div>
-            <div class="flex-item">
-              <p>平安问答</p>
-              <p class="f26 bold txt_linear LH_2">65562</p>
-            </div>
-          </div>
-        </div>
-      </div>
+<!--      <div class="mt_20">-->
+<!--        <p class="f20 bold txt_linear">社会监督</p>-->
+<!--        <div class="bg_blue01 text-center p20 mt_10">-->
+<!--          <div class="flex">-->
+<!--            <div class="flex-item">-->
+<!--              <p>社会关注度</p>-->
+<!--              <p class="f26 bold txt_linear LH_2">65562</p>-->
+<!--              <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>-->
+<!--            </div>-->
+<!--            <div class="flex-item">-->
+<!--              <p>投诉建议</p>-->
+<!--              <p class="f26 bold txt_linear LH_2">699</p>-->
+<!--              <p class="baseColor">已处理596</p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="flex mt_20">-->
+<!--            <div class="flex-item">-->
+<!--              <p>信访统计</p>-->
+<!--              <p class="f26 bold txt_linear LH_2">337</p>-->
+<!--            </div>-->
+<!--            <div class="flex-item">-->
+<!--              <p>平安问答</p>-->
+<!--              <p class="f26 bold txt_linear LH_2">65562</p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
 
     </div>
 
@@ -150,6 +150,16 @@
       <div class="map_intro f14 bold flex baseColor weui-cell">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_02.png"/></div>
         <div class="weui-cell__bd">设备离线</div>
+      </div>
+    </div>
+    <div class="center_content yy_center_content clr_white text-center" v-if="activeIndex == 2">
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_01.png"/></div>
+        <div class="weui-cell__bd">在建中</div>
+      </div>
+      <div class="map_intro f14 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_04.png"/></div>
+        <div class="weui-cell__bd">审批中</div>
       </div>
     </div>
 
