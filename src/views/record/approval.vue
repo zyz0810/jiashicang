@@ -144,6 +144,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,LineChart,PieChartTwo,vueSeamlessScroll},
     data() {
       return {
+        timer:'',
         approvalData:{},
         listLoading:false,
         list:[],
@@ -159,7 +160,7 @@
           color:['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'],
           series: [
             {
-              name: '访问来源',
+              name: '备案审批概况',
               type: 'pie',
               center: ['30%', '50%'],
               radius: ['70%', '90%'],
@@ -393,6 +394,22 @@
       this.getLineChart();
       this.getBarChart();
       this.getListData();
+
+      // this.chartDataThree.series[0].data = [{
+      //   name:'犬只审批',value:res.data.quanzhi
+      // },{
+      //   name:'工程渣土',value:res.data.gongcheng
+      // },{
+      //   name:'广告审批',value:res.data.guanggao
+      // },{
+      //   name:'其他审批',value:res.data.qita
+      // }];
+
+
+    },
+    beforeDestroy() {
+      clearInterval(this.timer);
+      this.timer = null;
     },
     methods: {
       onLoad() {
@@ -411,17 +428,67 @@
           const {count,gongcheng,guanggao,qita,quanzhi} = res.data;
           this.formData = {count,gongcheng,guanggao,qita,quanzhi};
           // 犬只审批、工程渣土、广告审批、其他审批
-          this.chartDataThree.series[0].data = [{
-            name:'犬只审批',value:res.data.quanzhi
-          },{
-            name:'工程渣土',value:res.data.gongcheng
-          },{
-            name:'广告审批',value:res.data.guanggao
-          },{
-            name:'其他审批',value:res.data.qita
-          }];
-          // this.pointList = res.data.data;
-          // this.mapPoint(this.pointList);
+          // this.chartDataThree.series[0].data = [{
+          //   name:'犬只审批',value:res.data.quanzhi
+          // },{
+          //   name:'工程渣土',value:res.data.gongcheng
+          // },{
+          //   name:'广告审批',value:res.data.guanggao
+          // },{
+          //   name:'其他审批',value:res.data.qita
+          // }];
+          let i = 1;
+          console.log('2222222222dianjidainji')
+          setInterval(function () {
+            console.log('1111dianjidainji')
+            if(i==1){
+              this.chartDataThree.series[0].data = [{
+                name:'犬只审批',value:res.data.quanzhi
+              },{
+                name:'工程渣土',value:res.data.gongcheng
+              },{
+                name:'广告审批',value:res.data.guanggao
+              },{
+                name:'其他审批',value:res.data.qita
+              }];
+              i = 2;
+            }else{
+              this.chartDataThree.series[0].data = [];
+              i = 1;
+            }
+
+          }, 2000);
+        });
+      },
+      getPieChat(){
+        generalApprove().then((res) => {
+          // 犬只审批、工程渣土、广告审批、其他审批
+          let i = 1;
+          setInterval(function () {
+            if(i==1){
+              this.chartDataThree.series[0].data = [{
+                name:'犬只审批',value:res.data.quanzhi
+              },{
+                name:'工程渣土',value:res.data.gongcheng
+              },{
+                name:'广告审批',value:res.data.guanggao
+              },{
+                name:'其他审批',value:res.data.qita
+              }];
+            }else{
+              this.chartDataThree.series[0].data = [{
+                name:'犬只审批',value:0
+              },{
+                name:'工程渣土',value:0
+              },{
+                name:'广告审批',value:0
+              },{
+                name:'其他审批',value:0
+              }];
+            }
+
+          }, 2000);
+
         });
       },
       getLineChart(){
@@ -455,15 +522,49 @@
           const {count,gongcheng,guanggao,qita,quanzi} = res.data;
           this.formData = {count,gongcheng,guanggao,qita,quanzi};
           // 犬只审批、工程渣土、广告审批、其他审批
-          this.chartDataThree.series[0].data = [{
-            name:'犬只审批',value:res.data.quanzi
-          },{
-            name:'工程渣土',value:res.data.gongcheng
-          },{
-            name:'广告审批',value:res.data.guanggao
-          },{
-            name:'其他审批',value:res.data.qita
-          }];
+          // this.chartDataThree.series[0].data = [{
+          //   name:'犬只审批',value:res.data.quanzi
+          // },{
+          //   name:'工程渣土',value:res.data.gongcheng
+          // },{
+          //   name:'广告审批',value:res.data.guanggao
+          // },{
+          //   name:'其他审批',value:res.data.qita
+          // }];
+          let that = this;
+          let i = 1;
+          this.timer = setInterval(function () {
+            if(i==1){
+              console.log('1111dianjidainji')
+              that.chartDataThree.series[0].data = [{
+                name:'犬只审批',value:res.data.quanzi
+              },{
+                name:'工程渣土',value:res.data.gongcheng
+              },{
+                name:'广告审批',value:res.data.guanggao
+              },{
+                name:'其他审批',value:res.data.qita
+              }];
+              i = 2;
+            }else{
+              console.log('22222dianjidainji')
+              that.chartDataThree.series[0].data = [{
+                name:'工程渣土',value:res.data.gongcheng
+              },{
+                name:'其他审批',value:res.data.qita
+
+              },{
+                name:'广告审批',value:res.data.guanggao
+              },{
+                name:'犬只审批',value:res.data.quanzi
+
+              }];
+              i = 1;
+            }
+
+          }, 2000);
+
+
           this.pointList = res.data.data;
           this.mapPoint(this.pointList);
         });

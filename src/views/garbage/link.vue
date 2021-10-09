@@ -4,14 +4,16 @@
     <div id='mapDiv' class="mapDiv"></div>
 
     <div class="left_rate bold clr_white text-center">
-      <div class="clean_rate flex">
-        <p class="f20">95.6%</p>
-        <shui-qiu-chart :chartData="ShuiDataOne" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></shui-qiu-chart>
+      <div class="clean_rate">
+        <!--<p class="f20">95.6%</p>-->
+        <!--<shui-qiu-chart :chartData="ShuiDataOne" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></shui-qiu-chart>-->
+        <GaugeChart :chartData="gaugeOne" :PieChartLegend="PieChartLegend" height="15vh" ></GaugeChart>
       </div>
       <p class="mb_10">清扫完成</p>
-      <div class="watering_rate flex">
+      <div class="watering_rate">
         <div>
-          <p class="f20">95.6%</p>
+          <!--<p class="f20">95.6%</p>-->
+          <GaugeChart :chartData="gaugeOne" :PieChartLegend="PieChartLegend" height="15vh" ></GaugeChart>
         </div>
       </div>
       <p class="mb_10">洒水完成</p>
@@ -123,6 +125,7 @@
   import BarChartFive from '@/components/Charts/BarChartFive'
   import BarChartTwo from '@/components/Charts/BarChartTwo'
   import BarChartThree from '@/components/Charts/BarChartThree'
+  import GaugeChart from '@/components/Charts/GaugeChart'
   import BarChartFour from '@/components/Charts/BarChartFour'
   import ShuiQiuChart from '@/components/Charts/ShuiQiuChart'
   import waves from '@/directive/waves'
@@ -138,7 +141,7 @@
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,ShuiQiuChart},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,ShuiQiuChart,GaugeChart},
     data() {
       return {
         carData:{},
@@ -273,7 +276,7 @@
         BarData:{
           tooltip: {
             trigger:"axis",
-            formatter:"{a1}<br/>{b1}：{c1}%"
+            formatter:"{b1}：{c1}%"
           },
           grid: {
             left: '0',
@@ -356,7 +359,7 @@
         BarDataTwo:{
           tooltip: {
             trigger:"axis",
-            formatter:"{a1}<br/>{b1}：{c1}%"
+            formatter:"{b1}：{c1}%"
           },
           grid: {
             left: '0',
@@ -422,6 +425,46 @@
               },
               data: [5, 20, ]
             }]
+        },
+        gaugeOne:{
+          series: [
+            {
+              name: "压力值",
+              type: "gauge",
+              clockwise: true,
+              detail: {
+                formatter: 20,
+                textStyle: {
+                  fontSize: 20,
+                },
+              },
+              axisTick:{
+                length :5,
+              },
+              data: [{ value: 20, name: "压力值" }],
+              radius: "80%",
+              axisLabel: {// 刻度标签。
+                show: true,
+                distance: -5,
+                color: "black",
+                fontSize: 10,
+                formatter: "{value}",
+              },
+              axisLine: {// 仪表盘轴线(轮廓线)相关配置。
+                show: true,
+                lineStyle: {// 仪表盘轴线样式。
+                  opacity: 1,
+                  width: 10,
+                  shadowBlur: 10,
+                },
+              },
+              pointer: { // 仪表盘指针。
+                show: true,
+                length: "70%",
+                width: 4,
+              },
+            },
+          ]
         },
         PieDataOne:{
           color: ['#EB4B4B', 'rgb(245,245,245)'],
@@ -676,6 +719,8 @@
         zoom: 14, // 地图的初始化级别，及放大比例
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
+        timerOne:'',
+        timerTwo:''
       }
     },
 
@@ -685,16 +730,46 @@
       }),
     },
     mounted() {
-
       // import echarts from 'echarts'
       // 挂载完成后渲染地图
       this.$nextTick(function() {
         this.onLoad();
         this.getList();
-      })
-
+      });
+      this.getChart();
+    },
+    beforeDestroy() {
+      clearInterval(this.timerOne);
+      this.timerOne = null;
+      clearInterval(this.timerTwo);
+      this.timerTwo = null;
     },
     methods: {
+      getChart(){
+        let i = 1;
+        let that = this;
+        this.timerOne = setInterval(function () {
+          if(i==1){
+            that.PieDataOne.series[0].data = [75];
+            that.PieDataTwo.series[0].data = [75];
+            that.PieDataThree.series[0].data = [75];
+            i = 2;
+          }else{
+            that.PieDataOne.series[0].data = [0];
+            that.PieDataTwo.series[0].data = [0];
+            that.PieDataThree.series[0].data = [0];
+            i = 1;
+          }
+        }, 1500);
+
+        this.timerTwo = setInterval(function () {
+          const random= +(Math.random() * 60).toFixed(2);
+          that.gaugeOne.series[0].data = [          {
+            value: random
+          }]
+
+        }, 1500);
+      },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
@@ -787,15 +862,15 @@
     z-index: 99999999;
     .clean_rate{
       width: 15vh;
-      height: 15vh;
+      /*height: 50vh;*/
       /*background: url("./../../assets/image/cleanRate_bg.png") center center no-repeat;*/
       /*background-size: 100% 100%;*/
     }
     .watering_rate{
       width: 15vh;
-      height: 15vh;
-      background: url("./../../assets/image/wateringRate_bg.png") center center no-repeat;
-      background-size: 100% 100%;
+      /*height: 15vh;*/
+      /*background: url("./../../assets/image/wateringRate_bg.png") center center no-repeat;*/
+      /*background-size: 100% 100%;*/
     }
     .link_intro{
       width: 100px;
