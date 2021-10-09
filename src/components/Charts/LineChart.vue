@@ -22,6 +22,7 @@
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
+import { autoHover } from './../../utils/tool'
 
 export default {
   mixins: [resize],
@@ -58,7 +59,8 @@ export default {
   },
   data() {
     return {
-      chart: null
+      chart: null,
+      tootipTimer:''
     }
   },
   watch: {
@@ -100,7 +102,9 @@ export default {
     initChart() {
       this.chart = echarts.init(this.$refs.pieChart, 'macarons')
       this.setOptions(this.chartData)
-
+      this.tootipTimer && this.tootipTimer.clearLoop(); // this.tootipTimer 在data里定义
+      this.tootipTimer = 0;
+      this.tootipTimer = autoHover(this.chart, this.chartData, this.chartData.series[0].data.length, 1000);
     },
     setOptions({ title,xAxis,grid,yAxis,tooltip,legend,series  } = {}) {
       this.chart.setOption({

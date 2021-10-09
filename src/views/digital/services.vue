@@ -237,26 +237,25 @@
         </div>
       </div>
 
-
-
     </div>
     <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 2">
       <div class="flex f16 bold mr_20 border shadow" style="width: 200px;" >
-        <div class="flex-item">
-          亮灯总数（没接口）
-          <span class="txt_linear">{{carData.shangBao}}</span>
+        <div class="flex-item" @click="handleTypeLight(1)">
+          亮灯总数
+          <span class="txt_linear">{{lightData.lightCount}}</span>
         </div>
       </div>
       <div class="flex f16 bold mr_20 border shadow" style="width: 450px;" >
-        <div class="flex-item">
-          控制柜总数（没接口）
-          <span class="txt_linear">{{carData.shangBao}}</span>
+        <div class="flex-item" @click="handleTypeLight(2)">
+          控制柜总数
+          <span class="txt_linear">{{lightData.cabinetCount}}</span>
         </div>
-        <div class="flex-item">
+        <div class="flex-item" @click="handleTypeLight(2)">
           控制柜故障数（没接口）
-          <span class="txt_linear">{{carData.undisposed}}</span>
+          <span class="txt_linear"></span>
         </div>
       </div>
+
     </div>
     <div class="center_content clr_white text-center no_right" v-if="activeIndex == 0 && pointType == 1">
       <div class="map_intro f14 bold flex baseColor weui-cell">
@@ -288,26 +287,28 @@
         <div class="weui-cell__bd">禁行区域</div>
       </div>
     </div>
-    <div class="center_content clr_white text-center" v-if="activeIndex == 2">
-      <div class="map_intro f14 bold flex baseColor weui-cell">
+    <div class="center_content clr_white text-center" v-if="activeIndex == 2 && showType==1">
+      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getLampPostList(1)">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point35.png"/></div>
         <div class="weui-cell__bd">亮灯设备开</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
+      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getLampPostList(2)">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point34.png"/></div>
         <div class="weui-cell__bd">亮灯设备关</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
+    </div>
+    <div class="center_content clr_white text-center" v-if="activeIndex == 2 && showType==2">
+      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getControlCabinetlist(1)">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point33.png"/></div>
         <div class="weui-cell__bd">控制柜开</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
+      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getControlCabinetlist(2)">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point32.png"/></div>
         <div class="weui-cell__bd">控制柜关</div>
       </div>
       <div class="map_intro f14 bold flex baseColor weui-cell">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point31.png"/></div>
-        <div class="weui-cell__bd">控制柜故障</div>
+        <div class="weui-cell__bd">控制柜故障??</div>
       </div>
     </div>
         <videoView :showDialog.sync="showVideoDialog" :caseData={}></videoView>
@@ -347,6 +348,10 @@
     data() {
       return {
         pointType:1,
+        lightData:{
+          lightCount:'',
+          cabinetCount:''
+        },
         carData:{},
         lampPostList:[],
         showType:2,
@@ -924,7 +929,7 @@
       //
       // })
       this.onLoad();
-      // this.getLampPostList();
+      this.getLampPostList('');
       this.getChartData();
       this.getData();
       // this.getControlCabinetlist();
@@ -1027,14 +1032,14 @@
         if(type == 'control'){
           for (let i = 0; i < list.length; i++) {
             // var marker
-            // 0：关  1：开
-            if(list[i].status == 0){
-              let point = new T.LngLat(list[i].longitude,list[i].latitude);
-              markers[i]  = drawTMaker(point, icon04,this,list[i]);
-            }else if(list[i].status == 1){
+            // status 1开   2 关
+            if(list[i].status == 1){
               let point = new T.LngLat(list[i].longitude,list[i].latitude);
               markers[i]  = drawTMaker(point, icon05,this,list[i]);
             }else if(list[i].status == 2){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon04,this,list[i]);
+            }else if(list[i].status == 3){
               let point = new T.LngLat(list[i].longitude,list[i].latitude);
               markers[i]  = drawTMaker(point, icon03,this,list[i]);
             }
@@ -1072,15 +1077,14 @@
 
           for (let i = 0; i < list.length; i++) {
             // var marker
-            // 0：关  1：开
-            if(list[i].status == 0){
+            // status 1开   2 关
+            if(list[i].status == 1){
               let point = new T.LngLat(list[i].longitude,list[i].latitude);
-              markers[i]  = drawTMaker(point, icon01,this,list[i]);
-            }else if(list[i].status == 1){
+              markers[i]  = drawTMaker(point, icon07,this,list[i]);
+            }else if(list[i].status == 2){
               let point = new T.LngLat(list[i].longitude,list[i].latitude);
-              markers[i]  = drawTMaker(point, icon02,this,list[i]);
+              markers[i]  = drawTMaker(point, icon06,this,list[i]);
             }
-
           }
         }
 
@@ -1093,10 +1097,10 @@
               let infoWin1 = new T.InfoWindow();
               let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
               let status;
-              if(txt.status == 0){
-                status = '关'
-              }else  if(txt.status == 1){
+              if(txt.status == 1){
                 status = '开'
+              }else  if(txt.status == 2){
+                status = '关'
               }else {
                 status = '故障'
               }
@@ -1169,36 +1173,36 @@
       handleTypeLight(val){
         this.showType = val
         if(val == 1){
-          this.getLampPostList();
+          this.getLampPostList('');
         }else{
-          this.getControlCabinetlist();
+          this.getControlCabinetlist('');
         }
       },
       //亮灯杆列表
-      getLampPostList(){
-        getLampPostList().then((res) => {
-          this.formData.lampPostNum = res.data.total;
-          this.lampPostList = res.data.list;
+      getLampPostList(status){
+        getLampPostList({status:status}).then((res) => {
+          this.lightData.lightCount = res.data.count;
+          this.lampPostList = res.data.data;
           this.mapPoint('lamp',this.lampPostList,this)
         });
       },
       //控制柜列表
-      getControlCabinetlist(){
-        getcontrolcabinetlist().then((res) => {
-          this.totalData.controlCabinetNum =  res.data.total;
-          let b= res.data.list;
-          let a = [{
-            address: "长江西路湘湖34北路",
-            latitude: 30.188826,
-            longitude:120.198799,
-            name: "长湘109",
-            status: 2,},{
-            address: "长江西路湘湖北23路",
-            latitude: 30.183412,
-            longitude: 120.220823,
-            name: "长湘109",
-            status: 2,}]
-          b = b.concat(a);
+      getControlCabinetlist(status){
+        getcontrolcabinetlist({status:status}).then((res) => {
+          this.lightData.cabinetCount =  res.data.count;
+          let b= res.data.data;
+          // let a = [{
+          //   address: "长江西路湘湖34北路",
+          //   latitude: 30.188826,
+          //   longitude:120.198799,
+          //   name: "长湘109",
+          //   status: 3,},{
+          //   address: "长江西路湘湖北23路",
+          //   latitude: 30.183412,
+          //   longitude: 120.220823,
+          //   name: "长湘109",
+          //   status: 3,}]
+          // b = b.concat(a);
           this.controlList = b
           this.mapPoint('control',this.controlList,this)
         });

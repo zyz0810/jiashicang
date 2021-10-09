@@ -85,6 +85,7 @@ export default {
     }
   },
   mounted() {
+    let echarts = require("echarts/lib/echarts")
     this.$nextTick(() => {
       this.initChart()
     })

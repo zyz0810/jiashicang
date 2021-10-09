@@ -160,7 +160,8 @@
             <div class="monitor_content text-center">
               <img src="./../../assets/image/index_img01.gif" class=""/>
               <div class="monitor_num clr_white f26 bold">1286</div>
-              <div class="monitor_detail clr_white bold">查看详情</div>
+              <div class="monitor_detail clr_white bold"><router-link :to="{path:'/general/overview/view'}">查看详情</router-link></div>
+
             </div>
           </div>
         </el-col>

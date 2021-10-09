@@ -27,7 +27,10 @@
 <!--            </div>-->
 <!--          </div>-->
 
-          <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="25vh" divwidth="100%"></PieChartTwo>
+<!--          <div>-->
+            <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="25vh" divwidth="100%"></PieChartTwo>
+<!--          </div>-->
+
         </div>
       <div class="mt_20">
         <p class="f20 bold txt_linear">备案审批类型分析（周）</p>
@@ -58,27 +61,27 @@
         <vueSeamlessScroll :data="list" class="seamless-warp text-center" :class-option="classOption">
           <ul class="flex table_ul" v-for="(item,index) in list" :key="item.id">
             <li style="width: 50px;">{{index}}</li>
-            <li class="flex-item ellipsisOne">{{item.name}}</li>
-            <li class="flex-item ellipsisOne">{{item.name2}}</li>
-            <li style="width: 80px;" class="ellipsisOne">{{item.end}}</li>
+            <li class="flex-item ellipsisOne">{{item.statutory_people}}</li>
+            <li class="flex-item ellipsisOne">{{item.apply_name}}</li>
+            <li style="width: 80px;" class="ellipsisOne">{{item.result}}</li>
           </ul>
         </vueSeamlessScroll>
       </div>
     </div>
     <div class="center_content clr_white text-center">
-      <div class="map_intro f14 bold flex baseColor weui-cell">
+      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint('广告审批')">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point25.png"/></div>
         <div class="weui-cell__bd">广告审批</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
+      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint('犬只审批')">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point26.png"/></div>
         <div class="weui-cell__bd">犬只审批</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
+      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint('工程渣土')">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point27.png"/></div>
         <div class="weui-cell__bd">工程渣土</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
+      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint('其他审批')">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point28.png"/></div>
         <div class="weui-cell__bd">其他审批</div>
       </div>
@@ -94,7 +97,7 @@
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           犬只审批
-          <span class="txt_linear">{{formData.quanzhi}}</span>
+          <span class="txt_linear">{{formData.quanzi}}</span>
         </div>
       </div>
       <div class="flex border shadow mr_20">
@@ -130,7 +133,7 @@
   import point02 from '@/assets/image/point26.png' // 引入刚才的map.js 注意路径
   import point03 from '@/assets/image/point27.png' // 引入刚才的map.js 注意路径
   import point04 from '@/assets/image/point28.png' // 引入刚才的map.js 注意路径
-  import {generalApprove} from '@/api/recordApproval'
+  import {generalApprove,checkIndex,checkWeek,checkAnalyse,listCheck} from '@/api/recordApproval'
   import {cleanCarAddressList, lastGPS} from "@/api/garbageLink";
   import {cos} from "@/utils/translate";
   import vueSeamlessScroll from 'vue-seamless-scroll'
@@ -143,47 +146,7 @@
       return {
         approvalData:{},
         listLoading:false,
-        list:[{
-          name:'倪维绞',
-          name2:'养犬许可-个人申请',
-          end:'审批通过'
-        },{
-          name:'杭州市滨江区尔似便利店',
-          name2:'设置其他户外广告设施和招牌、指示牌备案',
-          end:'审批通过'
-        },{
-          name:'杭州市滨江区羽炫食品便利店',
-          name2:'设置其他户外广告设施和招牌、指示牌备案',
-          end:'审批通过'
-        },{
-          name:'杭州市滨江区教育局',
-          name2:'城市建筑垃圾处置核准（处置）',
-          end:'审批通过'
-        },{
-          name:'张潆心',
-          name2:'养犬许可-个人申请',
-          end:'审批通过'
-        },{
-          name:'刘欢',
-          name2:'养犬许可-个人申请',
-          end:'审批通过'
-        },{
-          name:'钱旦玮',
-          name2:'养犬许可-个人申请',
-          end:'审批通过'
-        },{
-          name:'陈俊边',
-          name2:'养犬许可-个人申请',
-          end:'审批通过'
-        },{
-          name:'唐根霞',
-          name2:'养犬许可-个人申请',
-          end:'审批通过'
-        },{
-          name:'陈青霞',
-          name2:'养犬许可-个人申请',
-          end:'审批通过'
-        }],
+        list:[],
         chartDataThree: {
           title:{},
           tooltip: {
@@ -232,7 +195,7 @@
             left: '0',
             right: '0',
             bottom: '5',
-            top: '20',
+            top: '30',
             containLabel: true
           },
           //----------------   图例 legend  -----------------
@@ -259,7 +222,7 @@
             },
             splitLine: { show: false },//去除网格线
             type: 'category',
-            data: ['9.22', '9.23', '9.24', '9.25', '9.26', '9.27', '9.28']
+            data: []
           },
           yAxis: {
             axisTick: {
@@ -306,7 +269,7 @@
                 label : {show: true, color:'#F3E981'}
               }
             },
-            data: [11, 12, 12, 12, 17, 18, 17],
+            data: [],
             type: 'line'
           }]
         },
@@ -353,7 +316,7 @@
               },
               splitLine: { show: false },//去除网格线
               type: 'category',
-              data:['工程渣土','广告审批','其他审批','犬只审批',]
+              data:[]
             }
           ],
           series: [
@@ -389,7 +352,7 @@
 
                 }
               },
-              data: [7,13,19,60,]
+              data: []
             },
           ]
         },
@@ -425,7 +388,11 @@
       //
       // })
       this.onLoad();
-      this.getList();
+      // this.getList();
+      this.getPoint('');
+      this.getLineChart();
+      this.getBarChart();
+      this.getListData();
     },
     methods: {
       onLoad() {
@@ -440,12 +407,56 @@
       },
       getList(){
         generalApprove().then((res) => {
-          this.pointList = [];
+          // this.pointList = [];
           const {count,gongcheng,guanggao,qita,quanzhi} = res.data;
           this.formData = {count,gongcheng,guanggao,qita,quanzhi};
           // 犬只审批、工程渣土、广告审批、其他审批
           this.chartDataThree.series[0].data = [{
             name:'犬只审批',value:res.data.quanzhi
+          },{
+            name:'工程渣土',value:res.data.gongcheng
+          },{
+            name:'广告审批',value:res.data.guanggao
+          },{
+            name:'其他审批',value:res.data.qita
+          }];
+          // this.pointList = res.data.data;
+          // this.mapPoint(this.pointList);
+        });
+      },
+      getLineChart(){
+        checkWeek().then((res) => {
+          let x = res.data.map(item=>{return item.apply_date});
+          let y = res.data.map(item=>{return item.apply_date_count});
+          this.lineData.xAxis.data = x;
+          this.lineData.series[0].data = y;
+        });
+      },
+      getBarChart(){
+        checkAnalyse().then((res) => {
+          let x = res.data.map(item=>{return item.apply_name});
+          let y = res.data.map(item=>{return item.apply_name_count});
+          this.BarDataTwo.yAxis[0].data = x;
+          this.BarDataTwo.series[0].data = y;
+          console.log( this.BarDataTwo.yAxis.data)
+          console.log(y)
+        });
+      },
+      getListData(){
+        listCheck().then((res) => {
+          this.list = res.data;
+        });
+      },
+
+
+      getPoint(type){
+        checkIndex({type:type}).then((res) => {
+          this.pointList = [];
+          const {count,gongcheng,guanggao,qita,quanzi} = res.data;
+          this.formData = {count,gongcheng,guanggao,qita,quanzi};
+          // 犬只审批、工程渣土、广告审批、其他审批
+          this.chartDataThree.series[0].data = [{
+            name:'犬只审批',value:res.data.quanzi
           },{
             name:'工程渣土',value:res.data.gongcheng
           },{
@@ -508,15 +519,35 @@
             // 办件编号、申请人/单位、电话、地址、申请日期、办结日期、办理结果、权力名称、所属类型
             let sContent =
               '<div class="point_info">' +
-              '<p class="f14 time">办件编号：' + txt.number_no + '</p>' +
-              '<p class="f14 time">申请人/单位：' + txt.statutory_people + '</p>' +
-              '<p class="f14 time">电话：' + txt.phone + '</p>' +
-              '<p class="f14 time">地址：' + txt.address + '</p>' +
-              '<p class="f14 time">申请日期：' + txt.apply_date + '</p>' +
-              '<p class="f14 time">办结日期：' + txt.end_date + '</p>' +
-              '<p class="f14 time">办理结果：' + txt.result + '</p>' +
-              '<p class="f14 time">权力名称：' + txt.apply_name + '</p>' +
-              '<p class="f14 time">所属类型：' + txt.type + '</p>' +
+              '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+              '<tr>' +
+              '<td class="txt_6">办件编号</td><td>' + txt.number_no + '</td>' +
+              '</tr>'+
+              '<tr>' +
+              '<td>申请人/单位</td><td>' + txt.statutory_people + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>电话</td><td>' +  txt.phone + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>地址</td><td>' + txt.address + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>申请日期</td><td>' + txt.apply_date + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>办结日期</td><td>' + txt.end_date + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>办理结果</td><td>' + txt.result + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>权力名称</td><td>' + txt.apply_name + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>所属类型</td><td>' + txt.type + '</td>'+
+              '</tr>'+
+              '</table>'+
               '</div>';
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
@@ -525,17 +556,13 @@
           return marker;
         }
       },
+
     }
   }
 </script>
 <style lang="scss" scoped>
   @import '@/styles/variables.scss';
 
-  /deep/.tdt-infowindow-content-wrapper{
-    width: 400px;
-    background: url("./../../assets/image/pop_bg.png") left top no-repeat;
-    background-size: 100% 100%;
-  }
   .approval_num{
     height: 60px;
     background: url("./../../assets/image/approvalTitle_bg.png") center bottom no-repeat;

@@ -685,6 +685,8 @@
       }),
     },
     mounted() {
+
+      // import echarts from 'echarts'
       // 挂载完成后渲染地图
       this.$nextTick(function() {
         this.onLoad();

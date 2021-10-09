@@ -919,7 +919,8 @@ input[type="number"] {
 }
 
 .tdt-infowindow-content-wrapper{
-  width: 400px;
+  //width: 400px;
+  width: auto;
   background: url("./../assets/image/pop_bg.png") left top no-repeat;
   background-size: 100% 100%;
 }
@@ -1089,6 +1090,9 @@ iframe{
     border-top: 1px solid #234075;
     &:nth-child(2n){
       border-right: 1px solid #234075;
+    }
+    &.txt_6{
+      width: 100px;
     }
   }
 }

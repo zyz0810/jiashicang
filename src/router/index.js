@@ -121,6 +121,15 @@ export const asyncRoutes = [
           title: '综合概览',
           roles: ['admin']
         }
+      },{
+        path: 'overview/view',
+        component: () => import('@/views/general/view'),
+        name: '视频详情',
+        hidden: true,
+        meta: {
+          title: '视频详情',
+          roles: ['admin']
+        }
       },
     ]
   },
