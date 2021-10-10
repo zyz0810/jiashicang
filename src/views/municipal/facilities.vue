@@ -890,8 +890,14 @@
             let infoWin1 = new T.InfoWindow();
             let sContent =
               '<div class="point_info">' +
-              '<p class="f12 time">名称：' + txt.name + '</p>' +
-              '<p class="f12 time">地址：' + txt.address + '</p>' +
+              '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+              '<tr>' +
+              '<td class="txt_6">名称</td><td>' + txt.name + '</td>' +
+              '</tr>'+
+              '<tr>' +
+              '<td>地址</td><td>' + txt.address + '</td>'+
+              '</tr>'+
+              '</table>'+
               '</div>';
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
@@ -948,17 +954,17 @@
   }
 </script>
 <style lang="scss" scoped>
-  /deep/.tdt-infowindow-content-wrapper{
-    width: auto;
-    color: #fff;
-    background: #0a1f44;
-  }
+  /*/deep/.tdt-infowindow-content-wrapper{*/
+    /*width: auto;*/
+    /*color: #fff;*/
+    /*background: #0a1f44;*/
+  /*}*/
   .progress_cont{
     border: 1px solid rgb(15,50,53) !important;
   }
-  /deep/.tdt-infowindow-tip{
-    background: #0a1f44 !important;
-  }
+  /*/deep/.tdt-infowindow-tip{*/
+    /*background: #0a1f44 !important;*/
+  /*}*/
   .top_div{
     width: 50%;
     left: 20%;

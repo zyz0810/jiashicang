@@ -162,13 +162,14 @@
             {
               name: '备案审批概况',
               type: 'pie',
-              center: ['30%', '50%'],
-              radius: ['70%', '90%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: false,
-                position: 'center',
-              },
+              center: ['50%', '50%'],
+              radius: ['40%', '55%'],
+              avoidLabelOverlap: true,
+              // label: {
+              //   show: false,
+              //   position: 'center',
+              // },
+
               emphasis: {
                 label: {
                   show: true,
@@ -176,9 +177,48 @@
                   fontWeight: 'bold'
                 }
               },
-              labelLine: {
-                show: false
+              // labelLine: {
+              //   show: false
+              // },
+              markLine :{
+                label  :{
+                  show:true,
+                  position :'outside'
+                },
               },
+              labelLine:{
+                normal:{
+                  lineStyle: {
+                    color: '#fff'
+                  },
+                  length:10,
+                  length2 :25,
+                }
+              },
+              label :{
+                // formatter: [
+                //   '{c}',
+                //   '{b}',
+                //   '{d}'
+                // ].join('\n'),
+                // formatter: '{b}{c}({d})%',
+                formatter: '{b}：{c}',
+                verticalAlign :'bottom',
+                position:'outside',
+                textShadowOffsetY :10,
+                align :'right',
+                color:'white',
+                // height :60,
+                // lineHeight:30,
+                fontSize:'14',
+                rich: {
+                  a: {
+                    verticalAlign:'bottom',
+                    // 没有设置 `verticalAlign`，则 `verticalAlign` 为 bottom
+                  }
+                }
+              },
+
               data: []
             }
           ]

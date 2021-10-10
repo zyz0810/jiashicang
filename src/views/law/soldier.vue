@@ -386,13 +386,28 @@
             console.log(txt)
             let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
             let type ;
+
             let sContent =
               '<div class="point_info">' +
-              '<p class="f12 time">监控名称：' + txt.name + '</p>' +
-              '<p class="f12 time">所属区域：' + txt.depart_name + '</p>' +
-              '<p class="f12 time">来源区域：' + txt.community_name + '</p>' +
-              '<p class="f12 time">所在地址：' + txt.install_place + '</p>' +
+              '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+              '<tr>' +
+              '<td class="txt_6">监控名称</td><td>' + txt.name + '</td>' +
+              '</tr>'+
+              '<tr>' +
+              '<td>所属区域</td><td>' + txt.depart_name + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>来源区域</td><td>' + txt.community_name + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>来源区域</td><td>' + txt.install_place + '</td>'+
+              '</tr>'+
+              '</table>'+
               '</div>';
+            // '<p class="f12 time">监控名称：' + txt.name + '</p>' +
+            // '<p class="f12 time">所属区域：' + txt.depart_name + '</p>' +
+            // '<p class="f12 time">来源区域：' + txt.community_name + '</p>' +
+            // '<p class="f12 time">所在地址：' + txt.install_place + '</p>' +
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
 

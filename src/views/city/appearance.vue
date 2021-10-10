@@ -1001,21 +1001,50 @@
             console.log(txt)
             let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
             let sContent;
+
             if(type == 'yy'){
+              // '<p class="f14 time">名称：' + txt.name + '</p>' +
+              // '<p class="f14 time">状态：' + txt.status + '</p>' +
+              // '<p class="f14 time">地址：' + txt.address + '</p>' +
               sContent =
                 '<div class="point_info">' +
-                '<p class="f14 time">名称：' + txt.name + '</p>' +
-                '<p class="f14 time">状态：' + txt.status + '</p>' +
-                '<p class="f14 time">地址：' + txt.address + '</p>' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">名称</td><td>' + txt.name + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>状态</td><td>' + txt.status + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>地址</td><td>' + txt.address + '</td>'+
+                '</tr>'+
+                '</table>'+
                 '</div>';
             }else{
+              // '<p class="f14 time">监控名称：' + txt.name + '</p>' +
+              // '<p class="f14 time">所属区域：' + txt.depart_name + '</p>' +
+              // '<p class="f14 time">来源区域：' + txt.community_name + '</p>' +
+              // '<p class="f14 time">所在地址：' + txt.install_place + '</p>' +
+              // '<p class="f14 baseColor text-right">查看视频</p>' +
               sContent =
                 '<div class="point_info">' +
-                '<p class="f14 time">监控名称：' + txt.name + '</p>' +
-                '<p class="f14 time">所属区域：' + txt.depart_name + '</p>' +
-                '<p class="f14 time">来源区域：' + txt.community_name + '</p>' +
-                '<p class="f14 time">所在地址：' + txt.install_place + '</p>' +
-                '<p class="f14 baseColor text-right">查看视频</p>' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">监控名称</td><td>' + txt.name + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>所属区域</td><td>' + txt.depart_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>来源区域</td><td>' + txt.community_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>来源区域</td><td>' + txt.install_place + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td></td><td class="text-right baseColor" onClick="handleVideo()">查看视频</td>'+
+                '</tr>'+
+                '</table>'+
                 '</div>';
             }
             infoWin1.setContent(sContent);

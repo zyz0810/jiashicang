@@ -38,19 +38,19 @@
     </div>
 
     <div class="center_content clr_white text-center no_right">
-      <div class="map_intro f14 bold flex baseColor weui-cell">
+      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint(1)">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>
         <div class="weui-cell__bd">AI视频</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
+      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint(2)">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
         <div class="weui-cell__bd">普通视频</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
+      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint(3)">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point37.png"/></div>
         <div class="weui-cell__bd">河道视频</div>
       </div>
-      <div class="map_intro f12 bold flex baseColor weui-cell">
+      <div class="map_intro f12 bold flex baseColor weui-cell" @click="getPoint(4)">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point42.png"/></div>
         <div class="weui-cell__bd">停车场视频</div>
       </div>
@@ -77,13 +77,13 @@
       </div>
       <div class="flex border shadow">
         <div class="flex-item">
-          到视频河道
+          河道视频
           <span class="txt_linear">{{formData.qita}}</span>
         </div>
       </div>
     </div>
 
-    <div class="back"><router-link :to="{path:'/general/overview'}"><i class="el-icon-back f26 bold clr_white"></i></router-link></div>
+    <div class="back"><router-link :to="{path:'/general/overview'}"><i class="iconfont icon-fanhui f26 bold clr_white"></i></router-link></div>
   </div>
 </template>
 
@@ -98,11 +98,11 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point13.png'
-  import point02 from "@/assets/image/point26.png";
-  import point03 from "@/assets/image/point27.png";
-  import point04 from "@/assets/image/point28.png"; // 引入刚才的map.js 注意路径
-
+  import point01 from '@/assets/image/point36.png'
+  import point02 from "@/assets/image/point38.png";
+  import point03 from "@/assets/image/point37.png";
+  import point04 from "@/assets/image/point42.png"; // 引入刚才的map.js 注意路径
+  import {pointList} from '@/api/system'
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -130,6 +130,7 @@
       // })
       this.onLoad();
       window.handleVideo = this.handleVideo;
+      this.getPoint('');
     },
     methods: {
       onLoad() {
@@ -140,7 +141,12 @@
         // this.addCtrl()
         this.map.setStyle('indigo');
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
-
+      },
+      getPoint(type){
+        pointList({type:'allList',class:type}).then((res) => {
+          this.pointList = res.data;
+          this.mapPoint(this.pointList)
+        });
       },
       mapPoint(list){
         //创建图片对象
@@ -169,18 +175,17 @@
 
         for (let i = 0; i < list.length; i++) {
           // var marker
-          let point = new T.LngLat(list[i].log,list[i].lat);
-          if(list[i].type == '犬只审批'){
-            markers[i]  = drawTMaker(point, icon02,this,list[i]);
-          }else if(list[i].type == '广告审批'){
+          // 监控类型1AI视频、2河道视频、3停车场视频、4普通视频
+          let point = new T.LngLat(list[i].longitude,list[i].latitude);
+          if(list[i].class == 1){
             markers[i]  = drawTMaker(point, icon01,this,list[i]);
-          }else if(list[i].type == '工程渣土'){
+          }else if(list[i].class == 2){
+            markers[i]  = drawTMaker(point, icon02,this,list[i]);
+          }else if(list[i].class == 3){
             markers[i]  = drawTMaker(point, icon03,this,list[i]);
-          }else if(list[i].type == '其他审批'){
-
+          }else if(list[i].class == 4){
             markers[i]  = drawTMaker(point, icon04,this,list[i]);
           }
-
         }
 
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
@@ -189,22 +194,23 @@
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {
             let infoWin1 = new T.InfoWindow();
-
-            // 办件编号、申请人/单位、电话、地址、申请日期、办结日期、办理结果、权力名称、所属类型
             let sContent =
               '<div class="point_info">' +
               '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
               '<tr>' +
-              '<td class="txt_6">监控点名称</td><td>' + '没接口' + '</td>' +
+              '<td class="txt_6">监控名称</td><td>' + txt.name + '</td>' +
               '</tr>'+
               '<tr>' +
-              '<td>监控类型</td><td>' + '没接口' + '</td>'+
+              '<td>所属区域</td><td>' + txt.depart_name + '</td>'+
               '</tr>'+
               '<tr>' +
-              '<td>地址</td><td>' +  '没接口' + '</td>'+
+              '<td>来源区域</td><td>' + txt.community_name + '</td>'+
               '</tr>'+
               '<tr>' +
-              '<td></td><td class="text-right" onClick="handleVideo()">查看视频</td>'+
+              '<td>所在地址</td><td>' + txt.install_place + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td></td><td class="text-right baseColor" onClick="handleVideo()">查看视频</td>'+
               '</tr>'+
               '</table>'+
               '</div>';

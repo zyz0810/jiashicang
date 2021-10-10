@@ -389,11 +389,25 @@
 
             // 办件编号、申请人/单位、电话、地址、申请日期、办结日期、办理结果、权力名称、所属类型
             let sContent =
+              // '<p class="f14 time">名称：' + txt.name + '</p>' +
+              // '<p class="f14 time">违法建筑总宗数：' + txt.num01 + '</p>' +
+              // '<p class="f14 time">违法占地总面积：' + txt.num02 + '</p>' +
+              // '<p class="f14 time">违法建筑总面积：' + txt.num03 + '</p>' +
               '<div class="point_info">' +
-              '<p class="f14 time">名称：' + txt.name + '</p>' +
-              '<p class="f14 time">违法建筑总宗数：' + txt.num01 + '</p>' +
-              '<p class="f14 time">违法占地总面积：' + txt.num02 + '</p>' +
-              '<p class="f14 time">违法建筑总面积：' + txt.num03 + '</p>' +
+              '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+              '<tr>' +
+              '<td class="txt_6">名称</td><td>' + txt.name + '</td>' +
+              '</tr>'+
+              '<tr>' +
+              '<td>违法建筑总宗数</td><td>' + txt.num01 + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>违法占地总面积</td><td>' + txt.num02 + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>违法建筑总面积</td><td>' + txt.num03 + '</td>'+
+              '</tr>'+
+              '</table>'+
               '</div>';
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);

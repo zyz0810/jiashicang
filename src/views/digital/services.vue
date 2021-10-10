@@ -113,7 +113,7 @@
 <!--      </div>-->
       <div class="left_bottom mt_20">
         <p class="f20 bold txt_linear">违规次数</p>
-        <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="25vh" divwidth="100%"></PieChartTwo>
+        <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="28vh" divwidth="100%"></PieChartTwo>
       </div>
 
     </div>
@@ -210,7 +210,7 @@
           </div>
         </div>
     <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 1">
-      <div class="flex f16 bold mr_20 border shadow">
+      <div class="flex f16 bold mr_20 border shadow" @click="handleTwoPointType(1)">
         <div class="flex-item">
           总泊位数（没接口）
           <span class="txt_linear">{{carData.shangBao}}</span>
@@ -224,13 +224,13 @@
           <span class="txt_linear">{{carData.undisposed}}</span>
         </div>
       </div>
-      <div class="flex f16 bold mr_20 border shadow">
+      <div class="flex f16 bold mr_20 border shadow" @click="handleTwoPointType(2)">
         <div class="flex-item">
           运维人员（没接口）
           <span class="txt_linear">{{carData.yellow_num}}</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow">
+      <div class="flex f16 bold border shadow" @click="handleTwoPointType(3)">
         <div class="flex-item">
           视频（没接口）
           <span class="txt_linear">{{carData.yellow_num}}</span>
@@ -269,7 +269,7 @@
         <div class="weui-cell__bd">停车场视频</div>
       </div>
     </div>
-    <div class="center_content clr_white text-center" v-if="activeIndex == 1">
+    <div class="center_content clr_white text-center" v-if="activeIndex == 1 && pointTwoType == 1">
       <div class="map_intro f12 bold flex baseColor weui-cell">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point30.png"/></div>
         <div class="weui-cell__bd">重点监控区域</div>
@@ -285,6 +285,18 @@
       <div class="map_intro f14 bold flex baseColor weui-cell">
         <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
         <div class="weui-cell__bd">禁行区域</div>
+      </div>
+    </div>
+    <div class="center_content clr_white text-center" v-if="activeIndex == 1 && pointTwoType == 2">
+      <div class="map_intro f12 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point43.png"/></div>
+        <div class="weui-cell__bd">运维人员</div>
+      </div>
+    </div>
+    <div class="center_content clr_white text-center" v-if="activeIndex == 1 && pointTwoType == 3">
+      <div class="map_intro f12 bold flex baseColor weui-cell">
+        <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
+        <div class="weui-cell__bd">普通视频</div>
       </div>
     </div>
     <div class="center_content clr_white text-center" v-if="activeIndex == 2 && showType==1">
@@ -334,6 +346,7 @@
   import point07 from '@/assets/image/point35.png' // 亮灯开
   import point08 from '@/assets/image/point36.png' // AI视频
   import point09 from '@/assets/image/point38.png' // 普通视频
+  import point10 from '@/assets/image/point43.png' // 运维人员
   import toolTipBg from '@/assets/image/digital-bg.png' // 引入刚才的map.js 注意路径
   import videoView from "./videoView";
   import {pointList} from '@/api/system'
@@ -651,12 +664,8 @@
               name: '访问来源',
               type: 'pie',
               // center: ['30%', '50%'],
-              radius: ['70%', '90%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: false,
-                position: 'center',
-              },
+              radius: ['55%', '75%'],
+              avoidLabelOverlap: true,
               emphasis: {
                 label: {
                   show: true,
@@ -664,8 +673,43 @@
                   fontWeight: 'bold'
                 }
               },
-              labelLine: {
-                show: false
+              markLine :{
+                label  :{
+                  show:true,
+                  position :'outside'
+                },
+              },
+              labelLine:{
+                normal:{
+                  lineStyle: {
+                    color: '#fff'
+                  },
+                  length:10,
+                  length2 :25,
+                }
+              },
+              label :{
+                // formatter: [
+                //   '{c}',
+                //   '{b}',
+                //   '{d}'
+                // ].join('\n'),
+                // formatter: '{b}{c}({d})%',
+                formatter: '{b}：{c}',
+                verticalAlign :'bottom',
+                position:'outside',
+                textShadowOffsetY :10,
+                align :'right',
+                color:'white',
+                // height :60,
+                // lineHeight:30,
+                fontSize:'14',
+                rich: {
+                  a: {
+                    verticalAlign:'bottom',
+                    // 没有设置 `verticalAlign`，则 `verticalAlign` 为 bottom
+                  }
+                }
               },
               data: [{name:'骑呗',value:1680},{name:'青桔',value:1180},{name:'摩拜',value:880},{name:'哈罗',value:880}]
             }
@@ -919,6 +963,9 @@
         timer:'',
         timerTwo:'',
         timerThree:'',
+        pointTwoType:1,
+        userList:[],
+        commonVideoList:[],
       }
     },
 
@@ -962,7 +1009,7 @@
           }else{
             that.chartDataThree.color=['rgb(48,171,241)','rgb(146,117,243)','rgb(249,138,127)','rgb(255,213,84)'];
             console.log('22222dianjidainji')
-            that.chartDataThree.series[0].data =  [{name:'青桔',value:0},{name:'哈罗',value:0},{name:'摩拜',value:0},{name:'骑呗',value:0}];
+            that.chartDataThree.series[0].data =  [{name:'青桔',value:1180},{name:'哈罗',value:880},{name:'摩拜',value:880},{name:'骑呗',value:1680}];
             i = 1;
           }
 
@@ -974,6 +1021,18 @@
           this.getParkList();
         }else {
           this.getParkVideoList();
+        }
+      },
+      handleTwoPointType(val){
+        this.pointTwoType = val;
+        if(val == 1){
+          // 停车场点位列表
+        }else if(val == 2) {
+          // 运维人员点位列表
+          this.getUser();
+        }else {
+          // 普通视频点位列表
+          this.getCommonVideoList();
         }
       },
       handleVideo(txt){
@@ -994,6 +1053,23 @@
         }else if(val == 1){
           this.getPointList();
         }
+      },
+      //运维人员点位
+      getUser(){
+        this.mapPoint('user',this.userList,this)
+      },
+      //普通视频点位
+      getCommonVideoList(){
+        pointList({type:'allList',class:2}).then((res) => {
+          this.commonVideoList = res.data;
+          this.mapPoint('point',this.commonVideoList,this)
+        });
+      },
+      getParkVideoList(){
+        pointList({type:'allList',class:4}).then((res) => {
+          this.pointList = res.data;
+          this.mapPoint('point',this.pointList,this)
+        });
       },
       getPointList(){
         pointList({type:'allList'}).then((res) => {
@@ -1177,27 +1253,69 @@
                }else{
                  sContent =
                    '<div class="point_info">' +
-                   '<p class="f14 time">监控名称：' + txt.name + '</p>' +
-                   '<p class="f14 time">所属区域：' + txt.depart_name + '</p>' +
-                   '<p class="f14 time">来源区域：' + txt.community_name + '</p>' +
-                   '<p class="f14 time">所在地址：' + txt.install_place + '</p>' +
-                   '<p class="f14 baseColor text-right" onClick="handleVideo()">查看视频</p>' +
+                   '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                   '<tr>' +
+                   '<td class="txt_6">监控名称</td><td>' + txt.name + '</td>' +
+                   '</tr>'+
+                   '<tr>' +
+                   '<td>所属区域</td><td>' + txt.depart_name + '</td>'+
+                   '</tr>'+
+                   '<tr>' +
+                   '<td>来源区域</td><td>' + txt.community_name + '</td>'+
+                   '</tr>'+
+                   '<tr>' +
+                   '<td>所在地址</td><td>' + txt.install_place + '</td>'+
+                   '</tr>'+
+                   '<tr>' +
+                   '<td></td><td class="text-right baseColor" onClick="handleVideo()">查看视频</td>'+
+                   '</tr>'+
+                   '</table>'+
                    '</div>';
                }
               }else if(type == 'point'){
+
+                // '<p class="f14 time">监控名称：' + txt.name + '</p>' +
+                // '<p class="f14 time">所属区域：' + txt.depart_name + '</p>' +
+                // '<p class="f14 time">来源区域：' + txt.community_name + '</p>' +
+                // '<p class="f14 time">所在地址：' + txt.install_place + '</p>' +
+                // '<p class="f14 baseColor text-right" onClick="handleVideo()">查看视频</p>' +
+
                 sContent =
                   '<div class="point_info">' +
-                  '<p class="f14 time">监控名称：' + txt.name + '</p>' +
-                  '<p class="f14 time">所属区域：' + txt.depart_name + '</p>' +
-                  '<p class="f14 time">来源区域：' + txt.community_name + '</p>' +
-                  '<p class="f14 time">所在地址：' + txt.install_place + '</p>' +
-                  '<p class="f14 baseColor text-right" onClick="handleVideo()">查看视频</p>' +
+                  '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                  '<tr>' +
+                  '<td class="txt_6">监控名称</td><td>' + txt.name + '</td>' +
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>所属区域</td><td>' + txt.depart_name + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>来源区域</td><td>' + txt.community_name + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>所在地址</td><td>' + txt.install_place + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td></td><td class="text-right baseColor" onClick="handleVideo()">查看视频</td>'+
+                  '</tr>'+
+                  '</table>'+
                   '</div>';
               }else{
+                // '<p class="f14 time">监控名称：' + txt.name + '</p>' +
+                // '<p class="f14 time">状态：' + status + '</p>' +
                 sContent =
                   '<div class="point_info">' +
-                  '<p class="f14 time">监控名称：' + txt.name + '</p>' +
-                  '<p class="f14 time">状态：' + status + '</p>' +
+                  '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                  '<tr>' +
+                  '<td>监控名称</td><td>' + txt.name + '</td>' +
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>状态</td><td>' + status + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>地址</td><td>' + txt.address + '</td>'+
+                  '</tr>'+
+                  '</table>'+
                   '</div>';
               }
               infoWin1.setContent(sContent);
@@ -1294,20 +1412,6 @@
           });
 
         });
-      },
-      getParkVideoList(){
-        // parkList().then((res) => {
-        //   // this.parkList = res.data.data;
-        //   let a = res.data.data;
-        //   pointList({type:'allList'}).then((res) => {
-        //     // this.pointList = res.data;
-        //     let b = a.concat(res.data);
-        //     this.parkList = b;
-        //     this.mapPoint('park',this.parkList)
-        //   });
-        //
-        // });
-        this.mapPoint('point',[],this)
       },
     }
   }

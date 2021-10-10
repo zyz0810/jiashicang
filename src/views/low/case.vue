@@ -906,23 +906,53 @@
             if(type == 0){
               sContent =
                 '<div class="point_info">' +
-                '<p class="f12 time">任务号：' + txt.number_no + '</p>' +
-                '<p class="f12 time">问题来源：' + txt.source + '</p>' +
-                '<p class="f12 time">问题状态：' + txt.status + '</p>' +
-                '<p class="f12 time">小类名称：' + txt.small_category + '</p>' +
-                '<p class="f12 time">上报时间：' + txt.create_time + '</p>' +
-                '<p class="f12 time">问题描述：' + txt.description + '</p>' +
-                '<p class="f12 time">所属区域：' + txt.professional_department_belongs + '</p>' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">任务号</td><td>' + txt.number_no + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>问题来源</td><td>' + txt.source + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>问题状态</td><td>' + txt.status + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>小类名称</td><td>' + txt.small_category + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>上报时间</td><td>' + txt.create_time + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>问题描述</td><td>' + txt.description + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>所属区域</td><td>' + txt.professional_department_belongs + '</td>'+
+                '</tr>'+
+                '</table>'+
                 '</div>';
             }else if(type == 1){
               sContent =
                 '<div class="point_info">' +
-                '<p class="f12 time">受理单编号：' + txt.number_no + '</p>' +
-                '<p class="f12 time">工单状态：' + txt.status + '</p>' +
-                '<p class="f12 time">投诉来源：' + txt.source + '</p>' +
-                '<p class="f12 time">详细类型：' + txt.detail_type + '</p>' +
-                '<p class="f12 time">反映内容：' + txt.react_content + '</p>' +
-                '<p class="f12 time">违法地址：' + txt.Illegal_address + '</p>' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">受理单编号</td><td>' + txt.number_no + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>工单状态</td><td>' + txt.status + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>投诉来源</td><td>' + txt.source + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>详细类型</td><td>' + txt.detail_type + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>反映内容</td><td>' + txt.react_content + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>违法地址</td><td>' + txt.Illegal_address + '</td>'+
+                '</tr>'+
+                '</table>'+
                 '</div>';
             }else if(type == 2){
               // 指挥平台（AI上报，问题登记）：案件编号、事件来源、小类、上报时间、问题描述、事件位置；图片
@@ -936,30 +966,56 @@
               if(txt.source == 1){
                 sContent =
                   '<div class="point_info">' +
-                  '<p class="f12 time">案件编号：' + txt.number_no + '</p>' +
-                  '<p class="f12 time">事件来源：' + source + '</p>' +
-                  '<p class="f12 time">小类：' + txt.small_category_name + '</p>' +
-                  '<p class="f12 time">上报时间：' + create_at + '</p>' +
-                  '<p class="f12 time">问题描述：' + txt.description + '</p>' +
-                  '<p class="f12 time">事件位置：' + txt.address + '</p>' +
-                  '<p class="f12 time text-right" onClick="handleVideo('+aa+')">查看图片</p>' +
+                  '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                  '<tr>' +
+                  '<td class="txt_6">案件编号</td><td>' + txt.number_no + '</td>' +
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>事件来源</td><td>' + source + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>小类</td><td>' + txt.small_category_name + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>上报时间</td><td>' + create_at + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>问题描述</td><td>' + txt.description + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>事件位置</td><td>' + txt.address + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td></td><td class="text-right baseColor" onClick="handleVideo('+aa+')">查看图片</td>'+
+                  '</tr>'+
+                  '</table>'+
                   '</div>';
               }else{
                 sContent =
                   '<div class="point_info">' +
-                  '<p class="f12 time">案件编号：' + txt.number_no + '</p>' +
-                  '<p class="f12 time">事件来源：' + source + '</p>' +
-                  '<p class="f12 time">小类：' + txt.small_category_name + '</p>' +
-                  '<p class="f12 time">上报时间：' + create_at + '</p>' +
-                  '<p class="f12 time">问题描述：' + txt.description + '</p>' +
-                  '<p class="f12 time">事件位置：' + txt.address + '</p>' +
+                  '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                  '<tr>' +
+                  '<td class="txt_6">案件编号</td><td>' + txt.number_no + '</td>' +
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>事件来源</td><td>' + source + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>小类</td><td>' + txt.small_category_name + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>上报时间</td><td>' + create_at + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>问题描述</td><td>' + txt.description + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>事件位置</td><td>' + txt.address + '</td>'+
+                  '</tr>'+
+                  '</table>'+
                   '</div>';
               }
-
-
             }
-
-
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
 

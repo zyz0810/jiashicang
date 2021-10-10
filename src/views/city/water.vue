@@ -747,12 +747,24 @@
             }else if(txt.type == 4){
               type = '视频点位'
             }
-            let sContent =
+            let sContent ='<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+
               '<div class="point_info">' +
-              '<p class="f12 time">站点名称：' + txt.stnm + '</p>' +
-              '<p class="f12 time">站点类型：' + type + '</p>' +
-              '<p class="f12 time">地址：' + txt.address + '</p>' +
+              '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+              '<tr>' +
+              '<td class="txt_6">站点名称</td><td>' + txt.stnm + '</td>' +
+              '</tr>'+
+              '<tr>' +
+              '<td>站点类型</td><td>' + type + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>地址</td><td>' + txt.address + '</td>'+
+              '</tr>'+
+              '</table>'+
               '</div>';
+            // '<p class="f12 time">站点名称：' + txt.stnm + '</p>' +
+            // '<p class="f12 time">站点类型：' + type + '</p>' +
+            // '<p class="f12 time">地址：' + txt.address + '</p>' +
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
 
@@ -787,17 +799,17 @@
 <style lang="scss" scoped>
   @import '@/styles/variables.scss';
 
-  /deep/.tdt-infowindow-content-wrapper{
-    width: auto;
-    color: #fff;
-    background: #0a1f44;
-  }
+  /*/deep/.tdt-infowindow-content-wrapper{*/
+    /*width: auto;*/
+    /*color: #fff;*/
+    /*background: #0a1f44;*/
+  /*}*/
   .progress_cont{
     border: 1px solid rgb(15,50,53) !important;
   }
-  /deep/.tdt-infowindow-tip{
-    background: #0a1f44 !important;
-  }
+  /*/deep/.tdt-infowindow-tip{*/
+    /*background: #0a1f44 !important;*/
+  /*}*/
 
   .water_num01{
     .flex-item{

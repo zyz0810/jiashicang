@@ -823,11 +823,26 @@
             let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
             let sContent =
               '<div class="point_info">' +
-              '<p class="f12 time">车牌号：' + txt.Vehicle + '</p>' +
-              '<p class="f12 time">车型：' + '（没接口）' + '</p>' +
-              '<p class="f12 time">品牌类型：' + '（没接口）' + '</p>' +
-              '<p class="f12 time">车辆类型：' + '（没接口）' + '</p>' +
-              '<p class="f12 time">地址：' + txt.Address + '</p>' +
+              '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+              '<tr>' +
+              '<td class="txt_6">车牌号</td><td>' + txt.Vehicle + '</td>' +
+              '</tr>'+
+              '<tr>' +
+              '<td>车型</td><td>' + '（没接口）' + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>品牌类型</td><td>' + '（没接口）' + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>车辆类型</td><td>' + '（没接口）' + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>地址</td><td>' + txt.Address + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td></td><td class="text-right baseColor">查看轨迹</td>'+
+              '</tr>'+
+              '</table>'+
               '</div>';
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
@@ -885,7 +900,7 @@
         }
       }
       .color_bg01{
-        background: rgba(255,100,71,1);
+        background: #bb1f02;
       }
       .color_bg02{
         background: rgba(254,98,71,1);
