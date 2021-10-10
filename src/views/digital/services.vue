@@ -270,20 +270,20 @@
       </div>
     </div>
     <div class="center_content clr_white text-center" v-if="activeIndex == 1 && pointTwoType == 1">
-      <div class="map_intro f12 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point30.png"/></div>
+      <div class="map_intro no_bg border shadow f12 bold flex baseColor weui-cell">
+        <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point30.png"/></div>-->
         <div class="weui-cell__bd">重点监控区域</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>
+      <div class="map_intro no_bg border shadow f14 bold flex baseColor weui-cell">
+        <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>-->
         <div class="weui-cell__bd">停车区域</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
+      <div class="map_intro no_bg border shadow f14 bold flex baseColor weui-cell">
+        <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>-->
         <div class="weui-cell__bd">禁停区域</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
+      <div class="map_intro no_bg border shadow f14 bold flex baseColor weui-cell">
+        <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>-->
         <div class="weui-cell__bd">禁行区域</div>
       </div>
     </div>
@@ -966,6 +966,7 @@
         pointTwoType:1,
         userList:[],
         commonVideoList:[],
+        bikePartList:[],
       }
     },
 
@@ -1047,11 +1048,15 @@
       handlePageType(val){
         this.activeIndex = val;
         if(val == 0){
+          this.pointType = 1;
           this.getParkList();
-        }else if(val == 2){
-          this.getControlCabinetlist();
         }else if(val == 1){
-          this.getPointList();
+          //获取共享单车泊车位
+          this.pointTwoType = 1;
+          this.getBikePartList();
+        }else if(val == 2){
+          this.showType = 1;
+          this.getControlCabinetlist();
         }
       },
       //运维人员点位
@@ -1398,6 +1403,11 @@
             count:res.data.light.count
           };
         });
+      },
+      //获取共享单车泊车位点位
+      getBikePartList(){
+        this.bikePartList = [];
+        this.mapPoint('park',this.bikePartList,this)
       },
       //获取停车场点位及视频点位
       getParkList(){

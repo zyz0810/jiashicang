@@ -1023,6 +1023,9 @@ iframe{
     margin: 0 auto;
     background: url("./../assets/image/intro_bg.png") center bottom no-repeat;
     background-size: 100% 100%;
+    &.no_bg{
+      background: rgba(0,0,0,0.3);
+    }
     .weui-cell__hd{
       width: 40px;
       img{
