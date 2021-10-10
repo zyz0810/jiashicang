@@ -313,6 +313,17 @@
                   color: '#fff',
                   fontSize:'13',
                   fontWeight:'bold'
+                },
+                //设置文本过长超出隐藏...表示
+                margin: 8,
+                formatter:function(params){
+                  var val="";
+                  if(params.length >6){
+                    val = params.substr(0,6)+'...';
+                    return val;
+                  }else{
+                    return params;
+                  }
                 }
               },
               splitLine: { show: false },//去除网格线
@@ -442,6 +453,7 @@
           setInterval(function () {
             console.log('1111dianjidainji')
             if(i==1){
+              this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
               this.chartDataThree.series[0].data = [{
                 name:'犬只审批',value:res.data.quanzhi
               },{
@@ -453,6 +465,7 @@
               }];
               i = 2;
             }else{
+              this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
               this.chartDataThree.series[0].data = [];
               i = 1;
             }
@@ -466,6 +479,7 @@
           let i = 1;
           setInterval(function () {
             if(i==1){
+              this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
               this.chartDataThree.series[0].data = [{
                 name:'犬只审批',value:res.data.quanzhi
               },{
@@ -476,6 +490,7 @@
                 name:'其他审批',value:res.data.qita
               }];
             }else{
+              this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
               this.chartDataThree.series[0].data = [{
                 name:'犬只审批',value:0
               },{
@@ -535,6 +550,7 @@
           let i = 1;
           this.timer = setInterval(function () {
             if(i==1){
+              that.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
               console.log('1111dianjidainji')
               that.chartDataThree.series[0].data = [{
                 name:'犬只审批',value:res.data.quanzi
@@ -547,12 +563,12 @@
               }];
               i = 2;
             }else{
+              that.chartDataThree.color=['rgb(48,171,241)','rgb(146,117,243)','rgb(249,138,127)','rgb(255,213,84)'];
               console.log('22222dianjidainji')
               that.chartDataThree.series[0].data = [{
                 name:'工程渣土',value:res.data.gongcheng
               },{
                 name:'其他审批',value:res.data.qita
-
               },{
                 name:'广告审批',value:res.data.guanggao
               },{

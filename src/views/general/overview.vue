@@ -108,19 +108,19 @@
         <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10">
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">执法办案</span></div>
-            <div class="flex mt_10" style=" align-items: stretch;">
-              <ul class="f16 clr_white bold anjian_cegory mr_20">
+            <div class="flex mt_10 ml_10" style=" align-items: stretch;">
+              <ul class="clr_white bold anjian_cegory mr_20">
                 <li class="flex">
-                  <span class="block f26 text-center"><animate-number from="0" :to="formData.case.count" :key="formData.case.count" :duration="3000" class="f20"></animate-number></span>
-                  <p>今日上报案件</p>
+                  <span class="block f26 text-center"><animate-number from="0" :to="formData.case.count" :key="formData.case.count" :duration="3000" ></animate-number></span>
+                  <p class="f14 txtColor">今日上报案件</p>
                 </li>
                 <li class="flex mt_10">
-                  <span class="block f26 text-center"><animate-number from="0" :to="formData.case.chuli" :key="formData.case.chuli" :duration="3000" class="f20"></animate-number></span>
-                  <p>今日受理案件</p>
+                  <span class="block f26 text-center"><animate-number from="0" :to="formData.case.chuli" :key="formData.case.chuli" :duration="3000"></animate-number></span>
+                  <p class="f14 txtColor">今日受理案件</p>
                 </li>
                 <li class="flex mt_10">
-                  <span class="block f26 text-center"><animate-number from="0" :to="formData.case.end" :key="formData.case.end" :duration="3000" class="f20"></animate-number></span>
-                  <p>今日结案案件</p>
+                  <span class="block f26 text-center"><animate-number from="0" :to="formData.case.end" :key="formData.case.end" :duration="3000"></animate-number></span>
+                  <p class="f14 txtColor">今日结案案件</p>
                 </li>
               </ul>
 <!--              <div class="map_echart text-center">-->
@@ -129,11 +129,11 @@
 <!--                &lt;!&ndash;<div id='mapDiv' class="mapDiv" style="width: 250px;height: 300px;"></div>&ndash;&gt;-->
 <!--                <img src="./../../assets/image/map.png" class="my_map"/>-->
 <!--              </div>-->
-              <div class="anjian_genzong bold">
+              <div class="anjian_genzong bold mr_20">
                 <p class="txtColor text-center bold f18">案件实时跟踪</p>
                 <div class="weui-cells clr_white">
 
-                  <vueSeamlessScroll :data="formData.case.list" class="seamless-warp text-center" :class-option="classOption">
+                  <vueSeamlessScroll :data="formData.case.list" class="seamless-warp" :class-option="classOption">
                     <div class="weui-cell" v-for="item in formData.case.list">
                       <div class="weui-cell__hd flex">
                         <span :class="['tag f12',item.source==1?'bg_purple':'bg_blue02']">{{item.source == '1'?'问题登记':'AI上报'}}</span>
@@ -764,17 +764,17 @@
     }
   }
   .anjian_cegory{
-    width: 190px;
+    width: 220px;
     li{
-      height: 90px;
-      line-height: 90px;
+      height: 100px;
+      line-height: 100px;
       background: url("./../../assets/image/index-num-bg02.png") left top no-repeat;
       background-size: 100% 100%;
       span{
-        width: 90px;
+        width: 110px;
       }
       p{
-        width: 100px;
+        width: 110px;
         /*margin-left: 10px;*/
       }
     }

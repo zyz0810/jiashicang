@@ -126,7 +126,7 @@
         <div class="weui-cell__bd bold">
           <p class="f16">当前亮灯情况</p>
           <div class="progress_cont mt_10 progress_light">
-            <el-progress :show-text="false" :stroke-width="15" :percentage="80"></el-progress>
+            <el-progress :show-text="false" :stroke-width="15" :percentage="percentageNum"></el-progress>
             <span class="progress_border"></span>
             <span class="progress_border"></span>
             <span class="progress_border"></span>
@@ -347,6 +347,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,videoView},
     data() {
       return {
+        percentageNum:0,
         pointType:1,
         lightData:{
           lightCount:'',
@@ -915,6 +916,9 @@
         parkList:[],
         pointList:[],
         showVideoDialog:false,
+        timer:'',
+        timerTwo:'',
+        timerThree:'',
       }
     },
 
@@ -935,8 +939,35 @@
       // this.getControlCabinetlist();
       this.getParkList();
       window.handleVideo = this.handleVideo;
+      this.getPieChart();
+    },
+    beforeDestroy() {
+      clearInterval(this.timer);
+      this.timer = null;
+      clearInterval(this.timerTwo);
+      this.timerTwo = null;
+      clearInterval(this.timerThree);
+      this.timerThree = null;
     },
     methods: {
+      getPieChart(){
+        let that = this;
+        let i = 1;
+        this.timer = setInterval(function () {
+          if(i==1){
+            that.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
+            console.log('1111dianjidainji')
+            that.chartDataThree.series[0].data =  [{name:'骑呗',value:1680},{name:'青桔',value:1180},{name:'摩拜',value:880},{name:'哈罗',value:880}];
+            i = 2;
+          }else{
+            that.chartDataThree.color=['rgb(48,171,241)','rgb(146,117,243)','rgb(249,138,127)','rgb(255,213,84)'];
+            console.log('22222dianjidainji')
+            that.chartDataThree.series[0].data =  [{name:'青桔',value:0},{name:'哈罗',value:0},{name:'摩拜',value:0},{name:'骑呗',value:0}];
+            i = 1;
+          }
+
+        }, 2000);
+      },
       handlePointType(val){
         this.pointType = val;
         if(val == 1){
@@ -1106,6 +1137,13 @@
               }
               let sContent = '';
               if(type == 'park'){
+                let park_type = '';
+                // 0:地面停车场;1:地下停车场
+                if(txt.park_type == 0){
+                  park_type = '地面停车场'
+                }else if(txt.park_type == 1){
+                  park_type = '地下停车场'
+                }
                if(txt.way_longitude  && txt.way_latitude){
                  sContent =
                    '<div class="point_info">' +
@@ -1114,19 +1152,19 @@
                    '<td>停车场名称</td><td>' + txt.park_name + '</td>' +
                    '</tr>'+
                    '<tr>' +
-                   '<td>总泊位数</td><td>' + '没接口' + '</td>'+
+                   '<td>总泊位数</td><td>' + txt.total_num + '</td>'+
                     '</tr>'+
                    '<tr>' +
-                   '<td>剩余泊位数</td><td>' + '没接口' + '</td>'+
+                   '<td>剩余泊位数</td><td>' + txt.left_num + '</td>'+
                    '</tr>'+
                    '<tr>' +
-                   '<td>性质</td><td>' + '没接口' + '</td>'+
+                   '<td>性质</td><td>' + park_type + '</td>'+
                    '</tr>'+
                    '<tr>' +
-                   '<td>充电桩泊位</td><td>' + '没接口' + '</td>'+
+                   '<td>充电桩泊位</td><td>' + txt.charge_num + '</td>'+
                    '</tr>'+
                    '<tr>' +
-                   '<td>机械泊位</td><td>' + '没接口' + '</td>'+
+                   '<td>机械泊位</td><td>' + txt.machine_num + '</td>'+
                    '</tr>'+
                    '<tr>' +
                    '<td>停车场详细地址</td><td>' + txt.address + '</td>'+
@@ -1212,8 +1250,26 @@
           this.formData = res.data;
           this.PieData2.series[0].data = [((Number(res.data.powerRate))*100).toFixed(2)];
           this.PieData2.title[0].text = ((Number(res.data.powerRate))*100).toFixed(2)+'%';
-          this.PieData.series[0].data = [((Number(res.data.lightRate))*100).toFixed(2)];
+
+
           this.PieData.title[0].text = ((Number(res.data.lightRate))*100).toFixed(2)+'%';
+          let that = this;
+          let i = 1;
+          this.timerTwo = setInterval(function () {
+            if(i==1){
+              that.percentageNum = 80;
+              that.PieData2.series[0].data = [((Number(res.data.powerRate))*100).toFixed(2)];
+              that.PieData.series[0].data = [((Number(res.data.lightRate))*100).toFixed(2)];
+              i = 2;
+            }else{
+              that.percentageNum = 0;
+              console.log('22222dianjidainji')
+              that.PieData2.series[0].data = [0];
+              that.PieData.series[0].data =  [0];
+              i = 1;
+            }
+
+          }, 2000);
         });
       },
       //获取灯总数及亮灯数

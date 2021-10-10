@@ -985,13 +985,14 @@ iframe{
 .top_div{
   position: fixed;
   top: 10vh;
-  left: 10%;
+  left: 15%;
   width: 70%;
   z-index: 9999;
   //background: ;
-  background-image: linear-gradient(to bottom, #061027 60%, rgba(6,16,39,0.5) 85%, rgba(6,16,39,0.3) 90%, rgba(6,16,39,0) 100%);
+  //background-image: linear-gradient(to bottom, #061027 60%, rgba(6,16,39,0.5) 85%, rgba(6,16,39,0.3) 90%, rgba(6,16,39,0) 100%);
   .flex{
     padding: 10px;
+    background-image: linear-gradient(to bottom, #061027 60%, rgba(6,16,39,0.5) 85%, rgba(6,16,39,0.3) 90%, rgba(6,16,39,0) 100%);
     .flex-item{
       padding: 0 10px;
       border-left: 1px solid #fff;

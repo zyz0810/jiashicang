@@ -38,26 +38,36 @@
 
     </div>
     <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 0">
-      <div class="flex-item border shadow">
-        周上报量
-        <span class="txt_linear">{{formData.shangBao}}</span>
+      <div class="flex border shadow mr_20">
+        <div class="flex-item">
+          周上报量
+          <span class="txt_linear">{{formData.shangBao}}</span>
+        </div>
       </div>
-      <div class="flex-item border shadow ml_10">
+      <div class="flex border shadow mr_20">
+      <div class="flex-item">
         周处理量
         <span class="txt_linear">{{formData.chuLi}}</span>
       </div>
-      <div class="flex-item border shadow ml_10">
+      </div>
+      <div class="flex border shadow mr_20">
+      <div class="flex-item">
         周未处理量
         <span class="txt_linear">{{formData.undisposed}}</span>
       </div>
-      <div class="flex-item border shadow ml_10">
+      </div>
+      <div class="flex border shadow mr_20">
+      <div class="flex-item">
         周黄灯件
         <span class="txt_linear">{{formData.yellow_num}}</span>
       </div>
-      <div class="flex-item border shadow ml_10">
+      </div>
+      <div class="flex border shadow">
+      <div class="flex-item">
         周红灯件
         <span class="txt_linear">{{formData.red_num}}</span>
       </div>
+    </div>
     </div>
     <div class="top_div flex clr_white text-center f16 bold" v-if="activeIndex == 1">
       <div class="flex border shadow mr_20" style="width: 650px">
@@ -986,16 +996,7 @@
       }
     }
   }
-  .top_div{
-    &.top_one{
-      width: 50%;
-      left: 20%;
-      .flex-item{
-        padding: 10px 0;
-      }
-    }
 
-  }
   .mapBtn{
     position: fixed;
     top: 15vh;

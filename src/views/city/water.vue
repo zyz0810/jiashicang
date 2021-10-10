@@ -798,13 +798,7 @@
   /deep/.tdt-infowindow-tip{
     background: #0a1f44 !important;
   }
-  .top_div{
-    width: 50%;
-    left: 20%;
-  }
-  .abnormal_tab{
 
-  }
   .water_num01{
     .flex-item{
       padding: 20px 0;
