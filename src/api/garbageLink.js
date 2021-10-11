@@ -43,3 +43,22 @@ export function carHistory(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+/* 获取车辆轨迹视频
+ * card_no 	车牌号，只能输入一个
+ */
+export function getGps(data) {
+  return request({
+    url: `/api/clean_car/getGps`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
+/* 在线离线环卫车数量接口
+ */
+export function cleanCarNum(data) {
+  return request({
+    url: `/api/cleanCar/statistics`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}

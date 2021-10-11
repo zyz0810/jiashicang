@@ -60,25 +60,25 @@
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           AI视频
-          <span class="txt_linear">{{formData.guanggao}}</span>
+          <span class="txt_linear">{{formData.ai}}</span>
         </div>
       </div>
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           停车场视频
-          <span class="txt_linear">{{formData.quanzhi}}</span>
+          <span class="txt_linear">{{formData.parking}}</span>
         </div>
       </div>
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           普通视频
-          <span class="txt_linear">{{formData.gongcheng}}</span>
+          <span class="txt_linear">{{formData.putong}}</span>
         </div>
       </div>
       <div class="flex border shadow">
         <div class="flex-item">
           河道视频
-          <span class="txt_linear">{{formData.qita}}</span>
+          <span class="txt_linear">{{formData.hedao}}</span>
         </div>
       </div>
     </div>
@@ -102,7 +102,7 @@
   import point02 from "@/assets/image/point38.png";
   import point03 from "@/assets/image/point37.png";
   import point04 from "@/assets/image/point42.png"; // 引入刚才的map.js 注意路径
-  import {pointList} from '@/api/system'
+  import {getAllVideoPoint} from '@/api/system'
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -143,8 +143,10 @@
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
       },
       getPoint(type){
-        pointList({type:'allList',class:type}).then((res) => {
-          this.pointList = res.data;
+        getAllVideoPoint({class:type}).then((res) => {
+          const {ai,hedao,parking,putong} = res.data;
+          this.formData = {ai,hedao,parking,putong};
+          this.pointList = res.data.list;
           this.mapPoint(this.pointList)
         });
       },

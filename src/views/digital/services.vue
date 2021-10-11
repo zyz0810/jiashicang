@@ -204,8 +204,8 @@
           </div>
           <div class="flex f16 bold mr_20 border shadow" style="width: 200px;" @click="handlePointType(2)">
             <div class="flex-item">
-              视频（没接口)
-              <span class="txt_linear">11012</span>
+              视频
+              <span class="txt_linear">{{parkNum}}</span>
             </div>
           </div>
         </div>
@@ -349,7 +349,7 @@
   import point10 from '@/assets/image/point43.png' // 运维人员
   import toolTipBg from '@/assets/image/digital-bg.png' // 引入刚才的map.js 注意路径
   import videoView from "./videoView";
-  import {pointList} from '@/api/system'
+  import {getAllVideoPoint, pointList} from '@/api/system'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import {getLampPostList,getcontrolcabinetlist,getevaluate,parkList} from '@/api/digitalServices'
   import {generalIndex} from "@/api/overView";
@@ -967,6 +967,7 @@
         userList:[],
         commonVideoList:[],
         bikePartList:[],
+        parkNum:'',
       }
     },
 
@@ -981,13 +982,15 @@
       //
       // })
       this.onLoad();
-      this.getLampPostList('');
+      // this.getLampPostList('');
       this.getChartData();
       this.getData();
       // this.getControlCabinetlist();
       this.getParkList();
       window.handleVideo = this.handleVideo;
       this.getPieChart();
+      //获取数字停车停车场数量
+      this.getParkNum();
     },
     beforeDestroy() {
       clearInterval(this.timer);
@@ -1055,7 +1058,7 @@
           this.pointTwoType = 1;
           this.getBikePartList();
         }else if(val == 2){
-          this.showType = 1;
+          this.showType = 2;
           this.getControlCabinetlist();
         }
       },
@@ -1070,10 +1073,16 @@
           this.mapPoint('point',this.commonVideoList,this)
         });
       },
+      getParkNum(){
+        getAllVideoPoint({class:4}).then((res) => {
+          this.parkNum = res.data.parking;
+        });
+      },
       getParkVideoList(){
-        pointList({type:'allList',class:4}).then((res) => {
-          this.pointList = res.data;
-          this.mapPoint('point',this.pointList,this)
+        getAllVideoPoint({class:4}).then((res) => {
+          this.parkNum = res.data.parking;
+          this.pointList = res.data.list;
+          this.mapPoint('point',this.pointList,this);
         });
       },
       getPointList(){

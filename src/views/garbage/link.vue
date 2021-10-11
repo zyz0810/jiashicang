@@ -92,14 +92,14 @@
     <div class="top_div flex clr_white text-center f16 bold">
       <div class="flex border shadow mr_20">
         <div class="flex-item">
-          总车辆（没接口）
-          <span class="txt_linear">{{carData.count}}</span>
+          总车辆
+          <span class="txt_linear">{{carData.total}}</span>
         </div>
       </div>
       <div class="flex border shadow">
         <div class="flex-item">
-          在线车辆（没接口）
-          <span class="txt_linear">{{carData.chuli}}</span>
+          在线车辆
+          <span class="txt_linear">{{carData.onlineNum}}</span>
         </div>
       </div>
 
@@ -119,7 +119,6 @@
 
 <script>
   import echarts from 'echarts'
-
   import RingChart from '@/components/Charts/RingChart'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import BarChartFive from '@/components/Charts/BarChartFive'
@@ -131,11 +130,9 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import car from '@/assets/image/car.png' // 引入刚才的map.js 注意路径
-  import {cleancarList,cleanCarAddressList,lastGPS,carHistory} from '@/api/garbageLink'
+  import {cleancarList,cleanCarAddressList,lastGPS,carHistory,getGps,cleanCarNum} from '@/api/garbageLink'
   import point01 from "@/assets/image/point40.png";
   import point02 from "@/assets/image/point41.png";
-  import {getLampPostList} from "@/api/digitalServices";
 
   export default {
     name: 'parameterList',
@@ -720,7 +717,8 @@
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
         timerOne:'',
-        timerTwo:''
+        timerTwo:'',
+        line:'',
       }
     },
 
@@ -730,13 +728,14 @@
       }),
     },
     mounted() {
-      // import echarts from 'echarts'
       // 挂载完成后渲染地图
       this.$nextTick(function() {
         this.onLoad();
         this.getList();
       });
       this.getChart();
+      this.getNum();
+      window.handleTrail = this.handleTrail;
     },
     beforeDestroy() {
       clearInterval(this.timerOne);
@@ -745,6 +744,13 @@
       this.timerTwo = null;
     },
     methods: {
+      getNum(){
+        cleanCarNum().then((res) => {
+          const {offlineNum,onlineNum} = res.data;
+          let total = Number(offlineNum) + Number(onlineNum);
+          this.carData={offlineNum,onlineNum,total}
+        });
+      },
       getChart(){
         let i = 1;
         let that = this;
@@ -803,21 +809,17 @@
           //   markers[i]  = drawTMaker(point, icon02,this,list[i]);
           // }
 
-
           let point = new T.LngLat(list[i].PACK.longitude1,list[i].PACK.latitude1);
           markers[i]  = drawTMaker(point, icon01,this,list[i]);
         }
-
-
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){
           var marker =  new T.Marker(lnglat, {icon: icon});
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {
+            // carHistory({card_no:txt.Vehicle,start:that.$moment().format('YYYY-MM-DD'),end:that.$moment().format('YYYY-MM-DD')}).then((res) => {
+            // });
 
-            carHistory({card_no:txt.Vehicle,start:that.$moment().format('YYYY-MM-DD'),end:that.$moment().format('YYYY-MM-DD')}).then((res) => {
-
-            });
 
             let infoWin1 = new T.InfoWindow();
             let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
@@ -840,7 +842,7 @@
               '<td>地址</td><td>' + txt.Address + '</td>'+
               '</tr>'+
               '<tr>' +
-              '<td></td><td class="text-right baseColor">查看轨迹</td>'+
+              '<td></td><td class="text-right baseColor" onClick="handleTrail(' + aa +')">查看轨迹</td>'+
               '</tr>'+
               '</table>'+
               '</div>';
@@ -851,6 +853,23 @@
           return marker;
         }
 
+      },
+      //查看轨迹
+      handleTrail(txt){
+        if(this.line != ''){
+          this.map.removeOverLay(this.line);
+        }
+        getGps({card_no:txt.Vehicle}).then((res) => {
+          let points = res.data.map(item=>{
+            let json = new T.LngLat(item.longitude1, item.latitude1)
+            return json;
+          });
+          console.log(points)
+          //创建线对象
+          this.line = new T.Polyline(points,{color:'#00fd71',weight:10,opacity:1});
+          //向地图上添加线
+          this.map.addOverLay(this.line);
+        });
       },
       getList(){
         cleanCarAddressList({type:'allList'}).then((res) => {
