@@ -9,31 +9,17 @@
       <!--          <p class="mt_10">滨江二区</p>-->
       <!--        </div>-->
       <!--      </div>-->
-      <div class="left_content clr_white border shadow base_bg">
+      <div class="left_content clr_white">
         <p class="bold clearfix">
           <span class="f20 txt_linear fl">AI视频墙</span>
           <!--          <span class="f14 fr">更多</span>-->
         </p>
         <ul class="AI_list">
-          <li class="mt_20">
-            <div class="img_txt f14 bold">滨湖路与江虹路交叉口</div>
-            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic18.nipic.com%2F20111226%2F6647776_214907087000_2.jpg&refer=http%3A%2F%2Fpic18.nipic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1628911322&t=74fc6a998a3b91caed7e5ae052df4354">
-          </li>
-          <li class="mt_20">
-            <div class="img_txt f14 bold">滨湖路120号</div>
-            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic18.nipic.com%2F20111226%2F6647776_214907087000_2.jpg&refer=http%3A%2F%2Fpic18.nipic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1628911322&t=74fc6a998a3b91caed7e5ae052df4354">
-          </li>
-          <li class="mt_20">
-            <div class="img_txt f14 bold">滨湖路138号</div>
-            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic18.nipic.com%2F20111226%2F6647776_214907087000_2.jpg&refer=http%3A%2F%2Fpic18.nipic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1628911322&t=74fc6a998a3b91caed7e5ae052df4354">
-          </li>
-          <li class="mt_20">
-            <div class="img_txt f14 bold">滨湖路269号</div>
-            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic18.nipic.com%2F20111226%2F6647776_214907087000_2.jpg&refer=http%3A%2F%2Fpic18.nipic.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1628911322&t=74fc6a998a3b91caed7e5ae052df4354">
+          <li class="mt_20" v-for="item in AIList" :key="item.id">
+            <div class="img_txt f14 bold">{{item.camera_name}}</div>
+            <img :src="item.pic_url">
           </li>
         </ul>
-
-
       </div>
     </div>
 
@@ -103,6 +89,7 @@
   import point03 from "@/assets/image/point37.png";
   import point04 from "@/assets/image/point42.png"; // 引入刚才的map.js 注意路径
   import {getAllVideoPoint} from '@/api/system'
+  import {collectList} from '@/api/overView'
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -111,6 +98,7 @@
     data() {
       return {
         formData:{},
+        AIList:[],
         map: '', // 对象
         zoom: 14, // 地图的初始化级别，及放大比例
         centerLatitude:'30.2099178915',//中心纬度
@@ -131,6 +119,7 @@
       this.onLoad();
       window.handleVideo = this.handleVideo;
       this.getPoint('');
+      this.getAIList();
     },
     methods: {
       onLoad() {
@@ -141,6 +130,11 @@
         // this.addCtrl()
         this.map.setStyle('indigo');
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
+      },
+      getAIList(){
+        collectList({is_important:1}).then((res) => {
+          this.AIList = res.data.data
+        });
       },
       getPoint(type){
         getAllVideoPoint({class:type}).then((res) => {
@@ -257,6 +251,8 @@
       padding-right: 20px;
       left: 20px;
       .AI_list{
+        height: 98%;
+        overflow: auto;
         li{
           border-radius: 20px;
           position: relative;
