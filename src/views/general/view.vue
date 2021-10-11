@@ -83,7 +83,7 @@
       </div>
     </div>
 
-    <div class="back"><router-link :to="{path:'/general/overview'}"><i class="iconfont icon-fanhui f26 bold clr_white"></i></router-link></div>
+    <div class="back"><router-link :to="{path:'/general/overview'}"><i class="iconfont icon-fanhui f26 bold txtColor"></i></router-link></div>
   </div>
 </template>
 
@@ -239,7 +239,7 @@
   .back{
     position: fixed;
     right: 2%;
-    top: 20vh;
+    top: 12vh;
     z-index: 999;
   }
   .left_left_community{

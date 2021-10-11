@@ -9,7 +9,7 @@
 <!--          <p class="mt_10">滨江二区</p>-->
 <!--        </div>-->
 <!--      </div>-->
-      <div class="left_content clr_white border shadow base_bg">
+      <div class="left_content clr_white">
         <p class="bold clearfix">
           <span class="f20 txt_linear fl">AI视频墙</span>
 <!--          <span class="f14 fr">更多</span>-->

@@ -39,3 +39,12 @@ export function parkList(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+/* 数字停车 -- 总泊车位数量
+ */
+export function getAllPark(data) {
+  return request({
+    url: `/api/park/getAllPark`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}

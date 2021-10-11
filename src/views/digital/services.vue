@@ -2,7 +2,7 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="left_server clr_white text-center f16 bold border base_bg shadow">
+    <div class="left_server clr_white text-center f16 bold">
       <div :class="[activeIndex == 0 ? 'baseColor':'']" @click="handlePageType(0)">
         <img v-if="activeIndex == 0" src="./../../assets/image/services_nav01_active.png" class="nav_img"/>
         <img v-else src="./../../assets/image/services_nav01.png" class="nav_img"/>
@@ -133,8 +133,8 @@
             <span class="progress_border"></span>
           </div>
           <p class="mt_10">
-            亮灯数<span class="clr_green txt_shadow m_r30"> {{lightNum.num}}</span>
-            总灯数<span class="clr_green txt_shadow"> {{lightNum.count}}</span>
+            亮灯数<span class="clr_blue04 txt_shadow m_r30"> {{lightNum.num}}</span>
+            总灯数<span class="clr_blue04 txt_shadow"> {{lightNum.count}}</span>
           </p>
         </div>
       </div>
@@ -196,11 +196,11 @@
         <div class="top_div flex clr_white text-center f16" v-if="activeIndex == 0">
           <div class="flex f16 bold mr_20 border shadow" style="width: 500px;" @click="handlePointType(1)">
             <div class="flex-item">
-              总泊位数（没接口）
-              <span class="txt_linear">{{totalData.controlCabinetNum}}</span>
+              总泊位数
+              <span class="txt_linear">{{parkData.total}}</span>
             </div>
-            <div class="flex-item">占用泊位数（没接口)  <span class="txt_linear">{{totalData.controlCabinetNum}}</span></div>
-            <div class="flex-item">占用率（没接口)  <span class="txt_linear">{{totalData.controlCabinetNum}}</span></div>
+            <div class="flex-item">占用泊位数<span class="txt_linear">{{parkData.useNum}}</span></div>
+            <div class="flex-item">占用率<span class="txt_linear">{{parkData.useRate}}%</span></div>
           </div>
           <div class="flex f16 bold mr_20 border shadow" style="width: 200px;" @click="handlePointType(2)">
             <div class="flex-item">
@@ -351,7 +351,7 @@
   import videoView from "./videoView";
   import {getAllVideoPoint, pointList} from '@/api/system'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
-  import {getLampPostList,getcontrolcabinetlist,getevaluate,parkList} from '@/api/digitalServices'
+  import {getLampPostList,getcontrolcabinetlist,getevaluate,parkList,getAllPark} from '@/api/digitalServices'
   import {generalIndex} from "@/api/overView";
   export default {
     name: 'parameterList',
@@ -360,6 +360,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,videoView},
     data() {
       return {
+        parkData:{},
         percentageNum:0,
         pointType:1,
         lightData:{
@@ -500,13 +501,13 @@
                   //   // color: 'red'
                   //   color: 'rgba(248,211,91,1)'
                   // }]),
-                  color:'rgba(48,177,106,1)'
+                  color:'#30abf1'
                 }
               }
             },{//里面细圈
               name: 'decorationOne',
               type: 'pie',
-              color: ['rgba(48,177,106,1)'],
+              color: ['#30abf1'],
               // center: ['30%', '50%'],
               radius: ['74%', '72%'],
               hoverAnimation: false,
@@ -576,11 +577,11 @@
                 normal: {
                   color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
                     offset: 0,
-                    color: 'rgba(252,209,82,1)'
+                    color: '#ffd554'
                   }, {
                     offset: 1,
                     // color: 'red'
-                    color: 'rgba(248,211,91,1)'
+                    color: '#ffd554'
                   }]),
                   // color:'rgba(78,239,254,1)'
                 }
@@ -588,7 +589,7 @@
             },{//里面细圈
               name: 'decorationOne',
               type: 'pie',
-              color: ['rgba(252,209,82,1)'],
+              color: ['#ffd554'],
               // center: ['30%', '50%'],
               radius: ['74%', '72%'],
               hoverAnimation: false,
@@ -991,6 +992,7 @@
       this.getPieChart();
       //获取数字停车停车场数量
       this.getParkNum();
+      this.getAllPark();
     },
     beforeDestroy() {
       clearInterval(this.timer);
@@ -1076,6 +1078,16 @@
       getParkNum(){
         getAllVideoPoint({class:4}).then((res) => {
           this.parkNum = res.data.parking;
+        });
+      },
+      getAllPark(){
+        getAllPark().then((res) => {
+          let useRate = ((Number(res.data.shengyu)/Number(res.data.total))*100).toFixed(2);
+          this.parkData = {
+            total:res.data.total,
+            useNum:res.data.shengyu,
+            useRate:useRate
+          };
         });
       },
       getParkVideoList(){
@@ -1422,14 +1434,14 @@
       getParkList(){
         parkList().then((res) => {
           // this.parkList = res.data.data;
-          let a = res.data.data;
-          pointList({type:'allList'}).then((res) => {
-            // this.pointList = res.data;
-            let b = a.concat(res.data);
-            this.parkList = b;
-            this.mapPoint('park',this.parkList,this)
-          });
-
+          this.parkList = res.data.data;
+          // pointList({type:'allList'}).then((res) => {
+          //   // this.pointList = res.data;
+          //   let b = a.concat(res.data);
+          //   this.parkList = b;
+          //   this.mapPoint('park',this.parkList,this)
+          // });
+          this.mapPoint('park',this.parkList,this)
         });
       },
     }
@@ -1440,13 +1452,13 @@
     width: auto;
   }
   .progress_cont{
-    border: 1px solid rgb(15,50,53) !important;
+    border: 1px solid rgba(48,171,241,0.3) !important;
   }
 
 .progress_light{
 
   /deep/.el-progress-bar__inner{
-    background-image: linear-gradient(to left,rgba(48,171,106,1) ,  rgba(48,164,104,0)) !important; /* 标准的语法（必须放在最后） */
+    background-image: linear-gradient(to left,rgba(48,171,241,1) ,  rgba(48,171,241,0)) !important; /* 标准的语法（必须放在最后） */
   }
 }
 .bor_circle{
@@ -1455,15 +1467,15 @@
   border-radius: 50%;
   margin: 0 auto;
   &.bor_red{
-    border:10px solid red;
+    border:10px solid #f98a7f;
     .circle_two{
-      border:1px solid red;
+      border:1px solid #f98a7f;
     }
   }
   &.bor_blue{
-    border:10px solid rgb(5,139,224);
+    border:10px solid #9275f3;
     .circle_two{
-      border:1px solid rgb(5,139,224);
+      border:1px solid #9275f3;
     }
   }
   &.bor_green{
