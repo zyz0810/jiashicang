@@ -1029,6 +1029,9 @@ iframe{
     &.no_bg{
       background: rgba(0,0,0,0.3);
     }
+    &.active{
+      background: url("./../assets/image/intro_bg_active.png") center bottom no-repeat;
+    }
     .weui-cell__hd{
       width: 40px;
       img{

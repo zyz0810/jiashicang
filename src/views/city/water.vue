@@ -121,10 +121,10 @@
 
     </div>
     <div class="top_div flex clr_white text-center">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 400px;">
-        <div class="flex-item txt_linear">设备管理</div>
+      <div class="flex f16 bold mr_20 border shadow" style="width: 400px;" @click="handleMapType(1)">
+        <div class="flex-item baseColor">设备管理</div>
         <div class="flex-item">
-          总览
+          总数
           <span class="txt_linear">66</span>
         </div>
         <div class="flex-item">
@@ -137,32 +137,42 @@
         </div>
 
       </div>
-      <div class="flex f16 border shadow" style="position: relative;" @click="showOption == 0?showOption=1:showOption=0">
-        设备点位
-        <div style="position: absolute;top: 35px;left: 0;width: 100%; line-height: 30px;" class="clr_white border shadow" v-if="showOption==1">
-          <p :class="showType == 2 ? 'baseColor':''" @click="handleTypeLight(2)">河道水质</p>
-          <p :class="showType == 3 ? 'baseColor':''" @click="handleTypeLight(3)">河道水量</p>
-          <p :class="showType == 0 ? 'baseColor':''" @click="handleTypeLight(0)">河道水位</p>
-          <p :class="showType == 4 ? 'baseColor':''" @click="handleTypeLight(4)">视频点位</p>
+      <div class="flex f16 bold border shadow" style="width: 240px;" @click="handleMapType(2)">
+        <div class="flex-item baseColor">视频</div>
+        <div class="flex-item">
+          河道视频
+          <span class="txt_linear">18</span>
         </div>
       </div>
     </div>
-    <div class="center_content yy_center_content clr_white text-center">
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_01.png"/></div>
-        <div class="weui-cell__bd">河道水位</div>
+    <div class="center_content clr_white text-center" v-if="showMapType == 1">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==1?'active':'']" @click="handlePointType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=1" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==1?'clr_white':'']">全部设备</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_04.png"/></div>
-        <div class="weui-cell__bd">河道水量</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==2?'active':'']" @click="handlePointType(2)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=2" src="./../../assets/image/point45.png"/>
+          <img v-else src="./../../assets/image/point45_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==2?'clr_white':'']">河道水位</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_04.png"/></div>
-        <div class="weui-cell__bd">河道水质</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==3?'active':'']" @click="handlePointType(3)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=3" src="./../../assets/image/point46.png"/>
+          <img v-else src="./../../assets/image/point46_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==3?'clr_white':'']">河道水量</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_04.png"/></div>
-        <div class="weui-cell__bd">视频</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==4?'active':'']" @click="handlePointType(4)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=4" src="./../../assets/image/point47.png"/>
+          <img v-else src="./../../assets/image/point47_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==4?'clr_white':'']">河道水质</div>
       </div>
     </div>
   </div>
@@ -179,10 +189,11 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point19.png'
-  import point02 from "@/assets/image/point20.png";
-  import point03 from "@/assets/image/point21.png";
-  import point04 from "@/assets/image/point22.png";
+  import point01 from '@/assets/image/point44.png'
+  import point02 from "@/assets/image/point45.png";
+  import point03 from "@/assets/image/point46.png";
+  import point04 from "@/assets/image/point47.png";
+  import point05 from "@/assets/image/point48.png";
   import {findSite,abnormalSite,warnSite} from "@/api/water"; // 引入刚才的map.js 注意路径
   import vueSeamlessScroll from 'vue-seamless-scroll'
   export default {
@@ -192,6 +203,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,vueSeamlessScroll},
     data() {
       return {
+        showMapType:1,
         showOption:0,
         showType:1,
         abnormalIndex:0,
@@ -615,6 +627,7 @@
         waterList:[],
         warnList:[],
         abnormalList:[],
+        pointList:[]
       }
     },
 
@@ -646,6 +659,18 @@
       this.getWarn(2);
     },
     methods: {
+      handleMapType(type){
+        this.showMapType = type;
+        if(type == 1){//获取设备点位
+          this.getList(2);
+        }else if(type == 2){//获取视频点位
+          this.getVideo();
+        }
+      },
+      //获取设备 -- 不同类型点位
+      handlePointType(type){
+        this.showType = type
+      },
       formatType(row, column, cellValue, index) {
         return cellValue == 0
           ? "河道水位"
@@ -792,6 +817,14 @@
           this.waterList = res.data;
           this.mapPoint(type,this.waterList)
         });
+      },
+      getVideo(type){
+        // findSite({type:type}).then((res) => {
+        //   this.waterList = res.data;
+        //   this.mapPoint(type,this.waterList)
+        // });
+        this.pointList = [];
+        this.mapPoint('',this.pointList)
       },
     }
   }
