@@ -110,7 +110,7 @@
           <img v-if="showType!=1" src="./../../assets/image/point44.png"/>
           <img v-else src="./../../assets/image/point44_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showType==1?'clr_white':'']">全部审批</div>
+        <div :class="['weui-cell__bd',showType==1?'clr_white':'']">全部</div>
       </div>
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==2?'active':'']" @click="handlePointType(2,type)">
         <div class="weui-cell__hd flex">

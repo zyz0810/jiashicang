@@ -336,7 +336,7 @@
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showTwoType==1?'active':'']" @click="handleLightPointType(1)">
         <div class="weui-cell__hd flex">
           <img v-if="showTwoType!=1" src="./../../assets/image/point35.png"/>
-          <img v-else src="./../../assets/image/point35_active.png"/>
+          <img v-else src="./../../assets/image/point34_active.png"/>
         </div>
         <div :class="['weui-cell__bd',showTwoType==1?'clr_white':'']">亮灯设备开</div>
       </div>
@@ -359,14 +359,14 @@
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showThreeType==1?'active':'']" @click="handleControlPointType(1)">
         <div class="weui-cell__hd flex">
           <img v-if="showThreeType!=1" src="./../../assets/image/point33.png"/>
-          <img v-else src="./../../assets/image/point33_active.png"/>
+          <img v-else src="./../../assets/image/point31_active.png"/>
         </div>
         <div :class="['weui-cell__bd',showThreeType==1?'clr_white':'']">控制柜开</div>
       </div>
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showThreeType==2?'active':'']" @click="handleControlPointType(2)">
         <div class="weui-cell__hd flex">
           <img v-if="showThreeType!=2" src="./../../assets/image/point32.png"/>
-          <img v-else src="./../../assets/image/point32_active.png"/>
+          <img v-else src="./../../assets/image/point31_active.png"/>
         </div>
         <div :class="['weui-cell__bd',showThreeType==2?'clr_white':'']">控制柜关</div>
       </div>
@@ -1266,6 +1266,12 @@
             if(list[i].class==1){
               let point = new T.LngLat(list[i].longitude,list[i].latitude);
               markers[i]  = drawTMaker(point, icon08,this,list[i]);
+            }else if(list[i].class==2){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon09,this,list[i]);
+            }else if(list[i].class==3){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon09,this,list[i]);
             }else if(list[i].class==3){
               let point = new T.LngLat(list[i].longitude,list[i].latitude);
               markers[i]  = drawTMaker(point, icon09,this,list[i]);

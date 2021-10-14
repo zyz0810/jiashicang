@@ -24,21 +24,40 @@
     </div>
 
     <div class="center_content clr_white text-center no_right">
-      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint(1)">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>
-        <div class="weui-cell__bd">AI视频</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showPointType==0?'active':'']" @click="handlePointType(0)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showPointType!=0" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showPointType==0?'clr_white':'']">全部</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint(2)">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
-        <div class="weui-cell__bd">普通视频</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showPointType==1?'active':'']" @click="handlePointType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showPointType!=1" src="./../../assets/image/point36.png"/>
+          <img v-else src="./../../assets/image/point51_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showPointType==1?'clr_white':'']">AI视频</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint(3)">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point37.png"/></div>
-        <div class="weui-cell__bd">河道视频</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showPointType==2?'active':'']" @click="handlePointType(2)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showPointType!=2" src="./../../assets/image/point38.png"/>
+          <img v-else src="./../../assets/image/point51_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showPointType==2?'clr_white':'']">普通视频</div>
       </div>
-      <div class="map_intro f12 bold flex baseColor weui-cell" @click="getPoint(4)">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point42.png"/></div>
-        <div class="weui-cell__bd">停车场视频</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showPointType==3?'active':'']" @click="handlePointType(3)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showPointType!=3" src="./../../assets/image/point37.png"/>
+          <img v-else src="./../../assets/image/point51_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showPointType==3?'clr_white':'']">河道视频</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showPointType==4?'active':'']" @click="handlePointType(4)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showPointType!=4" src="./../../assets/image/point42.png"/>
+          <img v-else src="./../../assets/image/point51_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showPointType==4?'clr_white':'']">停车场视频</div>
       </div>
       <!--<p class="text-right baseColor f16 bold mt_20">说明</p>-->
     </div>
@@ -97,6 +116,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        showPointType:0,
         formData:{},
         AIList:[],
         map: '', // 对象
@@ -122,6 +142,15 @@
       this.getAIList();
     },
     methods: {
+      handlePointType(type){
+        this.showPointType = type;
+        if(type == 0){
+          this.getPoint('')
+        }else{
+          this.getPoint(type)
+        }
+
+      },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')

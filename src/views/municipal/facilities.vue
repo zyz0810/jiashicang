@@ -955,6 +955,7 @@
       this.getWarring()
       this.onLoad();
       // this.getTypeData();
+      this.mapPoint('facilities',[]);
 
     },
     beforeDestroy() {
