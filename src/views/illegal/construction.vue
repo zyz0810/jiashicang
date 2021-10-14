@@ -2,18 +2,42 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="right_content right_construction bold base_bg_right">
-        <div class="flex clr_white">
-          <div class="text-center">
-            <img src="./../../assets/image/construction-icon.png">
-            <p class="txt_linear f20 mt_10">违建概况</p>
-          </div>
-          <ul class="ml_10">
-            <li><span class="f16">违法建筑总宗数</span><span class="clr_blue03 f26">2881</span></li>
-            <li><span class="f16">违法占地总面积</span><span class="clr_blue03 f26">194246.83</span></li>
-            <li><span class="f16">违法建筑总面积</span><span class="clr_blue03 f26">285742.53</span></li>
-          </ul>
+<!--    <div class="right_content right_construction bold base_bg_right">-->
+<!--        <div class="flex clr_white">-->
+<!--          <div class="text-center">-->
+<!--            <img src="./../../assets/image/construction-icon.png">-->
+<!--            <p class="txt_linear f20 mt_10">违建概况</p>-->
+<!--          </div>-->
+<!--          <ul class="ml_10">-->
+<!--            <li><span class="f16">违法建筑总宗数</span><span class="clr_blue03 f26">2881</span></li>-->
+<!--            <li><span class="f16">违法占地总面积</span><span class="clr_blue03 f26">194246.83</span></li>-->
+<!--            <li><span class="f16">违法建筑总面积</span><span class="clr_blue03 f26">285742.53</span></li>-->
+<!--          </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="top_div flex clr_white text-center">
+      <div class="flex f16 bold mr_20 border shadow" style="width: 1000px;" @click="handleMapType(1)">
+        <div class="flex-item baseColor">违法建筑</div>
+        <div class="flex-item">
+          违法建筑总宗数
+          <span class="txt_linear">2881</span>
         </div>
+        <div class="flex-item">
+          违法占地总面积
+          <span class="txt_linear">194246.83</span>
+        </div>
+        <div class="flex-item">
+          违法建筑总面积
+          <span class="txt_linear">285742.53</span>
+        </div>
+      </div>
+      <div class="flex f16 bold border shadow" style="width: 260px;" @click="handleMapType(2)">
+        <div class="flex-item baseColor">视频</div>
+        <div class="flex-item">
+          普通视频
+          <span class="txt_linear">828</span>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -30,7 +54,9 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point39.png' // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point52.png'
+  import point02 from '@/assets/image/point51.png'
+  import {getAllVideoPoint} from "@/api/system"; // 引入刚才的map.js 注意路径
 
   export default {
     name: 'parameterList',
@@ -327,6 +353,15 @@
       this.getList();
     },
     methods: {
+      handleMapType(type){
+        this.showMapType = type;
+        if(type == 1){//获取设备点位
+          this.getList();
+        }else if(type == 2){//获取视频点位
+          this.getVideo();
+        }
+      },
+      //违法建筑点位
       getList(){
         let pointList = [{
           name:'西兴中队',
@@ -350,7 +385,14 @@
           longitude:'120.19772',
           latitude:'30.20525',
         }];
-        this.mapPoint(pointList);
+        this.mapPoint('',pointList);
+      },
+      //视频点位
+      getVideo(){
+        getAllVideoPoint({class:2}).then((res) => {
+          this.pointList = res.data;
+          this.mapPoint('video',this.pointList)
+        });
       },
       onLoad() {
         let T = window.T
@@ -362,7 +404,7 @@
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
 
       },
-      mapPoint(list){
+      mapPoint(type,list){
         console.log('点位333')
         //创建图片对象
         this.map.clearOverLays();
@@ -371,13 +413,27 @@
           iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
+        let icon02 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
         let markers = []
 
-        for (let i = 0; i < list.length; i++) {
-          console.log(list[i].type)
-          let point = new T.LngLat(list[i].longitude,list[i].latitude);
-          markers[i]  = drawTMaker(point, icon01,this,list[i]);
+        if(type == 'video'){
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            markers[i]  = drawTMaker(point, icon02,this,list[i]);
+          }
+        }else{
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          }
         }
+
 
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){

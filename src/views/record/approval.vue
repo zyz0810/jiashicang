@@ -69,21 +69,40 @@
       </div>
     </div>
     <div class="center_content clr_white text-center">
-      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint('广告审批')">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point25.png"/></div>
-        <div class="weui-cell__bd">广告审批</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==1?'active':'']" @click="handlePointType(1,type)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=1" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==1?'clr_white':'']">全部审批</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint('犬只审批')">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point26.png"/></div>
-        <div class="weui-cell__bd">犬只审批</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==2?'active':'']" @click="handlePointType(2,'广告审批')">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=2" src="./../../assets/image/point25.png"/>
+          <img v-else src="./../../assets/image/point25_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==2?'clr_white':'']">广告审批</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint('工程渣土')">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point27.png"/></div>
-        <div class="weui-cell__bd">工程渣土</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==3?'active':'']" @click="handlePointType(3,'犬只审批')">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=3" src="./../../assets/image/point26.png"/>
+          <img v-else src="./../../assets/image/point26_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==3?'clr_white':'']">犬只审批</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getPoint('其他审批')">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point28.png"/></div>
-        <div class="weui-cell__bd">其他审批</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==4?'active':'']" @click="handlePointType(4,'工程渣土')">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=4" src="./../../assets/image/point27.png"/>
+          <img v-else src="./../../assets/image/point27_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==4?'clr_white':'']">工程渣土</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==5?'active':'']" @click="handlePointType(5,'其他审批')">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=5" src="./../../assets/image/point28.png"/>
+          <img v-else src="./../../assets/image/point28_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==5?'clr_white':'']">其他审批</div>
       </div>
       <!--<p class="text-right baseColor f16 bold mt_20">说明</p>-->
     </div>
@@ -144,6 +163,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,LineChart,PieChartTwo,vueSeamlessScroll},
     data() {
       return {
+        showType:1,
         timer:'',
         approvalData:{},
         listLoading:false,
@@ -445,6 +465,7 @@
       this.getLineChart();
       this.getBarChart();
       this.getListData();
+      this.getPieData('');//获取顶部及饼图数据
 
       // this.chartDataThree.series[0].data = [{
       //   name:'犬只审批',value:res.data.quanzhi
@@ -463,6 +484,11 @@
       this.timer = null;
     },
     methods: {
+      //不同类型点位
+      handlePointType(val,type){
+        this.showType = val;
+        this.getPoint(type);
+      },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
@@ -473,46 +499,46 @@
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
 
       },
-      getList(){
-        generalApprove().then((res) => {
-          // this.pointList = [];
-          const {count,gongcheng,guanggao,qita,quanzhi} = res.data;
-          this.formData = {count,gongcheng,guanggao,qita,quanzhi};
-          // 犬只审批、工程渣土、广告审批、其他审批
-          // this.chartDataThree.series[0].data = [{
-          //   name:'犬只审批',value:res.data.quanzhi
-          // },{
-          //   name:'工程渣土',value:res.data.gongcheng
-          // },{
-          //   name:'广告审批',value:res.data.guanggao
-          // },{
-          //   name:'其他审批',value:res.data.qita
-          // }];
-          let i = 1;
-          console.log('2222222222dianjidainji')
-          setInterval(function () {
-            console.log('1111dianjidainji')
-            if(i==1){
-              this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
-              this.chartDataThree.series[0].data = [{
-                name:'犬只审批',value:res.data.quanzhi
-              },{
-                name:'工程渣土',value:res.data.gongcheng
-              },{
-                name:'广告审批',value:res.data.guanggao
-              },{
-                name:'其他审批',value:res.data.qita
-              }];
-              i = 2;
-            }else{
-              this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
-              this.chartDataThree.series[0].data = [];
-              i = 1;
-            }
-
-          }, 2000);
-        });
-      },
+      // getList(){
+      //   generalApprove().then((res) => {
+      //     // this.pointList = [];
+      //     const {count,gongcheng,guanggao,qita,quanzhi} = res.data;
+      //     this.formData = {count,gongcheng,guanggao,qita,quanzhi};
+      //     // 犬只审批、工程渣土、广告审批、其他审批
+      //     // this.chartDataThree.series[0].data = [{
+      //     //   name:'犬只审批',value:res.data.quanzhi
+      //     // },{
+      //     //   name:'工程渣土',value:res.data.gongcheng
+      //     // },{
+      //     //   name:'广告审批',value:res.data.guanggao
+      //     // },{
+      //     //   name:'其他审批',value:res.data.qita
+      //     // }];
+      //     let i = 1;
+      //     console.log('2222222222dianjidainji')
+      //     setInterval(function () {
+      //       console.log('1111dianjidainji')
+      //       if(i==1){
+      //         this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
+      //         this.chartDataThree.series[0].data = [{
+      //           name:'犬只审批',value:res.data.quanzhi
+      //         },{
+      //           name:'工程渣土',value:res.data.gongcheng
+      //         },{
+      //           name:'广告审批',value:res.data.guanggao
+      //         },{
+      //           name:'其他审批',value:res.data.qita
+      //         }];
+      //         i = 2;
+      //       }else{
+      //         this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
+      //         this.chartDataThree.series[0].data = [];
+      //         i = 1;
+      //       }
+      //
+      //     }, 2000);
+      //   });
+      // },
       getPieChat(){
         generalApprove().then((res) => {
           // 犬只审批、工程渣土、广告审批、其他审批
@@ -571,21 +597,10 @@
       },
 
 
-      getPoint(type){
+      getPieData(type){
         checkIndex({type:type}).then((res) => {
-          this.pointList = [];
           const {count,gongcheng,guanggao,qita,quanzi} = res.data;
           this.formData = {count,gongcheng,guanggao,qita,quanzi};
-          // 犬只审批、工程渣土、广告审批、其他审批
-          // this.chartDataThree.series[0].data = [{
-          //   name:'犬只审批',value:res.data.quanzi
-          // },{
-          //   name:'工程渣土',value:res.data.gongcheng
-          // },{
-          //   name:'广告审批',value:res.data.guanggao
-          // },{
-          //   name:'其他审批',value:res.data.qita
-          // }];
           let that = this;
           let i = 1;
           this.timer = setInterval(function () {
@@ -619,8 +634,11 @@
             }
 
           }, 2000);
-
-
+        });
+      },
+      getPoint(type){
+        checkIndex({type:type}).then((res) => {
+          this.pointList = [];
           this.pointList = res.data.data;
           this.mapPoint(this.pointList);
         });

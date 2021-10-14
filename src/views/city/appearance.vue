@@ -24,16 +24,16 @@
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 0">
       <p class="f20 bold txt_linear">智能识别概况（日）</p>
       <div class="text-center">
-        <ul class="bold communityNum flex mt_10" style="width: 160px;margin-left: 20px;">
-          <li class="flex flex-item">
-            <span class="f26 baseColor block">186</span>
-            <span class="f16 clr_white block">监控点位</span>
-          </li>
-          <!--<li class="flex flex-item">-->
-            <!--<span class="f26 baseColor block">1</span>-->
-            <!--<span class="f16 clr_white block">监控路段</span>-->
-          <!--</li>-->
-        </ul>
+<!--        <ul class="bold communityNum flex mt_10" style="width: 160px;margin-left: 20px;">-->
+<!--          <li class="flex flex-item">-->
+<!--            <span class="f26 baseColor block">186</span>-->
+<!--            <span class="f16 clr_white block">监控点位</span>-->
+<!--          </li>-->
+<!--          &lt;!&ndash;<li class="flex flex-item">&ndash;&gt;-->
+<!--            &lt;!&ndash;<span class="f26 baseColor block">1</span>&ndash;&gt;-->
+<!--            &lt;!&ndash;<span class="f16 clr_white block">监控路段</span>&ndash;&gt;-->
+<!--          &lt;!&ndash;</li>&ndash;&gt;-->
+<!--        </ul>-->
         <div class="pieChart mt_10">
           <!--              <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="16vh"></RingChart>-->
           <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" height="25vh" :divwidth="'50%'"></PieChartTwo>
@@ -96,7 +96,7 @@
       <div class="clr_white mt_20">
         <p class="f20 bold txt_linear">工地一件事</p>
 <!--        <BarChartFour :chartData="BarDataThree" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></BarChartFour>-->
-        <RingChart :chartData="chartDataFive" :PieChartLegend="PieChartLegend" height="200px"></RingChart>
+        <RingChart :chartData="chartDataFive" :PieChartLegend="PieChartLegend" height="300px"></RingChart>
       </div>
 <!--      <div class="mt_20">-->
 <!--        <p class="f20 bold txt_linear">社会监督</p>-->
@@ -128,38 +128,154 @@
 
     </div>
 
-    <div class="center_content clr_white text-center" v-if="activeIndex == 0">
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>
-        <div class="weui-cell__bd">AI视频</div>
+<!--    <div class="center_content clr_white text-center" v-if="activeIndex == 0">-->
+<!--      <div class="map_intro f14 bold flex baseColor weui-cell">-->
+<!--        <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>-->
+<!--        <div class="weui-cell__bd">AI视频</div>-->
+<!--      </div>-->
+<!--    </div>-->
+    <div class="center_content clr_white text-center" v-if="activeIndex == 1&&yyMapType == 1">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showYyType==1?'active':'']" @click="handleYyPointType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showYyType!=1" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showYyType==1?'clr_white':'']">全部</div>
+      </div>
+      <div :class="['map_intro','map_intro_yy','f14','bold','flex','baseColor','weui-cell',showYyType==2?'active':'']" @click="handleYyPointType(2)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showYyType!=2" src="./../../assets/image/point_yy_01.png"/>
+          <img v-else src="./../../assets/image/point_yy_active.png"/>
+          </div>
+        <div :class="['weui-cell__bd',showYyType==2?'clr_white':'']">正常</div>
+      </div>
+      <div :class="['map_intro','map_intro_yy','f14','bold','flex','baseColor','weui-cell',showYyType==3?'active':'']" @click="handleYyPointType(3)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showYyType!=3" src="./../../assets/image/point_yy_04.png"/>
+          <img v-else src="./../../assets/image/point_yy_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showYyType==3?'clr_white':'']">报警</div>
+      </div>
+      <div :class="['map_intro','map_intro_yy','f14','bold','flex','baseColor','weui-cell',showYyType==4?'active':'']" @click="handleYyPointType(4)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showYyType!=4" src="./../../assets/image/point_yy_03.png"/>
+          <img v-else src="./../../assets/image/point_yy_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showYyType==4?'clr_white':'']">故障</div>
+      </div>
+      <div :class="['map_intro','map_intro_yy','f14','bold','flex','baseColor','weui-cell',showYyType==5?'active':'']" @click="handleYyPointType(5)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showYyType!=5" src="./../../assets/image/point_yy_02.png"/>
+          <img v-else src="./../../assets/image/point_yy_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showYyType==5?'clr_white':'']">离线</div>
       </div>
     </div>
-    <div class="center_content yy_center_content clr_white text-center" v-if="activeIndex == 1">
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_01.png"/></div>
-        <div class="weui-cell__bd">油烟正常</div>
+    <div class="center_content clr_white text-center" v-if="activeIndex == 2&&gdMapType == 1">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showGdType==1?'active':'']" @click="handleGdPointType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showGdType!=1" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showGdType==1?'clr_white':'']">全部阶段</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_04.png"/></div>
-        <div class="weui-cell__bd">油烟超标</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showGdType==2?'active':'']" @click="handleGdPointType(2)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showGdType!=2" src="./../../assets/image/point53.png"/>
+          <img v-else src="./../../assets/image/point53_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showGdType==2?'clr_white':'']">竣工阶段</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_03.png"/></div>
-        <div class="weui-cell__bd">设备故障</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showGdType==3?'active':'']" @click="handleGdPointType(3)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showGdType!=3" src="./../../assets/image/point54.png"/>
+          <img v-else src="./../../assets/image/point53_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showGdType==3?'clr_white':'']">施工阶段</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_02.png"/></div>
-        <div class="weui-cell__bd">设备离线</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showGdType==4?'active':'']" @click="handleGdPointType(4)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showGdType!=4" src="./../../assets/image/point55.png"/>
+          <img v-else src="./../../assets/image/point53_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showGdType==4?'clr_white':'']">准备阶段</div>
       </div>
     </div>
-    <div class="center_content yy_center_content clr_white text-center" v-if="activeIndex == 2">
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_01.png"/></div>
-        <div class="weui-cell__bd">在建中</div>
+
+    <div class="top_div flex clr_white text-center" v-if="activeIndex == 0">
+      <div class="flex f16 bold mr_20 border shadow" style="width: 600px;">
+        <div class="flex-item baseColor">案件情况</div>
+        <div class="flex-item">
+          案件总数
+          <span class="txt_linear">1323</span>
+        </div>
+        <div class="flex-item">
+          立案数
+          <span class="txt_linear">823</span>
+        </div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point_yy_04.png"/></div>
-        <div class="weui-cell__bd">审批中</div>
+      <div class="flex f16 bold border shadow" style="width: 260px;">
+        <div class="flex-item baseColor">视频</div>
+        <div class="flex-item">
+          AI视频
+          <span class="txt_linear">186</span>
+        </div>
+      </div>
+    </div>
+    <div class="top_div flex clr_white text-center" v-if="activeIndex == 1">
+      <div class="flex f16 bold mr_20 border shadow" style="width: 700px;" @click="getYyPoint(1)">
+        <div class="flex-item baseColor">设备管理</div>
+        <div class="flex-item">
+          报警数
+          <span class="txt_linear">1323</span>
+        </div>
+        <div class="flex-item">
+          正常数
+          <span class="txt_linear">823</span>
+        </div>
+        <div class="flex-item">
+          离线数
+          <span class="txt_linear">2</span>
+        </div>
+        <div class="flex-item">
+          故障数
+          <span class="txt_linear">2</span>
+        </div>
+      </div>
+      <div class="flex f16 bold border shadow" style="width: 260px;" @click="getYyPoint(2)">
+        <div class="flex-item baseColor">视频</div>
+        <div class="flex-item">
+          普通视频
+          <span class="txt_linear">18</span>
+        </div>
+      </div>
+    </div>
+    <div class="top_div flex clr_white text-center" v-if="activeIndex == 2">
+      <div class="flex f16 bold mr_20 border shadow" style="width: 700px;" @click="getGdPoint(1)">
+        <div class="flex-item baseColor">工地概览</div>
+        <div class="flex-item">
+          总数
+          <span class="txt_linear">22</span>
+        </div>
+        <div class="flex-item">
+          准备阶段
+          <span class="txt_linear">12</span>
+        </div>
+        <div class="flex-item">
+          施工阶段
+          <span class="txt_linear">10</span>
+        </div>
+        <div class="flex-item">
+          竣工阶段
+          <span class="txt_linear">10</span>
+        </div>
+      </div>
+      <div class="flex f16 bold border shadow" style="width: 260px;" @click="getGdPoint(2)">
+        <div class="flex-item baseColor">视频</div>
+        <div class="flex-item">
+          普通视频
+          <span class="txt_linear">18</span>
+        </div>
       </div>
     </div>
 
@@ -182,7 +298,7 @@
   import point04 from '@/assets/image/point_yy_03.png' // 引入刚才的map.js 注意路径
   import point05 from '@/assets/image/point_yy_04.png' // 引入刚才的map.js 注意路径
   import PieChartTwo from '@/components/Charts/PieChartTwo'
-  import {pointList} from '@/api/system'
+  import {getAllVideoPoint, pointList} from '@/api/system'
 
   export default {
     name: 'appearance',
@@ -191,165 +307,219 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        yyMapType:1,
+        gdMapType:1,
+        showGdType:1,
+        showYyType:1,
         activeIndex:0,
-        pieChartOne:{
-          color: ['#75E4E3', '#E5AF45', '#9941E2'],
-          // 预警值 环中的数据显示
-          title: {
-            text: '预警量',
-            top: '38%',
-            subtext: '',
-            textStyle: {
-              color: '#f2f2f2',
-              fontSize: 20,
-              align: 'center'
-            },
-            subtextStyle: {
-              fontSize: 20,
-              color: ['#fff'],
-              align: 'center'
-            },
-            x: '50%',
-            y: 'center',
-            textAlign: 'center'
-          },
-          // 中心的文字
-          graphic: {
-            type: 'text',
-            top: '55%',
-            left: '45%',
-            style: {
-              color: '#f2f2f2',
-              text: '10',
-              textAlign: 'center',
-              fill: '#f2f2f2',
-              fontSize: 10,
-              fontWeight: 700
-            },
-          },
-          // 图表的位置和大小是由grid控制的
-          grid: {
-            top: 10,
-            bottom: 10,
-            left: 10,
-            right: 10
-          },
-
-          series: [// 主要展示层的
-            {
-              name: '',
-              radius: ['50%', '65%'],
-              center: ['50%', '50%'],
-              type: 'pie',
-              data: [{ value: 80, name: '通过' },
-                { value: 20, name: '待审核' },
-                { value: 30, name: '不通过' }],
-              labelLine: {
-                normal: {
-                  show: false,
-                  length1:'0',
-                  length2:'0',
-                }
-              },
-              label: { //对标签中 显示的文字进行设置
-                color: 'white',
-                position: 'outside',
-                normal: {
-                  // formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
-                  formatter: '{a|{b}}\n{hr|}\n{per|{d}%}',
-                  padding: [10, 15],
-                  backgroundColor: '#387993',
-                  borderRadius: 5,
-                  rich: {
-                    a: {
-                      color: 'white',
-                      fontSize: 15,
-                      lineHeight: 20,
-                      align: 'left'
-                    },
-                    hr: {
-                      width: '100%',
-                      height: 0,
-                      alien: 'left'
-                    },
-                    per: {
-                      color: '#fff',
-                      align: 'left',
-                      fontSize: 15,
-                    }
-                  }
-                },
-              },
-            },
-            {
-              name: '',
-              type: 'gauge',
-              center: ['50%', '50%'],
-              // radius: ['80%', '90%'],
-              radius: '90%',
-              startAngle: 0,
-              endAngle: 359.9,
-              splitNumber: 99,
-              hoverAnimation: true,
-              axisTick: {
-                show: false
-              },
-              splitLine: {
-                length: 13,
-                lineStyle: {
-                  width: 1,//最外层光圈的粗细
-                  color: '#5692BC'// 最外层光圈颜色宽度
-                }
-              },
-              title: {
-                show: false
-              },
-              axisLabel: {
-                show: false
-              },
-              pointer: {
-                show: false
-              },
-              axisLine: {
-                lineStyle: {
-                  opacity: 0
-                }
-              },
-              detail: {
-                show: false
-              },
-              data: [{ value: 80, name: '违规立案' },
-                { value: 20, name: '待审核' },
-                { value: 30, name: '违规不立案' }],
-            },
-            {
-              name: '',
-              type: 'pie',
-              radius: ['90%', '100%'],
-              center: ['77%', '50%'],
-              silent: true,
-              z: 0,
-              zlevel: 0,
-              showVal: true,
-              label: {
-                normal: {
-                  show: false,
-                  position: 'center'
-                }
-              },
-              itemStyle: {
-                normal: {
-                  // 定制显示（按顺序）最外层光环色值
-                  color: function (params) {
-                    var colorList = []
-                    return colorList[params.dataIndex]
-                  }
-                }
-              },
-              data: []
-            }
-          ],
-        },
+        // pieChartOne:{
+        //   color: ['#75E4E3', '#E5AF45', '#9941E2'],
+        //   // 预警值 环中的数据显示
+        //   title: {
+        //     text: '预警量',
+        //     top: '38%',
+        //     subtext: '',
+        //     textStyle: {
+        //       color: '#f2f2f2',
+        //       fontSize: 20,
+        //       align: 'center'
+        //     },
+        //     subtextStyle: {
+        //       fontSize: 20,
+        //       color: ['#fff'],
+        //       align: 'center'
+        //     },
+        //     x: '50%',
+        //     y: 'center',
+        //     textAlign: 'center'
+        //   },
+        //   // 中心的文字
+        //   graphic: {
+        //     type: 'text',
+        //     top: '55%',
+        //     left: '45%',
+        //     style: {
+        //       color: '#f2f2f2',
+        //       text: '10',
+        //       textAlign: 'center',
+        //       fill: '#f2f2f2',
+        //       fontSize: 10,
+        //       fontWeight: 700
+        //     },
+        //   },
+        //   // 图表的位置和大小是由grid控制的
+        //   grid: {
+        //     top: 10,
+        //     bottom: 10,
+        //     left: 10,
+        //     right: 10
+        //   },
+        //
+        //   series: [// 主要展示层的
+        //     {
+        //       name: '',
+        //       radius: ['50%', '65%'],
+        //       center: ['50%', '50%'],
+        //       type: 'pie',
+        //       data: [{ value: 80, name: '通过' },
+        //         { value: 20, name: '待审核' },
+        //         { value: 30, name: '不通过' }],
+        //       labelLine: {
+        //         normal: {
+        //           show: false,
+        //           length1:'0',
+        //           length2:'0',
+        //         }
+        //       },
+        //       label: { //对标签中 显示的文字进行设置
+        //         color: 'white',
+        //         position: 'outside',
+        //         normal: {
+        //           // formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+        //           formatter: '{a|{b}}\n{hr|}\n{per|{d}%}',
+        //           padding: [10, 15],
+        //           backgroundColor: '#387993',
+        //           borderRadius: 5,
+        //           rich: {
+        //             a: {
+        //               color: 'white',
+        //               fontSize: 15,
+        //               lineHeight: 20,
+        //               align: 'left'
+        //             },
+        //             hr: {
+        //               width: '100%',
+        //               height: 0,
+        //               alien: 'left'
+        //             },
+        //             per: {
+        //               color: '#fff',
+        //               align: 'left',
+        //               fontSize: 15,
+        //             }
+        //           }
+        //         },
+        //       },
+        //     },
+        //     {
+        //       name: '',
+        //       type: 'gauge',
+        //       center: ['50%', '50%'],
+        //       // radius: ['80%', '90%'],
+        //       radius: '90%',
+        //       startAngle: 0,
+        //       endAngle: 359.9,
+        //       splitNumber: 99,
+        //       hoverAnimation: true,
+        //       axisTick: {
+        //         show: false
+        //       },
+        //       splitLine: {
+        //         length: 13,
+        //         lineStyle: {
+        //           width: 1,//最外层光圈的粗细
+        //           color: '#5692BC'// 最外层光圈颜色宽度
+        //         }
+        //       },
+        //       title: {
+        //         show: false
+        //       },
+        //       axisLabel: {
+        //         show: false
+        //       },
+        //       pointer: {
+        //         show: false
+        //       },
+        //       axisLine: {
+        //         lineStyle: {
+        //           opacity: 0
+        //         }
+        //       },
+        //       detail: {
+        //         show: false
+        //       },
+        //       data: [{ value: 80, name: '违规立案' },
+        //         { value: 20, name: '待审核' },
+        //         { value: 30, name: '违规不立案' }],
+        //     },
+        //     {
+        //       name: '',
+        //       type: 'pie',
+        //       radius: ['90%', '100%'],
+        //       center: ['77%', '50%'],
+        //       silent: true,
+        //       z: 0,
+        //       zlevel: 0,
+        //       showVal: true,
+        //       label: {
+        //         normal: {
+        //           show: false,
+        //           position: 'center'
+        //         }
+        //       },
+        //       itemStyle: {
+        //         normal: {
+        //           // 定制显示（按顺序）最外层光环色值
+        //           color: function (params) {
+        //             var colorList = []
+        //             return colorList[params.dataIndex]
+        //           }
+        //         }
+        //       },
+        //       data: []
+        //     }
+        //   ],
+        // },
+       pieChartOne:{
+         title: {},
+         tooltip: {
+           trigger: 'item',
+           formatter: '{b} : {c} ({d}%)'
+         },
+         // legend: {
+         //   left: 'center',
+         //   top: 'bottom',
+         //   data: ['未审核', '审核未通过', '审核通过',]
+         // },
+         toolbox: {
+           show: true,
+           feature: {
+             mark: {show: true},
+             dataView: {show: true, readOnly: false},
+             magicType: {
+               show: true,
+               type: ['pie', 'funnel']
+             },
+             restore: {show: true},
+             saveAsImage: {show: true}
+           }
+         },
+         series: [
+           {
+             name: '',
+             type: 'pie',
+             radius: '60%',
+             // radius: [30, 110],
+             center: ['50%', '50%'],
+             roseType: 'radius',
+             label: {
+               normal: {
+                 show: true,
+                 formatter: "{b}{d}%",
+                 textStyle: {
+                   fontSize: 14,
+                   color: "#fff"
+                 },
+               },
+             },
+             data: [
+               {value: 26.8, name: '未审核'},
+               {value: 36, name: '审核未通过'},
+               {value: 55.3, name: '审核通过'},
+             ]
+           }
+         ]
+       },
         chartData: {
           title:{},
           tooltip: {
@@ -493,8 +663,15 @@
               // barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
               itemStyle: {
                 normal: {
-                  color:'#00A0EB'
-
+                  // color:'#00A0EB'
+                  // 13,24,46
+                  color:new echarts.graphic.LinearGradient(0, 1, 0, 0,
+                    [
+                      { offset: 1, color: 'rgba(63,247,203,1)' },
+                      { offset: 0, color: 'rgb(13,24,46)' },
+                      { offset: 0.4, color: 'rgba(63,247,203,1)' },
+                    ]
+                  ),
                 }
               },
               data: [220, 182, 191,220, 182, 191,220, 182]
@@ -564,8 +741,9 @@
                 normal: {
                   color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
                     [
-                      { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: 'rgba(4,178,255,1)' }
+                      { offset: 1, color: 'rgba(1,221,235,1)' },
+                      { offset: 0, color: 'rgb(0,0,0)' },
+                      { offset: 0.4, color: 'rgba(1,221,235,1)' },
                     ]
                   ),
                   label: {
@@ -676,7 +854,7 @@
           legend: {
             show:false
           },
-          color:['#367CFD','rgba(255,209,91,1)'],
+          color:['rgb(57,229,189)','rgba(206,171,255,1)','rgba(0,242,254,1)'],
           series: [
             {
               name: '访问来源',
@@ -762,8 +940,8 @@
                 lineHeight: 20
               },
             },
-            top: 'center',
-            left: '145',
+            top: '36%',
+            left: '49%',
             textAlign: 'center',
             textStyle: {
               rich: {
@@ -785,12 +963,15 @@
             formatter: "{b}: {c} ({d}%)"
           },
           legend: {
-            orient: 'vertical',
-            x: 'right',
+            type: 'plain',
+            orient: 'horizontal',
+            // x: 'right',
             data: ['过程验收','工验收','安全考评','完工评价','危大备案','机械登记','拆卸告知'],
-            itemGap: 30,
-            top: 'middle',
-            align: 'left',
+            // itemGap: 30,
+            left: 'center',
+            bottom:'bottom',
+            // top: 'middle',
+            // align: 'left',
             icon: 'circle',
             textStyle:{
               color:'#fff'
@@ -803,8 +984,8 @@
             {
               name: '访问来源',
               type: 'pie',
-              radius: ['60%', '84%'],
-              center: [150, '50%'],
+              radius: ['45%', '65%'],
+              center: ['50%', '43%'],
               stillShowZeroSum: false,
               avoidLabelOverlap: false,
               zlevel: 1,
@@ -850,13 +1031,15 @@
                 {value: 244, name: '危大备案'},{value: 689, name: '机械登记'},{value: 163, name: '拆卸告知'}]
             }
           ],
-          color: ['rgb(188,86,64)','rgb(83,155,141)','rgb(255,156,18)','rgb(254,112,26)','rgb(72,109,180)','rgb(110,87,167)','rgb(81,140,182)']
+          color: ['rgb(0,242,254)','rgb(255,82,52)','rgb(247,212,66)','rgb(247,185,66)','rgb(62,252,128)','rgb(244,170,255)','rgb(61,253,206)']
         },
         map: '', // 对象
         zoom: 14, // 地图的初始化级别，及放大比例
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
         pointList:[],
+        yyList:[],
+        gdList:[],
       }
     },
 
@@ -874,12 +1057,22 @@
       this.getList();
     },
     methods: {
-      handlePageType(val){
-        this.activeIndex = val;
-        if(val == 0){
-          this.getList();
+      handleGdPointType(val){
+        this.showGdType = val;
+      },
+      getGdPoint(val){
+        this.gdMapType = val;
+        if(val == 1){
+          console.log('获取工地点位')
+          this.mapPoint(this.gdList,'gd');
         }else{
-          this.pointList = [{
+          this.getVideo();
+        }
+      },
+      getYyPoint(val){
+        this.yyMapType = val;
+        if(val == 1){
+          this.yyList = [{
             name:'建德人家',
             status:'正常',
             address:'杭州市滨江区江陵路与启智街交汇处附近西',
@@ -922,7 +1115,82 @@
             longitude:'120.19302',
             latitude:'30.194742',
           }];
-          this.mapPoint(this.pointList,'yy');
+          this.mapPoint(this.yyList,'yy');
+        }else{
+          this.getVideo();
+        }
+      },
+      handleYyPointType(type){
+        this.showYyType = type
+      },
+      handleMapType(type){
+        if(type == 1){//获取设备点位
+          this.getList();
+        }else if(type == 2){//获取视频点位
+          this.getVideo();
+        }
+      },
+      handlePageType(val){
+        this.activeIndex = val;
+        if(val == 0){
+          this.getList();
+        }else if(val == 2){
+          // this.yyMapType = val;
+          if(this.gdMapType == 1){
+            this.mapPoint(this.gdList,'gd');
+          }else{
+            this.getVideo();
+          }
+        }else{
+          if(this.yyMapType == 1){
+            this.yyList = [{
+              name:'建德人家',
+              status:'正常',
+              address:'杭州市滨江区江陵路与启智街交汇处附近西',
+              longitude:'120.126305',
+              latitude:'30.182287',
+            },{
+              name:'物美',
+              status:'故障',
+              address:'杭州市滨江区江陵路与启智街交汇处附近西',
+              longitude:'120.14547',
+              latitude:'30.160213',
+            },{
+              name:'物美',
+              status:'离线',
+              address:'杭州市滨江区江陵路与启智街交汇处附近西',
+              longitude:'120.205925',
+              latitude:'30.145908',
+            },{
+              name:'佰味佳',
+              status:'超标',
+              address:'杭州市滨江区江陵路与启智街交汇处附近西',
+              longitude:'120.203186',
+              latitude:'30.214312',
+            },{
+              name:'建德人家',
+              status:'正常',
+              address:'杭州市滨江区江陵路与启智街交汇处附近西',
+              longitude:'120.19772',
+              latitude:'30.20525',
+            },{
+              name:'建德人家',
+              status:'正常',
+              address:'杭州市滨江区江陵路与启智街交汇处附近西',
+              longitude:'120.180405',
+              latitude:'30.174658',
+            },{
+              name:'建德人家',
+              status:'正常',
+              address:'杭州市滨江区江陵路与启智街交汇处附近西',
+              longitude:'120.19302',
+              latitude:'30.194742',
+            }];
+            this.mapPoint(this.yyList,'yy');
+          }else{
+            this.getVideo();
+          }
+
         }
       },
       onLoad() {
@@ -946,22 +1214,22 @@
         });
         let icon02 = new T.Icon({
           iconUrl: point02,
-          iconSize: new T.Point(66, 59),
+          iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
         let icon03 = new T.Icon({
           iconUrl: point03,
-          iconSize: new T.Point(66, 59),
+          iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
         let icon04 = new T.Icon({
           iconUrl: point04,
-          iconSize: new T.Point(66, 59),
+          iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
         let icon05 = new T.Icon({
           iconUrl: point05,
-          iconSize: new T.Point(66, 59),
+          iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
         let markers = [];
@@ -1056,9 +1324,18 @@
 
       },
 
+      //获取AI视频
       getList(){
         console.log('好久好久')
-        pointList({type:'allList',class:1}).then((res) => {
+        getAllVideoPoint({class:1}).then((res) => {
+          this.pointList = res.data;
+          this.mapPoint(this.pointList)
+        });
+      },
+      //获取油烟--普通视频
+      getVideo(){
+        console.log('好久好久')
+        getAllVideoPoint({class:2}).then((res) => {
           this.pointList = res.data;
           this.mapPoint(this.pointList)
         });

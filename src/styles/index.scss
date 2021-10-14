@@ -988,8 +988,8 @@ iframe{
 .top_div{
   position: fixed;
   top: 10vh;
-  left: 15%;
-  width: 70%;
+  left: 10%;
+  width: 80%;
   z-index: 9999;
   //background: ;
   //background-image: linear-gradient(to bottom, #061027 60%, rgba(6,16,39,0.5) 85%, rgba(6,16,39,0.3) 90%, rgba(6,16,39,0) 100%);
@@ -1028,6 +1028,9 @@ iframe{
     background-size: 100% 100%;
     &.no_bg{
       background: rgba(0,0,0,0.3);
+      &.active{
+        background: rgba(0,0,0,0.6);
+      }
     }
     &.active{
       background: url("./../assets/image/intro_bg_active.png") center bottom no-repeat;
@@ -1039,10 +1042,17 @@ iframe{
         //height: 30px;
       }
     }
-
+  &.map_intro_yy.active{
+    .weui-cell__hd{
+      img{
+        width: 30px;
+        //height: 30px;
+      }
+    }
+  }
   }
   &.yy_center_content{
-    .map_intro{
+    .map_intro.active{
       .weui-cell__hd{
         img{
           width: 30px;

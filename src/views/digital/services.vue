@@ -194,7 +194,10 @@
 <!--      </div>-->
 <!--    </div>-->
         <div class="top_div flex clr_white text-center f16" v-if="activeIndex == 0">
-          <div class="flex f16 bold mr_20 border shadow" style="width: 500px;" @click="handlePointType(1)">
+          <div class="flex f16 bold mr_20 border shadow" style="width: 600px;" @click="handlePointType(1)">
+            <div class="flex-item baseColor">
+              泊位概况
+            </div>
             <div class="flex-item">
               总泊位数
               <span class="txt_linear">{{parkData.total}}</span>
@@ -202,15 +205,21 @@
             <div class="flex-item">占用泊位数<span class="txt_linear">{{parkData.useNum}}</span></div>
             <div class="flex-item">占用率<span class="txt_linear">{{parkData.useRate}}%</span></div>
           </div>
-          <div class="flex f16 bold mr_20 border shadow" style="width: 200px;" @click="handlePointType(2)">
-            <div class="flex-item">
+          <div class="flex f16 bold mr_20 border shadow" style="width: 260px;" @click="handlePointType(2)">
+            <div class="flex-item baseColor">
               视频
+            </div>
+            <div class="flex-item">
+              停车场视频
               <span class="txt_linear">{{parkNum}}</span>
             </div>
           </div>
         </div>
     <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 1">
       <div class="flex f16 bold mr_20 border shadow" @click="handleTwoPointType(1)">
+        <div class="flex-item baseColor">
+          泊位概况
+        </div>
         <div class="flex-item">
           总泊位数（没接口）
           <span class="txt_linear">{{carData.shangBao}}</span>
@@ -225,66 +234,83 @@
         </div>
       </div>
       <div class="flex f16 bold mr_20 border shadow" @click="handleTwoPointType(2)">
+        <div class="flex-item baseColor">
+          人员
+        </div>
         <div class="flex-item">
           运维人员（没接口）
           <span class="txt_linear">{{carData.yellow_num}}</span>
         </div>
       </div>
       <div class="flex f16 bold border shadow" @click="handleTwoPointType(3)">
+        <div class="flex-item baseColor">
+          视频
+        </div>
         <div class="flex-item">
-          视频（没接口）
+          普通视频（没接口）
           <span class="txt_linear">{{carData.yellow_num}}</span>
         </div>
       </div>
 
     </div>
     <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 2">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 200px;" >
-        <div class="flex-item" @click="handleTypeLight(1)">
-          亮灯总数
-          <span class="txt_linear">{{lightData.lightCount}}</span>
+      <div class="flex f16 bold mr_20 border shadow" style="width: 450px;" @click="handleTypeLight(2)">
+        <div class="flex-item baseColor">
+          控制柜
         </div>
-      </div>
-      <div class="flex f16 bold mr_20 border shadow" style="width: 450px;" >
-        <div class="flex-item" @click="handleTypeLight(2)">
-          控制柜总数
+        <div class="flex-item">
+          总数
           <span class="txt_linear">{{lightData.cabinetCount}}</span>
         </div>
-        <div class="flex-item" @click="handleTypeLight(2)">
-          控制柜故障数（没接口）
+        <div class="flex-item">
+          故障数（没接口）
           <span class="txt_linear"></span>
         </div>
       </div>
+      <div class="flex f16 bold mr_20 border shadow" style="width: 200px;" @click="handleTypeLight(1)">
+        <div class="flex-item baseColor">
+          亮灯设备
+        </div>
+        <div class="flex-item">
+          总数
+          <span class="txt_linear">{{lightData.lightCount}}</span>
+        </div>
+      </div>
+
 
     </div>
-    <div class="center_content clr_white text-center no_right" v-if="activeIndex == 0 && pointType == 1">
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point29.png"/></div>
-        <div class="weui-cell__bd">停车场</div>
-      </div>
-    </div>
-    <div class="center_content clr_white text-center no_right" v-if="activeIndex == 0 && pointType == 2">
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point42.png"/></div>
-        <div class="weui-cell__bd">停车场视频</div>
-      </div>
-    </div>
+<!--    <div class="center_content clr_white text-center no_right" v-if="activeIndex == 0 && pointType == 1">-->
+<!--      <div class="map_intro f14 bold flex baseColor weui-cell">-->
+<!--        <div class="weui-cell__hd flex"><img src="./../../assets/image/point29.png"/></div>-->
+<!--        <div class="weui-cell__bd">停车场</div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="center_content clr_white text-center no_right" v-if="activeIndex == 0 && pointType == 2">-->
+<!--      <div class="map_intro f14 bold flex baseColor weui-cell">-->
+<!--        <div class="weui-cell__hd flex"><img src="./../../assets/image/point42.png"/></div>-->
+<!--        <div class="weui-cell__bd">停车场视频</div>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="center_content clr_white text-center" v-if="activeIndex == 1 && pointTwoType == 1">
-      <div class="map_intro no_bg border shadow f12 bold flex baseColor weui-cell">
+      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==1?'active':'']" @click="handleParkPointType(1)">
         <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point30.png"/></div>-->
-        <div class="weui-cell__bd">重点监控区域</div>
+        <div :class="['weui-cell__bd',showOneType==1?'clr_white':'']">全部区域</div>
       </div>
-      <div class="map_intro no_bg border shadow f14 bold flex baseColor weui-cell">
+      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==2?'active':'']" @click="handleParkPointType(2)">
+        <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point30.png"/></div>-->
+        <div :class="['weui-cell__bd',showOneType==2?'clr_white':'']">重点监控区域</div>
+      </div>
+      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==3?'active':'']" @click="handleParkPointType(3)">
         <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>-->
-        <div class="weui-cell__bd">停车区域</div>
+        <div :class="['weui-cell__bd',showOneType==3?'clr_white':'']">停车区域</div>
       </div>
-      <div class="map_intro no_bg border shadow f14 bold flex baseColor weui-cell">
+      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==4?'active':'']" @click="handleParkPointType(4)">
         <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>-->
-        <div class="weui-cell__bd">禁停区域</div>
+        <div :class="['weui-cell__bd',showOneType==4?'clr_white':'']">禁停区域</div>
       </div>
-      <div class="map_intro no_bg border shadow f14 bold flex baseColor weui-cell">
+      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==5?'active':'']" @click="handleParkPointType(5)">
         <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>-->
-        <div class="weui-cell__bd">禁行区域</div>
+        <div :class="['weui-cell__bd',showOneType==5?'clr_white':'']">禁行区域</div>
       </div>
     </div>
     <div class="center_content clr_white text-center" v-if="activeIndex == 1 && pointTwoType == 2">
@@ -300,27 +326,56 @@
       </div>
     </div>
     <div class="center_content clr_white text-center" v-if="activeIndex == 2 && showType==1">
-      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getLampPostList(1)">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point35.png"/></div>
-        <div class="weui-cell__bd">亮灯设备开</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showTwoType==0?'active':'']" @click="handleLightPointType(0)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showTwoType!=0" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showTwoType==0?'clr_white':'']">全部设备</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getLampPostList(2)">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point34.png"/></div>
-        <div class="weui-cell__bd">亮灯设备关</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showTwoType==1?'active':'']" @click="handleLightPointType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showTwoType!=1" src="./../../assets/image/point35.png"/>
+          <img v-else src="./../../assets/image/point35_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showTwoType==1?'clr_white':'']">亮灯设备开</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showTwoType==2?'active':'']" @click="handleLightPointType(2)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showTwoType!=2" src="./../../assets/image/point34.png"/>
+          <img v-else src="./../../assets/image/point34_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showTwoType==2?'clr_white':'']">亮灯设备关</div>
       </div>
     </div>
     <div class="center_content clr_white text-center" v-if="activeIndex == 2 && showType==2">
-      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getControlCabinetlist(1)">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point33.png"/></div>
-        <div class="weui-cell__bd">控制柜开</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showThreeType==0?'active':'']" @click="handleControlPointType(0)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showThreeType!=0" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showThreeType==0?'clr_white':'']">全部设备</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell" @click="getControlCabinetlist(2)">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point32.png"/></div>
-        <div class="weui-cell__bd">控制柜关</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showThreeType==1?'active':'']" @click="handleControlPointType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showThreeType!=1" src="./../../assets/image/point33.png"/>
+          <img v-else src="./../../assets/image/point33_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showThreeType==1?'clr_white':'']">控制柜开</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point31.png"/></div>
-        <div class="weui-cell__bd">控制柜故障??</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showThreeType==2?'active':'']" @click="handleControlPointType(2)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showThreeType!=2" src="./../../assets/image/point32.png"/>
+          <img v-else src="./../../assets/image/point32_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showThreeType==2?'clr_white':'']">控制柜关</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showThreeType==3?'active':'']" @click="handleControlPointType(3)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showThreeType!=3" src="./../../assets/image/point31.png"/>
+          <img v-else src="./../../assets/image/point31_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showThreeType==3?'clr_white':'']">控制柜故障??</div>
       </div>
     </div>
         <videoView :showDialog.sync="showVideoDialog" :caseData={}></videoView>
@@ -360,6 +415,9 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,videoView},
     data() {
       return {
+        showThreeType:0,
+        showTwoType:0,
+        showOneType:1,
         parkData:{},
         percentageNum:0,
         pointType:1,
@@ -878,8 +936,8 @@
           series: [{
             name:'允许投放数',
             type: 'bar',
-            barWidth: 20,//柱图宽度
-            barGap:'20%',
+            barWidth: 10,//柱图宽度
+            barGap:'50%',
             barCategoryGap:'20%',/*多个并排柱子设置柱子之间的间距*/
             // label: {
             //   normal: {
@@ -892,8 +950,9 @@
               normal: {
                 color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
                   [
-                    { offset: 0, color: 'rgba(96,11,240,1)' },
-                    { offset: 1, color: 'rgba(204,171,242,1)' }
+
+                    { offset: 1, color: 'rgba(201,168,246,1)' },
+                    { offset: 0, color: 'rgba(201,168,246,0)' },
                   ]
                 ),
                 label: {
@@ -913,8 +972,8 @@
             {
              name:'目前投放数',
               type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'20%',
+              barWidth: 10,//柱图宽度
+              barGap:'50%',
               barCategoryGap:'20%',/*多个并排柱子设置柱子之间的间距*/
               // label: {
               //   normal: {
@@ -927,8 +986,8 @@
                 normal: {
                   color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
                     [
-                      { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: 'rgba(4,178,255,1)' }
+                      { offset: 1, color: 'rgba(3,238,252,1)' },
+                      { offset: 0, color: 'rgba(3,238,252,0)' },
                     ]
                   ),
                   label: {
@@ -1003,6 +1062,9 @@
       this.timerThree = null;
     },
     methods: {
+      handleOnePointType(val){
+        this.showOneType = val;
+      },
       getPieChart(){
         let that = this;
         let i = 1;
@@ -1041,6 +1103,10 @@
           this.getCommonVideoList();
         }
       },
+      handleControlPointType(type){
+        this.showThreeType = type;
+        this.getControlCabinetlist(type)
+      },
       handleVideo(txt){
         this.showVideoDialog = true
         // this.videoData={
@@ -1070,7 +1136,7 @@
       },
       //普通视频点位
       getCommonVideoList(){
-        pointList({type:'allList',class:2}).then((res) => {
+        getAllVideoPoint({class:2}).then((res) => {
           this.commonVideoList = res.data;
           this.mapPoint('point',this.commonVideoList,this)
         });
@@ -1359,6 +1425,16 @@
         }else{
           this.getControlCabinetlist('');
         }
+      },
+      handleParkPointType(type){
+        this.showOneType = type;
+      },
+      handleLightPointType(type){
+        this.showTwoType = type;
+        if(type == 0){
+          this.getLampPostList('')
+        }
+        this.getLampPostList(type)
       },
       //亮灯杆列表
       getLampPostList(status){

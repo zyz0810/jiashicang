@@ -28,18 +28,53 @@
 
       <div class="clr_white">
         <p class="f20 bold txt_linear">市政管理信息总览</p>
-        <div class="f14 bold flex mt_20 facilities_intro ml_10">
-          <div>养护道路：103条</div>
-          <div>排水管线长度：5625米</div>
+        <div class="weui-cell facilities_weui">
+          <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left01_active.png"></div>
+          <div class="weui-cell__bd">
+            <p class="clr_white">桥梁(江虹桥)</p>
+            <p class="bold clr01"><span class="f26">1</span>个</p>
+          </div>
         </div>
-        <div class="f14 bold flex mt_20 facilities_intro ml_10">
-          <div>养护单位：14家</div>
-          <div>智能感应井盖：103个</div>
+        <div class="weui-cell facilities_weui">
+          <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left02.png"></div>
+          <div class="weui-cell__bd">
+            <p class="clr_white">智能感应井盖</p>
+            <p class="bold clr02"><span class="f26">103</span>个</p>
+          </div>
         </div>
-        <div class="f14 bold flex mt_20 mb_20 facilities_intro ml_10">
-          <div>管道水位监测：24个</div>
-          <div>管道流量监测：2个</div>
+        <div class="weui-cell facilities_weui">
+          <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left03.png"></div>
+          <div class="weui-cell__bd">
+            <p class="clr_white">养护道路</p>
+            <p class="bold clr03"><span class="f26">103</span>个</p>
+          </div>
         </div>
+        <div class="weui-cell facilities_weui">
+          <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left04.png"></div>
+          <div class="weui-cell__bd">
+            <p class="clr_white">排水管线长度</p>
+            <p class="bold clr04"><span class="f26">1</span>个</p>
+          </div>
+        </div>
+        <div class="weui-cell facilities_weui">
+          <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left05.png"></div>
+          <div class="weui-cell__bd">
+            <p class="clr_white">养护单位</p>
+            <p class="bold clr05"><span class="f26">14</span>个</p>
+          </div>
+        </div>
+<!--        <div class="f14 bold flex mt_20 facilities_intro ml_10">-->
+<!--          <div>养护道路：103条</div>-->
+<!--          <div>排水管线长度：5625米</div>-->
+<!--        </div>-->
+<!--        <div class="f14 bold flex mt_20 facilities_intro ml_10">-->
+<!--          <div>养护单位：14家</div>-->
+<!--          <div>智能感应井盖：103个</div>-->
+<!--        </div>-->
+<!--        <div class="f14 bold flex mt_20 mb_20 facilities_intro ml_10">-->
+<!--          <div>管道水位监测：24个</div>-->
+<!--          <div>管道流量监测：2个</div>-->
+<!--        </div>-->
 <!--        <RingChart :class="'transformChart'" :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="200px"></RingChart>-->
         <!--<div class="flex facilitiesWarning_num f14 bold text-center">-->
           <!--<div class="flex-item">-->
@@ -60,73 +95,73 @@
 
     </div>
     <div class="right_content base_bg_right">
-      <div class="clr_white">
-        <p class="f20 bold txt_linear">江虹桥异常情况</p>
-        <div class="flex bold text-center mt_10">
-          <div class="flex-item equipment_normal">
-            <div class="f26 num">46</div>
-            <p class="f16 mt_10">正常设备</p>
-          </div>
-          <div class="flex-item equipment_abnormal">
-            <div class="f26 num">0</div>
-            <p class="f16 mt_10">异常设备</p>
-          </div>
-          <div class="flex-item rate_abnormal">
-            <div class="num">
-              <span class="f26">0</span>%
-              <!--<ring-chart :chartData="pieData" :PieChartLegend="PieChartLegend" height="60px" divwidth="100%"></ring-chart>-->
-            </div>
-            <p class="f16 mt_10">异常率</p>
-          </div>
-        </div>
+<!--      <div class="clr_white">-->
+<!--        <p class="f20 bold txt_linear">江虹桥异常情况</p>-->
+<!--        <div class="flex bold text-center mt_10">-->
+<!--          <div class="flex-item equipment_normal">-->
+<!--            <div class="f26 num">46</div>-->
+<!--            <p class="f16 mt_10">正常设备</p>-->
+<!--          </div>-->
+<!--          <div class="flex-item equipment_abnormal">-->
+<!--            <div class="f26 num">0</div>-->
+<!--            <p class="f16 mt_10">异常设备</p>-->
+<!--          </div>-->
+<!--          <div class="flex-item rate_abnormal">-->
+<!--            <div class="num">-->
+<!--              <span class="f26">0</span>%-->
+<!--              &lt;!&ndash;<ring-chart :chartData="pieData" :PieChartLegend="PieChartLegend" height="60px" divwidth="100%"></ring-chart>&ndash;&gt;-->
+<!--            </div>-->
+<!--            <p class="f16 mt_10">异常率</p>-->
+<!--          </div>-->
+<!--        </div>-->
 
-      </div>
-      <div class="mt_20 ">
-        <p class="f20 bold txt_linear">江虹桥预警信息</p>
-        <div class="flex warning_intro clr_white mt_10">
-          <div class="flex m_r30"><span class="block warning_circle bg_green"></span>正常</div>
-          <div class="flex m_r30"><span class="block warning_circle bg_blue"></span>一级预警</div>
-          <div class="flex m_r30"><span class="block warning_circle bg_yellow"></span>二级预警</div>
-          <div class="flex m_r30"><span class="block warning_circle bg_red"></span>三级预警</div>
-        </div>
-        <div class="flex divBar_content bold mt_10 text-center">
-          <div class="flex-item">
-            <div class="bar_div f16 bg_green">
-              <div>总27</div>
-              <p>0</p>
-            </div>
-            <p class="f14 clr_blue01 mt_5">应变计</p>
-          </div>
-          <div class="flex-item">
-            <div class="bar_div f16 bg_green">
-              <div>总27</div>
-              <p>0</p>
-            </div>
-            <p class="f14 clr_blue01 mt_5">饶变计</p>
-          </div>
-          <div class="flex-item">
-            <div class="bar_div f16 bg_green">
-              <div>总27</div>
-              <p>0</p>
-            </div>
-            <p class="f14 clr_blue01 mt_5">温湿度计</p>
-          </div>
-          <div class="flex-item">
-            <div class="bar_div f16 bg_green">
-              <div>总27</div>
-              <p>0</p>
-            </div>
-            <p class="f14 clr_blue01 mt_5">裂缝计</p>
-          </div>
-          <div class="flex-item">
-            <div class="bar_div f16 bg_green">
-              <div>总27</div>
-              <p>0</p>
-            </div>
-            <p class="f14 clr_blue01 mt_5">钢索计</p>
-          </div>
-        </div>
-      </div>
+<!--      </div>-->
+<!--      <div class="mt_20 ">-->
+<!--        <p class="f20 bold txt_linear">江虹桥预警信息</p>-->
+<!--        <div class="flex warning_intro clr_white mt_10">-->
+<!--          <div class="flex m_r30"><span class="block warning_circle bg_green"></span>正常</div>-->
+<!--          <div class="flex m_r30"><span class="block warning_circle bg_blue"></span>一级预警</div>-->
+<!--          <div class="flex m_r30"><span class="block warning_circle bg_yellow"></span>二级预警</div>-->
+<!--          <div class="flex m_r30"><span class="block warning_circle bg_red"></span>三级预警</div>-->
+<!--        </div>-->
+<!--        <div class="flex divBar_content bold mt_10 text-center">-->
+<!--          <div class="flex-item">-->
+<!--            <div class="bar_div f16 bg_green">-->
+<!--              <div>总27</div>-->
+<!--              <p>0</p>-->
+<!--            </div>-->
+<!--            <p class="f14 clr_blue01 mt_5">应变计</p>-->
+<!--          </div>-->
+<!--          <div class="flex-item">-->
+<!--            <div class="bar_div f16 bg_green">-->
+<!--              <div>总27</div>-->
+<!--              <p>0</p>-->
+<!--            </div>-->
+<!--            <p class="f14 clr_blue01 mt_5">饶变计</p>-->
+<!--          </div>-->
+<!--          <div class="flex-item">-->
+<!--            <div class="bar_div f16 bg_green">-->
+<!--              <div>总27</div>-->
+<!--              <p>0</p>-->
+<!--            </div>-->
+<!--            <p class="f14 clr_blue01 mt_5">温湿度计</p>-->
+<!--          </div>-->
+<!--          <div class="flex-item">-->
+<!--            <div class="bar_div f16 bg_green">-->
+<!--              <div>总27</div>-->
+<!--              <p>0</p>-->
+<!--            </div>-->
+<!--            <p class="f14 clr_blue01 mt_5">裂缝计</p>-->
+<!--          </div>-->
+<!--          <div class="flex-item">-->
+<!--            <div class="bar_div f16 bg_green">-->
+<!--              <div>总27</div>-->
+<!--              <p>0</p>-->
+<!--            </div>-->
+<!--            <p class="f14 clr_blue01 mt_5">钢索计</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
 <!--      <div class="mt_20">-->
 <!--        <p class="f20 bold clr_white txt_linear mb_20">江虹桥实时曲线</p>-->
 <!--        <el-form :inline="true" :model="listQuery" class="facilities_form">-->
@@ -147,6 +182,43 @@
 <!--        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" :divwidth="'100%'"></LineChart>-->
 <!--      </div>-->
 
+      <div>
+        <p class="f20 bold txt_linear">江虹桥预警信息</p>
+        <div class="flex warning_intro clr_white mt_10">
+          <div class="flex m_r30"><span class="block warning_circle bg01"></span>正常</div>
+          <div class="flex m_r30"><span class="block warning_circle bg02"></span>一级预警</div>
+          <div class="flex m_r30"><span class="block warning_circle bg03"></span>二级预警</div>
+          <div class="flex m_r30"><span class="block warning_circle bg04"></span>三级预警</div>
+        </div>
+        <div class="progress_cont mt_10 progress_light">
+          <div class="weui-cell clr06">
+            <div class="weui-cell__hd txtColor">应变计</div>
+            <div class="weui-cell__bd"><el-progress :show-text="false" :stroke-width="16" :percentage="percentageNum"></el-progress></div>
+            <div class="weui-cell__ft f12 clr_white ml_10 bg01">总：27</div>
+          </div>
+          <div class="weui-cell clr06">
+            <div class="weui-cell__hd txtColor">挠度计</div>
+            <div class="weui-cell__bd"><el-progress :show-text="false" :stroke-width="16" :percentage="percentageNum"></el-progress></div>
+            <div class="weui-cell__ft f12 clr_white ml_10 bg01">总：10</div>
+          </div>
+          <div class="weui-cell clr06">
+            <div class="weui-cell__hd txtColor">温湿度计</div>
+            <div class="weui-cell__bd"><el-progress :show-text="false" :stroke-width="16" :percentage="percentageNum"></el-progress></div>
+            <div class="weui-cell__ft f12 clr_white ml_10 bg01">总：1</div>
+          </div>
+          <div class="weui-cell clr06">
+            <div class="weui-cell__hd txtColor">裂缝计</div>
+            <div class="weui-cell__bd"><el-progress :show-text="false" :stroke-width="16" :percentage="percentageNum"></el-progress></div>
+            <div class="weui-cell__ft f12 clr_white ml_10 bg01">总：2</div>
+          </div>
+          <div class="weui-cell clr06">
+            <div class="weui-cell__hd txtColor">钢索计</div>
+            <div class="weui-cell__bd"><el-progress :show-text="false" :stroke-width="16" :percentage="percentageNum"></el-progress></div>
+            <div class="weui-cell__ft f12 clr_white ml_10 bg01">总：6</div>
+          </div>
+        </div>
+
+      </div>
     </div>
     <!--<div class="top_div flex clr_white text-center">-->
       <!--<div class="flex f14 bold mr_20 border shadow" style="width: 400px;">-->
@@ -172,6 +244,30 @@
         <!--</div>-->
       <!--</div>-->
     <!--</div>-->
+    <div class="top_div flex clr_white text-center">
+      <div class="flex f16 bold mr_20 border shadow" style="width: 600px;" @click="getPoint(1)">
+        <div class="flex-item baseColor">设备管理</div>
+        <div class="flex-item">
+          正常
+          <span class="txt_linear">1323</span>
+        </div>
+        <div class="flex-item">
+          异常
+          <span class="txt_linear">823</span>
+        </div>
+        <div class="flex-item">
+          异常率
+          <span class="txt_linear">823</span>
+        </div>
+      </div>
+      <div class="flex f16 bold border shadow" style="width: 260px;" @click="getPoint(2)">
+        <div class="flex-item baseColor">视频</div>
+        <div class="flex-item">
+          普通视频
+          <span class="txt_linear">18</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -188,7 +284,9 @@
   import { mapState } from 'vuex';
   import map from '@/components/Map/map.js'; // 引入刚才的map.js 注意路径
   import point01 from '@/assets/image/point10.png'; // 引入刚才的map.js 注意路径
+  import point02 from '@/assets/image/point38.png'; // 引入刚才的map.js 注意路径
   import {warring,typeData,dataLine,dataPoint,currentData,historicalData} from '@/api/municipalFacilities'
+  import {getAllVideoPoint} from "@/api/system";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -196,6 +294,8 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        videoList:[],
+        percentageNum:0,
         showOption:0,
         showType:1,
         listQuery:{
@@ -837,7 +937,8 @@
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
         typeList:[],
-        dataLine:[]
+        dataLine:[],
+        timerTwo:'',
       }
     },
 
@@ -853,10 +954,27 @@
       // })
       this.getWarring()
       this.onLoad();
-      this.getTypeData();
+      // this.getTypeData();
 
     },
+    beforeDestroy() {
+      clearInterval(this.timerTwo);
+      this.timerTwo = null;
+    },
     methods: {
+      getPoint(val){
+        if(val == 1){
+          this.mapPoint('facilities',[]);
+        }else{
+          this.getVideo();
+        }
+      },
+      getVideo(){
+        getAllVideoPoint({class:2}).then((res) => {
+          this.videoList = res.data.list;
+          this.mapPoint('video',this.videoList)
+        });
+      },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
@@ -865,10 +983,8 @@
         // this.addCtrl()
         this.map.setStyle('indigo');
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
-        this.mapPoint();
       },
-      mapPoint(){
-        console.log('点位')
+      mapPoint(type,list){
         //创建图片对象
         this.map.clearOverLays();
         let icon01 = new T.Icon({
@@ -876,14 +992,25 @@
           iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
+        let icon02 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
         let markers = []
-        let point = new T.LngLat(120.208896,30.203874);
-        markers[0] = drawTMaker(point, icon01,this,{name:'江虹桥',address:'江虹桥位于杭州市滨江区江虹路和滨河路交叉口以北处'});
 
+        if(type == 'facilities'){
+          let point = new T.LngLat(120.208896,30.203874);
+          markers[0] = drawTMaker(point, icon01,this,{name:'江虹桥',address:'江虹桥位于杭州市滨江区江虹路和滨河路交叉口以北处'});
+        }else{
+          for (let i = 0; i < list.length; i++) {
+            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            markers[i]  = drawTMaker(point, icon02,this,list[i]);
+          }
+        }
 
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){
-          console.log('获取')
           var marker =  new T.Marker(lnglat, {icon: icon});
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {
@@ -928,7 +1055,6 @@
       getDataPoint(id){
         dataPoint({monitorlineid:id}).then((res) => {
           for(let i = 0;i<res.data.length;i++){
-            console.log('循环 55')
             this.getCurrentData(res.data[i].id);
           }
         });
@@ -938,7 +1064,6 @@
       // * monitorlineid 监测线id
       //   * type 监测项
       //   * pointid 测点id
-        console.log('循环 '+id)
         currentData({monitorlineid:this.listQuery.monitorlineid,type:this.listQuery.type,pointid:id}).then((res) => {
           // this.dataLine = res.data;
         });
@@ -946,6 +1071,17 @@
       getWarring(){
         warring().then((res) => {
           // this.dataLine = res.data;
+          let that = this;
+          let i = 1;
+          this.timerTwo = setInterval(function () {
+            if(i==1){
+              that.percentageNum = 100;
+              i = 2;
+            }else{
+              that.percentageNum = 0;
+              i = 1;
+            }
+          }, 1000);
         });
       },
 
@@ -959,8 +1095,71 @@
     /*color: #fff;*/
     /*background: #0a1f44;*/
   /*}*/
+  .clr01{
+    color: rgb(67,249,200);
+  }
+  .clr02{
+    color: rgb(3,232,244);
+  }
+  .clr03{
+    color: rgb(250,211,69);
+  }
+  .clr04{
+    color: rgb(205,169,254);
+  }
+  .clr05{
+    color: rgb(251,82,45);
+  }
+  .clr06{
+    color: rgb(60,250,205);
+    /deep/.el-progress-bar__inner{
+      background-image: linear-gradient(to left,rgba(60,250,205,1) ,  rgba(63,219,234,0)); /* 标准的语法（必须放在最后） */
+    }
+  }
+  .clr07{
+    color: rgb(2,239,254);
+  }
+  .clr08{
+    color: rgb(242,212,58);
+  }
+  .clr09{
+    color: rgb(249,82,47);
+  }
+  .bg01{
+    background: rgba(60,250,205,0.5);
+  }
+  .bg02{
+    background: rgba(2,239,254,0.5);
+  }
+  .bg03{
+    background: rgba(242,212,58,0.5);
+  }
+  .bg04{
+    background: rgba(249,82,47,0.6);
+  }
   .progress_cont{
-    border: 1px solid rgb(15,50,53) !important;
+    border: none;
+    /deep/.el-progress-bar__outer{
+      border-radius: 0;
+    }
+    .weui-cell{
+      .weui-cell__hd{
+        width: 4em;
+      }
+      .weui-cell__ft{
+        text-align: center;
+        width: 60px;
+        padding: 5px 10px;
+      }
+    }
+  }
+  .facilities_weui{
+    .weui-cell__hd{
+      img{
+        width: 100px;
+        height: 103px;
+      }
+    }
   }
   /*/deep/.tdt-infowindow-tip{*/
     /*background: #0a1f44 !important;*/

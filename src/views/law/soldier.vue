@@ -2,33 +2,67 @@
   <div class="app-container">
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
-    <div class="right_soldier bold text-center">
-     <ul>
-       <li class="f16">
-         <p class="clr_white"><span class="f26">35</span> 个</p>
-         <span class="block"></span>
-         <p class="f16 intro_txt clr_blue01">执法人员</p>
-       </li>
-       <li class="f16 mt_20">
-         <p class="clr_white"><span class="f26">16</span> 辆</p>
-         <span class="block flex"></span>
-         <p class="f16 intro_txt clr_blue01">执法车辆</p>
-       </li>
-       <li class="f16 mt_20">
-         <p class="clr_white"><span class="f26">828</span> 路</p>
-         <span class="block flex"></span>
-         <p class="f16 intro_txt clr_blue01">视频</p>
-       </li>
-     </ul>
-    </div>
-    <div class="center_content clr_white text-center" v-if="activeIndex == 0">
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>
-        <div class="weui-cell__bd">AI视频</div>
+    <div class="top_div flex clr_white text-center">
+      <div class="flex f16 bold mr_20 border shadow" style="width: 400px;" @click="handleMapType(1)">
+        <div class="flex-item baseColor">执法力量</div>
+        <div class="flex-item">
+          执法人员
+          <span class="txt_linear">35</span>
+        </div>
+        <div class="flex-item">
+          执法车辆
+          <span class="txt_linear">16</span>
+        </div>
+
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>
-        <div class="weui-cell__bd">普通视频</div>
+      <div class="flex f16 bold border shadow" style="width: 260px;" @click="handleMapType(2)">
+        <div class="flex-item baseColor">视频</div>
+        <div class="flex-item">
+          普通视频
+          <span class="txt_linear">828</span>
+        </div>
+      </div>
+    </div>
+<!--    <div class="right_soldier bold text-center">-->
+<!--     <ul>-->
+<!--       <li class="f16">-->
+<!--         <p class="clr_white"><span class="f26">35</span> 个</p>-->
+<!--         <span class="block"></span>-->
+<!--         <p class="f16 intro_txt clr_blue01">执法人员</p>-->
+<!--       </li>-->
+<!--       <li class="f16 mt_20">-->
+<!--         <p class="clr_white"><span class="f26">16</span> 辆</p>-->
+<!--         <span class="block flex"></span>-->
+<!--         <p class="f16 intro_txt clr_blue01">执法车辆</p>-->
+<!--       </li>-->
+<!--       <li class="f16 mt_20">-->
+<!--         <p class="clr_white"><span class="f26">828</span> 路</p>-->
+<!--         <span class="block flex"></span>-->
+<!--         <p class="f16 intro_txt clr_blue01">视频</p>-->
+<!--       </li>-->
+<!--     </ul>-->
+<!--    </div>-->
+    <div class="center_content no_right clr_white text-center" v-if="showMapType == 1">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==1?'active':'']" @click="handlePointType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=1" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==1?'clr_white':'']">全部力量</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==2?'active':'']" @click="handlePointType(2)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=2" src="./../../assets/image/point49.png"/>
+          <img v-else src="./../../assets/image/point49_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==2?'clr_white':'']">执法人员</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==3?'active':'']" @click="handlePointType(3)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=3" src="./../../assets/image/point50.png"/>
+          <img v-else src="./../../assets/image/point50_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==3?'clr_white':'']">执法车辆</div>
       </div>
     </div>
   </div>
@@ -45,9 +79,10 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point36.png' // 引入刚才的map.js 注意路径
-  import point02 from '@/assets/image/point38.png' // 引入刚才的map.js 注意路径
-  import {pointList} from '@/api/system'
+  import point01 from '@/assets/image/point49.png' // 执法人员图标
+  import point02 from '@/assets/image/point50.png' // 执法车辆图标
+  import point03 from '@/assets/image/point51.png' // 普通视频图标
+  import {getAllVideoPoint, pointList} from '@/api/system'
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -55,6 +90,8 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive},
     data() {
       return {
+        showType:1,
+        showMapType:1,
         chartData: {
           title:{},
           tooltip: {
@@ -344,6 +381,19 @@
       this.getList();
     },
     methods: {
+      //获取力量 -- 不同类型点位
+      handlePointType(type){
+        this.showType = type;
+        this. getList();
+      },
+      handleMapType(type){
+        this.showMapType = type;
+        if(type == 1){//获取设备点位
+          this.getList(2);
+        }else if(type == 2){//获取视频点位
+          this.getVideo();
+        }
+      },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
@@ -354,7 +404,7 @@
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
 
       },
-      mapPoint(list){
+      mapPoint(type,list){
         console.log('点位');
         //创建图片对象
         this.map.clearOverLays();
@@ -363,19 +413,38 @@
           iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
+        let icon02 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon03 = new T.Icon({
+          iconUrl: point03,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
 
         let markers = [];
         console.log(list);
-        for (let i = 0; i < list.length; i++) {
-          // var marker
-          if(list[i].class==1){
+        if(type == 'video'){
+          for (let i = 0; i < list.length; i++) {
+            // var marker
             let point = new T.LngLat(list[i].longitude,list[i].latitude);
-            markers[i]  = drawTMaker(point, icon01,this,list[i]);
-          }else if(list[i].class==3){
-            let point = new T.LngLat(list[i].longitude,list[i].latitude);
-            markers[i]  = drawTMaker(point, icon02,this,list[i]);
+            markers[i]  = drawTMaker(point, icon03,this,list[i]);
+          }
+        }else{
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            if(list[i].class==1){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon01,this,list[i]);
+            }else if(list[i].class==3){
+              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+              markers[i]  = drawTMaker(point, icon02,this,list[i]);
+            }
           }
         }
+
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){
           var marker =  new T.Marker(lnglat, {icon: icon});
@@ -415,11 +484,16 @@
           return marker;
         }
       },
-
+      //执法力量点位
       getList(){
-        pointList({type:'allList'}).then((res) => {
+        this.userList = [];
+        this.mapPoint('power',this.userList)
+      },
+      //视频点位
+      getVideo(){
+        getAllVideoPoint({class:2}).then((res) => {
           this.pointList = res.data;
-          this.mapPoint(this.pointList)
+          this.mapPoint('video',this.pointList)
         });
       },
 

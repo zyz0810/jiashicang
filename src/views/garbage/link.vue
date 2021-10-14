@@ -105,13 +105,26 @@
 
     </div>
     <div class="center_content clr_white text-center">
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point40.png"/></div>
-        <div class="weui-cell__bd">洒水车</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==1?'active':'']" @click="handlePointType(1,type)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=1" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==1?'clr_white':'']">全部审批</div>
       </div>
-      <div class="map_intro f14 bold flex baseColor weui-cell">
-        <div class="weui-cell__hd flex"><img src="./../../assets/image/point41.png"/></div>
-        <div class="weui-cell__bd">清扫车</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==2?'active':'']" @click="handlePointType(2,type)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=2" src="./../../assets/image/point40.png"/>
+          <img v-else src="./../../assets/image/point40_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==2?'clr_white':'']">洒水车</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==3?'active':'']" @click="handlePointType(3,type)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=3" src="./../../assets/image/point41.png"/>
+          <img v-else src="./../../assets/image/point41_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==3?'clr_white':'']">清扫车</div>
       </div>
     </div>
   </div>
@@ -141,6 +154,7 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,ShuiQiuChart,GaugeChart},
     data() {
       return {
+        showType:1,
         carData:{},
         cleanCarList:[],
         divwidth:'30%',
@@ -744,6 +758,11 @@
       this.timerTwo = null;
     },
     methods: {
+      //不同类型点位
+      handlePointType(val,type){
+        this.showType = val;
+        // this.getList();
+      },
       getNum(){
         cleanCarNum().then((res) => {
           const {offlineNum,onlineNum} = res.data;

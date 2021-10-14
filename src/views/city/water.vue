@@ -56,7 +56,8 @@
         <vueSeamlessScroll :data="abnormalList" class="seamless-warp text-center" :class-option="classOption">
           <ul class="flex table_ul" v-for="item in abnormalList" :key="item.id">
             <li class="flex-item">{{item.stnm}}</li>
-            <li class="flex-item">{{item.type | formatType}}</li>
+<!--            <li class="flex-item">{{item.type | formatType}}</li>-->
+            <li class="flex-item">{{item.typeName}}</li>
             <li class="flex-item">{{item.status}}</li>
             <li class="flex-item">{{item.createTime}}</li>
           </ul>
@@ -111,7 +112,8 @@
         <vueSeamlessScroll :data="warnList" class="seamless-warp text-center" :class-option="classOption">
           <ul class="flex table_ul" v-for="item in warnList" :key="item.id">
             <li class="flex-item">{{item.stnm}}</li>
-            <li class="flex-item">{{item.type | formatType}}</li>
+<!--            <li class="flex-item">{{item.type | formatType}}</li>-->
+            <li class="flex-item">{{item.typeName}}</li>
             <li class="flex-item">{{item.alarmLevel | formatLevel}}</li>
             <li class="flex-item">{{item.alarmTime}}</li>
           </ul>
