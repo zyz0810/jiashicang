@@ -13,7 +13,7 @@
       <div class="watering_rate">
         <div>
           <!--<p class="f20">95.6%</p>-->
-          <GaugeChart :chartData="gaugeOne" :PieChartLegend="PieChartLegend" height="15vh" ></GaugeChart>
+          <GaugeChart :chartData="gaugeTwo" :PieChartLegend="PieChartLegend" height="15vh" ></GaugeChart>
         </div>
       </div>
       <p class="mb_10">洒水完成</p>
@@ -90,21 +90,29 @@
 
     </div>
     <div class="top_div flex clr_white text-center f16 bold">
-      <div class="flex border shadow mr_20">
+      <div class="flex f16 bold mr_20 border shadow" style="width: 500px;" @click="showMapType(1)">
+        <div class="flex-item baseColor">车辆管理</div>
         <div class="flex-item">
           总车辆
           <span class="txt_linear">{{carData.total}}</span>
         </div>
-      </div>
-      <div class="flex border shadow">
         <div class="flex-item">
           在线车辆
           <span class="txt_linear">{{carData.onlineNum}}</span>
         </div>
       </div>
+      <div class="flex f16 bold border shadow" style="width: 260px;" @click="showMapType(2)">
+        <div class="flex-item baseColor">视频</div>
+        <div class="flex-item">
+          普通视频
+          <span class="txt_linear">18</span>
+        </div>
+      </div>
 
     </div>
-    <div class="center_content clr_white text-center">
+
+
+    <div class="center_content clr_white text-center" v-if="mapPageType == 1">
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==1?'active':'']" @click="handlePointType(1,type)">
         <div class="weui-cell__hd flex">
           <img v-if="showType!=1" src="./../../assets/image/point44.png"/>
@@ -146,6 +154,8 @@
   import {cleancarList,cleanCarAddressList,lastGPS,carHistory,getGps,cleanCarNum} from '@/api/garbageLink'
   import point01 from "@/assets/image/point40.png";
   import point02 from "@/assets/image/point41.png";
+  import point03 from "@/assets/image/point38.png";
+  import {getAllVideoPoint} from "@/api/system";
 
   export default {
     name: 'parameterList',
@@ -155,7 +165,7 @@
     data() {
       return {
         showType:1,
-        carData:{},
+        carData:{offlineNum:'',onlineNum:'',total:''},
         cleanCarList:[],
         divwidth:'30%',
         pieHeight:'300px',
@@ -346,8 +356,8 @@
                 normal: {
                   color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
                     [
-                      { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: 'rgba(0,181,255,1)' }
+                      { offset: 0, color: 'rgba(1,239,252,0)' },
+                      { offset: 1, color: 'rgba(1,239,252,1)' }
                     ]
                   ),
                   label: {
@@ -389,8 +399,8 @@
           },
           color:['#15193F',new echarts.graphic.LinearGradient(0, 0, 1, 0,
             [
-              { offset: 0, color: '#2975FF' },
-              { offset: 1, color: '#81BAFF' }
+              { offset: 0, color: 'rgba(1,239,252,0)' },
+              { offset: 1, color: 'rgba(1,239,252,1)' }
             ]
           )],
           yAxis: {
@@ -446,11 +456,15 @@
               detail: {
                 formatter: 20,
                 textStyle: {
+                  color:'rgb(93,176,244)',
                   fontSize: 20,
                 },
               },
               axisTick:{
-                length :5,
+                length :3,
+              },
+              splitLine:{
+                length:15
               },
               data: [{ value: 20, name: "压力值" }],
               radius: "80%",
@@ -465,9 +479,83 @@
                 show: true,
                 lineStyle: {// 仪表盘轴线样式。
                   opacity: 1,
+                  // color : [ //表盘颜色
+                  //   [ 0.5, "#DA462C" ],//0-50%处的颜色
+                  //   [ 0.7, "#FF9618" ],//51%-70%处的颜色
+                  //   [ 0.9, "#FFED44" ],//70%-90%处的颜色
+                  //   [ 1,"#20AE51" ]//90%-100%处的颜色
+                  // ],
+                  color : [ //表盘颜色
+                    [ 1, "rgb(57,247,203)" ],//0-50%处的颜色
+                  ],
                   width: 10,
                   shadowBlur: 10,
                 },
+              },
+              itemStyle:{
+                // color:{//指针颜色
+                //
+                // }
+                color:'rgb(93,176,244)'
+              },
+              pointer: { // 仪表盘指针。
+                show: true,
+                length: "70%",
+                width: 4,
+              },
+            },
+          ]
+        },
+        gaugeTwo:{
+          series: [
+            {
+              name: "压力值",
+              type: "gauge",
+              clockwise: true,
+              detail: {
+                formatter: 20,
+                textStyle: {
+                  color:'rgb(93,176,244)',
+                  fontSize: 20,
+                },
+              },
+              axisTick:{
+                length :3,
+              },
+              splitLine:{
+                length:15
+              },
+              data: [{ value: 20, name: "压力值" }],
+              radius: "80%",
+              axisLabel: {// 刻度标签。
+                show: true,
+                distance: -5,
+                color: "black",
+                fontSize: 10,
+                formatter: "{value}",
+              },
+              axisLine: {// 仪表盘轴线(轮廓线)相关配置。
+                show: true,
+                lineStyle: {// 仪表盘轴线样式。
+                  opacity: 1,
+                  // color : [ //表盘颜色
+                  //   [ 0.5, "#DA462C" ],//0-50%处的颜色
+                  //   [ 0.7, "#FF9618" ],//51%-70%处的颜色
+                  //   [ 0.9, "#FFED44" ],//70%-90%处的颜色
+                  //   [ 1,"#20AE51" ]//90%-100%处的颜色
+                  // ],
+                  color : [ //表盘颜色
+                    [ 1, "rgb(5,247,255)" ],//0-50%处的颜色
+                  ],
+                  width: 10,
+                  shadowBlur: 10,
+                },
+              },
+              itemStyle:{
+                // color:{//指针颜色
+                //
+                // }
+                color:'rgb(93,176,244)'
               },
               pointer: { // 仪表盘指针。
                 show: true,
@@ -524,20 +612,20 @@
               coordinateSystem: 'polar',
               itemStyle: {
                 normal: {
-                  color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
-                    offset: 0,
-                    color: 'rgb(17,197,187)'
-                  }, {
-                    offset: 1,
-                    color: 'rgb(10,195,118)'
-                  }]),
-                  // color:'rgba(78,239,254,1)'
+                  // color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                  //   offset: 0,
+                  //   color: 'rgb(17,197,187)'
+                  // }, {
+                  //   offset: 1,
+                  //   color: 'rgb(10,195,118)'
+                  // }]),
+                  color:'rgba(213,168,255,1)'
                 }
               }
             },{
               name: 'decorationOne',
               type: 'pie',
-              color: ['rgba(62,109,176,1)'],
+              color: ['rgba(213,168,255,1)'],
               // center: ['30%', '50%'],
               radius: ['70%', '68%'],
               hoverAnimation: false,
@@ -607,20 +695,20 @@
               coordinateSystem: 'polar',
               itemStyle: {
                 normal: {
-                  color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
-                    offset: 0,
-                    color: 'rgb(15,242,246)'
-                  }, {
-                    offset: 1,
-                    color: 'rgb(53,214,250)'
-                  }]),
-                  // color:'rgba(78,239,254,1)'
+                  // color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                  //   offset: 0,
+                  //   color: 'rgb(15,242,246)'
+                  // }, {
+                  //   offset: 1,
+                  //   color: 'rgb(53,214,250)'
+                  // }]),
+                  color:'rgba(255,111,22,1)'
                 }
               }
             },{
               name: 'decorationOne',
               type: 'pie',
-              color: ['rgba(62,109,176,1)'],
+              color: ['rgba(255,111,22,1)'],
               // center: ['30%', '50%'],
               radius: ['70%', '68%'],
               hoverAnimation: false,
@@ -690,20 +778,20 @@
               coordinateSystem: 'polar',
               itemStyle: {
                 normal: {
-                  color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
-                    offset: 0,
-                    color: 'rgb(0,172,255)'
-                  }, {
-                    offset: 1,
-                    color: 'rgb(2,109,250)'
-                  }]),
-                  // color:'rgba(78,239,254,1)'
+                  // color: new echarts.graphic.LinearGradient(1, 0, 0, 0, [{
+                  //   offset: 0,
+                  //   color: 'rgb(0,172,255)'
+                  // }, {
+                  //   offset: 1,
+                  //   color: 'rgb(2,109,250)'
+                  // }]),
+                  color:'rgba(56,253,207,1)'
                 }
               }
             },{
               name: 'decorationOne',
               type: 'pie',
-              color: ['rgba(62,109,176,1)'],
+              color: ['rgba(56,253,207,1)'],
               // center: ['30%', '50%'],
               radius: ['70%', '68%'],
               hoverAnimation: false,
@@ -733,6 +821,7 @@
         timerOne:'',
         timerTwo:'',
         line:'',
+        mapPageType:1,
       }
     },
 
@@ -758,6 +847,22 @@
       this.timerTwo = null;
     },
     methods: {
+      //点击顶部车辆管理、视频
+      showMapType(val){
+        this.mapPageType = val;
+        if(val == 1){
+          this.getList();
+        }else{
+          this.getPoint();
+        }
+      },
+      //普通视频点位
+      getPoint(type){
+        getAllVideoPoint({class:2}).then((res) => {
+          this.pointList = res.data.list;
+          this.mapPoint('video',this.pointList)
+        });
+      },
       //不同类型点位
       handlePointType(val,type){
         this.showType = val;
@@ -791,8 +896,10 @@
           const random= +(Math.random() * 60).toFixed(2);
           that.gaugeOne.series[0].data = [          {
             value: random
-          }]
-
+          }];
+          that.gaugeTwo.series[0].data = [          {
+            value: random
+          }];
         }, 1500);
       },
       onLoad() {
@@ -804,7 +911,7 @@
         this.map.setStyle('indigo');
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
       },
-      mapPoint(list){
+      mapPoint(type,list){
         //创建图片对象
         this.map.clearOverLays();
         let icon01 = new T.Icon({
@@ -817,20 +924,33 @@
           iconSize: new T.Point(30, 52),
           iconAnchor: new T.Point(34, 59)
         });
+        let icon03 = new T.Icon({
+          iconUrl: point03,
+          iconSize: new T.Point(30, 52),
+          iconAnchor: new T.Point(34, 59)
+        });
         let markers = [];
-        for (let i = 0; i < list.length; i++) {
-          // var marker
-          // if(list[i].status == 1){
-          //   let point = new T.LngLat(list[i].longitude,list[i].latitude1);
-          //   markers[i]  = drawTMaker(point, icon01,this,list[i]);
-          // }else if(list[i].status == 0){
-          //   let point = new T.LngLat(list[i].longitude,list[i].longitude1);
-          //   markers[i]  = drawTMaker(point, icon02,this,list[i]);
-          // }
+        if(type == 'video'){
+          for (let i = 0; i < list.length; i++) {
+            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            markers[i]  = drawTMaker(point, icon03,this,list[i]);
+          }
+        }else{
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            // if(list[i].status == 1){
+            //   let point = new T.LngLat(list[i].longitude,list[i].latitude1);
+            //   markers[i]  = drawTMaker(point, icon01,this,list[i]);
+            // }else if(list[i].status == 0){
+            //   let point = new T.LngLat(list[i].longitude,list[i].longitude1);
+            //   markers[i]  = drawTMaker(point, icon02,this,list[i]);
+            // }
 
-          let point = new T.LngLat(list[i].PACK.longitude1,list[i].PACK.latitude1);
-          markers[i]  = drawTMaker(point, icon01,this,list[i]);
+            let point = new T.LngLat(list[i].PACK.longitude1,list[i].PACK.latitude1);
+            markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          }
         }
+
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){
           var marker =  new T.Marker(lnglat, {icon: icon});
@@ -895,7 +1015,7 @@
           this.cleanCarList = res.data;
           let card_no = res.data.map(item=> {return item.CarBrand}).join(',');
           lastGPS({card_no:card_no}).then((res) => {
-            this.mapPoint(res.data)
+            this.mapPoint('car',res.data)
           });
         });
       },

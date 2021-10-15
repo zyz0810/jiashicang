@@ -68,7 +68,7 @@
         </vueSeamlessScroll>
       </div>
     </div>
-    <div class="center_content clr_white text-center">
+    <div class="center_content clr_white text-center" v-if="mapPageType == 1">
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==1?'active':'']" @click="handlePointType(1,type)">
         <div class="weui-cell__hd flex">
           <img v-if="showType!=1" src="./../../assets/image/point44.png"/>
@@ -107,30 +107,61 @@
       <!--<p class="text-right baseColor f16 bold mt_20">说明</p>-->
     </div>
     <div class="top_div flex clr_white text-center f16 bold">
-      <div class="flex border shadow mr_20">
+      <div class="flex f16 bold mr_20 border shadow" style="width: 600px;" @click="showMapType(1)">
+        <div class="flex-item baseColor">备案审批</div>
         <div class="flex-item">
           广告审批
           <span class="txt_linear">{{formData.guanggao}}</span>
         </div>
-      </div>
-      <div class="flex border shadow mr_20">
         <div class="flex-item">
           犬只审批
           <span class="txt_linear">{{formData.quanzi}}</span>
         </div>
-      </div>
-      <div class="flex border shadow mr_20">
         <div class="flex-item">
           工程渣土
           <span class="txt_linear">{{formData.gongcheng}}</span>
         </div>
-      </div>
-      <div class="flex border shadow">
         <div class="flex-item">
           其他审批
           <span class="txt_linear">{{formData.qita}}</span>
         </div>
       </div>
+      <div class="flex f16 bold border shadow" style="width: 260px;" @click="showMapType(2)">
+        <div class="flex-item baseColor">视频</div>
+        <div class="flex-item">
+          普通视频
+          <span class="txt_linear">18</span>
+        </div>
+      </div>
+
+
+
+
+
+<!--      <div class="flex border shadow mr_20">-->
+<!--        <div class="flex-item">-->
+<!--          广告审批-->
+<!--          <span class="txt_linear">{{formData.guanggao}}</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="flex border shadow mr_20">-->
+<!--        <div class="flex-item">-->
+<!--          犬只审批-->
+<!--          <span class="txt_linear">{{formData.quanzi}}</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="flex border shadow mr_20">-->
+<!--        <div class="flex-item">-->
+<!--          工程渣土-->
+<!--          <span class="txt_linear">{{formData.gongcheng}}</span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="flex border shadow">-->
+<!--        <div class="flex-item">-->
+<!--          其他审批-->
+<!--          <span class="txt_linear">{{formData.qita}}</span>-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
   </div>
 </template>
@@ -152,10 +183,12 @@
   import point02 from '@/assets/image/point26.png' // 引入刚才的map.js 注意路径
   import point03 from '@/assets/image/point27.png' // 引入刚才的map.js 注意路径
   import point04 from '@/assets/image/point28.png' // 引入刚才的map.js 注意路径
+  import point05 from '@/assets/image/point38.png' // 普通视频图标
   import {generalApprove,checkIndex,checkWeek,checkAnalyse,listCheck} from '@/api/recordApproval'
   import {cleanCarAddressList, lastGPS} from "@/api/garbageLink";
   import {cos} from "@/utils/translate";
   import vueSeamlessScroll from 'vue-seamless-scroll'
+  import {getAllVideoPoint} from "@/api/system";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -177,7 +210,7 @@
           legend: {
             show:false
           },
-          color:['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'],
+          color:['rgb(255,213,84)','rgb(48,171,241)','rgb(255,82,52)','rgb(146,117,243)'],
           series: [
             {
               name: '备案审批概况',
@@ -408,11 +441,12 @@
                 normal: {
                   color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
                     [
-                      { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: 'rgba(0,181,255,1)' }
+                      { offset: 0, color: 'rgba(0,239,252,0)' },
+                      { offset: 1, color: 'rgba(0,239,252,1)' }
                     ]
                   ),
                   label: {
+                    // formatter:'{b}{c}',
                     show : true,
                     position : 'right',
                     textStyle : {
@@ -434,6 +468,7 @@
         centerLongitude:'120.2372328407',//中心经度
         formData:{},
         pointList:[],
+        mapPageType:1,
       }
     },
 
@@ -484,6 +519,22 @@
       this.timer = null;
     },
     methods: {
+      //点击顶部备案审批、视频
+      showMapType(val){
+        this.mapPageType = val;
+        if(val == 1){
+          this.getPoint();
+        }else{
+          this.getVideo();
+        }
+      },
+      //普通视频点位
+      getVideo(){
+        getAllVideoPoint({class:2}).then((res) => {
+          this.pointList = res.data.list;
+          this.mapPoint('video',this.pointList)
+        });
+      },
       //不同类型点位
       handlePointType(val,type){
         this.showType = val;
@@ -545,7 +596,7 @@
           let i = 1;
           setInterval(function () {
             if(i==1){
-              this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
+              this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(255,82,52)','rgb(146,117,243)'];
               this.chartDataThree.series[0].data = [{
                 name:'犬只审批',value:res.data.quanzhi
               },{
@@ -556,7 +607,7 @@
                 name:'其他审批',value:res.data.qita
               }];
             }else{
-              this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
+              this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(255,82,52)','rgb(146,117,243)'];
               this.chartDataThree.series[0].data = [{
                 name:'犬只审批',value:0
               },{
@@ -582,8 +633,14 @@
       },
       getBarChart(){
         checkAnalyse().then((res) => {
-          let x = res.data.map(item=>{return item.apply_name});
-          let y = res.data.map(item=>{return item.apply_name_count});
+          let arr = res.data;
+          arr.sort((old,New)=>{
+            return old.apply_name_count -New.apply_name_count
+          })
+          console.log(arr)
+
+          let x = arr.map(item=>{return item.apply_name});
+          let y = arr.map(item=>{return item.apply_name_count});
           this.BarDataTwo.yAxis[0].data = x;
           this.BarDataTwo.series[0].data = y;
           console.log( this.BarDataTwo.yAxis.data)
@@ -605,7 +662,7 @@
           let i = 1;
           this.timer = setInterval(function () {
             if(i==1){
-              that.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
+              that.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(255,81,52)','rgb(146,117,243)'];
               console.log('1111dianjidainji')
               that.chartDataThree.series[0].data = [{
                 name:'犬只审批',value:res.data.quanzi
@@ -618,7 +675,7 @@
               }];
               i = 2;
             }else{
-              that.chartDataThree.color=['rgb(48,171,241)','rgb(146,117,243)','rgb(249,138,127)','rgb(255,213,84)'];
+              that.chartDataThree.color=['rgb(48,171,241)','rgb(146,117,243)','rgb(255,81,52)','rgb(255,213,84)'];
               console.log('22222dianjidainji')
               that.chartDataThree.series[0].data = [{
                 name:'工程渣土',value:res.data.gongcheng
@@ -640,10 +697,10 @@
         checkIndex({type:type}).then((res) => {
           this.pointList = [];
           this.pointList = res.data.data;
-          this.mapPoint(this.pointList);
+          this.mapPoint('',this.pointList);
         });
       },
-      mapPoint(list){
+      mapPoint(type,list){
         //创建图片对象
         this.map.clearOverLays();
         let icon01 = new T.Icon({
@@ -666,23 +723,36 @@
           iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
+        let icon05 = new T.Icon({
+          iconUrl: point05,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
         let markers = []
 
-        for (let i = 0; i < list.length; i++) {
-          // var marker
-          let point = new T.LngLat(list[i].log,list[i].lat);
-          if(list[i].type == '犬只审批'){
-            markers[i]  = drawTMaker(point, icon02,this,list[i]);
-          }else if(list[i].type == '广告审批'){
-            markers[i]  = drawTMaker(point, icon01,this,list[i]);
-          }else if(list[i].type == '工程渣土'){
-            markers[i]  = drawTMaker(point, icon03,this,list[i]);
-          }else if(list[i].type == '其他审批'){
-
-            markers[i]  = drawTMaker(point, icon04,this,list[i]);
+        if(type == 'video'){
+          for (let i = 0; i < list.length; i++) {
+            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            markers[i]  = drawTMaker(point, icon05,this,list[i]);
           }
+        }else{
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            let point = new T.LngLat(list[i].log,list[i].lat);
+            if(list[i].type == '犬只审批'){
+              markers[i]  = drawTMaker(point, icon02,this,list[i]);
+            }else if(list[i].type == '广告审批'){
+              markers[i]  = drawTMaker(point, icon01,this,list[i]);
+            }else if(list[i].type == '工程渣土'){
+              markers[i]  = drawTMaker(point, icon03,this,list[i]);
+            }else if(list[i].type == '其他审批'){
 
+              markers[i]  = drawTMaker(point, icon04,this,list[i]);
+            }
+
+          }
         }
+
 
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){

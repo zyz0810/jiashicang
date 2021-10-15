@@ -141,7 +141,7 @@
 <!--                &lt;!&ndash;<div id='mapDiv' class="mapDiv" style="width: 250px;height: 300px;"></div>&ndash;&gt;-->
 <!--                <img src="./../../assets/image/map.png" class="my_map"/>-->
 <!--              </div>-->
-              <div class="anjian_genzong bold mr_20">
+              <div class="anjian_genzong bold">
                 <p class="txtColor text-center bold f18">案件实时跟踪</p>
                 <div class="weui-cells clr_white">
 
@@ -152,8 +152,8 @@
                         <img class="anjian_img" :src="item.images_arr?item.images_arr[0]:''"/>
                       </div>
                       <div class="weui-cell__bd">
-                        <p class="f14">{{item.big_category_name}}</p>
-                        <p class="f12">{{item.small_category_name}}</p>
+                        <p class="f14">{{item.small_category_name}}</p>
+                        <p class="f12">{{item.address}}</p>
                       </div>
                       <div class="weui-cell__ft f12">
                         <p><span class="ml_10">{{item.wz_status}}</span></p>
@@ -169,10 +169,26 @@
         <el-col :xs="24" :sm="7" :md="7" :lg="7" :xl="7">
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">实时监控</span></div>
-            <div class="monitor_content text-center">
+            <div class="monitor_content text-center bold">
               <img src="./../../assets/image/index_img01.gif" class=""/>
-              <div class="monitor_num clr_white f26 bold">1286</div>
-              <div class="monitor_detail clr_white bold"><router-link :to="{path:'/general/overview/view'}">查看详情</router-link></div>
+              <div class="monitor_num clr_white f26"><router-link :to="{path:'/general/overview/view'}">{{videoData.total}}</router-link></div>
+              <div class="weui-cell monitor_num_AI">
+                <div class="weui-cell__hd txtColor">{{videoData.ai}}</div>
+                <div class="weui-cell__bd clr_white">AI</div>
+              </div>
+              <div class="weui-cell monitor_num_common">
+                <div class="weui-cell__bd clr_white">普通</div>
+                <div class="weui-cell__hd txtColor">{{videoData.putong}}</div>
+              </div>
+              <div class="weui-cell monitor_num_water">
+                <div class="weui-cell__hd txtColor f14 text-center">{{videoData.hedao}}</div>
+                <div class="weui-cell__bd f12 clr_white">河道</div>
+              </div>
+              <div class="weui-cell monitor_num_park">
+                <div class="weui-cell__bd clr_white">停车场</div>
+                <div class="weui-cell__hd txtColor">{{videoData.parking}}</div>
+              </div>
+<!--              <div class="monitor_detail clr_white bold"><router-link :to="{path:'/general/overview/view'}">查看详情</router-link></div>-->
 
             </div>
           </div>
@@ -199,7 +215,7 @@
 <!--                <PieChartTwo :chartData="PieDataOne" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo>-->
 <!--              </div>-->
 <!--            </div>-->
-            <p class="f16 baseColor bold text-center mt_20">
+            <p class="f18 txtColor bold text-center mt_20">
               {{formData.letter.input_time}}受理件
               <countTo :startVal="0" :endVal="formData.letter.month_deal_num" :duration="5000" ref="countOne"></countTo>
               <!--<animate-number from="0" :to="formData.letter.month_deal_num" :key="formData.letter.month_deal_num" :duration="3000" class="f20"></animate-number>-->
@@ -213,7 +229,7 @@
                 <p class="f26">{{formData.letter.comparative_num}}%<i v-if="formData.letter.basis_direction == 1" class="iconfont icon-shangsheng clr_blue03 ml_10"></i><i v-else class="iconfont icon-xiajiang clr_yellow ml_10"></i></p>
                 <p class="mt_5">环比<span>{{formData.letter.comparative_direction == 1?'上升':'下降'}}</span></p>
               </div>
-              <div class="flex-item clr_yellow">
+              <div class="flex-item clr_yellow01">
                 <p class="f26">{{formData.letter.satisfaction_rate}}%</p>
                 <p class="mt_5">满意率</p>
               </div>
@@ -238,7 +254,7 @@
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">行政审批</span></div>
             <div class="clr_white mt_20">
-              <div class="f16 bold text-center baseColor approval_num">
+              <div class="f18 bold text-center txtColor approval_num">
                 周审批总量：
                 <countTo :startVal="0" :endVal="formData.check.count" :duration="5000" ref="countTwo"></countTo>
                 <!--<animate-number from="0" :to="formData.check.count" :key="formData.check.count" :duration="3000" class="f20"></animate-number>-->
@@ -247,19 +263,19 @@
                 <img src="./../../assets/image/approval_circle.gif" class="circle_img">
                 <div class="circle_num_item">
                   <span class="clr_white f20 bold circleNum_left_bg block">{{formData.check.quanzhi}}/{{((Number(formData.check.quanzhi)/Number(formData.check.count))*100).toFixed(2)}}%</span>
-                  <p class="clr_yellow bold">犬只审批</p>
+                  <p class="clr_yellow01 bold">犬只审批</p>
                 </div>
                 <div class="circle_num_item">
                   <span class="clr_white f20 bold circleNum_left_bg block">{{formData.check.gongcheng}}/{{((Number(formData.check.gongcheng)/Number(formData.check.count))*100).toFixed(2)}}%</span>
-                  <p class="clr_yellow bold">工程渣土</p>
+                  <p class="clr_yellow01 bold">工程渣土</p>
                 </div>
                 <div class="circle_num_item">
                   <span class="clr_white f20 bold circleNum_right_bg block">{{formData.check.guanggao}}/{{((Number(formData.check.guanggao)/Number(formData.check.count))*100).toFixed(2)}}%</span>
-                  <p class="clr_yellow bold">广告审批</p>
+                  <p class="clr_yellow01 bold">广告审批</p>
                 </div>
                 <div class="circle_num_item">
                   <span class="clr_white f20 bold circleNum_right_bg block">{{formData.check.qita}}/{{((Number(formData.check.qita)/Number(formData.check.count))*100).toFixed(2)}}%</span>
-                  <p class="clr_yellow bold">其他审批</p>
+                  <p class="clr_yellow01 bold">其他审批</p>
                 </div>
               </div>
 
@@ -296,21 +312,21 @@
 
 <!--              </div>-->
               <div class="flex" style="margin-top: 40px;">
-                <div class="flex-item" style="padding-left: 20px;">
+                <div class="flex-item">
                   <div class="weui-cell server_cell">
-                    <div class="weui-cell__hd"><PieChartTwo :chartData="PieDataThree" :PieChartLegend="PieChartLegend" height="12vh" :divwidth="'100%'"></PieChartTwo></div>
+                    <div class="weui-cell__hd"><PieChartTwo :chartData="PieDataThree" :PieChartLegend="PieChartLegend" height="14vh" :divwidth="'100%'"></PieChartTwo></div>
                     <div class="weui-cell__bd">
                       <p>亮灯数<span class="clr_yellow ml_10">{{formData.light.num}}</span></p>
                       <p>总灯数<span class="clr_yellow ml_10">{{formData.light.count}}</span></p>
                     </div>
                   </div>
-                  <p class="text-center chart_width ml_10">亮灯率</p>
+                  <p class="f16 bold text-center chart_width ml_10">亮灯率</p>
                 </div>
                 <div class="flex-item">
                   <div class="weui-cell server_cell">
                     <div class="weui-cell__hd">
                       <!--                    <RingChart :chartData="PieDataOne" :PieChartLegend="PieChartLegend" height="10vh"></RingChart>-->
-                      <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="12vh" :divwidth="'100%'"></PieChartTwo>
+                      <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="14vh" :divwidth="'100%'"></PieChartTwo>
                       <!--                 <PieChartTwo :chartData="PieData3" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo>-->
                     </div>
                     <div class="weui-cell__bd">
@@ -318,7 +334,7 @@
                       <p>总泊位数<span class="clr_blue03 ml_10">20566</span></p>
                     </div>
                   </div>
-                  <p class="text-center chart_width">泊位占用率</p>
+                  <p class="f16 bold text-center chart_width">泊位占用率</p>
                 </div>
               </div>
             </div>
@@ -342,6 +358,7 @@
   import {generalApprove} from "@/api/recordApproval";
   import vueSeamlessScroll from 'vue-seamless-scroll'
   import countTo from "vue-count-to";
+  import {getAllVideoPoint} from "@/api/system";
   export default {
     name: 'Dashboard',
     components: {
@@ -608,6 +625,7 @@
         timer: '',
         timerTwo:'',
         timerFour:'',
+        videoData:{},
       }
     },
     computed: {
@@ -627,6 +645,7 @@
     mounted(){
       this.getData();
       this.handleReset();
+      this.getVideo();
       // this.timer = setInterval(this.getData,120000);
     },
     beforeDestroy() {
@@ -638,7 +657,13 @@
       this.timerFour = null;
     },
     methods: {
-
+      getVideo(){
+        getAllVideoPoint({class:''}).then((res) => {
+          const {ai,hedao,parking,putong} = res.data;
+          let total = Number(res.data.ai)+Number(res.data.hedao)+Number(res.data.parking)+Number(res.data.putong)
+          this.videoData = {total,ai,hedao,parking,putong};
+        });
+      },
       handleReset(){
         // this.formData.letter.month_deal_num = 8000
         // console.log('充值之地沙发的收费模式')
@@ -715,7 +740,7 @@
   .monitor_content{
     position: relative;
     img{
-      width: 67%;
+      width: 80%;
     }
     .monitor_detail{
       background: url("./../../assets/image/monitor.png") no-repeat center center;
@@ -732,6 +757,31 @@
       bottom: 44%;
       left:44%;
       z-index: 999;
+    }
+    .weui-cell{
+      padding: 0;
+      position: absolute;
+      z-index: 999;
+      width: 20%;
+      .weui-cell__hd{
+        width: 35%;
+      }
+      &.monitor_num_AI{
+        left: 20%;
+        top: 38.5%;
+      }
+      &.monitor_num_common{
+        right: 20%;
+        top: 38.5%;
+      }
+      &.monitor_num_water{
+        left: 20%;
+        top: 58.5%;
+      }
+      &.monitor_num_park{
+        right: 20%;
+        top: 58.5%;
+      }
     }
   }
   .cityAdmin_num{
