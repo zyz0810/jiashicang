@@ -768,11 +768,11 @@
       }
       &.monitor_num_AI{
         left: 20%;
-        top: 38.5%;
+        top: 39%;
       }
       &.monitor_num_common{
         right: 20%;
-        top: 38.5%;
+        top: 39%;
       }
       &.monitor_num_water{
         left: 20%;
