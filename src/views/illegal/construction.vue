@@ -16,26 +16,26 @@
 <!--        </div>-->
 <!--    </div>-->
     <div class="top_div flex clr_white text-center">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 1000px;" @click="handleMapType(1)">
-        <div class="flex-item baseColor">违法建筑</div>
-        <div class="flex-item">
+      <div class="flex f16 bold mr_20 border shadow" @click="handleMapType(1)">
+        <div class="baseColor">违法建筑</div>
+        <div class="">
           违法建筑总宗数
           <span class="txt_linear">2881</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           违法占地总面积
           <span class="txt_linear">194246.83</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           违法建筑总面积
           <span class="txt_linear">285742.53</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" style="width: 260px;" @click="handleMapType(2)">
-        <div class="flex-item baseColor">视频</div>
-        <div class="flex-item">
+      <div class="flex f16 bold border shadow" @click="handleMapType(2)">
+        <div class="baseColor">视频</div>
+        <div class="">
           普通视频
-          <span class="txt_linear">828</span>
+          <span class="txt_linear">{{commonVideo_num}}</span>
         </div>
       </div>
     </div>
@@ -57,6 +57,7 @@
   import point01 from '@/assets/image/point52.png'
   import point02 from '@/assets/image/point51.png'
   import {getAllVideoPoint} from "@/api/system"; // 引入刚才的map.js 注意路径
+  import global from "@/utils/common";
 
   export default {
     name: 'parameterList',
@@ -65,280 +66,13 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive},
     data() {
       return {
-        chartData: {
-          title:{},
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          legend: {
-            show:false
-          },
-          series: [
-            {
-              name: '访问来源',
-              type: 'pie',
-              radius: ['50%', '70%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: false,
-                position: 'center'
-              },
-              emphasis: {
-                label: {
-                  show: true,
-                  fontSize: '30',
-                  fontWeight: 'bold'
-                }
-              },
-              labelLine: {
-                show: false
-              },
-              data: [
-                {value: 335, name: '直接访问'},
-                {value: 310, name: '邮件营销'},
-                {value: 234, name: '联盟广告'},
-                {value: 135, name: '视频广告'},
-                {value: 1548, name: '搜索引擎'}
-              ]
-            }
-          ]
-        },
-        chartDataThree: {
-          title:{},
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          legend: {
-            show:false
-          },
-          color:['#367CFD','#E20280'],
-          series: [
-            {
-              name: '访问来源',
-              type: 'pie',
-              radius: ['70%', '90%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: false,
-                position: 'center',
-
-              },
-              emphasis: {
-                label: {
-                  show: true,
-                  fontSize: '30',
-                  fontWeight: 'bold'
-                }
-              },
-              labelLine: {
-                show: false
-              },
-              data: [
-                {value: 520, name: '直接访问'},
-                {value: 205, name: '邮件营销'},
-              ]
-            }
-          ]
-        },
-        PieChartLegend:[],
-        BarData:{
-          title: {},
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
-          },
-          grid: {
-            left: '0',
-            right: '0',
-            bottom: '40',
-            top: '20',
-            containLabel: true
-          },
-          //----------------   图例 legend  -----------------
-          legend: {
-            type:'plain',				//----图例类型，默认为'plain'，当图例很多时可使用'scroll'
-            bottom:'5',					//----图例相对容器位置,top\bottom\left\right
-            data:[						//----图例内容
-              {
-                name:'应处置案件',
-                textStyle:{
-                  color:'#fff',		//----单独设置某一个图例的颜色
-                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
-                }
-              },
-              {
-                name:'已处置案件',
-                textStyle:{
-                  color:'#fff',		//----单独设置某一个图例的颜色
-                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
-                }
-              }
-            ],
-          },
-
-          xAxis: [
-            {
-
-
-              axisTick: {
-                show:false,
-                alignWithLabel: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'category',
-              data: ['浦沿中队', '西兴中队', '长河中队']
-            }
-          ],
-          yAxis: [
-            {
-              axisTick: {
-                show:false,
-                alignWithLabel: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'value'
-            }
-          ],
-          series: [
-            {
-              name:'应处置案件',
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'50%',
-              // barCategoryGap:'50%',/*多个并排柱子设置柱子之间的间距*/
-              itemStyle: {
-                normal: {
-                  color:'#2FB26B'
-                }
-              },
-              data: [320, 332, 301]
-            },
-            {
-              name:'已处置案件',
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'50%',
-              // barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
-              itemStyle: {
-                normal: {
-                  color:'#00A0EB'
-
-                }
-              },
-              data: [220, 182, 191]
-            }
-          ]
-        },
-        BarDataTwo:{
-          title: {},
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
-          },
-          grid: {
-            left: '0',
-            right: '0',
-            bottom: '-20',
-            top: '20',
-            containLabel: true
-          },
-          xAxis: [
-            {
-              show:false,
-              axisTick: {
-                alignWithLabel: false
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'value',
-            }
-          ],
-          yAxis: [
-            {
-              axisTick: {
-                show: false
-              },
-              axisLine: {
-                show: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'category',
-              data:['滨河路','秋溢路','江虹路','江陵路','长河路','滨文路']
-            }
-          ],
-          series: [
-            {
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'180%',
-              barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
-              // label: {
-              //   normal: {
-              //     color: 'red',
-              //     show: true,
-              //     position: 'top'
-              //   }
-              // },
-              itemStyle: {
-                normal: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
-                    [
-                      { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: '#9D4EE8' }
-                    ]
-                  ),
-                  label: {
-                    show : true,
-                    position : 'right',
-                    textStyle : {
-                      color: '#fff',
-                      fontSize:'16',
-                      fontWeight:'bold'
-                    }
-                  }
-
-                }
-              },
-              data: [320, 332, 301,230,56,963]
-            },
-          ]
-        },
         map: '', // 对象
         zoom: 14, // 地图的初始化级别，及放大比例
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
+        commonVideo_num:'',
       }
     },
-
     computed: {
       ...mapState({
         roles: state => state.user.roles,
@@ -351,11 +85,13 @@
       // })
       this.onLoad();
       this.getList();
+      this.getVideoNum();
     },
     methods: {
       handleMapType(type){
         this.showMapType = type;
         if(type == 1){//获取设备点位
+          this.map.clearOverLays();
           this.getList();
         }else if(type == 2){//获取视频点位
           this.getVideo();
@@ -387,17 +123,24 @@
         }];
         this.mapPoint('',pointList);
       },
+      //视频点位数字
+      getVideoNum(){
+        getAllVideoPoint({class:2}).then((res) => {
+          this.commonVideo_num = res.data.putong;
+        });
+      },
       //视频点位
       getVideo(){
         getAllVideoPoint({class:2}).then((res) => {
-          this.pointList = res.data;
+          this.commonVideo_num = res.data.putong;
+          this.pointList = res.data.list;
           this.mapPoint('video',this.pointList)
         });
       },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
         this.map.setStyle('indigo');
@@ -407,7 +150,7 @@
       mapPoint(type,list){
         console.log('点位333')
         //创建图片对象
-        this.map.clearOverLays();
+        // this.map.clearOverLays();
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),

@@ -17,3 +17,11 @@ export function getCascaderOptions(arr, ids) {
   })
   return ids
 }
+const latlog = {
+  centerLatitude:'30.178653',//中心纬度
+  centerLongitude:'120.19519',//中心经度
+  zoom:14
+}
+export default {
+  latlog
+}

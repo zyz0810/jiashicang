@@ -223,11 +223,15 @@
             <div class="flex bold text-center clr_white mt_10 mb_10 bg_blue03" style="padding: 10px 0; border-radius: 10px;">
               <div class="flex-item">
                 <p class="f26">{{formData.letter.basis_num}}%<i v-if="formData.letter.basis_direction == 1" class="iconfont icon-shangsheng clr_blue03 ml_10"></i><i v-else class="iconfont icon-xiajiang clr_yellow ml_10"></i> </p>
-                <p class="mt_5">同比<span>{{formData.letter.basis_direction == 1?'上升':'下降'}}</span></p>
+                <p class="mt_5">同比
+<!--                  <span>{{formData.letter.basis_direction == 1?'上升':'下降'}}</span>-->
+                </p>
               </div>
               <div class="flex-item">
                 <p class="f26">{{formData.letter.comparative_num}}%<i v-if="formData.letter.basis_direction == 1" class="iconfont icon-shangsheng clr_blue03 ml_10"></i><i v-else class="iconfont icon-xiajiang clr_yellow ml_10"></i></p>
-                <p class="mt_5">环比<span>{{formData.letter.comparative_direction == 1?'上升':'下降'}}</span></p>
+                <p class="mt_5">环比
+<!--                  <span>{{formData.letter.comparative_direction == 1?'上升':'下降'}}</span>-->
+                </p>
               </div>
               <div class="flex-item clr_yellow01">
                 <p class="f26">{{formData.letter.satisfaction_rate}}%</p>
@@ -314,7 +318,7 @@
               <div class="flex" style="margin-top: 40px;">
                 <div class="flex-item">
                   <div class="weui-cell server_cell">
-                    <div class="weui-cell__hd"><PieChartTwo :chartData="PieDataThree" :PieChartLegend="PieChartLegend" height="14vh" :divwidth="'100%'"></PieChartTwo></div>
+                    <div class="weui-cell__hd" style="width: 60%;"><PieChartTwo :chartData="PieDataThree" :PieChartLegend="PieChartLegend" height="14vh" :divwidth="'100%'"></PieChartTwo></div>
                     <div class="weui-cell__bd">
                       <p>亮灯数<span class="clr_yellow ml_10">{{formData.light.num}}</span></p>
                       <p>总灯数<span class="clr_yellow ml_10">{{formData.light.count}}</span></p>
@@ -324,7 +328,7 @@
                 </div>
                 <div class="flex-item">
                   <div class="weui-cell server_cell">
-                    <div class="weui-cell__hd">
+                    <div class="weui-cell__hd" style="width: 60%;">
                       <!--                    <RingChart :chartData="PieDataOne" :PieChartLegend="PieChartLegend" height="10vh"></RingChart>-->
                       <PieChartTwo :chartData="PieDataTwo" :PieChartLegend="PieChartLegend" height="14vh" :divwidth="'100%'"></PieChartTwo>
                       <!--                 <PieChartTwo :chartData="PieData3" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="'100%'"></PieChartTwo>-->

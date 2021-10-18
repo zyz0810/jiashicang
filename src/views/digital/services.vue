@@ -194,22 +194,22 @@
 <!--      </div>-->
 <!--    </div>-->
         <div class="top_div flex clr_white text-center f16" v-if="activeIndex == 0">
-          <div class="flex f16 bold mr_20 border shadow" style="width: 600px;" @click="handlePointType(1)">
-            <div class="flex-item baseColor">
+          <div class="flex f16 bold mr_20 border shadow" @click="handlePointType(1)">
+            <div class="baseColor">
               泊位概况
             </div>
             <div class="flex-item">
               总泊位数
               <span class="txt_linear">{{parkData.total}}</span>
             </div>
-            <div class="flex-item">占用泊位数<span class="txt_linear">{{parkData.useNum}}</span></div>
-            <div class="flex-item">占用率<span class="txt_linear">{{parkData.useRate}}%</span></div>
+            <div class="">占用泊位数<span class="txt_linear">{{parkData.useNum}}</span></div>
+            <div class="">占用率<span class="txt_linear">{{parkData.useRate}}%</span></div>
           </div>
-          <div class="flex f16 bold mr_20 border shadow" style="width: 260px;" @click="handlePointType(2)">
-            <div class="flex-item baseColor">
+          <div class="flex f16 bold mr_20 border shadow" @click="handlePointType(2)">
+            <div class="baseColor">
               视频
             </div>
-            <div class="flex-item">
+            <div class="">
               停车场视频
               <span class="txt_linear">{{parkNum}}</span>
             </div>
@@ -217,67 +217,65 @@
         </div>
     <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 1">
       <div class="flex f16 bold mr_20 border shadow" @click="handleTwoPointType(1)">
-        <div class="flex-item baseColor">
+        <div class="baseColor">
           泊位概况
         </div>
-        <div class="flex-item">
+        <div class="">
           总泊位数（没接口）
           <span class="txt_linear">{{carData.shangBao}}</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           允许投放数（没接口）
           <span class="txt_linear">{{carData.chuLi}}</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           车辆总数（没接口）
           <span class="txt_linear">{{carData.undisposed}}</span>
         </div>
       </div>
       <div class="flex f16 bold mr_20 border shadow" @click="handleTwoPointType(2)">
-        <div class="flex-item baseColor">
+        <div class="baseColor">
           人员
         </div>
-        <div class="flex-item">
+        <div class="">
           运维人员（没接口）
-          <span class="txt_linear">{{carData.yellow_num}}</span>
+          <span class="txt_linear">{{carData.user_num}}</span>
         </div>
       </div>
       <div class="flex f16 bold border shadow" @click="handleTwoPointType(3)">
-        <div class="flex-item baseColor">
+        <div class="baseColor">
           视频
         </div>
-        <div class="flex-item">
-          普通视频（没接口）
-          <span class="txt_linear">{{carData.yellow_num}}</span>
+        <div class="">
+          普通视频
+          <span class="txt_linear">{{carData.commonVideo_num}}</span>
         </div>
       </div>
 
     </div>
     <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 2">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 450px;" @click="handleTypeLight(2)">
-        <div class="flex-item baseColor">
+      <div class="flex f16 bold mr_20 border shadow" @click="handleTypeLight(2)">
+        <div class="baseColor">
           控制柜
         </div>
-        <div class="flex-item">
+        <div class="">
           总数
           <span class="txt_linear">{{lightData.cabinetCount}}</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           故障数（没接口）
           <span class="txt_linear"></span>
         </div>
       </div>
-      <div class="flex f16 bold mr_20 border shadow" style="width: 200px;" @click="handleTypeLight(1)">
-        <div class="flex-item baseColor">
+      <div class="flex f16 bold mr_20 border shadow" @click="handleTypeLight(1)">
+        <div class="baseColor">
           亮灯设备
         </div>
-        <div class="flex-item">
+        <div class="">
           总数
           <span class="txt_linear">{{lightData.lightCount}}</span>
         </div>
       </div>
-
-
     </div>
 <!--    <div class="center_content clr_white text-center no_right" v-if="activeIndex == 0 && pointType == 1">-->
 <!--      <div class="map_intro f14 bold flex baseColor weui-cell">-->
@@ -408,6 +406,7 @@
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import {getLampPostList,getcontrolcabinetlist,getevaluate,parkList,getAllPark} from '@/api/digitalServices'
   import {generalIndex} from "@/api/overView";
+  import global from "@/utils/common";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -425,7 +424,13 @@
           lightCount:'',
           cabinetCount:''
         },
-        carData:{},
+        carData:{
+          shangBao:'',
+          chuLi:'',
+          undisposed:'',
+          user_num:'',
+          commonVideo_num:''
+        },
         lampPostList:[],
         showType:2,
         showOption:0,
@@ -1071,12 +1076,10 @@
         this.timer = setInterval(function () {
           if(i==1){
             that.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
-            console.log('1111dianjidainji')
             that.chartDataThree.series[0].data =  [{name:'骑呗',value:1680},{name:'青桔',value:1180},{name:'摩拜',value:880},{name:'哈罗',value:880}];
             i = 2;
           }else{
             that.chartDataThree.color=['rgb(48,171,241)','rgb(146,117,243)','rgb(249,138,127)','rgb(255,213,84)'];
-            console.log('22222dianjidainji')
             that.chartDataThree.series[0].data =  [{name:'青桔',value:1180},{name:'哈罗',value:880},{name:'摩拜',value:880},{name:'骑呗',value:1680}];
             i = 1;
           }
@@ -1086,6 +1089,7 @@
       handlePointType(val){
         this.pointType = val;
         if(val == 1){
+          this.map.clearOverLays();
           this.getParkList();
         }else {
           this.getParkVideoList();
@@ -1094,6 +1098,7 @@
       handleTwoPointType(val){
         this.pointTwoType = val;
         if(val == 1){
+          this.map.clearOverLays();
           // 停车场点位列表
         }else if(val == 2) {
           // 运维人员点位列表
@@ -1117,6 +1122,7 @@
         // }
       },
       handlePageType(val){
+        this.map.clearOverLays();
         this.activeIndex = val;
         if(val == 0){
           this.pointType = 1;
@@ -1124,9 +1130,11 @@
         }else if(val == 1){
           //获取共享单车泊车位
           this.pointTwoType = 1;
+          this.getCommonVideoNum();
           this.getBikePartList();
         }else if(val == 2){
           this.showType = 2;
+          this.getLampPostNum();
           this.getControlCabinetlist();
         }
       },
@@ -1134,10 +1142,17 @@
       getUser(){
         this.mapPoint('user',this.userList,this)
       },
+      //普通视频数量
+      getCommonVideoNum(){
+        getAllVideoPoint({class:2}).then((res) => {
+          this.carData.commonVideo_num = res.data.putong;
+        });
+      },
       //普通视频点位
       getCommonVideoList(){
         getAllVideoPoint({class:2}).then((res) => {
-          this.commonVideoList = res.data;
+          this.carData.commonVideo_num = res.data.putong;
+          this.commonVideoList = res.data.list;
           this.mapPoint('point',this.commonVideoList,this)
         });
       },
@@ -1172,7 +1187,7 @@
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
         this.map.setStyle('indigo');
@@ -1181,7 +1196,7 @@
       },
       mapPoint(type,list,that){
         //创建图片对象
-        that.map.clearOverLays();
+
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
@@ -1425,6 +1440,7 @@
 
       },
       handleTypeLight(val){
+        this.map.clearOverLays();
         this.showType = val
         if(val == 1){
           this.getLampPostList('');
@@ -1441,6 +1457,12 @@
           this.getLampPostList('')
         }
         this.getLampPostList(type)
+      },
+      //亮灯杆数字
+      getLampPostNum(status){
+        getLampPostList({status:status}).then((res) => {
+          this.lightData.lightCount = res.data.count;
+        });
       },
       //亮灯杆列表
       getLampPostList(status){
@@ -1489,7 +1511,6 @@
               i = 2;
             }else{
               that.percentageNum = 0;
-              console.log('22222dianjidainji')
               that.PieData2.series[0].data = [0];
               that.PieData.series[0].data =  [0];
               i = 1;

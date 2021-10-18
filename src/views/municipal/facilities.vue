@@ -245,26 +245,26 @@
       <!--</div>-->
     <!--</div>-->
     <div class="top_div flex clr_white text-center">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 600px;" @click="getPoint(1)">
-        <div class="flex-item baseColor">设备管理</div>
-        <div class="flex-item">
+      <div class="flex f16 bold mr_20 border shadow" @click="getPoint(1)">
+        <div class="baseColor">设备管理</div>
+        <div class="">
           正常
           <span class="txt_linear">1323</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           异常
           <span class="txt_linear">823</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           异常率
           <span class="txt_linear">823</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" style="width: 260px;" @click="getPoint(2)">
-        <div class="flex-item baseColor">视频</div>
-        <div class="flex-item">
+      <div class="flex f16 bold border shadow" @click="getPoint(2)">
+        <div class="baseColor">视频</div>
+        <div class="">
           普通视频
-          <span class="txt_linear">18</span>
+          <span class="txt_linear">{{commonVideo_num}}</span>
         </div>
       </div>
     </div>
@@ -287,6 +287,7 @@
   import point02 from '@/assets/image/point38.png'; // 引入刚才的map.js 注意路径
   import {warring,typeData,dataLine,dataPoint,currentData,historicalData} from '@/api/municipalFacilities'
   import {getAllVideoPoint} from "@/api/system";
+  import global from "@/utils/common";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -939,6 +940,7 @@
         typeList:[],
         dataLine:[],
         timerTwo:'',
+        commonVideo_num:'',
       }
     },
 
@@ -954,6 +956,7 @@
       // })
       this.getWarring()
       this.onLoad();
+      this.getVideoNum();
       // this.getTypeData();
       this.mapPoint('facilities',[]);
 
@@ -965,21 +968,30 @@
     methods: {
       getPoint(val){
         if(val == 1){
+          this.map.clearOverLays();
           this.mapPoint('facilities',[]);
         }else{
           this.getVideo();
         }
       },
+      //获取普通视频数量
+      getVideoNum(){
+        getAllVideoPoint({class:2}).then((res) => {
+          this.commonVideo_num = res.data.putong;
+        });
+      },
+      //获取普通视频点位
       getVideo(){
         getAllVideoPoint({class:2}).then((res) => {
+          this.commonVideo_num = res.data.putong;
           this.videoList = res.data.list;
-          this.mapPoint('video',this.videoList)
+          this.mapPoint('video',this.videoList);
         });
       },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
         this.map.setStyle('indigo');
@@ -987,7 +999,7 @@
       },
       mapPoint(type,list){
         //创建图片对象
-        this.map.clearOverLays();
+        // this.map.clearOverLays();
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
@@ -1165,10 +1177,7 @@
   /*/deep/.tdt-infowindow-tip{*/
     /*background: #0a1f44 !important;*/
   /*}*/
-  .top_div{
-    width: 50%;
-    left: 20%;
-  }
+
   .facilitiesWarning_num{
     .flex-item{
       &:nth-child(1){

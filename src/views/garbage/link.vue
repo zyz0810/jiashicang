@@ -90,22 +90,22 @@
 
     </div>
     <div class="top_div flex clr_white text-center f16 bold">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 500px;" @click="showMapType(1)">
-        <div class="flex-item baseColor">车辆管理</div>
-        <div class="flex-item">
+      <div class="flex f16 bold mr_20 border shadow" @click="showMapType(1)">
+        <div class="baseColor">车辆管理</div>
+        <div class="">
           总车辆
           <span class="txt_linear">{{carData.total}}</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           在线车辆
           <span class="txt_linear">{{carData.onlineNum}}</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" style="width: 260px;" @click="showMapType(2)">
-        <div class="flex-item baseColor">视频</div>
-        <div class="flex-item">
+      <div class="flex f16 bold border shadow" @click="showMapType(2)">
+        <div class=" baseColor">视频</div>
+        <div class="">
           普通视频
-          <span class="txt_linear">18</span>
+          <span class="txt_linear">{{commonVideo_num}}</span>
         </div>
       </div>
 
@@ -156,6 +156,7 @@
   import point02 from "@/assets/image/point41.png";
   import point03 from "@/assets/image/point38.png";
   import {getAllVideoPoint} from "@/api/system";
+  import global from "@/utils/common";
 
   export default {
     name: 'parameterList',
@@ -420,7 +421,7 @@
             },
             splitLine: { show: false },//去除网格线
             type: 'category',
-            data: ["清扫作业","洒水作业",]
+            data: ["清扫车","洒水车",]
           },
           series: [{
             name: '',
@@ -822,6 +823,7 @@
         timerTwo:'',
         line:'',
         mapPageType:1,
+        commonVideo_num:'',
       }
     },
 
@@ -838,6 +840,7 @@
       });
       this.getChart();
       this.getNum();
+      this.getPointNum();
       window.handleTrail = this.handleTrail;
     },
     beforeDestroy() {
@@ -851,14 +854,22 @@
       showMapType(val){
         this.mapPageType = val;
         if(val == 1){
+          this.map.clearOverLays();
           this.getList();
         }else{
           this.getPoint();
         }
       },
+      //普通视频数量
+      getPointNum() {
+        getAllVideoPoint({class: 2}).then((res) => {
+          this.commonVideo_num = res.data.putong;
+        });
+      },
       //普通视频点位
       getPoint(type){
         getAllVideoPoint({class:2}).then((res) => {
+          this.commonVideo_num = res.data.putong;
           this.pointList = res.data.list;
           this.mapPoint('video',this.pointList)
         });
@@ -905,7 +916,7 @@
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
         this.map.setStyle('indigo');
@@ -913,7 +924,6 @@
       },
       mapPoint(type,list){
         //创建图片对象
-        this.map.clearOverLays();
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 52),

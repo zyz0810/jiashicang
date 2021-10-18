@@ -123,25 +123,25 @@
 
     </div>
     <div class="top_div flex clr_white text-center">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 400px;" @click="handleMapType(1)">
-        <div class="flex-item baseColor">设备管理</div>
-        <div class="flex-item">
+      <div class="flex f16 bold mr_20 border shadow" @click="handleMapType(1)">
+        <div class=" baseColor">设备管理</div>
+        <div class="">
           总数
           <span class="txt_linear">66</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           离线
           <span class="txt_linear">4</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           故障
           <span class="txt_linear">4</span>
         </div>
 
       </div>
-      <div class="flex f16 bold border shadow" style="width: 240px;" @click="handleMapType(2)">
-        <div class="flex-item baseColor">视频</div>
-        <div class="flex-item">
+      <div class="flex f16 bold border shadow" @click="handleMapType(2)">
+        <div class="baseColor">视频</div>
+        <div class="">
           河道视频
           <span class="txt_linear">18</span>
         </div>
@@ -198,6 +198,7 @@
   import point05 from "@/assets/image/point48.png";
   import {findSite,abnormalSite,warnSite} from "@/api/water"; // 引入刚才的map.js 注意路径
   import vueSeamlessScroll from 'vue-seamless-scroll'
+  import global from "@/utils/common";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -664,6 +665,7 @@
       handleMapType(type){
         this.showMapType = type;
         if(type == 1){//获取设备点位
+          this.map.clearOverLays();
           this.getList(2);
         }else if(type == 2){//获取视频点位
           this.getVideo();
@@ -700,7 +702,7 @@
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
         this.map.setStyle('indigo');
@@ -710,7 +712,7 @@
       mapPoint(type,list){
         console.log('点位')
         //创建图片对象
-        this.map.clearOverLays();
+        // this.map.clearOverLays();
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),

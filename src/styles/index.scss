@@ -872,7 +872,7 @@ input[type="number"] {
   text-shadow: 0 0 8px rgba(237,254,255,1);
 }
 .left_content{
-  padding: 20px 0 20px 20px;
+  padding: 50px 0 20px 20px;
   width: 20%;
   min-width: 400px;
   position: fixed;
@@ -882,7 +882,7 @@ input[type="number"] {
   height: 82%;
 }
 .right_content{
-  padding: 20px 20px 20px 0;
+  padding: 50px 20px 20px 0;
   width: 20%;
   min-width: 435px;
   position: fixed;
@@ -997,7 +997,14 @@ iframe{
     padding: 10px;
     background-image: linear-gradient(to bottom, #061027 60%, rgba(6,16,39,0.5) 85%, rgba(6,16,39,0.3) 90%, rgba(6,16,39,0) 100%);
     .flex-item{
-      padding: 0 10px;
+      padding: 0 20px;
+      border-left: 1px solid #fff;
+      &:nth-child(1){
+        border-left:none;
+      }
+    }
+    & > div{
+      padding: 0 20px;
       border-left: 1px solid #fff;
       &:nth-child(1){
         border-left:none;

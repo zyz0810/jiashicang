@@ -60,7 +60,7 @@
         </ul>
         <vueSeamlessScroll :data="list" class="seamless-warp text-center" :class-option="classOption">
           <ul class="flex table_ul" v-for="(item,index) in list" :key="item.id">
-            <li style="width: 50px;">{{index}}</li>
+            <li style="width: 50px;">{{index+1}}</li>
             <li class="flex-item ellipsisOne">{{item.statutory_people}}</li>
             <li class="flex-item ellipsisOne">{{item.apply_name}}</li>
             <li style="width: 80px;" class="ellipsisOne">{{item.result}}</li>
@@ -107,30 +107,30 @@
       <!--<p class="text-right baseColor f16 bold mt_20">说明</p>-->
     </div>
     <div class="top_div flex clr_white text-center f16 bold">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 600px;" @click="showMapType(1)">
-        <div class="flex-item baseColor">备案审批</div>
-        <div class="flex-item">
+      <div class="flex f16 bold mr_20 border shadow" @click="showMapType(1)">
+        <div class="baseColor">备案审批</div>
+        <div class="">
           广告审批
           <span class="txt_linear">{{formData.guanggao}}</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           犬只审批
           <span class="txt_linear">{{formData.quanzi}}</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           工程渣土
           <span class="txt_linear">{{formData.gongcheng}}</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           其他审批
           <span class="txt_linear">{{formData.qita}}</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" style="width: 260px;" @click="showMapType(2)">
-        <div class="flex-item baseColor">视频</div>
-        <div class="flex-item">
+      <div class="flex f16 bold border shadow" @click="showMapType(2)">
+        <div class="baseColor">视频</div>
+        <div class="">
           普通视频
-          <span class="txt_linear">18</span>
+          <span class="txt_linear">{{commonVideo_num}}</span>
         </div>
       </div>
 
@@ -167,6 +167,7 @@
 </template>
 
 <script>
+  import global from '@/utils/common'
   import axios from 'axios'
   import echarts from 'echarts'
   import RingChart from '@/components/Charts/RingChart'
@@ -198,69 +199,114 @@
       return {
         showType:1,
         timer:'',
+        timerTwo:'',
         approvalData:{},
         listLoading:false,
         list:[],
+        // chartDataThree: {
+        //   title:{},
+        //   tooltip: {
+        //     trigger: 'item',
+        //     formatter: '{b}: {c} <br/> {d}%'
+        //   },
+        //   legend: {
+        //     show:false
+        //   },
+        //   color:['rgb(255,213,84)','rgb(48,171,241)','rgb(255,82,52)','rgb(146,117,243)'],
+        //   series: [
+        //     {
+        //       name: '备案审批概况',
+        //       type: 'pie',
+        //       center: ['50%', '50%'],
+        //       radius: ['40%', '55%'],
+        //       avoidLabelOverlap: true,
+        //       // label: {
+        //       //   show: false,
+        //       //   position: 'center',
+        //       // },
+        //
+        //       emphasis: {
+        //         label: {
+        //           show: true,
+        //           fontSize: '30',
+        //           fontWeight: 'bold'
+        //         }
+        //       },
+        //       // labelLine: {
+        //       //   show: false
+        //       // },
+        //       markLine :{
+        //         label  :{
+        //           show:true,
+        //           position :'outside'
+        //         },
+        //       },
+        //       labelLine:{
+        //         normal:{
+        //           lineStyle: {
+        //             color: '#fff'
+        //           },
+        //           length:10,
+        //           length2 :25,
+        //         }
+        //       },
+        //       label :{
+        //         // formatter: [
+        //         //   '{c}',
+        //         //   '{b}',
+        //         //   '{d}'
+        //         // ].join('\n'),
+        //         // formatter: '{b}{c}({d})%',
+        //         formatter: '{b}：{c}',
+        //         verticalAlign :'bottom',
+        //         position:'outside',
+        //         textShadowOffsetY :10,
+        //         align :'right',
+        //         color:'white',
+        //         // height :60,
+        //         // lineHeight:30,
+        //         fontSize:'14',
+        //         rich: {
+        //           a: {
+        //             verticalAlign:'bottom',
+        //             // 没有设置 `verticalAlign`，则 `verticalAlign` 为 bottom
+        //           }
+        //         }
+        //       },
+        //
+        //       data: []
+        //     }
+        //   ]
+        // },
         chartDataThree: {
-          title:{},
-          tooltip: {
-            trigger: 'item',
-            formatter: '{b}: {c} <br/> {d}%'
+          legend: {show:false },
+          toolbox: {
+            show: true,
+            feature: {
+              mark: { show: true },
+              dataView: { show: true, readOnly: false },
+              restore: { show: true },
+              saveAsImage: { show: true }
+            }
           },
-          legend: {
-            show:false
-          },
-          color:['rgb(255,213,84)','rgb(48,171,241)','rgb(255,82,52)','rgb(146,117,243)'],
+          color:['rgb(48,171,241)','rgb(146,117,243)','rgb(255,81,52)','rgb(255,213,84)'],
           series: [
             {
-              name: '备案审批概况',
+              name: 'Nightingale Chart',
               type: 'pie',
+              radius: [20, 100],
               center: ['50%', '50%'],
-              radius: ['40%', '55%'],
-              avoidLabelOverlap: true,
-              // label: {
-              //   show: false,
-              //   position: 'center',
-              // },
-
-              emphasis: {
-                label: {
-                  show: true,
-                  fontSize: '30',
-                  fontWeight: 'bold'
-                }
-              },
-              // labelLine: {
-              //   show: false
-              // },
-              markLine :{
-                label  :{
-                  show:true,
-                  position :'outside'
-                },
-              },
-              labelLine:{
-                normal:{
-                  lineStyle: {
-                    color: '#fff'
-                  },
-                  length:10,
-                  length2 :25,
-                }
+              roseType: 'area',
+              itemStyle: {
+                borderRadius: 8
               },
               label :{
-                // formatter: [
-                //   '{c}',
-                //   '{b}',
-                //   '{d}'
-                // ].join('\n'),
-                // formatter: '{b}{c}({d})%',
                 formatter: '{b}：{c}',
                 verticalAlign :'bottom',
                 position:'outside',
                 textShadowOffsetY :10,
                 align :'right',
-                color:'white',
+                // color:'white',
                 // height :60,
                 // lineHeight:30,
                 fontSize:'14',
@@ -271,7 +317,12 @@
                   }
                 }
               },
-
+              animationDuration:30000,
+              animationDurationUpdate: function (idx) {
+                console.log('数据更新'+idx)
+                // 越往后的数据时长越大
+                return idx * 500;
+              },
               data: []
             }
           ]
@@ -363,6 +414,7 @@
                 label : {show: true, color:'#F3E981'}
               }
             },
+            animationDuration:30000,
             data: [],
             type: 'line'
           }]
@@ -437,6 +489,7 @@
               //     position: 'top'
               //   }
               // },
+              animationDuration:3000,
               itemStyle: {
                 normal: {
                   color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
@@ -463,12 +516,10 @@
           ]
         },
         map: '', // 对象
-        zoom: 14, // 地图的初始化级别，及放大比例
-        centerLatitude:'30.2099178915',//中心纬度
-        centerLongitude:'120.2372328407',//中心经度
         formData:{},
         pointList:[],
         mapPageType:1,
+        commonVideo_num:'',
       }
     },
 
@@ -496,6 +547,7 @@
       // })
       this.onLoad();
       // this.getList();
+      this.getVideoNum();
       this.getPoint('');
       this.getLineChart();
       this.getBarChart();
@@ -517,22 +569,32 @@
     beforeDestroy() {
       clearInterval(this.timer);
       this.timer = null;
+      clearInterval(this.timerTwo);
+      this.timerTwo = null;
     },
     methods: {
       //点击顶部备案审批、视频
       showMapType(val){
         this.mapPageType = val;
         if(val == 1){
+          this.map.clearOverLays();
           this.getPoint();
         }else{
           this.getVideo();
         }
       },
+      //普通视频数量
+      getVideoNum(){
+        getAllVideoPoint({class:2}).then((res) => {
+          this.commonVideo_num = res.data.putong;
+        });
+      },
       //普通视频点位
       getVideo(){
         getAllVideoPoint({class:2}).then((res) => {
+          this.commonVideo_num = res.data.putong;
           this.pointList = res.data.list;
-          this.mapPoint('video',this.pointList)
+          this.mapPoint('video',this.pointList);
         });
       },
       //不同类型点位
@@ -543,7 +605,8 @@
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        console.log(global.latlog)
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
         this.map.setStyle('indigo');
@@ -590,39 +653,6 @@
       //     }, 2000);
       //   });
       // },
-      getPieChat(){
-        generalApprove().then((res) => {
-          // 犬只审批、工程渣土、广告审批、其他审批
-          let i = 1;
-          setInterval(function () {
-            if(i==1){
-              this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(255,82,52)','rgb(146,117,243)'];
-              this.chartDataThree.series[0].data = [{
-                name:'犬只审批',value:res.data.quanzhi
-              },{
-                name:'工程渣土',value:res.data.gongcheng
-              },{
-                name:'广告审批',value:res.data.guanggao
-              },{
-                name:'其他审批',value:res.data.qita
-              }];
-            }else{
-              this.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(255,82,52)','rgb(146,117,243)'];
-              this.chartDataThree.series[0].data = [{
-                name:'犬只审批',value:0
-              },{
-                name:'工程渣土',value:0
-              },{
-                name:'广告审批',value:0
-              },{
-                name:'其他审批',value:0
-              }];
-            }
-
-          }, 2000);
-
-        });
-      },
       getLineChart(){
         checkWeek().then((res) => {
           let x = res.data.map(item=>{return item.apply_date});
@@ -652,45 +682,86 @@
           this.list = res.data;
         });
       },
-
-
       getPieData(type){
         checkIndex({type:type}).then((res) => {
           const {count,gongcheng,guanggao,qita,quanzi} = res.data;
           this.formData = {count,gongcheng,guanggao,qita,quanzi};
+
+          this.chartDataThree.color=['rgb(48,171,241)','rgb(146,117,243)','rgb(255,81,52)','rgb(255,213,84)'];
+          this.chartDataThree.series[0].data = [{
+            name:'工程渣土',value:res.data.gongcheng
+          },{
+            name:'其他审批',value:res.data.qita
+          },{
+            name:'广告审批',value:res.data.guanggao
+          },{
+            name:'犬只审批',value:res.data.quanzi
+          }];
+
           let that = this;
           let i = 1;
-          this.timer = setInterval(function () {
-            if(i==1){
-              that.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(255,81,52)','rgb(146,117,243)'];
-              console.log('1111dianjidainji')
-              that.chartDataThree.series[0].data = [{
-                name:'犬只审批',value:res.data.quanzi
-              },{
-                name:'工程渣土',value:res.data.gongcheng
-              },{
-                name:'广告审批',value:res.data.guanggao
-              },{
-                name:'其他审批',value:res.data.qita
-              }];
-              i = 2;
-            }else{
-              that.chartDataThree.color=['rgb(48,171,241)','rgb(146,117,243)','rgb(255,81,52)','rgb(255,213,84)'];
-              console.log('22222dianjidainji')
-              that.chartDataThree.series[0].data = [{
-                name:'工程渣土',value:res.data.gongcheng
-              },{
-                name:'其他审批',value:res.data.qita
-              },{
-                name:'广告审批',value:res.data.guanggao
-              },{
-                name:'犬只审批',value:res.data.quanzi
 
-              }];
-              i = 1;
-            }
+          // this.timerTwo = setInterval(function () {
 
-          }, 2000);
+              this.timer = setInterval(function () {
+                if(i == 1){
+                  that.chartDataThree.color=['rgb(48,171,241)','rgb(146,117,243)','rgb(255,81,52)','rgb(255,213,84)'];
+                  console.log('22222dianjidainji')
+                  that.chartDataThree.series[0].data = [{
+                    name:'工程渣土',value:res.data.gongcheng
+                  },{
+                    name:'其他审批',value:res.data.qita
+                  },{
+                    name:'广告审批',value:res.data.guanggao
+                  },{
+                    name:'犬只审批',value:res.data.quanzi
+                  }];
+                  i = 2;
+                }else if(i==2){
+                  that.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(146,117,243)','rgb(255,81,52)',];
+                  console.log('22222dianjidainji')
+                  that.chartDataThree.series[0].data = [{
+                    name:'犬只审批',value:res.data.quanzi
+                  },{
+                    name:'工程渣土',value:res.data.gongcheng
+                  },{
+                    name:'其他审批',value:res.data.qita
+                  },{
+                    name:'广告审批',value:res.data.guanggao
+                  },];
+                  i = 3;
+                }else if(i==3){
+                  that.chartDataThree.color=['rgb(255,81,52)','rgb(255,213,84)','rgb(48,171,241)','rgb(146,117,243)',];
+                  console.log('22222dianjidainji')
+                  that.chartDataThree.series[0].data = [{
+                    name:'广告审批',value:res.data.guanggao
+                  },{
+                    name:'犬只审批',value:res.data.quanzi
+                  },{
+                    name:'工程渣土',value:res.data.gongcheng
+                  },{
+                    name:'其他审批',value:res.data.qita
+                  },];
+                  i = 4;
+                }else if(i==4){
+                  that.chartDataThree.color=['rgb(146,117,243)','rgb(255,81,52)','rgb(255,213,84)','rgb(48,171,241)',];
+                  console.log('22222dianjidainji')
+                  that.chartDataThree.series[0].data = [{
+                    name:'其他审批',value:res.data.qita
+                  },{
+                    name:'广告审批',value:res.data.guanggao
+                  },{
+                    name:'犬只审批',value:res.data.quanzi
+                  },{
+                    name:'工程渣土',value:res.data.gongcheng
+                  },];
+                  i = 1;
+                }
+              }, 2000);
+
+          // },500);
+
+
         });
       },
       getPoint(type){
@@ -702,7 +773,6 @@
       },
       mapPoint(type,list){
         //创建图片对象
-        this.map.clearOverLays();
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
@@ -766,6 +836,12 @@
               '<div class="point_info">' +
               '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
               '<tr>' +
+              '<td>权力名称</td><td>' + txt.apply_name + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td>所属类型</td><td>' + txt.type + '</td>'+
+              '</tr>'+
+              '<tr>' +
               '<td class="txt_6">办件编号</td><td>' + txt.number_no + '</td>' +
               '</tr>'+
               '<tr>' +
@@ -785,12 +861,6 @@
               '</tr>'+
               '<tr>' +
               '<td>办理结果</td><td>' + txt.result + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>权力名称</td><td>' + txt.apply_name + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>所属类型</td><td>' + txt.type + '</td>'+
               '</tr>'+
               '</table>'+
               '</div>';

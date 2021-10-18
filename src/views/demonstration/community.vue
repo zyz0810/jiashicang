@@ -76,7 +76,7 @@
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import point01 from '@/assets/image/point13.png' // 引入刚才的map.js 注意路径
-
+  import global from "@/utils/common";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -489,8 +489,8 @@
                 normal: {
                   color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
                     [
-                      { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: '#9D4EE8' }
+                      { offset: 1, color: 'rgba(0,239,252,1)' },
+                      { offset: 0, color: 'rgba(0,239,252,0)' }
                     ]
                   ),
                   label: {
@@ -502,10 +502,9 @@
                       fontWeight:'bold'
                     }
                   }
-
                 }
               },
-              data: [320, 332, 301,230,56,963,56,963]
+              data: [56,56,230,301,320, 332,963,963]
             },
           ]
         },
@@ -532,7 +531,7 @@
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()

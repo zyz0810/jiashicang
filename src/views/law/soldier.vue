@@ -3,23 +3,23 @@
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv"></div>
     <div class="top_div flex clr_white text-center">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 400px;" @click="handleMapType(1)">
-        <div class="flex-item baseColor">执法力量</div>
-        <div class="flex-item">
+      <div class="flex f16 bold mr_20 border shadow" @click="handleMapType(1)">
+        <div class="baseColor">执法力量</div>
+        <div class="">
           执法人员
           <span class="txt_linear">35</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           执法车辆
           <span class="txt_linear">16</span>
         </div>
 
       </div>
-      <div class="flex f16 bold border shadow" style="width: 260px;" @click="handleMapType(2)">
-        <div class="flex-item baseColor">视频</div>
-        <div class="flex-item">
+      <div class="flex f16 bold border shadow" @click="handleMapType(2)">
+        <div class="baseColor">视频</div>
+        <div class="">
           普通视频
-          <span class="txt_linear">828</span>
+          <span class="txt_linear">{{commonVideo_num}}</span>
         </div>
       </div>
     </div>
@@ -83,6 +83,7 @@
   import point02 from '@/assets/image/point50.png' // 执法车辆图标
   import point03 from '@/assets/image/point51.png' // 普通视频图标
   import {getAllVideoPoint, pointList} from '@/api/system'
+  import global from "@/utils/common";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -364,6 +365,7 @@
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
         pointList:[],
+        commonVideo_num:'',
       }
     },
 
@@ -379,16 +381,18 @@
       // })
       this.onLoad();
       this.getList();
+      this.getVideoNum();
     },
     methods: {
       //获取力量 -- 不同类型点位
       handlePointType(type){
         this.showType = type;
-        this. getList();
+        this.getList();
       },
       handleMapType(type){
         this.showMapType = type;
         if(type == 1){//获取设备点位
+          this.map.clearOverLays();
           this.getList(2);
         }else if(type == 2){//获取视频点位
           this.getVideo();
@@ -397,7 +401,7 @@
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
         this.map.setStyle('indigo');
@@ -407,7 +411,7 @@
       mapPoint(type,list){
         console.log('点位');
         //创建图片对象
-        this.map.clearOverLays();
+        // this.map.clearOverLays();
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
@@ -489,11 +493,18 @@
         this.userList = [];
         this.mapPoint('power',this.userList)
       },
+      //视频点位数字
+      getVideoNum(){
+        getAllVideoPoint({class:2}).then((res) => {
+          this.commonVideo_num = res.data.putong;
+        });
+      },
       //视频点位
       getVideo(){
         getAllVideoPoint({class:2}).then((res) => {
-          this.pointList = res.data;
-          this.mapPoint('video',this.pointList)
+          this.commonVideo_num = res.data.putong;
+          this.pointList = res.data.list;
+          this.mapPoint('video',this.pointList);
         });
       },
 

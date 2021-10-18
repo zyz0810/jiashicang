@@ -96,7 +96,7 @@
       <div class="clr_white mt_20">
         <p class="f20 bold txt_linear">工地一件事</p>
 <!--        <BarChartFour :chartData="BarDataThree" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></BarChartFour>-->
-        <RingChart :chartData="chartDataFive" :PieChartLegend="PieChartLegend" height="300px"></RingChart>
+        <RingChartHover :chartData="chartDataFive" :PieChartLegend="PieChartLegend" height="300px"></RingChartHover>
       </div>
 <!--      <div class="mt_20">-->
 <!--        <p class="f20 bold txt_linear">社会监督</p>-->
@@ -203,78 +203,78 @@
     </div>
 
     <div class="top_div flex clr_white text-center" v-if="activeIndex == 0">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 600px;">
-        <div class="flex-item baseColor">案件情况</div>
-        <div class="flex-item">
+      <div class="flex f16 bold mr_20 border shadow">
+        <div class="baseColor">案件情况</div>
+        <div class="">
           案件总数
           <span class="txt_linear">1323</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           立案数
           <span class="txt_linear">823</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" style="width: 260px;">
-        <div class="flex-item baseColor">视频</div>
-        <div class="flex-item">
+      <div class="flex f16 bold border shadow">
+        <div class="baseColor">视频</div>
+        <div class="">
           AI视频
-          <span class="txt_linear">186</span>
+          <span class="txt_linear">{{AIVideo_num}}</span>
         </div>
       </div>
     </div>
     <div class="top_div flex clr_white text-center" v-if="activeIndex == 1">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 700px;" @click="getYyPoint(1)">
-        <div class="flex-item baseColor">设备管理</div>
-        <div class="flex-item">
+      <div class="flex f16 bold mr_20 border shadow" @click="getYyPoint(1)">
+        <div class="baseColor">设备管理</div>
+        <div class="">
           报警数
           <span class="txt_linear">1323</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           正常数
           <span class="txt_linear">823</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           离线数
           <span class="txt_linear">2</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           故障数
           <span class="txt_linear">2</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" style="width: 260px;" @click="getYyPoint(2)">
-        <div class="flex-item baseColor">视频</div>
-        <div class="flex-item">
+      <div class="flex f16 bold border shadow" @click="getYyPoint(2)">
+        <div class="baseColor">视频</div>
+        <div class="">
           普通视频
-          <span class="txt_linear">18</span>
+          <span class="txt_linear">{{commonVideo_num}}</span>
         </div>
       </div>
     </div>
     <div class="top_div flex clr_white text-center" v-if="activeIndex == 2">
-      <div class="flex f16 bold mr_20 border shadow" style="width: 700px;" @click="getGdPoint(1)">
-        <div class="flex-item baseColor">工地概览</div>
-        <div class="flex-item">
+      <div class="flex f16 bold mr_20 border shadow" @click="getGdPoint(1)">
+        <div class=" baseColor">工地概览</div>
+        <div class="">
           总数
           <span class="txt_linear">22</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           准备阶段
           <span class="txt_linear">12</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           施工阶段
           <span class="txt_linear">10</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           竣工阶段
           <span class="txt_linear">10</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" style="width: 260px;" @click="getGdPoint(2)">
-        <div class="flex-item baseColor">视频</div>
-        <div class="flex-item">
+      <div class="flex f16 bold border shadow" @click="getGdPoint(2)">
+        <div class="baseColor">视频</div>
+        <div class="">
           普通视频
-          <span class="txt_linear">18</span>
+          <span class="txt_linear">{{commonVideo_num}}</span>
         </div>
       </div>
     </div>
@@ -289,6 +289,7 @@
   import BarChartTwo from '@/components/Charts/BarChartTwo'
   import BarChartThree from '@/components/Charts/BarChartThree'
   import BarChartFour from '@/components/Charts/BarChartFour'
+  import RingChartHover from '@/components/Charts/RingChartHover'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
@@ -300,12 +301,12 @@
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import {getAllVideoPoint, pointList} from '@/api/system'
   import {analysisData,departOfWarn,timesOfWarn} from '@/api/appearance'
-
+  import global from "@/utils/common";
   export default {
     name: 'appearance',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,RingChartHover},
     data() {
       return {
         yyMapType:1,
@@ -1038,6 +1039,8 @@
         pointList:[],
         yyList:[],
         gdList:[],
+        AIVideo_num:'',
+        commonVideo_num:'',
       }
     },
 
@@ -1114,6 +1117,7 @@
       getGdPoint(val){
         this.gdMapType = val;
         if(val == 1){
+          this.map.clearOverLays();
           console.log('获取工地点位')
           this.mapPoint(this.gdList,'gd');
         }else{
@@ -1123,6 +1127,7 @@
       getYyPoint(val){
         this.yyMapType = val;
         if(val == 1){
+          this.map.clearOverLays();
           this.yyList = [{
             name:'建德人家',
             status:'正常',
@@ -1182,11 +1187,13 @@
         }
       },
       handlePageType(val){
+        this.map.clearOverLays();
         this.activeIndex = val;
         if(val == 0){
           this.getList();
           this.getAIData();
         }else if(val == 2){
+          this.getVideoNum();
           // this.yyMapType = val;
           if(this.gdMapType == 1){
             this.mapPoint(this.gdList,'gd');
@@ -1194,6 +1201,7 @@
             this.getVideo();
           }
         }else{
+          this.getVideoNum();
           this.getYyPie();
           this.getYyBar();
           if(this.yyMapType == 1){
@@ -1250,7 +1258,7 @@
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
         this.map.setStyle('indigo');
@@ -1260,7 +1268,7 @@
       mapPoint(list,type){
         console.log('点位');
         //创建图片对象
-        this.map.clearOverLays();
+        // this.map.clearOverLays();
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
@@ -1380,18 +1388,24 @@
 
       //获取AI视频
       getList(){
-        console.log('好久好久')
         getAllVideoPoint({class:1}).then((res) => {
-          this.pointList = res.data;
-          this.mapPoint(this.pointList)
+          this.AIVideo_num = res.data.ai;
+          this.pointList = res.data.list;
+          this.mapPoint(this.pointList);
+        });
+      },
+      //获取油烟--普通视频数字
+      getVideoNum(){
+        getAllVideoPoint({class:2}).then((res) => {
+          this.commonVideo_num = res.data.putong;
         });
       },
       //获取油烟--普通视频
       getVideo(){
-        console.log('好久好久')
         getAllVideoPoint({class:2}).then((res) => {
-          this.pointList = res.data;
-          this.mapPoint(this.pointList)
+          this.commonVideo_num = res.data.putong;
+          this.pointList = res.data.list;
+          this.mapPoint(this.pointList,'video')
         });
       },
     }

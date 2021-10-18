@@ -20,10 +20,10 @@
           <p class="nav_txt">指挥平台</p>
         </div>
       </div>
-      <ul class="direct_option clr_white text-center" v-if="activeIndex == 2">
-        <li :class="['border','shadow','mb_10',directType==1?'baseColor':'']" @click="handleDirectType(1)">AI上报</li>
-        <li :class="['border','shadow',directType==2?'baseColor':'']" @click="handleDirectType(2)">人工登记</li>
-      </ul>
+<!--      <ul class="direct_option clr_white text-center" v-if="activeIndex == 2">-->
+<!--        <li :class="['border','shadow','mb_10',directType==1?'baseColor':'']" @click="handleDirectType(1)">AI上报</li>-->
+<!--        <li :class="['border','shadow',directType==2?'baseColor':'']" @click="handleDirectType(2)">人工登记</li>-->
+<!--      </ul>-->
     </div>
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 2">
       <div class="top clr_white">
@@ -70,26 +70,26 @@
     </div>
     </div>
     <div class="top_div flex clr_white text-center f16 bold" v-if="activeIndex == 1">
-      <div class="flex border shadow mr_20" style="width: 650px">
-        <div class="flex-item">
+      <div class="flex border shadow mr_20">
+        <div class="">
           受理量
           <span class="txt_linear">{{formData.month_deal_num}}</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           同比{{formData.basis_direction == 1?'上升':'下降'}}
           <span class="txt_linear">{{formData.basis_num}}%</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           环比{{formData.comparative_direction == 1?'上升':'下降'}}
           <span class="txt_linear">{{formData.comparative_num}}%</span>
         </div>
-        <div class="flex-item">
+        <div class="">
           满意率
           <span class="txt_linear">{{formData.satisfaction_rate}}%</span>
         </div>
       </div>
       <div class="flex border shadow">
-        <div class="flex-item">
+        <div class="">
           重复投诉件
           <span class="txt_linear">{{formData.rep_num}}</span>
         </div>
@@ -156,7 +156,29 @@
 <!--        <div class="weui-cell__bd baseColor">正常件</div>-->
 <!--      </li>-->
 <!--    </ul>-->
-
+    <div class="center_content clr_white text-center" v-if="activeIndex == 2">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',directType==0?'active':'']" @click="handleDirectType(0)">
+        <div class="weui-cell__hd flex">
+          <img v-if="directType!=0" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',directType==0?'clr_white':'']">全部案件</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',directType==1?'active':'']" @click="handleDirectType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="directType!=1" src="./../../assets/image/point57.png"/>
+          <img v-else src="./../../assets/image/point57_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',directType==1?'clr_white':'']">AI上报</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',directType==2?'active':'']" @click="handleDirectType(2)">
+        <div class="weui-cell__hd flex">
+          <img v-if="directType!=2" src="./../../assets/image/point58.png"/>
+          <img v-else src="./../../assets/image/point57_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',directType==2?'clr_white':'']">人工登记</div>
+      </div>
+    </div>
 
 
     <myDialog :visible.sync="showImgDialog"
@@ -186,12 +208,13 @@
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point01.png'
   import {abnormalSite} from "@/api/water"; // 引入刚才的map.js 注意路径
   import {caseCount,commandCase} from "@/api/lowCase";
-  import point02 from "@/assets/image/point20.png";
-  import point03 from "@/assets/image/point24.png";
-  import point04 from "@/assets/image/point22.png"; // 引入刚才的map.js 注意路径
+  import point01 from '@/assets/image/point24.png'
+  import point02 from "@/assets/image/point56.png";
+  import point03 from "@/assets/image/point57.png";
+  import point04 from "@/assets/image/point58.png"; // 引入刚才的map.js 注意路径
+  import global from "@/utils/common";
   let heatmapOverlay;
   export default {
     name: 'case',
@@ -291,7 +314,7 @@
         },
         imgArr:[],
         formData:{},
-        directType:1,
+        directType:0,
         mapType:2,
         activeIndex:0,
         chartData: {
@@ -737,8 +760,10 @@
     },
     methods: {
       handlePageType(val){
+        this.map.clearOverLays();
         this.activeIndex = val;
         if(val == 2){
+          this.directType = 0;
           this.getPointThree();
         }else{
           this.getPointOne();
@@ -747,10 +772,17 @@
       //指挥平台
       handleDirectType(val){
         this.directType = val;
-        if(val == 1){
+        if(val == 0){
+          this.map.clearOverLays();
+          let arr = this.pointThree.concat(this.pointFour)
+          this.mapPoint(2,this.pointThree)
+          this.mapPoint(3,this.pointFour)
+        }else if(val == 1){
+          this.map.clearOverLays();
           this.mapPoint(2,this.pointThree)
         }else{
-          this.mapPoint(2,this.pointFour)
+          this.map.clearOverLays();
+          this.mapPoint(3,this.pointFour)
         }
       },
       changeMap(){
@@ -814,7 +846,7 @@
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         // this.map.centerAndZoom(new T.LngLat(117.283042, 31.86119), this.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
@@ -860,19 +892,33 @@
           if(this.directType == 1){
             this.mapPoint(2,this.pointThree)
           }else{
-            this.mapPoint(2,this.pointFour)
+            this.mapPoint(3,this.pointFour)
           }
         });
       },
       mapPoint(type,list){
         //创建图片对象
-        this.map.clearOverLays();
+        // this.map.clearOverLays();
+        let icon01 = new T.Icon({
+          iconUrl: point01,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
+        let icon02 = new T.Icon({
+          iconUrl: point02,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
         let icon03 = new T.Icon({
           iconUrl: point03,
           iconSize: new T.Point(30, 51),
           iconAnchor: new T.Point(34, 59)
         });
-
+        let icon04 = new T.Icon({
+          iconUrl: point04,
+          iconSize: new T.Point(30, 51),
+          iconAnchor: new T.Point(34, 59)
+        });
         let markers = [];
 
         console.log(list);
@@ -881,12 +927,18 @@
           // 0：关  1：开
           if(type == 0){
             let point = new T.LngLat(list[i].x_line,list[i].y_line);
-            markers[i]  = drawTMaker(point, icon03,this,list[i]);
-          }else{
+            markers[i]  = drawTMaker(point, icon01,this,list[i]);
+          }else if(type == 1){
+            let point = new T.LngLat(list[i].log,list[i].lat);
+            markers[i]  = drawTMaker(point, icon02,this,list[i]);
+          }else if(type == 2){
             let point = new T.LngLat(list[i].log,list[i].lat);
             markers[i]  = drawTMaker(point, icon03,this,list[i]);
+          }else if(type == 3){
+            console.log('三生三世')
+            let point = new T.LngLat(list[i].log,list[i].lat);
+            markers[i]  = drawTMaker(point, icon04,this,list[i]);
           }
-
         }
 
 
@@ -954,7 +1006,7 @@
                 '</tr>'+
                 '</table>'+
                 '</div>';
-            }else if(type == 2){
+            }else if(type == 2 || type == 3){
               // 指挥平台（AI上报，问题登记）：案件编号、事件来源、小类、上报时间、问题描述、事件位置；图片
               let source;
               if(txt.source == 1){
