@@ -991,7 +991,7 @@
               '<td>地址</td><td>' + txt.Address + '</td>'+
               '</tr>'+
               '<tr>' +
-              '<td></td><td class="text-right baseColor" onClick="handleTrail(' + aa +')">查看轨迹</td>'+
+              '<td></td><td class="text-right baseColor pointer" onClick="handleTrail(' + aa +')">查看轨迹</td>'+
               '</tr>'+
               '</table>'+
               '</div>';

@@ -96,6 +96,27 @@
       </div>
 
     </div>
+    <div class="top_div flex clr_white text-center f16 bold" v-if="activeIndex == 2 && directType == 0">
+      <div class="flex border shadow mr_20">
+        <div class="flex-item">
+          今日上报量
+          <span class="txt_linear">{{Number(directData.count) + Number(AIData.count)}}</span>
+        </div>
+      </div>
+      <div class="flex border shadow mr_20">
+        <div class="flex-item">
+          今日受理量
+          <span class="txt_linear">{{Number(directData.chuli) + Number(AIData.chuli)}}</span>
+        </div>
+      </div>
+      <div class="flex border shadow">
+        <div class="flex-item">
+          今日结案量
+          <span class="txt_linear">{{Number(directData.end) + Number(AIData.end)}}</span>
+        </div>
+      </div>
+
+    </div>
     <div class="top_div flex clr_white text-center f16 bold" v-if="activeIndex == 2 && directType == 1">
       <div class="flex border shadow mr_20">
         <div class="flex-item">
@@ -249,7 +270,7 @@
             axisLabel: {
               show: true,
               textStyle: {
-                color: '#26CBE2',
+                color: '#fff',
                 fontSize:'16',
                 fontWeight:'bold'
               }
@@ -278,7 +299,7 @@
             axisLabel: {
               show: true,
               textStyle: {
-                color: '#26CBE2',
+                color: '#fff',
                 fontSize:'15',
                 fontWeight:'bold'
               }
@@ -578,8 +599,6 @@
 
           xAxis: [
             {
-
-
               axisTick: {
                 show:false,
                 alignWithLabel: false
@@ -625,7 +644,12 @@
               // barCategoryGap:'50%',/*多个并排柱子设置柱子之间的间距*/
               itemStyle: {
                 normal: {
-                  color:'rgba(0,107,226)'
+                  // color:'rgba(0,107,226)',
+                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0,
+                    [
+                      { offset: 1, color: 'rgba(0,239,252,1)' },
+                      { offset: 0, color: 'rgba(0,239,252,0)' },
+                    ])
                 }
               },
               data: [320, 332, 301]
@@ -638,8 +662,12 @@
               // barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
               itemStyle: {
                 normal: {
-                  color:'rgba(0,183,255)'
-
+                  // color:'rgba(0,183,255)',
+                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0,
+                    [
+                      { offset: 1, color: 'rgba(0,183,255,1)' },
+                      { offset: 0, color: 'rgba(0,183,255,0)' },
+                    ])
                 }
               },
               data: [220, 182, 191]
