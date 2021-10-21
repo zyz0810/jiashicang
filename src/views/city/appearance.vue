@@ -135,40 +135,40 @@
 <!--      </div>-->
 <!--    </div>-->
     <div class="center_content clr_white text-center" v-if="activeIndex == 1&&yyMapType == 1">
-      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showYyType==1?'active':'']" @click="handleYyPointType(1)">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showYyType==0?'active':'']" @click="handleYyPointType(0)">
         <div class="weui-cell__hd flex">
-          <img v-if="showYyType!=1" src="./../../assets/image/point44.png"/>
+          <img v-if="showYyType!=0" src="./../../assets/image/point44.png"/>
           <img v-else src="./../../assets/image/point44_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showYyType==1?'clr_white':'']">全部</div>
+        <div :class="['weui-cell__bd',showYyType==0?'clr_white':'']">全部</div>
       </div>
-      <div :class="['map_intro','map_intro_yy','f14','bold','flex','baseColor','weui-cell',showYyType==2?'active':'']" @click="handleYyPointType(2)">
+      <div :class="['map_intro','map_intro_yy','f14','bold','flex','baseColor','weui-cell',showYyType==1?'active':'']" @click="handleYyPointType(1)">
         <div class="weui-cell__hd flex">
-          <img v-if="showYyType!=2" src="./../../assets/image/point_yy_01.png"/>
+          <img v-if="showYyType!=1" src="./../../assets/image/point_yy_01.png"/>
           <img v-else src="./../../assets/image/point_yy_active.png"/>
           </div>
-        <div :class="['weui-cell__bd',showYyType==2?'clr_white':'']">正常</div>
-      </div>
-      <div :class="['map_intro','map_intro_yy','f14','bold','flex','baseColor','weui-cell',showYyType==3?'active':'']" @click="handleYyPointType(3)">
-        <div class="weui-cell__hd flex">
-          <img v-if="showYyType!=3" src="./../../assets/image/point_yy_04.png"/>
-          <img v-else src="./../../assets/image/point_yy_active.png"/>
-        </div>
-        <div :class="['weui-cell__bd',showYyType==3?'clr_white':'']">报警</div>
+        <div :class="['weui-cell__bd',showYyType==1?'clr_white':'']">正常</div>
       </div>
       <div :class="['map_intro','map_intro_yy','f14','bold','flex','baseColor','weui-cell',showYyType==4?'active':'']" @click="handleYyPointType(4)">
         <div class="weui-cell__hd flex">
-          <img v-if="showYyType!=4" src="./../../assets/image/point_yy_03.png"/>
+          <img v-if="showYyType!=4" src="./../../assets/image/point_yy_04.png"/>
           <img v-else src="./../../assets/image/point_yy_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showYyType==4?'clr_white':'']">故障</div>
+        <div :class="['weui-cell__bd',showYyType==4?'clr_white':'']">报警</div>
       </div>
-      <div :class="['map_intro','map_intro_yy','f14','bold','flex','baseColor','weui-cell',showYyType==5?'active':'']" @click="handleYyPointType(5)">
+      <div :class="['map_intro','map_intro_yy','f14','bold','flex','baseColor','weui-cell',showYyType==3?'active':'']" @click="handleYyPointType(3)">
         <div class="weui-cell__hd flex">
-          <img v-if="showYyType!=5" src="./../../assets/image/point_yy_02.png"/>
+          <img v-if="showYyType!=3" src="./../../assets/image/point_yy_03.png"/>
           <img v-else src="./../../assets/image/point_yy_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showYyType==5?'clr_white':'']">离线</div>
+        <div :class="['weui-cell__bd',showYyType==3?'clr_white':'']">故障</div>
+      </div>
+      <div :class="['map_intro','map_intro_yy','f14','bold','flex','baseColor','weui-cell',showYyType==2?'active':'']" @click="handleYyPointType(2)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showYyType!=2" src="./../../assets/image/point_yy_02.png"/>
+          <img v-else src="./../../assets/image/point_yy_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showYyType==2?'clr_white':'']">离线</div>
       </div>
     </div>
     <div class="center_content clr_white text-center" v-if="activeIndex == 2&&gdMapType == 1">
@@ -227,19 +227,19 @@
         <div class="baseColor">设备管理</div>
         <div class="">
           报警数
-          <span class="txt_linear">1323</span>
+          <span class="txt_linear">{{yyFacilityNum.super}}</span>
         </div>
         <div class="">
           正常数
-          <span class="txt_linear">823</span>
+          <span class="txt_linear">{{yyFacilityNum.normal}}</span>
         </div>
         <div class="">
           离线数
-          <span class="txt_linear">2</span>
+          <span class="txt_linear">{{yyFacilityNum.off}}</span>
         </div>
         <div class="">
           故障数
-          <span class="txt_linear">2</span>
+          <span class="txt_linear">{{yyFacilityNum.trouble}}</span>
         </div>
       </div>
       <div class="flex f16 bold border shadow" @click="getYyPoint(2)">
@@ -300,7 +300,7 @@
   import point05 from '@/assets/image/point_yy_04.png' // 引入刚才的map.js 注意路径
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import {getAllVideoPoint, pointList} from '@/api/system'
-  import {analysisData,departOfWarn,timesOfWarn} from '@/api/appearance'
+  import {analysisData,departOfWarn,timesOfWarn,getFacilityAll} from '@/api/appearance'
   import global from "@/utils/common";
   export default {
     name: 'appearance',
@@ -312,7 +312,7 @@
         yyMapType:1,
         gdMapType:1,
         showGdType:1,
-        showYyType:1,
+        showYyType:0,
         activeIndex:0,
         // pieChartOne:{
         //   color: ['#75E4E3', '#E5AF45', '#9941E2'],
@@ -1041,6 +1041,7 @@
         gdList:[],
         AIVideo_num:'',
         commonVideo_num:'',
+        yyFacilityNum:{},
       }
     },
 
@@ -1080,6 +1081,19 @@
           this.BarData.series[0].data = barArrData;
         });
       },
+      getYyPointList(type){
+        getFacilityAll({ class:type}).then(res => {
+          this.yyFacilityNum={
+            normal:res.data.normal,
+            off:res.data.off,
+            super:res.data.super,
+            trouble:res.data.trouble,
+          }
+          this.yyList = res.data.list
+          this.mapPoint(this.yyList,'yy');
+        });
+      },
+
       //AI图表数据
       getAIData(){
         analysisData({day_time:''}).then(res => {
@@ -1128,56 +1142,21 @@
         this.yyMapType = val;
         if(val == 1){
           this.map.clearOverLays();
-          this.yyList = [{
-            name:'建德人家',
-            status:'正常',
-            address:'杭州市滨江区江陵路与启智街交汇处附近西',
-            longitude:'120.126305',
-            latitude:'30.182287',
-          },{
-            name:'物美',
-            status:'故障',
-            address:'杭州市滨江区江陵路与启智街交汇处附近西',
-            longitude:'120.14547',
-            latitude:'30.160213',
-          },{
-            name:'物美',
-            status:'离线',
-            address:'杭州市滨江区江陵路与启智街交汇处附近西',
-            longitude:'120.205925',
-            latitude:'30.145908',
-          },{
-            name:'佰味佳',
-            status:'超标',
-            address:'杭州市滨江区江陵路与启智街交汇处附近西',
-            longitude:'120.203186',
-            latitude:'30.214312',
-          },{
-            name:'建德人家',
-            status:'正常',
-            address:'杭州市滨江区江陵路与启智街交汇处附近西',
-            longitude:'120.19772',
-            latitude:'30.20525',
-          },{
-            name:'建德人家',
-            status:'正常',
-            address:'杭州市滨江区江陵路与启智街交汇处附近西',
-            longitude:'120.180405',
-            latitude:'30.174658',
-          },{
-            name:'建德人家',
-            status:'正常',
-            address:'杭州市滨江区江陵路与启智街交汇处附近西',
-            longitude:'120.19302',
-            latitude:'30.194742',
-          }];
-          this.mapPoint(this.yyList,'yy');
+         this.getYyPointList('');
         }else{
+          this.map.clearOverLays();
+          this.getYyPointList('');
           this.getVideo();
         }
       },
       handleYyPointType(type){
+        this.map.clearOverLays();
         this.showYyType = type
+        if(type == 0){
+          this.getYyPointList('')
+        }else{
+          this.getYyPointList(type)
+        }
       },
       handleMapType(type){
         if(type == 1){//获取设备点位
@@ -1205,51 +1184,11 @@
           this.getYyPie();
           this.getYyBar();
           if(this.yyMapType == 1){
-            this.yyList = [{
-              name:'建德人家',
-              status:'正常',
-              address:'杭州市滨江区江陵路与启智街交汇处附近西',
-              longitude:'120.126305',
-              latitude:'30.182287',
-            },{
-              name:'物美',
-              status:'故障',
-              address:'杭州市滨江区江陵路与启智街交汇处附近西',
-              longitude:'120.14547',
-              latitude:'30.160213',
-            },{
-              name:'物美',
-              status:'离线',
-              address:'杭州市滨江区江陵路与启智街交汇处附近西',
-              longitude:'120.205925',
-              latitude:'30.145908',
-            },{
-              name:'佰味佳',
-              status:'超标',
-              address:'杭州市滨江区江陵路与启智街交汇处附近西',
-              longitude:'120.203186',
-              latitude:'30.214312',
-            },{
-              name:'建德人家',
-              status:'正常',
-              address:'杭州市滨江区江陵路与启智街交汇处附近西',
-              longitude:'120.19772',
-              latitude:'30.20525',
-            },{
-              name:'建德人家',
-              status:'正常',
-              address:'杭州市滨江区江陵路与启智街交汇处附近西',
-              longitude:'120.180405',
-              latitude:'30.174658',
-            },{
-              name:'建德人家',
-              status:'正常',
-              address:'杭州市滨江区江陵路与启智街交汇处附近西',
-              longitude:'120.19302',
-              latitude:'30.194742',
-            }];
-            this.mapPoint(this.yyList,'yy');
+            this.map.clearOverLays();
+            this.getYyPointList('');
           }else{
+            this.map.clearOverLays();
+            this.getYyPointList('');
             this.getVideo();
           }
 
@@ -1272,44 +1211,42 @@
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon02 = new T.Icon({
           iconUrl: point02,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon03 = new T.Icon({
           iconUrl: point03,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon04 = new T.Icon({
           iconUrl: point04,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon05 = new T.Icon({
           iconUrl: point05,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let markers = [];
         console.log(list);
         for (let i = 0; i < list.length; i++) {
           // var marker
           if(type == 'yy'){
-            if(list[i].status == '正常'){
-              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            console.log('油烟列表')
+            let point = new T.LngLat(list[i].log,list[i].lat);
+            if(list[i].status == 1){ // 正常
               markers[i]  = drawTMaker(point, icon02,this,list[i]);
-            }else if(list[i].status == '离线'){
-              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            }else if(list[i].status == 2){
               markers[i]  = drawTMaker(point, icon03,this,list[i]);
-            }else if(list[i].status == '故障'){
-              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            }else if(list[i].status == 3){
               markers[i]  = drawTMaker(point, icon04,this,list[i]);
-            }else if(list[i].status == '超标'){
-              let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            }else if(list[i].status == 4){
               markers[i]  = drawTMaker(point, icon05,this,list[i]);
             }
 

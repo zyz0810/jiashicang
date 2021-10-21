@@ -1,8 +1,8 @@
 <template>
   <div class="app-container">
     <!--创建容器-->
-    <div id='mapDiv' class="mapDiv" v-show="showMapDiv"></div>
-    <div id="guijimap" :class="['mapDiv',showguijiDiv?'z99':'z-1']" ref="guijimap"></div>
+    <div id='mapDiv' class="mapDiv"></div>
+
     <div class="left_rate bold clr_white text-center">
       <div class="clean_rate">
         <!--<p class="f20">95.6%</p>-->
@@ -110,6 +110,8 @@
       </div>
 
     </div>
+
+
     <div class="center_content clr_white text-center" v-if="mapPageType == 1">
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==1?'active':'']" @click="handlePointType(1,type)">
         <div class="weui-cell__hd flex">
@@ -143,87 +145,6 @@
       </p>
       <p v-for="item in trailList" :key="item.id">{{$moment(Number(item.create_at)*1000).format("YYYY-MM-DD HH:mm:ss")}}</p>
     </div>
-
-
-
-    <!--车辆轨迹框部分-->
-    <div v-if="state.carTrack" class="tabbable-line guijitabbox carguiJiTabBox p20">
-      <div class="tab-content">
-        <div class="tab-pane active in" id="tab2_1">
-          <p style="font-size: 16px; color: #000">
-            <span id="carguijititle">{{ state.name }}</span>
-          </p>
-          <el-form :inline="true" :model="state" class="search_form form-horizontal">
-            <el-form-item label="日期" prop="name">
-              <el-date-picker
-                type="date"
-                v-model="state.timeDate.day_time"
-                value-format="yyyy-MM-dd"
-                placeholder="选择日期"
-                @change="carvehicle(state.v.Vehicle)"
-              />
-            </el-form-item>
-            <el-form-item label="时刻" prop="name">
-              <el-time-picker
-                is-range
-                arrow-control
-                v-model="dateTime"
-                value-format="HH:mm:ss"
-                @change="carvehicle(state.v.Vehicle)"
-                range-separator="至"
-                start-placeholder="开始时间"
-                end-placeholder="结束时间"
-                placeholder="选择时间范围">
-              </el-time-picker>
-            </el-form-item>
-
-          </el-form>
-<!--          <div class="wui-cell">-->
-<!--            &lt;!&ndash; 轨迹播放快慢 &ndash;&gt;-->
-<!--            <div class="weui-cell__hd">-->
-<!--              轨迹播放-->
-<!--            </div>-->
-<!--            <div class="weui-cell__bd">-->
-<!--              <el-slider-->
-<!--                :min="1"-->
-<!--                @change="sliderChange"-->
-<!--                style="width: 74%"-->
-<!--                id="test"-->
-<!--                v-model="state.timeDate.rangeValue"/>-->
-<!--            </div>-->
-<!--          </div>-->
-          <div class="text-center">
-            <el-button type="primary" v-if="state.startgj" @click="startTrack">开始</el-button>
-            <el-button type="primary" v-else @click="pauseTrack">暂停</el-button>
-            <el-button type="primary" @click="stopTrack">结束</el-button>
-            <el-button @click="carTrackReturn">返回</el-button>
-          </div>
-
-          <div ref="time_box" style="width: 100%; margin-top: 10px">
-            <div
-              id="carguijiscroller"
-              class="scroller tabselbox"
-              data-rail-visible="1"
-              data-rail-color="#ececec"
-              data-handle-color="#bcbcbc"
-              style="width: 100%; height: 350px; overflow: auto"
-            >
-              <p v-for="(item, i) in state.timeList"
-                :key="i"
-                class="showcarpoint gjtimelist"
-                @click="clickCar(item, i)"
-              >
-                <i class="guijinumlist">{{ i }}</i
-                ><span>{{$moment(item.time).format("YYYY-MM-DD HH:mm:ss")}}</span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
   </div>
 </template>
 
@@ -242,7 +163,6 @@
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import {cleancarList,cleanCarAddressList,lastGPS,carHistory,getGps,cleanCarNum} from '@/api/garbageLink'
   import point01 from "@/assets/image/point40.png";
-  import pointCar from "@/assets/image/car.png";
   import point02 from "@/assets/image/point41.png";
   import point03 from "@/assets/image/point38.png";
   import {getAllVideoPoint} from "@/api/system";
@@ -255,8 +175,6 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,ShuiQiuChart,GaugeChart},
     data() {
       return {
-        showMapDiv:true,
-        showguijiDiv:false,
         showTrail:false,
         showType:1,
         carData:{offlineNum:'',onlineNum:'',total:''},
@@ -920,49 +838,6 @@
         trailList:[],
         trailData:{},
         CarTrack:'',
-        state:{
-          count: 0,
-          map: "",
-          guijimap: "",
-          zoom: 12,
-          T: "",
-          mapHeight: 800 + "px",
-          timeDate: {
-            day_time: '',
-            start: "00:00:00",
-            end: "23:59:59",
-            rangeValue: 1,
-          },
-          carTrack: false,
-          loading: false,
-          obj_CarTrack: "",
-          tile: "",
-          timeList: [],
-          timename: {},
-          pagenum: 1,
-          pagesize: 500,
-          total: 10,
-          carList: [],
-          car_icon: "",
-          detailAddress: "",
-          v: {},
-          icont: "",
-          customerWinInfo: {},
-          name: "",
-          startgj: true,
-          setCarTnterTime: 1000,
-          linebottom: [],
-          iguiji: 0,
-          closetimeinter: 0,
-          markercaruserlinelabel: null,
-          markercarline: null,
-          carline: null,
-          startGTime: "",
-          onlinemarkercar: [],
-          markerclick: {},
-        },
-        open1:false,
-        open2:false,
       }
     },
 
@@ -970,24 +845,6 @@
       ...mapState({
         roles: state => state.user.roles,
       }),
-      dateTime: {
-        get() {
-          if (this.state.timeDate.start && this.state.timeDate.end) {
-            return [this.state.timeDate.start, this.state.timeDate.end];
-          } else {
-            return [];
-          }
-        },
-        set(v) {
-          if (v) {
-            this.state.timeDate.start = v[0];
-            this.state.timeDate.end = v[1];
-          } else {
-            this.state.timeDate.start = "";
-            this.state.timeDate.end = "";
-          }
-        },
-      },
     },
     mounted() {
       // 挂载完成后渲染地图
@@ -999,25 +856,6 @@
       this.getNum();
       this.getPointNum();
       window.handleTrail = this.handleTrail;
-
-
-      clearInterval(this.state.timename);
-      window.onresize = () => {
-        return (() => {
-          if (window.innerWidth > 1664) {
-            this.state.mapHeight = window.innerHeight - 350 + "px";
-          } else {
-            this.state.mapHeight = window.innerHeight - 350 + "px";
-          }
-        })();
-      };
-      this.state.cgjicon = new T.Icon({
-        iconUrl: point02,
-        iconSize: new T.Point(30, 52),
-        iconAnchor: new T.Point(34, 59)
-      });
-
-
     },
     beforeDestroy() {
       clearInterval(this.timerOne);
@@ -1026,309 +864,6 @@
       this.timerTwo = null;
     },
     methods: {
-      carTrackReturn() {
-        this.showMapDiv = true;
-        this.showguijiDiv = false;
-        this.state.carTrack = false;
-        this.state.map.clearOverLays();
-        clearInterval(this.state.timename);
-      },
-      clickCar(v, k) {
-        console.log(v);
-        let map1 = this.state.map;
-        // this.map1.panTo(v["TLngLat"]);
-        this.state.startgj = true;
-        this.state.iguiji = k;
-        // this.state.startGTime = this.$moment(Number(v.time)*1000).format("YYYY-MM-DD HH:mm:ss");
-        this.state.startGTime =v.time;
-          this.state.closetimeinter = 0;
-        clearInterval(this.state.timename);
-        if (this.state.markercarline != null) map1.removeOverLay(this.state.markercarline);
-        if (this.state.markercaruserlinelabel != null)
-          map1.removeOverLay(this.state.markercaruserlinelabel);
-        let icon01 = new T.Icon({
-          iconUrl: pointCar,
-          iconSize: new T.Point(41, 26),
-          // iconAnchor: new T.Point(6, 45)
-        });
-        this.state.markercarline = new T.Marker(v.TLngLat, {
-          icon: icon01,
-        });
-        map1.addOverLay(this.state.markercarline);
-        console.log(this.state.markercarline)
-        this.timelabel(
-          this.$moment(v.time).format("HH:mm:ss"),
-          this.state.markercarline.getLngLat()
-        );
-      },
-      showcarguiji(v) {
-        this.state.v = v;
-        this.state.startgj = true;
-        this.state.carTrack = true;
-        this.state.name = v.carcode;
-        this.state.timeDate.day_time = this.$moment().format("YYYY-MM-DD");
-        this.state.timeDate.start = "00:00:00";
-        this.state.timeDate.end = "23:59:59";
-        this.state.timeList = [];
-        //由于使用ctx 打包后会保存，暂用jquery代替
-        // $('#mapDiv').hide()
-        // $('#guijimap').show()
-        this.showMapDiv=false;
-        this.showguijiDiv=true;
-        // // ctx.$refs.mapDiv.style.display="none";
-        // // ctx.$refs.guijimap.style.display = "block";
-
-        //允许鼠标滚动放大地图
-        // map1.enableHandleMouseScroll();
-        this.state.map.clearOverLays();
-        // this.UrGban();
-        this.carvehicle(v.Vehicle);
-      },
-      UrGban() {
-        //创建标注对象
-        var marker = new T.Marker(new T.LngLat(119.95777, 30.53184), {
-          icon: this.state.cgjicon,
-        });
-        //向上地图上添加标注
-        this.state.map.addOverLay(marker);
-      },
-      carvehicle(v_devicecode, start_time, end_time) {
-        if(this.state.markercarline != null){
-          this.state.map.removeOverLay(this.state.markercarline);
-        }
-        if(this.state.carline != null){
-          this.state.map.removeOverLay(this.state.carline);
-        }
-        if(this.state.markercaruserlinelabel != null){
-          this.state.map.removeOverLay(this.state.markercaruserlinelabel);
-        }
-
-        if (!start_time) {
-          var fields = {
-            card_no: v_devicecode,
-            day_time:this.state.timeDate.day_time,
-            start: this.state.timeDate.start,
-            end: this.state.timeDate.end,
-          };
-        } else {
-          var fields = {
-            card_no: v_devicecode,
-            startTime: start_time,
-            endTime: end_time,
-          };
-        }
-        getGps(fields).then((res) => {
-          if (res.code == 1) {
-            var linebottom = [];
-            var linebottompoint = [];
-            if (res.data) {
-              var knum = 0;
-              let pointList = res.data.reverse()
-              pointList.map(item => {
-                // if (v["longitude1"]) {
-                  var arr = new Object();
-                  arr["TLngLat"] = new T.LngLat( item.longitude1,item.latitude1);
-                  // arr["time"] = this.$moment(Number(item.create_at)*1000).format("YYYY-MM-DD HH:mm:ss");
-                arr["time"] = Number(item.create_at)*1000;
-                  linebottom[knum] = arr;
-                  linebottompoint.push(new T.LngLat( item.longitude1,item.latitude1));
-                  this.state.timeList = linebottom;
-                  knum++;
-                // }
-              });
-              console.log('时间列表')
-              console.log(this.state.timeList)
-              console.log(linebottompoint)
-              this.state.linebottom = linebottom;
-              let icon02 = new T.Icon({
-                iconUrl: pointCar,
-                iconSize: new T.Point(41, 26),
-                // iconAnchor: new T.Point(6, 45)
-              });
-              this.state.markercarline = new T.Marker(linebottompoint[0], {
-                icon: icon02 //车辆轨迹
-              });
-              this.state.map.addOverLay(this.state.markercarline);
-              this.state.startGTime = linebottom[0]["time"];
-              //  添加其实车辆位置点标注
-              //创建线对象
-             let carline = new T.Polyline(linebottompoint, {
-               color: "yellow",
-               weight: 5,
-               opacity: 1,
-              });
-              this.state.carline = carline;
-              //向地图上添加线
-              this.state.map.addOverLay(carline);
-              // this.state.map.setViewport(linebottompoint);
-              // this.state.map.panTo(linebottompoint[0]);
-              this.timelabel(
-                this.$moment(linebottom[0]["time"]).format("HH:mm:ss"),
-                this.state.markercarline.getLngLat()
-              );
-            } else {
-              // message.error("暂无数据！");
-            }
-          }
-        });
-        // .catch(()=>{
-        //    alert('网络请求失败，请稍后再试');
-        // })
-      },
-      timelabel(timehms, position) {
-        console.log('时间：'+timehms)
-        var config = {
-          text:
-            '<div style="font-size:14px;background-color:#000;color:#fff;border-radius:4px !important;padding:3px 10px;box-shadow:3px 3px 6px 0 rgba(0,0,0,0.5);">' +
-            timehms +
-            "</div>",
-          offset: new T.Point(0,0),
-          position: position,
-        };
-        this.state.markercaruserlinelabel = new T.Label(config); //创建地图文本对象
-        // this.state.markercaruserlinelabel.setAnchorPer([0.5, 2]); //偏移量
-        this.state.markercaruserlinelabel.setBorderLine(0);
-        this.state.markercaruserlinelabel.setFontColor("#FFFFFF");
-        this.state.markercaruserlinelabel.setBackgroundColor("transparent");
-        this.state.map.addOverLay(this.state.markercaruserlinelabel);
-      },
-      sliderChange(val) {
-        this.state.setCarTnterTime = 1000 / val;
-        var st = Math.ceil(val / 9);
-        var map1 = this.state.map;
-        var linebottom = this.state.linebottom;
-        if (this.state.closetimeinter == 1) {
-          clearInterval(this.state.timename);
-          let timehms;
-          this.state.timename = setInterval(function() {
-            // if(this.state.startGTim == ''){
-            //   timehms = 0;
-            // }else{
-            //   timehms = this.$moment(this.state.startGTime).format("HH:mm:ss");
-            // }
-            // this.state.startGTime = this.$moment(this.state.startGTime).format("YYYY-MM-DD HH:mm:ss");
-            if (this.state.markercaruserlinelabel != null)
-              map1.removeOverLay(this.state.markercaruserlinelabel);
-            this.timelabel(this.$moment(Number(timehms)*1000).format("HH:mm:ss"), this.state.markercarline.getLngLat());
-            if (this.state.startGTime >= linebottom[this.state.iguiji]["time"]) {
-              //当前时间车辆所在位置
-              if (this.state.markercarline != null)
-                map1.removeOverLay(this.state.markercarline);
-              let icon01 = new T.Icon({
-                iconUrl: pointCar,
-                iconSize: new T.Point(41, 26),
-                // iconAnchor: new T.Point(6, 45)
-              });
-              this.state.markercarline = new T.Marker(
-                linebottom[this.state.iguiji]["TLngLat"],
-                {
-                  icon: icon01
-                }
-              );
-              map1.addOverLay(this.state.markercarline);
-              if (this.state.markercaruserlinelabel != null)
-                map1.removeOverLay(this.state.markercaruserlinelabel);
-              this.timelabel(this.$moment(Number(timehms)*1000).format("HH:mm:ss"), this.state.markercarline.getLngLat());
-              this.state.iguiji++;
-              if (this.state.iguiji == linebottom.length) {
-                clearInterval(this.state.timename);
-                this.state.startgj = true;
-                this.state.iguiji = 0;
-                this.state.closetimeinter = 0;
-                this.state.startGTime = linebottom[0]["time"];
-              }
-            }
-          }, this.state.setCarTnterTime);
-        }
-      },
-      startTrack() {
-        console.log("start");
-        var map1 = this.state.map;
-        var linebottom = this.state.linebottom;
-        this.state.startgj = false;
-        clearInterval(this.state.timename);
-        this.state.timename = setInterval(()=> {
-
-          console.log(11111)
-          console.log(this.state.setCarTnterTime)
-          console.log('；；；'+this.state.startGTime)
-          var st = Math.ceil(this.state.timeDate.rangeValue / 9);
-          var timehms = this.$moment(this.state.startGTime).subtract(-st, "second").format("HH:mm:ss");
-          this.state.startGTime = this.$moment(this.state.startGTime).subtract(-st, "second");
-          if (this.state.markercaruserlinelabel != null)
-            map1.removeOverLay(this.state.markercaruserlinelabel);
-          this.timelabel(timehms, this.state.markercarline.getLngLat());
-          console.log(this.state.startGTime)
-          console.log(linebottom[this.state.iguiji]["time"])
-          if (this.state.startGTime >= linebottom[this.state.iguiji]["time"]) {
-            console.log('斤斤计较军军军军军军')
-            //当前时间车辆所在位置
-            if (this.state.markercarline != null)
-              map1.removeOverLay(this.state.markercarline);
-            let icon01 = new T.Icon({
-              iconUrl: pointCar,
-              iconSize: new T.Point(41, 26),
-              // iconAnchor: new T.Point(6, 45)
-            });
-            this.state.markercarline = new T.Marker(
-              linebottom[this.state.iguiji]["TLngLat"],
-              {
-                icon: icon01, //车辆轨迹
-              }
-            );
-            map1.addOverLay(this.state.markercarline);
-            if (this.state.markercaruserlinelabel != null)
-              map1.removeOverLay(this.state.markercaruserlinelabel);
-            // this.timelabel(this.$moment(Number(timehms)*1000).format("HH:mm:ss"), this.state.markercarline.getLngLat());
-            this.timelabel(timehms, this.state.markercarline.getLngLat());
-            this.state.iguiji++;
-            if (this.state.iguiji == linebottom.length) {
-              console.log(123);
-              clearInterval(this.state.timename);
-              this.state.startgj = true;
-              this.state.iguiji = 0;
-              this.state.closetimeinter = 0;
-              this.state.startGTime = linebottom[0]["time"];
-            }
-          }
-        }, this.state.setCarTnterTime);
-        this.state.closetimeinter = 1;
-        //添加起始车辆位置点标注
-        console.log("end");
-      },
-
-      pauseTrack() {
-        clearInterval(this.state.timename);
-        this.state.startgj = true;
-        this.state.closetimeinter = 0;
-      },
-
-      stopTrack() {
-        this.state.iguiji = 0;
-        this.state.closetimeinter = 0;
-        this.state.startGTime = this.state.linebottom[0]["time"];
-        clearInterval(this.state.timename);
-        this.state.startgj = true;
-        var lastm = this.state.linebottom.length - 1;
-        if (this.state.markercarline != null)
-          this.state.map.removeOverLay(this.state.markercarline);
-        if (this.state.markercaruserlinelabel != null)
-          this.state.map.removeOverLay(this.state.markercaruserlinelabel);
-        let icon01 = new T.Icon({
-          iconUrl: pointCar,
-          iconSize: new T.Point(41, 26),
-          // iconAnchor: new T.Point(6, 45)
-        });
-        this.state.markercarline = new T.Marker(this.state.linebottom[lastm]["TLngLat"], {
-          icon: icon01
-        });
-        this.state.map.addOverLay(this.state.markercarline);
-        this.timelabel(
-          this.$moment(this.state.linebottom[lastm]["time"]).format("HH:mm:ss"),
-          this.state.linebottom[lastm]["TLngLat"]
-        );
-      },
-
       //点击顶部车辆管理、视频
       showMapType(val){
         this.mapPageType = val;
@@ -1401,34 +936,23 @@
         // this.addCtrl()
         this.map.setStyle('indigo');
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
-
-        //初始化地图对象
-
-        this.state.map = new T.Map("guijimap");
-        //设置显示地图的中心点和级别
-        this.state.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom);
-        this.state.map.setStyle('indigo');
-        document.getElementsByClassName("tdt-control-copyright tdt-control")[1].style.display = 'none';
-        //允许鼠标滚动放大地图
-        // map1.enableHandleMouseScroll();
-        this.state.map.clearOverLays();
       },
       mapPoint(type,list){
         //创建图片对象
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 52),
-          // iconAnchor: new T.Point(34, 59)
+          iconAnchor: new T.Point(34, 59)
         });
         let icon02 = new T.Icon({
           iconUrl: point02,
           iconSize: new T.Point(30, 52),
-          // iconAnchor: new T.Point(34, 59)
+          iconAnchor: new T.Point(34, 59)
         });
         let icon03 = new T.Icon({
           iconUrl: point03,
           iconSize: new T.Point(30, 52),
-          // iconAnchor: new T.Point(34, 59)
+          iconAnchor: new T.Point(34, 59)
         });
         let markers = [];
         if(type == 'video'){
@@ -1496,24 +1020,22 @@
       },
       //查看轨迹
       handleTrail(txt){
-        this.showcarguiji(txt)
-        // if(this.line != ''){
-        //   this.map.removeOverLay(this.line);
-        // }
-        // getGps({card_no:txt.Vehicle}).then((res) => {
-        //   this.showTrail = true;
-        //   this.trailList = res.data;
-        //   let points = res.data.map(item=>{
-        //     let json = new T.LngLat(item.longitude1, item.latitude1)
-        //     return json;
-        //   });
-        //   console.log(points)
-        //   //创建线对象
-        //   this.line = new T.Polyline(points,{color:'#00fd71',weight:5,opacity:1});
-        //   //向地图上添加线
-        //   this.map.addOverLay(this.line);
-        //
-        // });
+        if(this.line != ''){
+          this.map.removeOverLay(this.line);
+        }
+        getGps({card_no:txt.Vehicle}).then((res) => {
+          this.showTrail = true;
+          this.trailList = res.data;
+          let points = res.data.map(item=>{
+            let json = new T.LngLat(item.longitude1, item.latitude1)
+            return json;
+          });
+          console.log(points)
+          //创建线对象
+          this.line = new T.Polyline(points,{color:'#00fd71',weight:5,opacity:1});
+          //向地图上添加线
+          this.map.addOverLay(this.line);
+        });
       },
       handleStart(){
         this.CarTrack = new T.CarTrack(map, {
@@ -1541,99 +1063,6 @@
   }
 </script>
 <style lang="scss" scoped>
-
-  /deep/.el-date-editor .el-range-input,   /deep/.el-input__inner,   /deep/.el-textarea__inner,/deep/.el-form-item__label{
-    color: #606266!important;
-    background: #fff!important;
-  }
-  .el-popper[x-placement^="bottom"] .popper__arrow,.el-popper[x-placement^="bottom"] .popper__arrow::after{
-    border-bottom-color:#fff!important;
-  }
-  .z99{
-    z-index: 1000;
-  }
-  .z-1{
-    z-index: -1;
-  }
-  .drapdown_wrap {
-    position: absolute;
-    left: 0px;
-    top: 160px;
-    z-index: 400;
-    width: 200px;
-    // height: 300px;
-    background-color: #fff;
-    .dropdown {
-      width: 100%;
-      z-index: 99999;
-      background-color: #006dc9;
-      color: #fff;
-    }
-  }
-
-    .drapdown_wrap {
-      position: absolute;
-      left: 0px;
-      top: 160px;
-    }
-
-    /*轨迹选择时间弹框*/
-    .tabbable-line.guijitabbox {
-      position: fixed;
-      right: 10px;
-      top: 151px;
-      width: 430px;
-      z-index: 3005;
-      background: #fff;
-      color: #5f5f5f;
-      box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.5);
-      border-radius: 0 0 3px 3px !important;
-      overflow: hidden;
-    }
-    /*弹框中的input*/
-    .form-group .col-sm-7 {
-      padding-left: 0 !important;
-    }
-    /*查询轨迹*/
-    .gjtimelist {
-      padding: 5px 0;
-      border-bottom: 1px dashed #e3e3e3;
-      cursor: pointer;
-    }
-    .guijinumlist {
-      padding: 2px 8px 2px 4px;
-      background: #89bff5;
-      color: #fff;
-      margin-right: 10px;
-    }
-    .backspan {
-      font-size: 14px;
-      margin-left: 10px;
-      cursor: pointer;
-    }
-    /*巡检路线*/
-    .tabselbox {
-      height: 372px;
-      border-top: 1px solid #999;
-      text-align: left;
-      padding: 7px 15px;
-    }
-    .tabselbox > a {
-      display: block;
-      color: #000;
-      cursor: pointer;
-      border-bottom: 1px dashed #ccc;
-      padding: 9px 10px 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .tabselbox > a:hover {
-      color: #5b9bd1;
-    }
-
-
-
   .trail_content{
     padding: 20px;
     position: fixed;
@@ -1651,7 +1080,7 @@
     position: fixed;
     top: 10vh;
     left: 20px;
-    z-index: 3005;
+    z-index: 99999999;
     .clean_rate{
       width: 15vh;
       /*height: 50vh;*/

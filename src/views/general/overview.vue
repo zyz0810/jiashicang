@@ -157,7 +157,7 @@
                       </div>
                       <div class="weui-cell__ft f12">
                         <p><span class="ml_10">{{item.wz_status}}</span></p>
-                        <p>{{$moment(Number(item.create_at)*1000).format("YYYY-MM-DD HH:mm:ss")}}</p>
+                        <p>{{$moment(Number(item.day_time)*1000).format("YYYY-MM-DD HH:mm:ss")}}</p>
                       </div>
                     </div>
                   </vueSeamlessScroll>
@@ -363,6 +363,7 @@
   import vueSeamlessScroll from 'vue-seamless-scroll'
   import countTo from "vue-count-to";
   import {getAllVideoPoint} from "@/api/system";
+  import {getevaluate} from "@/api/digitalServices";
   export default {
     name: 'Dashboard',
     components: {
@@ -698,26 +699,38 @@
         generalIndex().then((res) => {
           this.formDataTwo=res.data;
           this.formData=res.data;
-          this.PieDataThree.series[0].data = [((Number(res.data.light.num)/Number(res.data.light.count))*100).toFixed(2)];
+          // this.PieDataThree.series[0].data = [((Number(res.data.light.num)/Number(res.data.light.count))*100).toFixed(2)];
           // this.formData.city.shangbao = this.formData.city.shangbao.toString().split('').map(Number).reverse();
           // this.formData.city.chuli = this.formData.city.chuli.toString().split('').map(Number).reverse();
           // this.formData.city.undisposed = this.formData.city.undisposed.toString().split('').map(Number).reverse();
-          this.PieDataThree.title[0].text = ((Number(res.data.light.num)/Number(res.data.light.count))*100).toFixed(2)+'%';
+          // this.PieDataThree.title[0].text = ((Number(res.data.light.num)/Number(res.data.light.count))*100).toFixed(2)+'%';
+          // this.PieDataThree.title[0].text = '100%';
 
-          let that = this;
-          let i = 1;
-          this.timerTwo = setInterval(function () {
-            if(i==1){
-              that.PieDataThree.series[0].data = [((Number(res.data.light.num)/Number(res.data.light.count))*100).toFixed(2)];
-              that.PieDataTwo.series[0].data = [75];
-              i = 2;
-            }else{
-              that.PieDataThree.series[0].data = [0];
-              that.PieDataTwo.series[0].data = [0];
-              i = 1;
-            }
+          getevaluate({year:this.$moment().format('YYYY')}).then((ress) => {
+            this.PieDataThree.series[0].data = [Number((Number(ress.data.lightRate))*100).toFixed(2)];
+            this.PieDataThree.title[0].text = ((Number(ress.data.lightRate))*100).toFixed(2)+'%';
+            this.formData.light.num= Number(Number(ress.data.lightRate)*Number(res.data.light.count)).toFixed(0);
 
-          }, 2000);
+            let that = this;
+            let i = 1;
+            this.timerTwo = setInterval(function () {
+              if(i==1){
+                that.PieDataThree.series[0].data = [Number((Number(ress.data.lightRate))*100).toFixed(2)];
+                that.PieDataTwo.series[0].data = [75];
+                i = 2;
+              }else{
+                that.PieDataThree.series[0].data = [0];
+                that.PieDataTwo.series[0].data = [0];
+                i = 1;
+              }
+
+            }, 2000);
+
+
+          })
+
+
+
 
 
         });
@@ -837,7 +850,7 @@
     }
   }
   .chart_width{
-   width: 100px;
+   width: 60%;
   }
   .my_map{
    width: 60%;

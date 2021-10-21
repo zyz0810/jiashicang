@@ -254,6 +254,9 @@ aside {
     border: none;
   }
 }
+.el-time-range-picker,.el-picker-panel,.el-popper{
+  z-index: 3006!important;
+}
 html{
   font-size:62.5%;
 }
@@ -345,7 +348,7 @@ body .el-table th.gutter{
     width: 90%;
     margin: 0 auto -30px;
     position: relative;
-    z-index: 999;
+    z-index: 3004;
     &>div{
       display: inline-block;
       margin: 0 20px 20px;
@@ -682,7 +685,7 @@ input[type="number"] {
 .el-select-dropdown{
   color: #fff;
   border: 1px solid #0a275f;
-  z-index: 9999999 !important;
+  //z-index: 9999999 !important;
   background: #0a275f !important;
   .el-select-dropdown__item{
     color: #fff;
@@ -695,7 +698,7 @@ input[type="number"] {
   border-bottom-color: #0a275f;
 }
 .el-dialog__wrapper{
-  z-index: 99999999!important;
+  //z-index: 99999999!important;
 }
 .tdt-infowindow-content-wrapper{
   color: #fff;
@@ -782,7 +785,7 @@ input[type="number"] {
     transform-origin: 0 0;
     -webkit-transform: scaleY(0.5);
     transform: scaleY(0.5);
-    z-index: 2;
+    z-index: 3000;
   }
   &::after{
     content: " ";
@@ -797,7 +800,7 @@ input[type="number"] {
     transform-origin: 0 100%;
     -webkit-transform: scaleY(0.5);
     transform: scaleY(0.5);
-    z-index: 2;
+    z-index: 3000;
   }
   .weui-cell:before {
     content: " ";
@@ -812,7 +815,7 @@ input[type="number"] {
     transform-origin: 0 0;
     -webkit-transform: scaleY(0.5);
     transform: scaleY(0.5);
-    z-index: 2;
+    z-index: 3000;
   }
 }
 .weui-cell {
@@ -878,7 +881,7 @@ input[type="number"] {
   position: fixed;
   top: 10vh;
   left: 0px;
-  z-index: 999999;
+  z-index: 3000;
   height: 82%;
 }
 .right_content{
@@ -888,7 +891,7 @@ input[type="number"] {
   position: fixed;
   top: 10vh;
   right: 0px;
-  z-index: 9999;
+  z-index: 3000;
   height: 82%;
 }
 .el-table tbody tr:hover>td {
@@ -958,7 +961,7 @@ input[type="number"] {
     height: 20px;
     background: #061027;
     top: 5px;
-    z-index: 9999999;
+    z-index: 3001;
     &:nth-child(2){
       left: 20%;
     }
@@ -990,7 +993,7 @@ iframe{
   top: 10vh;
   left: 10%;
   width: 80%;
-  z-index: 9999;
+  z-index: 3002;
   //background: ;
   //background-image: linear-gradient(to bottom, #061027 60%, rgba(6,16,39,0.5) 85%, rgba(6,16,39,0.3) 90%, rgba(6,16,39,0) 100%);
   .flex{
@@ -1022,7 +1025,7 @@ iframe{
   position: fixed;
   bottom: 120px;
   right: 28%;
-  z-index: 99999999;
+  z-index: 3003;
   &.no_right{
     right: 2%;
   }
@@ -1073,7 +1076,8 @@ iframe{
   position: fixed;
   top: 13vh;
   left: 20px;
-  z-index: 9999;
+  z-index: 3000
+;
   padding: 20px 5px;
   .nav_img{
     width: 100px;

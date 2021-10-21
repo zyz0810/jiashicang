@@ -154,12 +154,12 @@
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon02 = new T.Icon({
           iconUrl: point02,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let markers = []
 

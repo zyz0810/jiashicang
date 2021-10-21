@@ -4,7 +4,7 @@
     <div id='mapDiv' class="mapDiv"></div>
     <div class="left_content clr_white base_bg_left ">
 
-        <div class="txt_linear f18 bold">备案审批概况（周）</div>
+        <div class="txt_linear f20 bold">备案审批概况（周）</div>
         <div class="mt_20 clr_white">
 <!--          <div class="f18 bold text-center approval_num txt_shadow">审批总数：{{formData.count}}</div>-->
 <!--          <div class="circle_num text-center">-->
@@ -580,6 +580,8 @@
           this.map.clearOverLays();
           this.getPoint();
         }else{
+          this.map.clearOverLays();
+          this.getPoint();
           this.getVideo();
         }
       },
@@ -599,6 +601,7 @@
       },
       //不同类型点位
       handlePointType(val,type){
+        this.map.clearOverLays();
         this.showType = val;
         this.getPoint(type);
       },
@@ -776,27 +779,27 @@
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon02 = new T.Icon({
           iconUrl: point02,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon03 = new T.Icon({
           iconUrl: point03,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon04 = new T.Icon({
           iconUrl: point04,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon05 = new T.Icon({
           iconUrl: point05,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let markers = []
 

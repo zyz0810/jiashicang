@@ -92,7 +92,7 @@
     <div class="right_content clr_white base_bg_right">
       <div class="clr_white">
         <p class="f20 bold txt_linear">水质检测概况</p>
-        <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="25vh" divwidth="100%"></PieChartTwo>
+        <PieChartTwoHover :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="25vh" divwidth="100%"></PieChartTwoHover>
       </div>
       <div class="mt_20">
         <p class="f20 bold txt_linear mb_20">告警站点</p>
@@ -155,12 +155,12 @@
         </div>
         <div :class="['weui-cell__bd',showType==1?'clr_white':'']">全部设备</div>
       </div>
-      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==2?'active':'']" @click="handlePointType(2)">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==0?'active':'']" @click="handlePointType(0)">
         <div class="weui-cell__hd flex">
-          <img v-if="showType!=2" src="./../../assets/image/point45.png"/>
+          <img v-if="showType!=0" src="./../../assets/image/point45.png"/>
           <img v-else src="./../../assets/image/point45_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showType==2?'clr_white':'']">河道水位</div>
+        <div :class="['weui-cell__bd',showType==0?'clr_white':'']">河道水位</div>
       </div>
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==3?'active':'']" @click="handlePointType(3)">
         <div class="weui-cell__hd flex">
@@ -169,12 +169,12 @@
         </div>
         <div :class="['weui-cell__bd',showType==3?'clr_white':'']">河道水量</div>
       </div>
-      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==4?'active':'']" @click="handlePointType(4)">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==2?'active':'']" @click="handlePointType(2)">
         <div class="weui-cell__hd flex">
-          <img v-if="showType!=4" src="./../../assets/image/point47.png"/>
+          <img v-if="showType!=2" src="./../../assets/image/point47.png"/>
           <img v-else src="./../../assets/image/point47_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showType==4?'clr_white':'']">河道水质</div>
+        <div :class="['weui-cell__bd',showType==2?'clr_white':'']">河道水质</div>
       </div>
     </div>
   </div>
@@ -188,14 +188,14 @@
   import BarChartThree from '@/components/Charts/BarChartThree'
   import BarChartFour from '@/components/Charts/BarChartFour'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
+  import PieChartTwoHover from '@/components/Charts/PieChartTwoHover'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
-  import point01 from '@/assets/image/point44.png'
-  import point02 from "@/assets/image/point45.png";
-  import point03 from "@/assets/image/point46.png";
-  import point04 from "@/assets/image/point47.png";
-  import point05 from "@/assets/image/point48.png";
+  import point01 from '@/assets/image/point45.png'
+  import point02 from "@/assets/image/point46.png";
+  import point03 from "@/assets/image/point47.png";
+  import point05 from "@/assets/image/point38.png";
   import {findSite,abnormalSite,warnSite} from "@/api/water"; // 引入刚才的map.js 注意路径
   import vueSeamlessScroll from 'vue-seamless-scroll'
   import global from "@/utils/common";
@@ -203,7 +203,7 @@
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,vueSeamlessScroll},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,vueSeamlessScroll,PieChartTwoHover},
     data() {
       return {
         showMapType:1,
@@ -633,7 +633,6 @@
         pointList:[]
       }
     },
-
     computed: {
       ...mapState({
         roles: state => state.user.roles,
@@ -651,13 +650,19 @@
         }
       }
     },
+    filters: {
+      formatLevel: function (value) {
+        let StatusArr = { 0: "一般", 1: "严重",};
+        return StatusArr[value];
+      },
+    },
     mounted() {
       // 挂载完成后渲染地图
       // this.$nextTick(function() {
       //
       // })
       this.onLoad();
-      this.getList(2);
+      this.getList();
       this.getAbnormal(3);
       this.getWarn(2);
     },
@@ -666,14 +671,22 @@
         this.showMapType = type;
         if(type == 1){//获取设备点位
           this.map.clearOverLays();
-          this.getList(2);
+          this.getList('');
         }else if(type == 2){//获取视频点位
+          this.map.clearOverLays();
+          this.getList('');
           this.getVideo();
         }
       },
       //获取设备 -- 不同类型点位
       handlePointType(type){
-        this.showType = type
+        this.map.clearOverLays();
+        this.showType = type;
+        if(type == 1){
+          this.getList('');
+        }else{
+          this.getList(type);
+        }
       },
       formatType(row, column, cellValue, index) {
         return cellValue == 0
@@ -716,44 +729,50 @@
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon02 = new T.Icon({
           iconUrl: point02,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon03 = new T.Icon({
           iconUrl: point03,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
-        let icon04 = new T.Icon({
-          iconUrl: point04,
+        let icon05 = new T.Icon({
+          iconUrl: point05,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let markers = []
 
         console.log(list)
-        for (let i = 0; i < list.length; i++) {
-          // var marker
-          // 0：关  1：开
-          if(type == 2){
-            let point = new T.LngLat(list[i].lgtd,list[i].lttd);
-            markers[i]  = drawTMaker(point, icon01,this,list[i]);
-          }else if(type == 3){
-            let point = new T.LngLat(list[i].lgtd,list[i].lttd);
-            markers[i]  = drawTMaker(point, icon02,this,list[i]);
-          }else if(type == 0){
-            let point = new T.LngLat(list[i].lgtd,list[i].lttd);
-            markers[i]  = drawTMaker(point, icon03,this,list[i]);
-          }else if(type == 4){
-            let point = new T.LngLat(list[i].lgtd,list[i].lttd);
-            markers[i]  = drawTMaker(point, icon04,this,list[i]);
-          }
+        if(type == 'video'){
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            // 0：关  1：开
+            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            markers[i]  = drawTMaker(point, icon05,this,list[i]);
 
+          }
+        }else{
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            // 0：关  1：开
+            let point = new T.LngLat(list[i].lgtd,list[i].lttd);
+            if(list[i].type == 0){
+              markers[i]  = drawTMaker(point, icon01,this,list[i]);
+            }else if(list[i].type == 2){
+              markers[i]  = drawTMaker(point, icon02,this,list[i]);
+            }else if(list[i].type == 3){
+              markers[i]  = drawTMaker(point, icon03,this,list[i]);
+            }
+
+          }
         }
+
 
 
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
@@ -765,35 +784,59 @@
             console.log(m)
             let infoWin1 = new T.InfoWindow();
             console.log(txt)
+            let typeTxt = '';
             let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
-            let type ;
-            if(txt.type == 2){
-              type = '河道水质'
-            }else if(txt.type == 3){
-              type = '河道水量'
-            }else if(txt.type == 0){
-              type = '河道水位'
-            }else if(txt.type == 4){
-              type = '视频点位'
-            }
-            let sContent ='<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+            let sContent='';
+            if(type == 'video'){
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">监控名称</td><td>' + txt.name + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>所属区域</td><td>' + txt.depart_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>来源区域</td><td>' + txt.community_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>所在地址</td><td>' + txt.install_place + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td></td><td class="text-right baseColor pointer" onClick="handleVideo()">查看视频</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+            }else{
+              if(txt.type == 2){
+                typeTxt = '河道水质'
+              }else if(txt.type == 3){
+                typeTxt = '河道水量'
+              }else if(txt.type == 0){
+                typeTxt = '河道水位'
+              }
+              sContent ='<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
 
-              '<div class="point_info">' +
-              '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
-              '<tr>' +
-              '<td class="txt_6">站点名称</td><td>' + txt.stnm + '</td>' +
-              '</tr>'+
-              '<tr>' +
-              '<td>站点类型</td><td>' + type + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>地址</td><td>' + txt.address + '</td>'+
-              '</tr>'+
-              '</table>'+
-              '</div>';
-            // '<p class="f12 time">站点名称：' + txt.stnm + '</p>' +
-            // '<p class="f12 time">站点类型：' + type + '</p>' +
-            // '<p class="f12 time">地址：' + txt.address + '</p>' +
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">站点名称</td><td>' + txt.stnm + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>站点类型</td><td>' + typeTxt + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>地址</td><td>' + txt.address + '</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+              // '<p class="f12 time">站点名称：' + txt.stnm + '</p>' +
+              // '<p class="f12 time">站点类型：' + type + '</p>' +
+              // '<p class="f12 time">地址：' + txt.address + '</p>' +
+            }
+
+
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
 
@@ -819,7 +862,7 @@
       getList(type){
         findSite({type:type}).then((res) => {
           this.waterList = res.data;
-          this.mapPoint(type,this.waterList)
+          this.mapPoint('',this.waterList)
         });
       },
       getVideo(type){
@@ -828,7 +871,7 @@
         //   this.mapPoint(type,this.waterList)
         // });
         this.pointList = [];
-        this.mapPoint('',this.pointList)
+        this.mapPoint('video',this.pointList)
       },
     }
   }

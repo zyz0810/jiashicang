@@ -235,7 +235,7 @@
               '<td>所在地址</td><td>' + txt.install_place + '</td>'+
               '</tr>'+
               '<tr>' +
-              '<td></td><td class="text-right baseColor" onClick="handleVideo()">查看视频</td>'+
+              '<td></td><td class="text-right baseColor pointer" onClick="handleVideo()">查看视频</td>'+
               '</tr>'+
               '</table>'+
               '</div>';

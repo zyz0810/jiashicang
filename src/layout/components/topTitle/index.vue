@@ -12,19 +12,20 @@
 <!--  </div>-->
   <el-header class="top">
     <el-row>
-      <el-col :span="5">
+      <el-col :span="6">
         <span class="f26 bold m_r30">滨江区</span>
-        <span class="f18 bold m_r30">晴</span>
-        <span class="f18 bold">26~35℃</span>
+        <span class="date f18 bold  m_r30">{{$moment().format('YYYY-MM-DD')}}</span>
+        <span class="f18 bold mr_20">{{weatherData.weather}}</span>
+        <span class="f18 bold">{{weatherData.temperature}}℃</span>
       </el-col>
-      <el-col :span="14" class="logo text-center">
+      <el-col :span="12" class="logo text-center">
 <!--        <img src="./../../../assets/image/logo.png"/>-->
         <span class="txt_linear bold block xitong_title">{{title}}</span>
       </el-col>
-      <el-col :span="5" class="top_right text-right">
+      <el-col :span="6" class="top_right text-right">
         <!--<div class="right-menu">-->
-          <span class="date f14 bold">{{$moment().format('YYYY-MM-DD')}}</span>
-        <router-link :to="{path:'/dashboard'}" class="m_r30"><i class="el-icon-s-promotion"></i>回首页</router-link>
+
+        <router-link :to="{path:'/dashboard'}" class="f16 bold m_r30"><i class="el-icon-s-promotion" style="margin-right: 5px"></i>首 页</router-link>
           <span class="f16 bold" @click="logout">退 出<i class="el-icon-switch-button" style="margin-left: 5px"></i></span>
         <!--</div>-->
         <my-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="80%">
@@ -50,6 +51,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
@@ -103,7 +105,11 @@ export default {
         verifyCode:''
       },
       codeTxt: "获取验证码",
-      disabled:false
+      disabled:false,
+      weatherData:{
+        weather:'',
+        temperature:'',
+      },
     }
   },
   components: {
@@ -153,6 +159,25 @@ export default {
     ])
   },
   methods: {
+    getWeather(){
+      axios({
+        url:"https://restapi.amap.com/v3/weather/weatherInfo",
+        method:'get',
+        params:{
+          key:"50b7c6cf29043293d9c74d6154039858",
+          city:"滨江区",
+        }
+      }).then((data)=>{
+        console.log(data)
+       this.weatherData={
+         weather:data.data.lives[0].weather,
+         temperature:data.data.lives[0].temperature
+       }
+      }).catch((err) => {
+        console.log(err)
+        // alert("获取失败");
+      })
+    },
     resetPasswordTemp(){
       this. passwordTemp={
         confirmPassword:'',
@@ -257,6 +282,7 @@ export default {
   mounted() {
     // this.addDate();
     console.log('111111')
+    this.getWeather();
     console.log( this.$route.path)
   },
 }

@@ -32,3 +32,13 @@ export function timesOfWarn(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+/* 油烟点位
+ * class
+ */
+export function getFacilityAll(data) {
+  return request({
+    url: `/api/analyse/getFacilityAll`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}

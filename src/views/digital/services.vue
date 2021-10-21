@@ -263,8 +263,8 @@
           <span class="txt_linear">{{lightData.cabinetCount}}</span>
         </div>
         <div class="">
-          故障数（没接口）
-          <span class="txt_linear"></span>
+          故障数
+          <span class="txt_linear">{{lightData.cabinetTrouble}}</span>
         </div>
       </div>
       <div class="flex f16 bold mr_20 border shadow" @click="handleTypeLight(1)">
@@ -373,7 +373,7 @@
           <img v-if="showThreeType!=3" src="./../../assets/image/point31.png"/>
           <img v-else src="./../../assets/image/point31_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showThreeType==3?'clr_white':'']">控制柜故障??</div>
+        <div :class="['weui-cell__bd f12',showThreeType==3?'clr_white':'']">控制柜故障</div>
       </div>
     </div>
         <videoView :showDialog.sync="showVideoDialog" :caseData={}></videoView>
@@ -422,7 +422,8 @@
         pointType:1,
         lightData:{
           lightCount:'',
-          cabinetCount:''
+          cabinetCount:'',
+          cabinetTrouble:'',
         },
         carData:{
           shangBao:'',
@@ -514,7 +515,7 @@
           title: [{
             text: '%',
             x: '45%',
-            y: '35%',
+            y: '40%',
             textAlign: 'center',
             textStyle: {
               fontSize: '20',
@@ -1012,9 +1013,6 @@
           ]
         },
         map: '', // 对象
-        zoom: 14, // 地图的初始化级别，及放大比例
-        centerLatitude:'30.2099178915',//中心纬度
-        centerLongitude:'120.2372328407',//中心经度
         formData:{},
         totalData:{
           lampPostNum:'',//杆
@@ -1047,13 +1045,14 @@
       //
       // })
       this.onLoad();
+      this.getPieChart();//违规次数动效（共享单车）
       // this.getLampPostList('');
-      this.getChartData();
-      this.getData();
+
+
       // this.getControlCabinetlist();
       this.getParkList();
       window.handleVideo = this.handleVideo;
-      this.getPieChart();
+
       //获取数字停车停车场数量
       this.getParkNum();
       this.getAllPark();
@@ -1110,7 +1109,11 @@
       },
       handleControlPointType(type){
         this.showThreeType = type;
-        this.getControlCabinetlist(type)
+        if(type == 0){
+          this.getControlCabinetlist('')
+        }else{
+          this.getControlCabinetlist(type)
+        }
       },
       handleVideo(txt){
         this.showVideoDialog = true
@@ -1134,6 +1137,8 @@
           this.getBikePartList();
         }else if(val == 2){
           this.showType = 2;
+
+          this.getChartData();
           this.getLampPostNum();
           this.getControlCabinetlist();
         }
@@ -1200,47 +1205,47 @@
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon02 = new T.Icon({
           iconUrl: point02,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon03 = new T.Icon({
           iconUrl: point03,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon04 = new T.Icon({
           iconUrl: point04,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon05 = new T.Icon({
           iconUrl: point05,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon06 = new T.Icon({
           iconUrl: point06,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon07 = new T.Icon({
           iconUrl: point07,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon08 = new T.Icon({
           iconUrl: point08,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon09 = new T.Icon({
           iconUrl: point09,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let markers = []
         if(type == 'control'){
@@ -1476,6 +1481,7 @@
       getControlCabinetlist(status){
         getcontrolcabinetlist({status:status}).then((res) => {
           this.lightData.cabinetCount =  res.data.count;
+          this.lightData.cabinetTrouble = res.data.trouble;
           let b= res.data.data;
           // let a = [{
           //   address: "长江西路湘湖34北路",
@@ -1498,9 +1504,14 @@
           this.formData = res.data;
           this.PieData2.series[0].data = [((Number(res.data.powerRate))*100).toFixed(2)];
           this.PieData2.title[0].text = ((Number(res.data.powerRate))*100).toFixed(2)+'%';
-
-
           this.PieData.title[0].text = ((Number(res.data.lightRate))*100).toFixed(2)+'%';
+          generalIndex().then((ress) => {
+            this.lightNum={
+              // 亮灯数=亮灯率*总灯数
+              num:Number(Number(res.data.lightRate)*Number(ress.data.light.count)).toFixed(0),
+              count:ress.data.light.count
+            };
+          });
           let that = this;
           let i = 1;
           this.timerTwo = setInterval(function () {
@@ -1523,7 +1534,8 @@
       getData(){
         generalIndex().then((res) => {
           this.lightNum={
-            num:res.data.light.num,
+            // 亮灯数=亮灯率*总灯数
+            num:Number(res.data.lightRate)*Number(res.data.light.count),
             count:res.data.light.count
           };
         });
