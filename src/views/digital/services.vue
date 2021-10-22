@@ -1108,6 +1108,7 @@
         }
       },
       handleControlPointType(type){
+        this.map.clearOverLays();
         this.showThreeType = type;
         if(type == 0){
           this.getControlCabinetlist('')

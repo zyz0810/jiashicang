@@ -17,36 +17,36 @@
         </div>
       </div>
       <p class="mb_10">洒水完成</p>
-      <ul class="f16 clr_white bold text-center mt_20 link_intro">
-        <li>
-          <p>0次</p>
-          <span class="block color_bg01"></span>
-        </li>
-        <li>
-          <p>1次</p>
-          <span class="block color_bg02"></span>
-        </li>
-        <li>
-          <p>2次</p>
-          <span class="block color_bg03"></span>
-        </li>
-        <li>
-          <p>3次</p>
-          <span class="block color_bg04"></span>
-        </li>
-        <li>
-          <p>4次</p>
-          <span class="block color_bg05"></span>
-        </li>
-        <li>
-          <p>5次</p>
-          <span class="block color_bg06"></span>
-        </li>
-        <li>
-          <p>完成</p>
-          <span class="block color_bg07"></span>
-        </li>
-      </ul>
+<!--      <ul class="f16 clr_white bold text-center mt_20 link_intro">-->
+<!--        <li>-->
+<!--          <p>0次</p>-->
+<!--          <span class="block color_bg01"></span>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <p>1次</p>-->
+<!--          <span class="block color_bg02"></span>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <p>2次</p>-->
+<!--          <span class="block color_bg03"></span>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <p>3次</p>-->
+<!--          <span class="block color_bg04"></span>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <p>4次</p>-->
+<!--          <span class="block color_bg05"></span>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <p>5次</p>-->
+<!--          <span class="block color_bg06"></span>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--          <p>完成</p>-->
+<!--          <span class="block color_bg07"></span>-->
+<!--        </li>-->
+<!--      </ul>-->
     </div>
     <div class="right_content clr_white base_bg_right">
       <div class="top clr_white ">
@@ -111,26 +111,26 @@
 
     </div>
     <div class="center_content clr_white text-center" v-if="mapPageType == 1">
-      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==1?'active':'']" @click="handlePointType(1,type)">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==0?'active':'']" @click="handlePointType(0,type)">
         <div class="weui-cell__hd flex">
-          <img v-if="showType!=1" src="./../../assets/image/point44.png"/>
+          <img v-if="showType!=0" src="./../../assets/image/point44.png"/>
           <img v-else src="./../../assets/image/point44_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showType==1?'clr_white':'']">全部</div>
+        <div :class="['weui-cell__bd',showType==0?'clr_white':'']">全部</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==1?'active':'']" @click="handlePointType(1,type)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showType!=1" src="./../../assets/image/point40.png"/>
+          <img v-else src="./../../assets/image/point40_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showType==1?'clr_white':'']">洒水车</div>
       </div>
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==2?'active':'']" @click="handlePointType(2,type)">
         <div class="weui-cell__hd flex">
-          <img v-if="showType!=2" src="./../../assets/image/point40.png"/>
-          <img v-else src="./../../assets/image/point40_active.png"/>
-        </div>
-        <div :class="['weui-cell__bd',showType==2?'clr_white':'']">洒水车</div>
-      </div>
-      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showType==3?'active':'']" @click="handlePointType(3,type)">
-        <div class="weui-cell__hd flex">
-          <img v-if="showType!=3" src="./../../assets/image/point41.png"/>
+          <img v-if="showType!=2" src="./../../assets/image/point41.png"/>
           <img v-else src="./../../assets/image/point41_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showType==3?'clr_white':'']">清扫车</div>
+        <div :class="['weui-cell__bd',showType==2?'clr_white':'']">清扫车</div>
       </div>
     </div>
     <div class="trail_content" v-if="showTrail">
@@ -199,25 +199,25 @@
             <el-button @click="carTrackReturn">返回</el-button>
           </div>
 
-          <div ref="time_box" style="width: 100%; margin-top: 10px">
-            <div
-              id="carguijiscroller"
-              class="scroller tabselbox"
-              data-rail-visible="1"
-              data-rail-color="#ececec"
-              data-handle-color="#bcbcbc"
-              style="width: 100%; height: 350px; overflow: auto"
-            >
-              <p v-for="(item, i) in state.timeList"
-                :key="i"
-                class="showcarpoint gjtimelist"
-                @click="clickCar(item, i)"
-              >
-                <i class="guijinumlist">{{ i }}</i
-                ><span>{{$moment(item.time).format("YYYY-MM-DD HH:mm:ss")}}</span>
-              </p>
-            </div>
-          </div>
+<!--          <div ref="time_box" style="width: 100%; margin-top: 10px">-->
+<!--            <div-->
+<!--              id="carguijiscroller"-->
+<!--              class="scroller tabselbox"-->
+<!--              data-rail-visible="1"-->
+<!--              data-rail-color="#ececec"-->
+<!--              data-handle-color="#bcbcbc"-->
+<!--              style="width: 100%; height: 350px; overflow: auto"-->
+<!--            >-->
+<!--              <p v-for="(item, i) in state.timeList"-->
+<!--                :key="i"-->
+<!--                class="showcarpoint gjtimelist"-->
+<!--                @click="clickCar(item, i)"-->
+<!--              >-->
+<!--                <i class="guijinumlist">{{ i }}</i-->
+<!--                ><span>{{$moment(item.time).format("YYYY-MM-DD HH:mm:ss")}}</span>-->
+<!--              </p>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
       </div>
     </div>
@@ -258,7 +258,7 @@
         showMapDiv:true,
         showguijiDiv:false,
         showTrail:false,
-        showType:1,
+        showType:0,
         carData:{offlineNum:'',onlineNum:'',total:''},
         cleanCarList:[],
         divwidth:'30%',
@@ -963,6 +963,7 @@
         },
         open1:false,
         open2:false,
+        _CarTrack:'',
       }
     },
 
@@ -1148,7 +1149,7 @@
               this.state.markercarline = new T.Marker(linebottompoint[0], {
                 icon: icon02 //车辆轨迹
               });
-              this.state.map.addOverLay(this.state.markercarline);
+              // this.state.map.addOverLay(this.state.markercarline);
               this.state.startGTime = linebottom[0]["time"];
               //  添加其实车辆位置点标注
               //创建线对象
@@ -1162,10 +1163,24 @@
               this.state.map.addOverLay(carline);
               // this.state.map.setViewport(linebottompoint);
               // this.state.map.panTo(linebottompoint[0]);
-              this.timelabel(
-                this.$moment(linebottom[0]["time"]).format("HH:mm:ss"),
-                this.state.markercarline.getLngLat()
-              );
+             //  this.timelabel(
+             //    this.$moment(linebottom[0]["time"]).format("HH:mm:ss"),
+             //    this.state.markercarline.getLngLat()
+             //  );
+              this._CarTrack = new T.CarTrack(this.state.map, {
+                interval: 5,
+                speed: 10,
+                dynamicLine: true,
+                carstyle:{
+                  iconUrl:pointCar
+                },
+                polylinestyle: {color: "#fff", weight: 5, opacity: 0.9},
+                Datas: this.state.timeList.map(function (obj, i) {
+                    var lnlat = obj.TLngLat;
+                    return lnlat;
+                  }
+                )
+              })
             } else {
               // message.error("暂无数据！");
             }
@@ -1242,91 +1257,95 @@
         }
       },
       startTrack() {
-        console.log("start");
-        var map1 = this.state.map;
-        var linebottom = this.state.linebottom;
+        // console.log("start");
+        // var map1 = this.state.map;
+        // var linebottom = this.state.linebottom;
         this.state.startgj = false;
-        clearInterval(this.state.timename);
-        this.state.timename = setInterval(()=> {
+        // clearInterval(this.state.timename);
+        // this.state.timename = setInterval(()=> {
+        //
+        //   console.log(11111)
+        //   console.log(this.state.setCarTnterTime)
+        //   console.log('；；；'+this.state.startGTime)
+        //   var st = Math.ceil(this.state.timeDate.rangeValue / 9);
+        //   var timehms = this.$moment(this.state.startGTime).subtract(-st, "second").format("HH:mm:ss");
+        //   this.state.startGTime = this.$moment(this.state.startGTime).subtract(-st, "second");
+        //   if (this.state.markercaruserlinelabel != null)
+        //     map1.removeOverLay(this.state.markercaruserlinelabel);
+        //   this.timelabel(timehms, this.state.markercarline.getLngLat());
+        //   console.log(this.state.startGTime)
+        //   console.log(linebottom[this.state.iguiji]["time"])
+        //   if (this.state.startGTime >= linebottom[this.state.iguiji]["time"]) {
+        //     console.log('斤斤计较军军军军军军')
+        //     //当前时间车辆所在位置
+        //     if (this.state.markercarline != null)
+        //       map1.removeOverLay(this.state.markercarline);
+        //     let icon01 = new T.Icon({
+        //       iconUrl: pointCar,
+        //       iconSize: new T.Point(41, 26),
+        //       // iconAnchor: new T.Point(6, 45)
+        //     });
+        //     this.state.markercarline = new T.Marker(
+        //       linebottom[this.state.iguiji]["TLngLat"],
+        //       {
+        //         icon: icon01, //车辆轨迹
+        //       }
+        //     );
+        //     map1.addOverLay(this.state.markercarline);
+        //     if (this.state.markercaruserlinelabel != null)
+        //       map1.removeOverLay(this.state.markercaruserlinelabel);
+        //     // this.timelabel(this.$moment(Number(timehms)*1000).format("HH:mm:ss"), this.state.markercarline.getLngLat());
+        //     this.timelabel(timehms, this.state.markercarline.getLngLat());
+        //     this.state.iguiji++;
+        //     if (this.state.iguiji == linebottom.length) {
+        //       console.log(123);
+        //       clearInterval(this.state.timename);
+        //       this.state.startgj = true;
+        //       this.state.iguiji = 0;
+        //       this.state.closetimeinter = 0;
+        //       this.state.startGTime = linebottom[0]["time"];
+        //     }
+        //   }
+        // }, this.state.setCarTnterTime);
+        // this.state.closetimeinter = 1;
+        // //添加起始车辆位置点标注
+        // console.log("end");
 
-          console.log(11111)
-          console.log(this.state.setCarTnterTime)
-          console.log('；；；'+this.state.startGTime)
-          var st = Math.ceil(this.state.timeDate.rangeValue / 9);
-          var timehms = this.$moment(this.state.startGTime).subtract(-st, "second").format("HH:mm:ss");
-          this.state.startGTime = this.$moment(this.state.startGTime).subtract(-st, "second");
-          if (this.state.markercaruserlinelabel != null)
-            map1.removeOverLay(this.state.markercaruserlinelabel);
-          this.timelabel(timehms, this.state.markercarline.getLngLat());
-          console.log(this.state.startGTime)
-          console.log(linebottom[this.state.iguiji]["time"])
-          if (this.state.startGTime >= linebottom[this.state.iguiji]["time"]) {
-            console.log('斤斤计较军军军军军军')
-            //当前时间车辆所在位置
-            if (this.state.markercarline != null)
-              map1.removeOverLay(this.state.markercarline);
-            let icon01 = new T.Icon({
-              iconUrl: pointCar,
-              iconSize: new T.Point(41, 26),
-              // iconAnchor: new T.Point(6, 45)
-            });
-            this.state.markercarline = new T.Marker(
-              linebottom[this.state.iguiji]["TLngLat"],
-              {
-                icon: icon01, //车辆轨迹
-              }
-            );
-            map1.addOverLay(this.state.markercarline);
-            if (this.state.markercaruserlinelabel != null)
-              map1.removeOverLay(this.state.markercaruserlinelabel);
-            // this.timelabel(this.$moment(Number(timehms)*1000).format("HH:mm:ss"), this.state.markercarline.getLngLat());
-            this.timelabel(timehms, this.state.markercarline.getLngLat());
-            this.state.iguiji++;
-            if (this.state.iguiji == linebottom.length) {
-              console.log(123);
-              clearInterval(this.state.timename);
-              this.state.startgj = true;
-              this.state.iguiji = 0;
-              this.state.closetimeinter = 0;
-              this.state.startGTime = linebottom[0]["time"];
-            }
-          }
-        }, this.state.setCarTnterTime);
-        this.state.closetimeinter = 1;
-        //添加起始车辆位置点标注
-        console.log("end");
+        this._CarTrack.start();
       },
 
       pauseTrack() {
-        clearInterval(this.state.timename);
+        // clearInterval(this.state.timename);
         this.state.startgj = true;
-        this.state.closetimeinter = 0;
+        // this.state.closetimeinter = 0;
+        this._CarTrack.pause();
       },
 
       stopTrack() {
-        this.state.iguiji = 0;
-        this.state.closetimeinter = 0;
-        this.state.startGTime = this.state.linebottom[0]["time"];
-        clearInterval(this.state.timename);
+        this._CarTrack.stop();
+        // this.state.iguiji = 0;
+        // this.state.closetimeinter = 0;
+        // this.state.startGTime = this.state.linebottom[0]["time"];
+        // clearInterval(this.state.timename);
         this.state.startgj = true;
-        var lastm = this.state.linebottom.length - 1;
-        if (this.state.markercarline != null)
-          this.state.map.removeOverLay(this.state.markercarline);
-        if (this.state.markercaruserlinelabel != null)
-          this.state.map.removeOverLay(this.state.markercaruserlinelabel);
-        let icon01 = new T.Icon({
-          iconUrl: pointCar,
-          iconSize: new T.Point(41, 26),
-          // iconAnchor: new T.Point(6, 45)
-        });
-        this.state.markercarline = new T.Marker(this.state.linebottom[lastm]["TLngLat"], {
-          icon: icon01
-        });
-        this.state.map.addOverLay(this.state.markercarline);
-        this.timelabel(
-          this.$moment(this.state.linebottom[lastm]["time"]).format("HH:mm:ss"),
-          this.state.linebottom[lastm]["TLngLat"]
-        );
+        // var lastm = this.state.linebottom.length - 1;
+        // if (this.state.markercarline != null)
+        //   this.state.map.removeOverLay(this.state.markercarline);
+        // if (this.state.markercaruserlinelabel != null)
+        //   this.state.map.removeOverLay(this.state.markercaruserlinelabel);
+        // let icon01 = new T.Icon({
+        //   iconUrl: pointCar,
+        //   iconSize: new T.Point(41, 26),
+        //   // iconAnchor: new T.Point(6, 45)
+        // });
+        // this.state.markercarline = new T.Marker(this.state.linebottom[lastm]["TLngLat"], {
+        //   icon: icon01
+        // });
+        // this.state.map.addOverLay(this.state.markercarline);
+        // this.timelabel(
+        //   this.$moment(this.state.linebottom[lastm]["time"]).format("HH:mm:ss"),
+        //   this.state.linebottom[lastm]["TLngLat"]
+        // );
       },
 
       //点击顶部车辆管理、视频
@@ -1355,9 +1374,14 @@
       },
       //不同类型点位
       handlePointType(val,type){
-        // this.map.clearOverLays();
+        this.map.clearOverLays();
         this.showType = val;
-        // this.getList();
+
+        if(val == 0){
+          this.getList('');
+        }else{
+          this.getList(val);
+        }
       },
       getNum(){
         cleanCarNum().then((res) => {
@@ -1430,6 +1454,11 @@
           iconSize: new T.Point(30, 52),
           // iconAnchor: new T.Point(34, 59)
         });
+        let icon04 = new T.Icon({
+          iconUrl: pointCar,
+          iconSize: new T.Point(41, 26),
+          // iconAnchor: new T.Point(34, 59)
+        });
         let markers = [];
         if(type == 'video'){
           for (let i = 0; i < list.length; i++) {
@@ -1439,16 +1468,17 @@
         }else{
           for (let i = 0; i < list.length; i++) {
             // var marker
-            // if(list[i].status == 1){
-            //   let point = new T.LngLat(list[i].longitude,list[i].latitude1);
-            //   markers[i]  = drawTMaker(point, icon01,this,list[i]);
-            // }else if(list[i].status == 0){
-            //   let point = new T.LngLat(list[i].longitude,list[i].longitude1);
-            //   markers[i]  = drawTMaker(point, icon02,this,list[i]);
-            // }
-
             let point = new T.LngLat(list[i].PACK.longitude1,list[i].PACK.latitude1);
-            markers[i]  = drawTMaker(point, icon01,this,list[i]);
+            if(list[i].type == 1){
+              markers[i]  = drawTMaker(point, icon01,this,list[i]);
+            }else if(list[i].type == 2){
+              markers[i]  = drawTMaker(point, icon02,this,list[i]);
+            }else{
+              console.log('22222222')
+              markers[i]  = drawTMaker(point, icon04,this,list[i]);
+            }
+            // let point = new T.LngLat(list[i].PACK.longitude1,list[i].PACK.latitude1);
+            // markers[i]  = drawTMaker(point, icon01,this,list[i]);
           }
         }
 
@@ -1528,11 +1558,11 @@
           )
         })
       },
-      getList(){
+      getList(type){
         cleanCarAddressList({type:'allList'}).then((res) => {
           this.cleanCarList = res.data;
           let card_no = res.data.map(item=> {return item.CarBrand}).join(',');
-          lastGPS({card_no:card_no}).then((res) => {
+          lastGPS({card_no:card_no,type:type}).then((res) => {
             this.mapPoint('car',res.data)
           });
         });
@@ -1580,9 +1610,9 @@
     /*轨迹选择时间弹框*/
     .tabbable-line.guijitabbox {
       position: fixed;
-      right: 10px;
-      top: 151px;
-      width: 430px;
+      left: 20px;
+      bottom: 200px;
+      width: 380px;
       z-index: 3005;
       background: #fff;
       color: #5f5f5f;
