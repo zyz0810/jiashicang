@@ -153,7 +153,7 @@
           <p style="font-size: 16px; color: #000">
             <span id="carguijititle">{{ state.name }}</span>
           </p>
-          <el-form :inline="true" :model="state" class="search_form form-horizontal">
+          <el-form :inline="true" :model="state" class="form-horizontal">
             <el-form-item label="日期" prop="name">
               <el-date-picker
                 type="date"
@@ -1572,10 +1572,17 @@
 </script>
 <style lang="scss" scoped>
 
-  /deep/.el-date-editor .el-range-input,   /deep/.el-input__inner,   /deep/.el-textarea__inner,/deep/.el-form-item__label{
-    color: #606266!important;
-    background: #fff!important;
+/deep/.el-form-item__label{
+    color: #409EFF!important;
+
   }
+/deep/.el-date-editor--timerange.el-input__inner{
+  width: 230px !important;
+}
+/deep/.el-date-editor .el-range-input,   /deep/.el-input__inner,   /deep/.el-textarea__inner,{
+  color: #606266 !important;
+  background: #fff!important;
+}
   .el-popper[x-placement^="bottom"] .popper__arrow,.el-popper[x-placement^="bottom"] .popper__arrow::after{
     border-bottom-color:#fff!important;
   }
@@ -1612,9 +1619,9 @@
       position: fixed;
       left: 20px;
       bottom: 200px;
-      width: 380px;
+      width: 320px;
       z-index: 3005;
-      background: #fff;
+      background: rgba(6,16,39,0.8);
       color: #5f5f5f;
       box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.5);
       border-radius: 0 0 3px 3px !important;
