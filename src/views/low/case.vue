@@ -230,11 +230,12 @@
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import {abnormalSite} from "@/api/water"; // 引入刚才的map.js 注意路径
-  import {caseCount,commandCase,collectData} from "@/api/lowCase";
+  import {caseCount,commandCase,collectData,reLetterPic,reManagePic} from "@/api/lowCase";
   import point01 from '@/assets/image/point24.png'
   import point02 from "@/assets/image/point56.png";
   import point03 from "@/assets/image/point57.png";
-  import point04 from "@/assets/image/point58.png"; // 引入刚才的map.js 注意路径
+  import point04 from "@/assets/image/point58.png";
+  import point_null from "@/assets/image/point_null.png";
   import global from "@/utils/common";
   let heatmapOverlay;
   export default {
@@ -785,6 +786,7 @@
         pointThree:[],
         pointFour:[],
         showImgDialog:false,
+        timer:'',
       }
     },
 
@@ -852,10 +854,13 @@
       },
       changeMap(){
         if(this.mapType == 1){
+          this.map.clearOverLays();
           this.mapType  = 2
+          heatmapOverlay.hide();
           // this.getMaker();
           this.getPointOne();
         }else{
+          this.map.clearOverLays();
           this.mapType  = 1
           this.getHeatMap();
         }
@@ -863,50 +868,67 @@
       getHeatMap(){
         this.map.clearOverLays();
         console.log('热力图')
-        var data = [
-          {name: '海门', value: 899},
-          {name: '鄂尔多斯', value: 312},
-          {name: '招远', value: 512},
-          {name: '舟山', value: 142},
-          {name: '齐齐哈尔', value: 514},
-          {name: '盐城', value: 615},
-          {name: '盐城1', value: 914},
-          {name: '赤峰1', value: 315},
-          {name: '赤峰2', value: 315},
-        ];
-        var geoCoordMap = {
-          '海门': [120.217470,30.202110],
-          '招远': [120.223820,30.199590],
-          '舟山': [120.217210,30.195440],
-          '盐城': [120.207510,30.206050],
-          '赤峰': [120.237720,30.199590],
-          '盐城1': [120.219350,30.192690],
-          '赤峰1': [120.218150,30.190840],
-          '赤峰2': [120.226140,30.196250],
 
-        };
-        var convertData = function (data) {
-          var res = [];
-          for (var i = 0; i < data.length; i++) {
-            var geoCoord = geoCoordMap[data[i].name];
-            if (geoCoord) {
-              res.push({
-                name: data[i].name,
-                lat: geoCoord[1],
-                lng: geoCoord[0],
-                count: data[i].value
-              });
-            }
+        reLetterPic().then((res) => {
+
+        });
+        reManagePic().then((res) => {
+
+        });
+
+        var HotArr = [
+          {name: '海门', num: 899,log:'120.217470',lat:'30.202110'},
+          {name: '招远', num: 512,log:'120.223820',lat:'30.199590'},
+          {name: '舟山', num: 142,log:'120.217210',lat:'30.195440'},
+          {name: '盐城', num: 615,log:'120.207510',lat:'30.206050'},
+          {name: '盐城1', num: 914,log:'120.219350',lat:'30.192690'},
+          {name: '赤峰1', num: 315,log:'120.218150',lat:'30.190840'},
+          {name: '赤峰2', num: 315,log:'120.226140',lat:'30.196250'},
+        ];
+        var points  = HotArr.map (item=>{
+          return {
+            name: item.name,
+            lat:  Number(item.lat),
+            lng:  Number(item.log),
+            count: Number(item.num)
           }
-          return res;
-        };
-        var points = convertData(data);
+        });
         heatmapOverlay = new T.HeatmapOverlay({
           "radius": 50,
         });
         this.map.addOverLay(heatmapOverlay);
         heatmapOverlay.setDataSet({data: points, max: 300});
-        console.log(points)
+        this.mapPoint('hot',points);
+      },
+      getHeatMapTwo(){
+        this.map.clearOverLays();
+        reLetterPic().then((res) => {
+          var HotArr = [
+            {name: '海门', num: 899,log:'120.217470',lat:'30.202110',small_category:'小类'},
+            {name: '招远', num: 512,log:'120.223820',lat:'30.199590',small_category:'小类'},
+            {name: '舟山', num: 142,log:'120.217210',lat:'30.195440',small_category:'小类'},
+            {name: '盐城', num: 615,log:'120.207510',lat:'30.206050',small_category:'小类'},
+            {name: '盐城1', num: 914,log:'120.219350',lat:'30.192690',small_category:'小类'},
+            {name: '赤峰1', num: 315,log:'120.218150',lat:'30.190840',small_category:'小类'},
+            {name: '赤峰2', num: 315,log:'120.226140',lat:'30.196250',small_category:'小类'},
+          ];
+          var points  = HotArr.map (item=>{
+            return {
+              name: item.name,
+              lat:  Number(item.lat),
+              lng:  Number(item.log),
+              count: Number(item.num)
+            }
+          });
+          heatmapOverlay = new T.HeatmapOverlay({
+            "radius": 50,
+          });
+          this.map.addOverLay(heatmapOverlay);
+          heatmapOverlay.setDataSet({data: points, max: 300});
+          this.mapPoint('hot',points);
+        });
+
+
       },
       onLoad() {
         let T = window.T
@@ -984,6 +1006,11 @@
           iconSize: new T.Point(30, 51),
           // iconAnchor: new T.Point(34, 59)
         });
+        let iconNull = new T.Icon({
+          iconUrl: point_null,
+          iconSize: new T.Point(30, 51),
+          // iconAnchor: new T.Point(34, 59)
+        });
         let markers = [];
 
         console.log(list);
@@ -1000,9 +1027,14 @@
             let point = new T.LngLat(list[i].log,list[i].lat);
             markers[i]  = drawTMaker(point, icon03,this,list[i]);
           }else if(type == 3){
-            console.log('三生三世')
+
             let point = new T.LngLat(list[i].log,list[i].lat);
             markers[i]  = drawTMaker(point, icon04,this,list[i]);
+          }
+          if(type == 'hot'){
+            console.log('三生三世')
+            let point = new T.LngLat(list[i].lng,list[i].lat);
+            markers[i]  = drawTMaker(point, iconNull,this,list[i]);
           }
         }
 
@@ -1132,11 +1164,31 @@
                   '</table>'+
                   '</div>';
               }
+            }else if(type == 'hot'){
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">类型</td><td>' + 'leixing' + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>地址</td><td>' + txt.name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>数量</td><td>' + txt.count + '</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
             }
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
 
           });// 将标注添加到地图中
+
+          // this.timer = setInterval(()=>{
+          //
+          // },1000)
+
           return marker;
         }
 
