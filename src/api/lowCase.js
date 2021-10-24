@@ -18,3 +18,10 @@ export function commandCase(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+export function collectData(data) {
+  return request({
+    url: `/api/general/collectData`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}

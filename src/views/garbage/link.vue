@@ -1474,8 +1474,8 @@
             }else if(list[i].type == 2){
               markers[i]  = drawTMaker(point, icon02,this,list[i]);
             }else{
-              console.log('22222222')
-              markers[i]  = drawTMaker(point, icon04,this,list[i]);
+              // console.log('22222222')
+              // markers[i]  = drawTMaker(point, icon04,this,list[i]);
             }
             // let point = new T.LngLat(list[i].PACK.longitude1,list[i].PACK.latitude1);
             // markers[i]  = drawTMaker(point, icon01,this,list[i]);

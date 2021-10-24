@@ -27,13 +27,13 @@
     </div>
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 2">
       <div class="top clr_white">
-        <p class="f20 bold txt_linear">案件高发时段分析</p>
+        <p class="f20 bold txt_linear">案件趋势分析</p>
         <!--<BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="26vh" divwidth="100%"></BarChartFour>-->
-        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></LineChart>
+        <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="30vh" divwidth="100%"></LineChart>
       </div>
-      <div class="mt_20 ">
-        <p class="f20 bold txt_linear">部门案件处置分析</p>
-        <BarChartFive :chartData="BarData" height="30vh" divwidth="100%"></BarChartFive>
+      <div class="mt_20">
+        <p class="f20 bold txt_linear">案件类型分析(top8)</p>
+        <BarChartFive :chartData="BarData" height="40vh" divwidth="100%"></BarChartFive>
       </div>
 
     </div>
@@ -230,7 +230,7 @@
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import {abnormalSite} from "@/api/water"; // 引入刚才的map.js 注意路径
-  import {caseCount,commandCase} from "@/api/lowCase";
+  import {caseCount,commandCase,collectData} from "@/api/lowCase";
   import point01 from '@/assets/image/point24.png'
   import point02 from "@/assets/image/point56.png";
   import point03 from "@/assets/image/point57.png";
@@ -269,6 +269,8 @@
             },
             axisLabel: {
               show: true,
+              // interval:0,
+              // rotate:40,
               textStyle: {
                 color: '#fff',
                 fontSize:'16',
@@ -283,7 +285,7 @@
             },
             splitLine: { show: false },//去除网格线
             type: 'category',
-            data: ['滨文路', '长河路', '江陵路', '江虹路', '秋溢路', '滨湖路']
+            data: []
           },
           yAxis: {
             axisTick: {
@@ -329,7 +331,7 @@
                 }
               }
             },
-            data: [332, 320, 301, 230, 156, 98,],
+            data: [],
             type: 'line'
           }]
         },
@@ -577,24 +579,25 @@
           },
           //----------------   图例 legend  -----------------
           legend: {
-            type:'plain',				//----图例类型，默认为'plain'，当图例很多时可使用'scroll'
-            bottom:'5',					//----图例相对容器位置,top\bottom\left\right
-            data:[						//----图例内容
-              {
-                name:'应处置案件',
-                textStyle:{
-                  color:'#fff',		//----单独设置某一个图例的颜色
-                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
-                }
-              },
-              {
-                name:'已处置案件',
-                textStyle:{
-                  color:'#fff',		//----单独设置某一个图例的颜色
-                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
-                }
-              }
-            ],
+            show:false,
+            // type:'plain',				//----图例类型，默认为'plain'，当图例很多时可使用'scroll'
+            // bottom:'5',					//----图例相对容器位置,top\bottom\left\right
+            // data:[						//----图例内容
+            //   {
+            //     name:'应处置案件',
+            //     textStyle:{
+            //       color:'#fff',		//----单独设置某一个图例的颜色
+            //       //backgroundColor:'black',//---单独设置某一个图例的字体背景色
+            //     }
+            //   },
+            //   {
+            //     name:'已处置案件',
+            //     textStyle:{
+            //       color:'#fff',		//----单独设置某一个图例的颜色
+            //       //backgroundColor:'black',//---单独设置某一个图例的字体背景色
+            //     }
+            //   }
+            // ],
           },
 
           xAxis: [
@@ -605,15 +608,28 @@
               },
               axisLabel: {
                 show: true,
+                interval:0,
+                rotate:50,
                 textStyle: {
                   color: '#fff',
                   fontSize:'15',
                   fontWeight:'bold'
+                },
+                //设置文本过长超出隐藏...表示
+                margin: 8,
+                formatter:function(params){
+                  var val="";
+                  if(params.length >4){
+                    val = params.substr(0,4)+'...';
+                    return val;
+                  }else{
+                    return params;
+                  }
                 }
               },
               splitLine: { show: false },//去除网格线
               type: 'category',
-              data: ['浦沿中队', '西兴中队', '长河中队']
+              data: []
             }
           ],
           yAxis: [
@@ -628,7 +644,8 @@
                   color: '#fff',
                   fontSize:'15',
                   fontWeight:'bold'
-                }
+                },
+
               },
               splitLine: { show: false },//去除网格线
               splitArea: { show: false },//去除网格线
@@ -637,7 +654,7 @@
           ],
           series: [
             {
-              name:'应处置案件',
+              name:'',
               type: 'bar',
               barWidth: 20,//柱图宽度
               barGap:'50%',
@@ -652,26 +669,26 @@
                     ])
                 }
               },
-              data: [320, 332, 301]
+              data: []
             },
-            {
-              name:'已处置案件',
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'50%',
-              // barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
-              itemStyle: {
-                normal: {
-                  // color:'rgba(0,183,255)',
-                  color: new echarts.graphic.LinearGradient(0, 1, 0, 0,
-                    [
-                      { offset: 1, color: 'rgba(0,183,255,1)' },
-                      { offset: 0, color: 'rgba(0,183,255,0)' },
-                    ])
-                }
-              },
-              data: [220, 182, 191]
-            }
+            // {
+            //   name:'已处置案件',
+            //   type: 'bar',
+            //   barWidth: 20,//柱图宽度
+            //   barGap:'50%',
+            //   // barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
+            //   itemStyle: {
+            //     normal: {
+            //       // color:'rgba(0,183,255)',
+            //       color: new echarts.graphic.LinearGradient(0, 1, 0, 0,
+            //         [
+            //           { offset: 1, color: 'rgba(0,183,255,1)' },
+            //           { offset: 0, color: 'rgba(0,183,255,0)' },
+            //         ])
+            //     }
+            //   },
+            //   data: []
+            // }
           ]
         },
         BarDataTwo:{
@@ -785,13 +802,33 @@
       // this.getHeatMap();
       this.getPointOne();
       window.handleVideo = this.handleVideo;
+      this.getDirectChart();
     },
     methods: {
+      getDirectChart(){
+        collectData().then((res) => {
+          let x_arr = res.data.day_hours.map(item=>{return item.x_name;});
+          let y_arr = res.data.day_hours.map(item=>{return item.y_count;});
+          this.lineData.xAxis.data  = x_arr;
+          this.lineData.series[0].data = y_arr;
+          let barArr = res.data.category.filter((item,index)=>{
+            if(index<8){
+              return item;
+            }
+          });
+          let x_Barr = barArr.map(item=>{return item.name;});
+          let y_Barr = barArr.map(item=>{return item.count;});
+
+          this.BarData.xAxis[0].data = x_Barr;
+          this.BarData.series[0].data = y_Barr;
+        });
+      },
       handlePageType(val){
         this.map.clearOverLays();
         this.activeIndex = val;
         if(val == 2){
           this.directType = 0;
+          this.getDirectChart();
           this.getPointThree();
         }else{
           this.getPointOne();
