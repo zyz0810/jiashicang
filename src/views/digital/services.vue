@@ -376,7 +376,14 @@
         <div :class="['weui-cell__bd f12',showThreeType==3?'clr_white':'']">控制柜故障</div>
       </div>
     </div>
-        <videoView :showDialog.sync="showVideoDialog" :caseData={}></videoView>
+<!--        <videoView :showDialog.sync="showVideoDialog" :caseData={}></videoView>-->
+    <div v-show="showVideoDialog" class="dashboard-video-player-box">
+      <div id="dashboardVideoPlayer" class="dashboard-video-player">
+        <!--<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls data-setup="{}">-->
+        <!--<source id="source" src="rtsp://10.32.54.38:554/openUrl/ePBOw6I" autoplay type="rtsp/flv">-->
+        <!--</video>-->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -402,7 +409,7 @@
   import point10 from '@/assets/image/point43.png' // 运维人员
   import toolTipBg from '@/assets/image/digital-bg.png' // 引入刚才的map.js 注意路径
   import videoView from "./videoView";
-  import {getAllVideoPoint, pointList} from '@/api/system'
+  import {getAllVideoPoint, getNowurl, pointList} from '@/api/system'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import {getLampPostList,getcontrolcabinetlist,getevaluate,parkList,getAllPark} from '@/api/digitalServices'
   import {generalIndex} from "@/api/overView";
@@ -1022,7 +1029,6 @@
         controlList:[],
         parkList:[],
         pointList:[],
-        showVideoDialog:false,
         timer:'',
         timerTwo:'',
         timerThree:'',
@@ -1031,6 +1037,9 @@
         commonVideoList:[],
         bikePartList:[],
         parkNum:'',
+        showVideoDialog:false,
+        playVideoUri:'',
+        player: null
       }
     },
 
@@ -1051,11 +1060,14 @@
 
       // this.getControlCabinetlist();
       this.getParkList();
-      window.handleVideo = this.handleVideo;
-
       //获取数字停车停车场数量
       this.getParkNum();
       this.getAllPark();
+      window.handleVideo = this.handleVideo;
+      window.closeVideoDialog = () => {
+        this.handleVideoClose()
+      }
+      this.initPlayer()
     },
     beforeDestroy() {
       clearInterval(this.timer);
@@ -1066,6 +1078,76 @@
       this.timerThree = null;
     },
     methods: {
+      //播放视频
+      handleVideo(txt){
+        console.log(txt)
+        this.getNow(txt);
+      },
+      getNow(txt){
+        getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
+          this.showVideoDialog = true;
+          this.playVideo(res.data.data.url);
+        });
+      },
+      handleVideoClose() {
+        this.player.dispose()
+        $('#myVideo').remove()
+        $('#dashboardVideoPlayer').html('')
+        this.player = null
+        this.showVideoDialog = false
+        this.playVideoUri = ''
+      },
+      initPlayer() {
+        this.$nextTick(() => {
+          document.addEventListener('keyup', (e) => {
+            if (e.keyCode === 27) {
+              this.handleCloseKeyDown(e) // 事件名
+            }
+          })
+        })
+      },
+      handleCloseKeyDown(e) {
+        if (this.dialogVisible && e.keyCode === 27) {
+          this.player.dispose()
+          $('#myVideo').remove()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+      },
+      playVideo(uri) {
+        this.playVideoUri = uri;
+        // this.dialogVisible = true
+        $('#dashboardVideoPlayer').append(
+          `<div style="position: relative;width: 100%;height: 100%;">
+              <i class="el-icon-error"
+                 onclick="closeVideoDialog()"
+                 style="position: absolute;
+                 right: 10px;
+                 top: 10px;
+                 z-index: 999;
+                 color: #fff;
+                 cursor: pointer;
+                 font-size: 28px;
+              "></i>
+              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+            </video></div>`
+        )
+        window.setTimeout(() => {
+          this.player = videojs('myVideo', {
+            muted: true,
+            controls: true,
+            preload: 'auto',
+          })
+          this.player.play()
+          console.log('获取视频')
+          console.log(this.player)
+
+        }, 1000)
+      },
+
       handleOnePointType(val){
         this.showOneType = val;
       },
@@ -1116,15 +1198,7 @@
           this.getControlCabinetlist(type)
         }
       },
-      handleVideo(txt){
-        this.showVideoDialog = true
-        // this.videoData={
-        //   source:txt.org_name,
-        //   code:txt.index_code,
-        //   address:txt.name,
-        //   video:'https://vd3.bdstatic.com/mda-mi6yu6w39518uykg/cae_h264/1631056499817188563/mda-mi6yu6w39518uykg.mp4?v_from_s=hkapp-haokan-tucheng&auth_key=1631080314-0-0-bafac110cf549f9655d005c67eb8dbe4&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=3000186_2'
-        // }
-      },
+
       handlePageType(val){
         this.map.clearOverLays();
         this.activeIndex = val;
@@ -1386,7 +1460,7 @@
                    '<td>所在地址</td><td>' + txt.install_place + '</td>'+
                    '</tr>'+
                    '<tr>' +
-                   '<td></td><td class="text-right baseColor" onClick="handleVideo()">查看视频</td>'+
+                   '<td></td><td class="text-right baseColor" onClick="handleVideo('+ aa +')">查看视频</td>'+
                    '</tr>'+
                    '</table>'+
                    '</div>';
@@ -1415,7 +1489,7 @@
                   '<td>所在地址</td><td>' + txt.install_place + '</td>'+
                   '</tr>'+
                   '<tr>' +
-                  '<td></td><td class="text-right baseColor" onClick="handleVideo()">查看视频</td>'+
+                  '<td></td><td class="text-right baseColor" onClick="handleVideo('+ aa +')">查看视频</td>'+
                   '</tr>'+
                   '</table>'+
                   '</div>';

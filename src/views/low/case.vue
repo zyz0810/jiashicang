@@ -806,6 +806,10 @@
       window.handleVideo = this.handleVideo;
       this.getDirectChart();
     },
+    beforeDestroy() {
+      clearInterval(this.timer);
+      this.timer = null;
+    },
     methods: {
       getDirectChart(){
         collectData().then((res) => {
@@ -827,6 +831,7 @@
       },
       handlePageType(val){
         this.map.clearOverLays();
+        heatmapOverlay = '';
         this.activeIndex = val;
         if(val == 2){
           this.directType = 0;
@@ -853,57 +858,55 @@
         }
       },
       changeMap(){
+        this.map.clearOverLays();
         if(this.mapType == 1){
-          this.map.clearOverLays();
-          this.mapType  = 2
-          heatmapOverlay.hide();
+          this.mapType  = 2;
+          // heatmapOverlay.hide();
           // this.getMaker();
           this.getPointOne();
         }else{
-          this.map.clearOverLays();
           this.mapType  = 1
-          this.getHeatMap();
+          if(this.activeIndex == 0){
+            this.getHeatMap();
+          }else if(this.activeIndex == 1){
+            this.getHeatMapTwo();
+          }
+
+
         }
       },
       getHeatMap(){
+        heatmapOverlay='';
         this.map.clearOverLays();
-        console.log('热力图')
+        console.log('热力图1')
 
-        reLetterPic().then((res) => {
-
-        });
         reManagePic().then((res) => {
-
+          let points  = res.data.map (item=>{
+            return {
+              name: item.description,
+              type:item.type?item.type:'',
+              lat:  Number(item.y_line),
+              lng:  Number(item.x_line),
+              count: Number(item.num)
+            }
+          });
+          heatmapOverlay = new T.HeatmapOverlay({
+            "radius": 50,
+          });
+          console.log(points)
+          this.map.addOverLay(heatmapOverlay);
+          heatmapOverlay.setDataSet({data: points, max: 6});
+          this.mapPoint('hot',points);
+          this.markerTimer(points)
         });
 
-        var HotArr = [
-          {name: '海门', num: 899,log:'120.217470',lat:'30.202110'},
-          {name: '招远', num: 512,log:'120.223820',lat:'30.199590'},
-          {name: '舟山', num: 142,log:'120.217210',lat:'30.195440'},
-          {name: '盐城', num: 615,log:'120.207510',lat:'30.206050'},
-          {name: '盐城1', num: 914,log:'120.219350',lat:'30.192690'},
-          {name: '赤峰1', num: 315,log:'120.218150',lat:'30.190840'},
-          {name: '赤峰2', num: 315,log:'120.226140',lat:'30.196250'},
-        ];
-        var points  = HotArr.map (item=>{
-          return {
-            name: item.name,
-            lat:  Number(item.lat),
-            lng:  Number(item.log),
-            count: Number(item.num)
-          }
-        });
-        heatmapOverlay = new T.HeatmapOverlay({
-          "radius": 50,
-        });
-        this.map.addOverLay(heatmapOverlay);
-        heatmapOverlay.setDataSet({data: points, max: 300});
-        this.mapPoint('hot',points);
       },
       getHeatMapTwo(){
+        heatmapOverlay='';
+        console.log('热力图2')
         this.map.clearOverLays();
         reLetterPic().then((res) => {
-          var HotArr = [
+          let HotArr = [
             {name: '海门', num: 899,log:'120.217470',lat:'30.202110',small_category:'小类'},
             {name: '招远', num: 512,log:'120.223820',lat:'30.199590',small_category:'小类'},
             {name: '舟山', num: 142,log:'120.217210',lat:'30.195440',small_category:'小类'},
@@ -912,11 +915,12 @@
             {name: '赤峰1', num: 315,log:'120.218150',lat:'30.190840',small_category:'小类'},
             {name: '赤峰2', num: 315,log:'120.226140',lat:'30.196250',small_category:'小类'},
           ];
-          var points  = HotArr.map (item=>{
+          let points  = res.data.map (item=>{
             return {
-              name: item.name,
+              name: item.name?item.name:'',
+              type:item.type?item.type:'',
               lat:  Number(item.lat),
-              lng:  Number(item.log),
+              lng:  Number(item.lon),
               count: Number(item.num)
             }
           });
@@ -924,11 +928,61 @@
             "radius": 50,
           });
           this.map.addOverLay(heatmapOverlay);
-          heatmapOverlay.setDataSet({data: points, max: 300});
+          heatmapOverlay.setDataSet({data: points, max: 6});
           this.mapPoint('hot',points);
+          this.markerTimer(points)
         });
 
 
+      },
+      markerTimer(list){
+        clearInterval(this.timer);
+        this.timer = null;
+        let i = 1;
+
+        let sContent =
+          '<div class="point_info">' +
+          '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+          '<tr>' +
+          '<td style="white-space:nowrap;">类型</td><td>' + list[0].type + '</td>' +
+          '</tr>'+
+          '<tr>' +
+          '<td>数量</td><td>' + list[0].count + '</td>'+
+          '</tr>'+
+          '<tr>' +
+          '<td>地址</td><td>' + list[0].name + '</td>'+
+          '</tr>'+
+          '</table>'+
+          '</div>';
+        let lnglat = new T.LngLat(list[0].lng,list[0].lat)
+        this.map.openInfoWindow(sContent, lnglat); //开启信息窗口
+
+
+        this.timer = setInterval(() => {
+          console.log('幻灯片播放')
+          let sContent =
+            '<div class="point_info">' +
+            '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+            '<tr>' +
+            '<td style="white-space:nowrap;">类型</td><td>' + list[i].type + '</td>' +
+            '</tr>'+
+            '<tr>' +
+            '<td>数量</td><td>' + list[i].count + '</td>'+
+            '</tr>'+
+            '<tr>' +
+            '<td>地址</td><td>' + list[i].name + '</td>'+
+            '</tr>'+
+            '</table>'+
+            '</div>';
+          let lnglat = new T.LngLat(list[i].lng,list[i].lat)
+          this.map.openInfoWindow(sContent, lnglat); //开启信息窗口
+          if(i<list.length-1){
+            i++;
+          }else{
+            i=0;
+          }
+
+        },3000)
       },
       onLoad() {
         let T = window.T
@@ -951,7 +1005,12 @@
           if((this.activeIndex == 0 || this.activeIndex == 1) && this.mapType == 1){
             // this.mapPoint(0,this.pointOne)
             // 热力图
-            this.getHeatMap();
+            // this.getHeatMap();
+            if(this.activeIndex == 0){
+              this.getHeatMap();
+            }else if(this.activeIndex == 1){
+              this.getHeatMapTwo();
+            }
           }else if(this.activeIndex == 0 && this.mapType == 2) {
             this.mapPoint(0, this.pointOne)
           } else{
@@ -1008,7 +1067,8 @@
         });
         let iconNull = new T.Icon({
           iconUrl: point_null,
-          iconSize: new T.Point(30, 51),
+          // iconUrl: point04,
+          iconSize: new T.Point(60, 60),
           // iconAnchor: new T.Point(34, 59)
         });
         let markers = [];
@@ -1027,7 +1087,6 @@
             let point = new T.LngLat(list[i].log,list[i].lat);
             markers[i]  = drawTMaker(point, icon03,this,list[i]);
           }else if(type == 3){
-
             let point = new T.LngLat(list[i].log,list[i].lat);
             markers[i]  = drawTMaker(point, icon04,this,list[i]);
           }
@@ -1043,10 +1102,12 @@
         function drawTMaker(lnglat,icon,that,txt){
           var marker =  new T.Marker(lnglat, {icon: icon});
           that.map.addOverLay(marker);
+
           marker.addEventListener("click", function (m) {
             console.log(m)
             let infoWin1 = new T.InfoWindow();
             console.log(txt)
+            console.log(infoWin1)
             let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
             // 数字城管：任务号、问题来源、问题状态、小类名称、上报时间、问题描述、所属区域；
             // 信访投诉：受理单编号、工单状态、投诉来源、详细类型、反映内容、违法地址
@@ -1164,18 +1225,20 @@
                   '</table>'+
                   '</div>';
               }
-            }else if(type == 'hot'){
+            }else if(type == 'hot' || type == 'hotTwo'){
+              clearInterval(that.timer);
+              that.timer = null;
               sContent =
                 '<div class="point_info">' +
                 '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
                 '<tr>' +
-                '<td class="txt_6">类型</td><td>' + 'leixing' + '</td>' +
-                '</tr>'+
-                '<tr>' +
-                '<td>地址</td><td>' + txt.name + '</td>'+
+                '<td style="white-space:nowrap;">类型</td><td>' + txt.type + '</td>' +
                 '</tr>'+
                 '<tr>' +
                 '<td>数量</td><td>' + txt.count + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>地址</td><td>' + txt.name + '</td>'+
                 '</tr>'+
                 '</table>'+
                 '</div>';
@@ -1184,10 +1247,6 @@
             marker.openInfoWindow(infoWin1);
 
           });// 将标注添加到地图中
-
-          // this.timer = setInterval(()=>{
-          //
-          // },1000)
 
           return marker;
         }

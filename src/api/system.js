@@ -21,3 +21,13 @@ export function getAllVideoPoint(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+/* 获取实时监控
+ * camera_index_code 监控点编码
+ */
+export function getNowurl(data) {
+  return request({
+    url:'/api/Hikvision/getNowurl',
+    method: 'post',
+    data: data
+  })
+}

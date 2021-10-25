@@ -177,6 +177,13 @@
         <div :class="['weui-cell__bd',showType==2?'clr_white':'']">河道水质</div>
       </div>
     </div>
+    <div v-show="showVideoDialog" class="dashboard-video-player-box">
+      <div id="dashboardVideoPlayer" class="dashboard-video-player">
+        <!--<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls data-setup="{}">-->
+        <!--<source id="source" src="rtsp://10.32.54.38:554/openUrl/ePBOw6I" autoplay type="rtsp/flv">-->
+        <!--</video>-->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -199,6 +206,7 @@
   import {findSite,abnormalSite,warnSite} from "@/api/water"; // 引入刚才的map.js 注意路径
   import vueSeamlessScroll from 'vue-seamless-scroll'
   import global from "@/utils/common";
+  import {getNowurl} from "@/api/system";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -624,13 +632,13 @@
           ]
         },
         map: '', // 对象
-        zoom: 14, // 地图的初始化级别，及放大比例
-        centerLatitude:'30.2099178915',//中心纬度
-        centerLongitude:'120.2372328407',//中心经度
         waterList:[],
         warnList:[],
         abnormalList:[],
-        pointList:[]
+        pointList:[],
+        showVideoDialog:false,
+        playVideoUri:'',
+        player: null
       }
     },
     computed: {
@@ -665,8 +673,83 @@
       this.getList();
       this.getAbnormal(3);
       this.getWarn(2);
+      window.handleVideo = this.handleVideo;
+      window.closeVideoDialog = () => {
+        this.handleVideoClose()
+      }
+      this.initPlayer()
     },
     methods: {
+      //播放视频
+      handleVideo(txt){
+        console.log(txt)
+        this.getNow(txt);
+      },
+      getNow(txt){
+        getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
+          this.showVideoDialog = true;
+          this.playVideo(res.data.data.url);
+        });
+      },
+      handleVideoClose() {
+        this.player.dispose()
+        $('#myVideo').remove()
+        $('#dashboardVideoPlayer').html('')
+        this.player = null
+        this.showVideoDialog = false
+        this.playVideoUri = ''
+      },
+      initPlayer() {
+        this.$nextTick(() => {
+          document.addEventListener('keyup', (e) => {
+            if (e.keyCode === 27) {
+              this.handleCloseKeyDown(e) // 事件名
+            }
+          })
+        })
+      },
+      handleCloseKeyDown(e) {
+        if (this.dialogVisible && e.keyCode === 27) {
+          this.player.dispose()
+          $('#myVideo').remove()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+      },
+      playVideo(uri) {
+        this.playVideoUri = uri;
+        // this.dialogVisible = true
+        $('#dashboardVideoPlayer').append(
+          `<div style="position: relative;width: 100%;height: 100%;">
+              <i class="el-icon-error"
+                 onclick="closeVideoDialog()"
+                 style="position: absolute;
+                 right: 10px;
+                 top: 10px;
+                 z-index: 999;
+                 color: #fff;
+                 cursor: pointer;
+                 font-size: 28px;
+              "></i>
+              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+            </video></div>`
+        )
+        window.setTimeout(() => {
+          this.player = videojs('myVideo', {
+            muted: true,
+            controls: true,
+            preload: 'auto',
+          })
+          this.player.play()
+          console.log('获取视频')
+          console.log(this.player)
+
+        }, 1000)
+      },
+
       handleMapType(type){
         this.showMapType = type;
         if(type == 1){//获取设备点位
@@ -755,7 +838,6 @@
             // 0：关  1：开
             let point = new T.LngLat(list[i].longitude,list[i].latitude);
             markers[i]  = drawTMaker(point, icon05,this,list[i]);
-
           }
         }else{
           for (let i = 0; i < list.length; i++) {
@@ -804,7 +886,7 @@
                 '<td>所在地址</td><td>' + txt.install_place + '</td>'+
                 '</tr>'+
                 '<tr>' +
-                '<td></td><td class="text-right baseColor pointer" onClick="handleVideo()">查看视频</td>'+
+                '<td></td><td class="text-right baseColor pointer" onClick="handleVideo('+aa+')">查看视频</td>'+
                 '</tr>'+
                 '</table>'+
                 '</div>';

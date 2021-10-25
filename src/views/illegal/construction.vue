@@ -39,7 +39,13 @@
         </div>
       </div>
     </div>
-
+    <div v-show="showVideoDialog" class="dashboard-video-player-box">
+      <div id="dashboardVideoPlayer" class="dashboard-video-player">
+        <!--<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls data-setup="{}">-->
+        <!--<source id="source" src="rtsp://10.32.54.38:554/openUrl/ePBOw6I" autoplay type="rtsp/flv">-->
+        <!--</video>-->
+      </div>
+    </div>
   </div>
 
 </template>
@@ -56,7 +62,7 @@
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import point01 from '@/assets/image/point52.png'
   import point02 from '@/assets/image/point51.png'
-  import {getAllVideoPoint} from "@/api/system"; // 引入刚才的map.js 注意路径
+  import {getAllVideoPoint, getNowurl} from "@/api/system"; // 引入刚才的map.js 注意路径
   import global from "@/utils/common";
 
   export default {
@@ -67,10 +73,10 @@
     data() {
       return {
         map: '', // 对象
-        zoom: 14, // 地图的初始化级别，及放大比例
-        centerLatitude:'30.2099178915',//中心纬度
-        centerLongitude:'120.2372328407',//中心经度
         commonVideo_num:'',
+        showVideoDialog:false,
+        playVideoUri:'',
+        player: null
       }
     },
     computed: {
@@ -86,8 +92,83 @@
       this.onLoad();
       this.getList();
       this.getVideoNum();
+      window.handleVideo = this.handleVideo;
+      window.closeVideoDialog = () => {
+        this.handleVideoClose()
+      }
+      this.initPlayer()
     },
     methods: {
+      //播放视频
+      handleVideo(txt){
+        console.log(txt)
+        this.getNow(txt);
+      },
+      getNow(txt){
+        getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
+          this.showVideoDialog = true;
+          this.playVideo(res.data.data.url);
+        });
+      },
+      handleVideoClose() {
+        this.player.dispose()
+        $('#myVideo').remove()
+        $('#dashboardVideoPlayer').html('')
+        this.player = null
+        this.showVideoDialog = false
+        this.playVideoUri = ''
+      },
+      initPlayer() {
+        this.$nextTick(() => {
+          document.addEventListener('keyup', (e) => {
+            if (e.keyCode === 27) {
+              this.handleCloseKeyDown(e) // 事件名
+            }
+          })
+        })
+      },
+      handleCloseKeyDown(e) {
+        if (this.dialogVisible && e.keyCode === 27) {
+          this.player.dispose()
+          $('#myVideo').remove()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+      },
+      playVideo(uri) {
+        this.playVideoUri = uri;
+        // this.dialogVisible = true
+        $('#dashboardVideoPlayer').append(
+          `<div style="position: relative;width: 100%;height: 100%;">
+              <i class="el-icon-error"
+                 onclick="closeVideoDialog()"
+                 style="position: absolute;
+                 right: 10px;
+                 top: 10px;
+                 z-index: 999;
+                 color: #fff;
+                 cursor: pointer;
+                 font-size: 28px;
+              "></i>
+              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+            </video></div>`
+        )
+        window.setTimeout(() => {
+          this.player = videojs('myVideo', {
+            muted: true,
+            controls: true,
+            preload: 'auto',
+          })
+          this.player.play()
+          console.log('获取视频')
+          console.log(this.player)
+
+        }, 1000)
+      },
+
       handleMapType(type){
         this.showMapType = type;
         if(type == 1){//获取设备点位
@@ -162,7 +243,6 @@
           // iconAnchor: new T.Point(34, 59)
         });
         let markers = []
-
         if(type == 'video'){
           for (let i = 0; i < list.length; i++) {
             // var marker
@@ -177,7 +257,6 @@
           }
         }
 
-
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){
           var marker =  new T.Marker(lnglat, {icon: icon});
@@ -185,29 +264,51 @@
           marker.addEventListener("click", function (m) {
             console.log(m)
             let infoWin1 = new T.InfoWindow();
+            let sContent;
+            if(type == 'video'){
+              let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
+              // 办件编号、申请人/单位、电话、地址、申请日期、办结日期、办理结果、权力名称、所属类型
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">监控名称</td><td>' + txt.name + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>所属区域</td><td>' + txt.depart_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>来源区域</td><td>' + txt.community_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>来源区域</td><td>' + txt.install_place + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td></td><td class="text-right baseColor pointer" onClick="handleVideo('+ aa +')">查看视频</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+            }else{
+              // 办件编号、申请人/单位、电话、地址、申请日期、办结日期、办理结果、权力名称、所属类型
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">名称</td><td>' + txt.name + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>违法建筑总宗数</td><td>' + txt.num01 + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>违法占地总面积</td><td>' + txt.num02 + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>违法建筑总面积</td><td>' + txt.num03 + '</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+            }
 
-            // 办件编号、申请人/单位、电话、地址、申请日期、办结日期、办理结果、权力名称、所属类型
-            let sContent =
-              // '<p class="f14 time">名称：' + txt.name + '</p>' +
-              // '<p class="f14 time">违法建筑总宗数：' + txt.num01 + '</p>' +
-              // '<p class="f14 time">违法占地总面积：' + txt.num02 + '</p>' +
-              // '<p class="f14 time">违法建筑总面积：' + txt.num03 + '</p>' +
-              '<div class="point_info">' +
-              '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
-              '<tr>' +
-              '<td class="txt_6">名称</td><td>' + txt.name + '</td>' +
-              '</tr>'+
-              '<tr>' +
-              '<td>违法建筑总宗数</td><td>' + txt.num01 + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>违法占地总面积</td><td>' + txt.num02 + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>违法建筑总面积</td><td>' + txt.num03 + '</td>'+
-              '</tr>'+
-              '</table>'+
-              '</div>';
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
 

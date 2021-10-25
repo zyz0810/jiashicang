@@ -15,7 +15,7 @@
           <!--          <span class="f14 fr">更多</span>-->
         </p>
         <ul class="AI_list">
-          <li class="mt_20" v-for="item in AIList" :key="item.id">
+          <li class="mt_20" v-for="item in AIList" :key="item.id" @click="handleVideo(item)">
             <div class="img_txt f14 bold">{{item.camera_name}}</div>
             <img :src="item.pic_url">
           </li>
@@ -87,8 +87,14 @@
         </div>
       </div>
     </div>
-
     <div class="back"><router-link :to="{path:'/general/overview'}"><i class="iconfont icon-fanhui f26 bold txtColor"></i></router-link></div>
+    <div v-show="showVideoDialog" class="dashboard-video-player-box">
+      <div id="dashboardVideoPlayer" class="dashboard-video-player">
+        <!--<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls data-setup="{}">-->
+        <!--<source id="source" src="rtsp://10.32.54.38:554/openUrl/ePBOw6I" autoplay type="rtsp/flv">-->
+        <!--</video>-->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -107,7 +113,7 @@
   import point02 from "@/assets/image/point38.png";
   import point03 from "@/assets/image/point37.png";
   import point04 from "@/assets/image/point42.png"; // 引入刚才的map.js 注意路径
-  import {getAllVideoPoint} from '@/api/system'
+  import {getAllVideoPoint, getNowurl} from '@/api/system'
   import {collectList} from '@/api/overView'
   export default {
     name: 'parameterList',
@@ -138,6 +144,10 @@
       // })
       this.onLoad();
       window.handleVideo = this.handleVideo;
+      window.closeVideoDialog = () => {
+        this.handleVideoClose()
+      }
+      this.initPlayer()
       this.getPoint('');
       this.getAIList();
     },
@@ -219,6 +229,7 @@
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {
             let infoWin1 = new T.InfoWindow();
+            let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
             let sContent =
               '<div class="point_info">' +
               '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
@@ -235,7 +246,7 @@
               '<td>所在地址</td><td>' + txt.install_place + '</td>'+
               '</tr>'+
               '<tr>' +
-              '<td></td><td class="text-right baseColor pointer" onClick="handleVideo()">查看视频</td>'+
+              '<td></td><td class="text-right baseColor pointer" onClick="handleVideo('+ aa +')">查看视频</td>'+
               '</tr>'+
               '</table>'+
               '</div>';
@@ -246,14 +257,75 @@
           return marker;
         }
       },
+
+      //播放视频
       handleVideo(txt){
-        this.showVideoDialog = true
-        // this.videoData={
-        //   source:txt.org_name,
-        //   code:txt.index_code,
-        //   address:txt.name,
-        //   video:'https://vd3.bdstatic.com/mda-mi6yu6w39518uykg/cae_h264/1631056499817188563/mda-mi6yu6w39518uykg.mp4?v_from_s=hkapp-haokan-tucheng&auth_key=1631080314-0-0-bafac110cf549f9655d005c67eb8dbe4&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=3000186_2'
-        // }
+        console.log(txt)
+        this.getNow(txt);
+      },
+      getNow(txt){
+        getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
+          this.showVideoDialog = true;
+          this.playVideo(res.data.data.url);
+        });
+      },
+      handleVideoClose() {
+        this.player.dispose()
+        $('#myVideo').remove()
+        $('#dashboardVideoPlayer').html('')
+        this.player = null
+        this.showVideoDialog = false
+        this.playVideoUri = ''
+      },
+      initPlayer() {
+        this.$nextTick(() => {
+          document.addEventListener('keyup', (e) => {
+            if (e.keyCode === 27) {
+              this.handleCloseKeyDown(e) // 事件名
+            }
+          })
+        })
+      },
+      handleCloseKeyDown(e) {
+        if (this.dialogVisible && e.keyCode === 27) {
+          this.player.dispose()
+          $('#myVideo').remove()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+      },
+      playVideo(uri) {
+        this.playVideoUri = uri;
+        // this.dialogVisible = true
+        $('#dashboardVideoPlayer').append(
+          `<div style="position: relative;width: 100%;height: 100%;">
+              <i class="el-icon-error"
+                 onclick="closeVideoDialog()"
+                 style="position: absolute;
+                 right: 10px;
+                 top: 10px;
+                 z-index: 999;
+                 color: #fff;
+                 cursor: pointer;
+                 font-size: 28px;
+              "></i>
+              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+            </video></div>`
+        )
+        window.setTimeout(() => {
+          this.player = videojs('myVideo', {
+            muted: true,
+            controls: true,
+            preload: 'auto',
+          })
+          this.player.play()
+          console.log('获取视频')
+          console.log(this.player)
+
+        }, 1000)
       },
     }
   }

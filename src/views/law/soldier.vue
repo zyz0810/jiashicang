@@ -65,6 +65,13 @@
         <div :class="['weui-cell__bd',showType==3?'clr_white':'']">执法车辆</div>
       </div>
     </div>
+    <div v-show="showVideoDialog" class="dashboard-video-player-box">
+      <div id="dashboardVideoPlayer" class="dashboard-video-player">
+        <!--<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls data-setup="{}">-->
+        <!--<source id="source" src="rtsp://10.32.54.38:554/openUrl/ePBOw6I" autoplay type="rtsp/flv">-->
+        <!--</video>-->
+      </div>
+    </div>
   </div>
 
 </template>
@@ -82,7 +89,7 @@
   import point01 from '@/assets/image/point49.png' // 执法人员图标
   import point02 from '@/assets/image/point50.png' // 执法车辆图标
   import point03 from '@/assets/image/point51.png' // 普通视频图标
-  import {getAllVideoPoint, pointList} from '@/api/system'
+  import {getAllVideoPoint, getNowurl, pointList} from '@/api/system'
   import global from "@/utils/common";
   export default {
     name: 'parameterList',
@@ -93,279 +100,15 @@
       return {
         showType:1,
         showMapType:1,
-        chartData: {
-          title:{},
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          legend: {
-            show:false
-          },
-          series: [
-            {
-              name: '访问来源',
-              type: 'pie',
-              radius: ['50%', '70%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: false,
-                position: 'center'
-              },
-              emphasis: {
-                label: {
-                  show: true,
-                  fontSize: '30',
-                  fontWeight: 'bold'
-                }
-              },
-              labelLine: {
-                show: false
-              },
-              data: [
-                {value: 335, name: '直接访问'},
-                {value: 310, name: '邮件营销'},
-                {value: 234, name: '联盟广告'},
-                {value: 135, name: '视频广告'},
-                {value: 1548, name: '搜索引擎'}
-              ]
-            }
-          ]
-        },
-        chartDataThree: {
-          title:{},
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
-          },
-          legend: {
-            show:false
-          },
-          color:['#367CFD','#E20280'],
-          series: [
-            {
-              name: '访问来源',
-              type: 'pie',
-              radius: ['70%', '90%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: false,
-                position: 'center',
-
-              },
-              emphasis: {
-                label: {
-                  show: true,
-                  fontSize: '30',
-                  fontWeight: 'bold'
-                }
-              },
-              labelLine: {
-                show: false
-              },
-              data: [
-                {value: 520, name: '直接访问'},
-                {value: 205, name: '邮件营销'},
-              ]
-            }
-          ]
-        },
-        PieChartLegend:[],
-        BarData:{
-          title: {},
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
-          },
-          grid: {
-            left: '0',
-            right: '0',
-            bottom: '40',
-            top: '20',
-            containLabel: true
-          },
-          //----------------   图例 legend  -----------------
-          legend: {
-            type:'plain',				//----图例类型，默认为'plain'，当图例很多时可使用'scroll'
-            bottom:'5',					//----图例相对容器位置,top\bottom\left\right
-            data:[						//----图例内容
-              {
-                name:'应处置案件',
-                textStyle:{
-                  color:'#fff',		//----单独设置某一个图例的颜色
-                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
-                }
-              },
-              {
-                name:'已处置案件',
-                textStyle:{
-                  color:'#fff',		//----单独设置某一个图例的颜色
-                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
-                }
-              }
-            ],
-          },
-
-          xAxis: [
-            {
-
-
-              axisTick: {
-                show:false,
-                alignWithLabel: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'category',
-              data: ['浦沿中队', '西兴中队', '长河中队']
-            }
-          ],
-          yAxis: [
-            {
-              axisTick: {
-                show:false,
-                alignWithLabel: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'value'
-            }
-          ],
-          series: [
-            {
-              name:'应处置案件',
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'50%',
-              // barCategoryGap:'50%',/*多个并排柱子设置柱子之间的间距*/
-              itemStyle: {
-                normal: {
-                  color:'#2FB26B'
-                }
-              },
-              data: [320, 332, 301]
-            },
-            {
-              name:'已处置案件',
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'50%',
-              // barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
-              itemStyle: {
-                normal: {
-                  color:'#00A0EB'
-
-                }
-              },
-              data: [220, 182, 191]
-            }
-          ]
-        },
-        BarDataTwo:{
-          title: {},
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
-          },
-          grid: {
-            left: '0',
-            right: '0',
-            bottom: '-20',
-            top: '20',
-            containLabel: true
-          },
-          xAxis: [
-            {
-              show:false,
-              axisTick: {
-                alignWithLabel: false
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'value',
-            }
-          ],
-          yAxis: [
-            {
-              axisTick: {
-                show: false
-              },
-              axisLine: {
-                show: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'category',
-              data:['滨河路','秋溢路','江虹路','江陵路','长河路','滨文路']
-            }
-          ],
-          series: [
-            {
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'180%',
-              barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
-              // label: {
-              //   normal: {
-              //     color: 'red',
-              //     show: true,
-              //     position: 'top'
-              //   }
-              // },
-              itemStyle: {
-                normal: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
-                    [
-                      { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: '#9D4EE8' }
-                    ]
-                  ),
-                  label: {
-                    show : true,
-                    position : 'right',
-                    textStyle : {
-                      color: '#fff',
-                      fontSize:'16',
-                      fontWeight:'bold'
-                    }
-                  }
-
-                }
-              },
-              data: [320, 332, 301,230,56,963]
-            },
-          ]
-        },
         map: '', // 对象
         zoom: 14, // 地图的初始化级别，及放大比例
         centerLatitude:'30.2099178915',//中心纬度
         centerLongitude:'120.2372328407',//中心经度
         pointList:[],
         commonVideo_num:'',
+        showVideoDialog:false,
+        playVideoUri:'',
+        player: null
       }
     },
 
@@ -382,8 +125,83 @@
       this.onLoad();
       this.getList();
       this.getVideoNum();
+      window.handleVideo = this.handleVideo;
+      window.closeVideoDialog = () => {
+        this.handleVideoClose()
+      }
+      this.initPlayer()
     },
     methods: {
+      //播放视频
+      handleVideo(txt){
+        console.log(txt)
+        this.getNow(txt);
+      },
+      getNow(txt){
+        getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
+          this.showVideoDialog = true;
+          this.playVideo(res.data.data.url);
+        });
+      },
+      handleVideoClose() {
+        this.player.dispose()
+        $('#myVideo').remove()
+        $('#dashboardVideoPlayer').html('')
+        this.player = null
+        this.showVideoDialog = false
+        this.playVideoUri = ''
+      },
+      initPlayer() {
+        this.$nextTick(() => {
+          document.addEventListener('keyup', (e) => {
+            if (e.keyCode === 27) {
+              this.handleCloseKeyDown(e) // 事件名
+            }
+          })
+        })
+      },
+      handleCloseKeyDown(e) {
+        if (this.dialogVisible && e.keyCode === 27) {
+          this.player.dispose()
+          $('#myVideo').remove()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+      },
+      playVideo(uri) {
+        this.playVideoUri = uri;
+        // this.dialogVisible = true
+        $('#dashboardVideoPlayer').append(
+          `<div style="position: relative;width: 100%;height: 100%;">
+              <i class="el-icon-error"
+                 onclick="closeVideoDialog()"
+                 style="position: absolute;
+                 right: 10px;
+                 top: 10px;
+                 z-index: 999;
+                 color: #fff;
+                 cursor: pointer;
+                 font-size: 28px;
+              "></i>
+              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+            </video></div>`
+        )
+        window.setTimeout(() => {
+          this.player = videojs('myVideo', {
+            muted: true,
+            controls: true,
+            preload: 'auto',
+          })
+          this.player.play()
+          console.log('获取视频')
+          console.log(this.player)
+
+        }, 1000)
+      },
+
       //获取力量 -- 不同类型点位
       handlePointType(type){
         this.showType = type;
@@ -474,6 +292,9 @@
               '</tr>'+
               '<tr>' +
               '<td>来源区域</td><td>' + txt.install_place + '</td>'+
+              '</tr>'+
+              '<tr>' +
+              '<td></td><td class="text-right baseColor pointer" onClick="handleVideo('+ aa +')">查看视频</td>'+
               '</tr>'+
               '</table>'+
               '</div>';

@@ -278,7 +278,13 @@
         </div>
       </div>
     </div>
-
+    <div v-show="showVideoDialog" class="dashboard-video-player-box">
+      <div id="dashboardVideoPlayer" class="dashboard-video-player">
+        <!--<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls data-setup="{}">-->
+        <!--<source id="source" src="rtsp://10.32.54.38:554/openUrl/ePBOw6I" autoplay type="rtsp/flv">-->
+        <!--</video>-->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -299,7 +305,7 @@
   import point04 from '@/assets/image/point_yy_03.png' // 引入刚才的map.js 注意路径
   import point05 from '@/assets/image/point_yy_04.png' // 引入刚才的map.js 注意路径
   import PieChartTwo from '@/components/Charts/PieChartTwo'
-  import {getAllVideoPoint, pointList} from '@/api/system'
+  import {getAllVideoPoint, pointList,getNowurl} from '@/api/system'
   import {analysisData,departOfWarn,timesOfWarn,getFacilityAll} from '@/api/appearance'
   import global from "@/utils/common";
   export default {
@@ -1042,6 +1048,9 @@
         AIVideo_num:'',
         commonVideo_num:'',
         yyFacilityNum:{},
+        showVideoDialog:false,
+        playVideoUri:'',
+        player: null
       }
     },
 
@@ -1058,6 +1067,11 @@
       this.onLoad();
       this.getList();
       this.getAIData();
+      window.handleVideo = this.handleVideo;
+      window.closeVideoDialog = () => {
+        this.handleVideoClose()
+      }
+      this.initPlayer()
     },
     methods: {
       // 辖区报警次数占比分析
@@ -1266,7 +1280,7 @@
             console.log(m)
             let infoWin1 = new T.InfoWindow();
             console.log(txt)
-            let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
+
             let sContent;
 
             if(type == 'yy'){
@@ -1293,6 +1307,7 @@
               // '<p class="f14 time">来源区域：' + txt.community_name + '</p>' +
               // '<p class="f14 time">所在地址：' + txt.install_place + '</p>' +
               // '<p class="f14 baseColor text-right">查看视频</p>' +
+              let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
               sContent =
                 '<div class="point_info">' +
                 '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
@@ -1309,7 +1324,7 @@
                 '<td>来源区域</td><td>' + txt.install_place + '</td>'+
                 '</tr>'+
                 '<tr>' +
-                '<td></td><td class="text-right baseColor pointer" onClick="handleVideo()">查看视频</td>'+
+                '<td></td><td class="text-right baseColor pointer" onClick="handleVideo('+ aa +')">查看视频</td>'+
                 '</tr>'+
                 '</table>'+
                 '</div>';
@@ -1321,6 +1336,77 @@
           return marker;
         }
 
+      },
+
+
+      //播放视频
+      handleVideo(txt){
+        console.log(txt)
+        this.getNow(txt);
+      },
+      getNow(txt){
+        getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
+          this.showVideoDialog = true;
+          this.playVideo(res.data.data.url);
+        });
+      },
+      handleVideoClose() {
+        this.player.dispose()
+        $('#myVideo').remove()
+        $('#dashboardVideoPlayer').html('')
+        this.player = null
+        this.showVideoDialog = false
+        this.playVideoUri = ''
+      },
+      initPlayer() {
+        this.$nextTick(() => {
+          document.addEventListener('keyup', (e) => {
+            if (e.keyCode === 27) {
+              this.handleCloseKeyDown(e) // 事件名
+            }
+          })
+        })
+      },
+      handleCloseKeyDown(e) {
+        if (this.dialogVisible && e.keyCode === 27) {
+          this.player.dispose()
+          $('#myVideo').remove()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+      },
+      playVideo(uri) {
+        this.playVideoUri = uri;
+        // this.dialogVisible = true
+        $('#dashboardVideoPlayer').append(
+          `<div style="position: relative;width: 100%;height: 100%;">
+              <i class="el-icon-error"
+                 onclick="closeVideoDialog()"
+                 style="position: absolute;
+                 right: 10px;
+                 top: 10px;
+                 z-index: 999;
+                 color: #fff;
+                 cursor: pointer;
+                 font-size: 28px;
+              "></i>
+              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+            </video></div>`
+        )
+        window.setTimeout(() => {
+          this.player = videojs('myVideo', {
+            muted: true,
+            controls: true,
+            preload: 'auto',
+          })
+          this.player.play()
+          console.log('获取视频')
+          console.log(this.player)
+
+        }, 1000)
       },
 
       //获取AI视频

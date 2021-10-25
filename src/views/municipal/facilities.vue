@@ -268,6 +268,13 @@
         </div>
       </div>
     </div>
+    <div v-show="showVideoDialog" class="dashboard-video-player-box">
+      <div id="dashboardVideoPlayer" class="dashboard-video-player">
+        <!--<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls data-setup="{}">-->
+        <!--<source id="source" src="rtsp://10.32.54.38:554/openUrl/ePBOw6I" autoplay type="rtsp/flv">-->
+        <!--</video>-->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -286,7 +293,7 @@
   import point01 from '@/assets/image/point10.png'; // 引入刚才的map.js 注意路径
   import point02 from '@/assets/image/point38.png'; // 引入刚才的map.js 注意路径
   import {warring,typeData,dataLine,dataPoint,currentData,historicalData} from '@/api/municipalFacilities'
-  import {getAllVideoPoint} from "@/api/system";
+  import {getAllVideoPoint, getNowurl} from "@/api/system";
   import global from "@/utils/common";
   export default {
     name: 'parameterList',
@@ -934,13 +941,13 @@
           ]
         },
         map: '', // 对象
-        zoom: 14, // 地图的初始化级别，及放大比例
-        centerLatitude:'30.2099178915',//中心纬度
-        centerLongitude:'120.2372328407',//中心经度
         typeList:[],
         dataLine:[],
         timerTwo:'',
         commonVideo_num:'',
+        showVideoDialog:false,
+        playVideoUri:'',
+        player: null
       }
     },
 
@@ -959,13 +966,86 @@
       this.getVideoNum();
       // this.getTypeData();
       this.mapPoint('facilities',[]);
-
+      window.handleVideo = this.handleVideo;
+      window.closeVideoDialog = () => {
+        this.handleVideoClose()
+      }
+      this.initPlayer()
     },
     beforeDestroy() {
       clearInterval(this.timerTwo);
       this.timerTwo = null;
     },
     methods: {
+      //播放视频
+      handleVideo(txt){
+        console.log(txt)
+        this.getNow(txt);
+      },
+      getNow(txt){
+        getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
+          this.showVideoDialog = true;
+          this.playVideo(res.data.data.url);
+        });
+      },
+      handleVideoClose() {
+        this.player.dispose()
+        $('#myVideo').remove()
+        $('#dashboardVideoPlayer').html('')
+        this.player = null
+        this.showVideoDialog = false
+        this.playVideoUri = ''
+      },
+      initPlayer() {
+        this.$nextTick(() => {
+          document.addEventListener('keyup', (e) => {
+            if (e.keyCode === 27) {
+              this.handleCloseKeyDown(e) // 事件名
+            }
+          })
+        })
+      },
+      handleCloseKeyDown(e) {
+        if (this.dialogVisible && e.keyCode === 27) {
+          this.player.dispose()
+          $('#myVideo').remove()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+      },
+      playVideo(uri) {
+        this.playVideoUri = uri;
+        // this.dialogVisible = true
+        $('#dashboardVideoPlayer').append(
+          `<div style="position: relative;width: 100%;height: 100%;">
+              <i class="el-icon-error"
+                 onclick="closeVideoDialog()"
+                 style="position: absolute;
+                 right: 10px;
+                 top: 10px;
+                 z-index: 999;
+                 color: #fff;
+                 cursor: pointer;
+                 font-size: 28px;
+              "></i>
+              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+            </video></div>`
+        )
+        window.setTimeout(() => {
+          this.player = videojs('myVideo', {
+            muted: true,
+            controls: true,
+            preload: 'auto',
+          })
+          this.player.play()
+          console.log('获取视频')
+          console.log(this.player)
+
+        }, 1000)
+      },
       getPoint(val){
         if(val == 1){
           this.map.clearOverLays();
@@ -1028,17 +1108,43 @@
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {
             let infoWin1 = new T.InfoWindow();
-            let sContent =
-              '<div class="point_info">' +
-              '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
-              '<tr>' +
-              '<td class="txt_6">名称</td><td>' + txt.name + '</td>' +
-              '</tr>'+
-              '<tr>' +
-              '<td>地址</td><td>' + txt.address + '</td>'+
-              '</tr>'+
-              '</table>'+
-              '</div>';
+            let sContent;
+            if(type == 'video'){
+              let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">监控名称</td><td>' + txt.name + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>所属区域</td><td>' + txt.depart_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>来源区域</td><td>' + txt.community_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>所在地址</td><td>' + txt.install_place + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td></td><td class="text-right baseColor pointer" onClick="handleVideo('+ aa +')">查看视频</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+            }else{
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">名称</td><td>' + txt.name + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>地址</td><td>' + txt.address + '</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+            }
+
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
 

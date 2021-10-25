@@ -222,7 +222,13 @@
       </div>
     </div>
 
-
+    <div v-show="showVideoDialog" class="dashboard-video-player-box">
+      <div id="dashboardVideoPlayer" class="dashboard-video-player">
+        <!--<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls data-setup="{}">-->
+        <!--<source id="source" src="rtsp://10.32.54.38:554/openUrl/ePBOw6I" autoplay type="rtsp/flv">-->
+        <!--</video>-->
+      </div>
+    </div>
 
   </div>
 </template>
@@ -245,7 +251,7 @@
   import pointCar from "@/assets/image/car.png";
   import point02 from "@/assets/image/point41.png";
   import point03 from "@/assets/image/point38.png";
-  import {getAllVideoPoint} from "@/api/system";
+  import {getAllVideoPoint, getNowurl} from "@/api/system";
   import global from "@/utils/common";
 
   export default {
@@ -964,6 +970,9 @@
         open1:false,
         open2:false,
         _CarTrack:'',
+        showVideoDialog:false,
+        playVideoUri:'',
+        player: null
       }
     },
 
@@ -1018,7 +1027,11 @@
         iconAnchor: new T.Point(34, 59)
       });
 
-
+      window.handleVideo = this.handleVideo;
+      window.closeVideoDialog = () => {
+        this.handleVideoClose()
+      }
+      this.initPlayer()
     },
     beforeDestroy() {
       clearInterval(this.timerOne);
@@ -1027,6 +1040,75 @@
       this.timerTwo = null;
     },
     methods: {
+      //播放视频
+      handleVideo(txt){
+        console.log(txt)
+        this.getNow(txt);
+      },
+      getNow(txt){
+        getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
+          this.showVideoDialog = true;
+          this.playVideo(res.data.data.url);
+        });
+      },
+      handleVideoClose() {
+        this.player.dispose()
+        $('#myVideo').remove()
+        $('#dashboardVideoPlayer').html('')
+        this.player = null
+        this.showVideoDialog = false
+        this.playVideoUri = ''
+      },
+      initPlayer() {
+        this.$nextTick(() => {
+          document.addEventListener('keyup', (e) => {
+            if (e.keyCode === 27) {
+              this.handleCloseKeyDown(e) // 事件名
+            }
+          })
+        })
+      },
+      handleCloseKeyDown(e) {
+        if (this.dialogVisible && e.keyCode === 27) {
+          this.player.dispose()
+          $('#myVideo').remove()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+      },
+      playVideo(uri) {
+        this.playVideoUri = uri;
+        // this.dialogVisible = true
+        $('#dashboardVideoPlayer').append(
+          `<div style="position: relative;width: 100%;height: 100%;">
+              <i class="el-icon-error"
+                 onclick="closeVideoDialog()"
+                 style="position: absolute;
+                 right: 10px;
+                 top: 10px;
+                 z-index: 999;
+                 color: #fff;
+                 cursor: pointer;
+                 font-size: 28px;
+              "></i>
+              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+            </video></div>`
+        )
+        window.setTimeout(() => {
+          this.player = videojs('myVideo', {
+            muted: true,
+            controls: true,
+            preload: 'auto',
+          })
+          this.player.play()
+          console.log('获取视频')
+          console.log(this.player)
+
+        }, 1000)
+      },
       carTrackReturn() {
         this.showMapDiv = true;
         this.showguijiDiv = false;
@@ -1493,29 +1575,53 @@
 
             let infoWin1 = new T.InfoWindow();
             let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
-            let sContent =
-              '<div class="point_info">' +
-              '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
-              '<tr>' +
-              '<td class="txt_6">车牌号</td><td>' + txt.Vehicle + '</td>' +
-              '</tr>'+
-              '<tr>' +
-              '<td>车型</td><td>' + '（没接口）' + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>品牌类型</td><td>' + '（没接口）' + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>车辆类型</td><td>' + '（没接口）' + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>地址</td><td>' + txt.Address + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td></td><td class="text-right baseColor pointer" onClick="handleTrail(' + aa +')">查看轨迹</td>'+
-              '</tr>'+
-              '</table>'+
-              '</div>';
+            let sContent;
+            if(type == 'video'){
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">监控名称</td><td>' + txt.name + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>所属区域</td><td>' + txt.depart_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>来源区域</td><td>' + txt.community_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>来源区域</td><td>' + txt.install_place + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td></td><td class="text-right baseColor pointer" onClick="handleVideo('+ aa +')">查看视频</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+            }else{
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">车牌号</td><td>' + txt.Vehicle + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>车型</td><td>' + '（没接口）' + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>品牌类型</td><td>' + '（没接口）' + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>车辆类型</td><td>' + '（没接口）' + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>地址</td><td>' + txt.Address + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td></td><td class="text-right baseColor pointer" onClick="handleTrail(' + aa +')">查看轨迹</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+            }
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
 

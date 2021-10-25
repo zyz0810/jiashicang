@@ -163,6 +163,13 @@
 <!--        </div>-->
 <!--      </div>-->
     </div>
+    <div v-show="showVideoDialog" class="dashboard-video-player-box">
+      <div id="dashboardVideoPlayer" class="dashboard-video-player">
+        <!--<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls data-setup="{}">-->
+        <!--<source id="source" src="rtsp://10.32.54.38:554/openUrl/ePBOw6I" autoplay type="rtsp/flv">-->
+        <!--</video>-->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -189,7 +196,7 @@
   import {cleanCarAddressList, lastGPS} from "@/api/garbageLink";
   import {cos} from "@/utils/translate";
   import vueSeamlessScroll from 'vue-seamless-scroll'
-  import {getAllVideoPoint} from "@/api/system";
+  import {getAllVideoPoint, getNowurl} from "@/api/system";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -520,6 +527,9 @@
         pointList:[],
         mapPageType:1,
         commonVideo_num:'',
+        showVideoDialog:false,
+        playVideoUri:'',
+        player: null
       }
     },
 
@@ -553,16 +563,11 @@
       this.getBarChart();
       this.getListData();
       this.getPieData('');//获取顶部及饼图数据
-
-      // this.chartDataThree.series[0].data = [{
-      //   name:'犬只审批',value:res.data.quanzhi
-      // },{
-      //   name:'工程渣土',value:res.data.gongcheng
-      // },{
-      //   name:'广告审批',value:res.data.guanggao
-      // },{
-      //   name:'其他审批',value:res.data.qita
-      // }];
+      window.handleVideo = this.handleVideo;
+      window.closeVideoDialog = () => {
+        this.handleVideoClose()
+      }
+      this.initPlayer()
 
 
     },
@@ -573,6 +578,76 @@
       this.timerTwo = null;
     },
     methods: {
+      //播放视频
+      handleVideo(txt){
+        console.log(txt)
+        this.getNow(txt);
+      },
+      getNow(txt){
+        getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
+          this.showVideoDialog = true;
+          this.playVideo(res.data.data.url);
+        });
+      },
+      handleVideoClose() {
+        this.player.dispose()
+        $('#myVideo').remove()
+        $('#dashboardVideoPlayer').html('')
+        this.player = null
+        this.showVideoDialog = false
+        this.playVideoUri = ''
+      },
+      initPlayer() {
+        this.$nextTick(() => {
+          document.addEventListener('keyup', (e) => {
+            if (e.keyCode === 27) {
+              this.handleCloseKeyDown(e) // 事件名
+            }
+          })
+        })
+      },
+      handleCloseKeyDown(e) {
+        if (this.dialogVisible && e.keyCode === 27) {
+          this.player.dispose()
+          $('#myVideo').remove()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+      },
+      playVideo(uri) {
+        this.playVideoUri = uri;
+        // this.dialogVisible = true
+        $('#dashboardVideoPlayer').append(
+          `<div style="position: relative;width: 100%;height: 100%;">
+              <i class="el-icon-error"
+                 onclick="closeVideoDialog()"
+                 style="position: absolute;
+                 right: 10px;
+                 top: 10px;
+                 z-index: 999;
+                 color: #fff;
+                 cursor: pointer;
+                 font-size: 28px;
+              "></i>
+              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+            </video></div>`
+        )
+        window.setTimeout(() => {
+          this.player = videojs('myVideo', {
+            muted: true,
+            controls: true,
+            preload: 'auto',
+          })
+          this.player.play()
+          console.log('获取视频')
+          console.log(this.player)
+
+        }, 1000)
+      },
+
       //点击顶部备案审批、视频
       showMapType(val){
         this.mapPageType = val;
@@ -833,40 +908,64 @@
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {
             let infoWin1 = new T.InfoWindow();
-
-            // 办件编号、申请人/单位、电话、地址、申请日期、办结日期、办理结果、权力名称、所属类型
-            let sContent =
-              '<div class="point_info">' +
-              '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
-              '<tr>' +
-              '<td>权力名称</td><td>' + txt.apply_name + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>所属类型</td><td>' + txt.type + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td class="txt_6">办件编号</td><td>' + txt.number_no + '</td>' +
-              '</tr>'+
-              '<tr>' +
-              '<td>申请人/单位</td><td>' + txt.statutory_people + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>电话</td><td>' +  txt.phone + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>地址</td><td>' + txt.address + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>申请日期</td><td>' + txt.apply_date + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>办结日期</td><td>' + txt.end_date + '</td>'+
-              '</tr>'+
-              '<tr>' +
-              '<td>办理结果</td><td>' + txt.result + '</td>'+
-              '</tr>'+
-              '</table>'+
-              '</div>';
+            let sContent;
+            if(type == 'video'){
+              let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">监控名称</td><td>' + txt.name + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>所属区域</td><td>' + txt.depart_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>来源区域</td><td>' + txt.community_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>所在地址</td><td>' + txt.install_place + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td></td><td class="text-right baseColor pointer" onClick="handleVideo('+ aa +')">查看视频</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+            }else {
+              // 办件编号、申请人/单位、电话、地址、申请日期、办结日期、办理结果、权力名称、所属类型
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td>权力名称</td><td>' + txt.apply_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>所属类型</td><td>' + txt.type + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td class="txt_6">办件编号</td><td>' + txt.number_no + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>申请人/单位</td><td>' + txt.statutory_people + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>电话</td><td>' +  txt.phone + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>地址</td><td>' + txt.address + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>申请日期</td><td>' + txt.apply_date + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>办结日期</td><td>' + txt.end_date + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>办理结果</td><td>' + txt.result + '</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+            }
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
 
