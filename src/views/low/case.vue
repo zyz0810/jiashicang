@@ -970,13 +970,13 @@
             '<div class="point_info">' +
             '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
             '<tr>' +
-            '<td style="white-space:nowrap;">类型</td><td>' + list[i].type + '</td>' +
+            '<td style="white-space:nowrap;">案件类型</td><td>' + list[i].type + '</td>' +
             '</tr>'+
             '<tr>' +
-            '<td>数量</td><td>' + list[i].count + '</td>'+
+            '<td>案件数量</td><td>' + list[i].count + '</td>'+
             '</tr>'+
             '<tr>' +
-            '<td>地址</td><td>' + list[i].name + '</td>'+
+            '<td>详细地址</td><td>' + list[i].name + '</td>'+
             '</tr>'+
             '</table>'+
             '</div>';
@@ -1238,13 +1238,13 @@
                 '<div class="point_info">' +
                 '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
                 '<tr>' +
-                '<td style="white-space:nowrap;">类型</td><td>' + txt.type + '</td>' +
+                '<td style="white-space:nowrap;">案件类型</td><td>' + txt.type + '</td>' +
                 '</tr>'+
                 '<tr>' +
-                '<td>数量</td><td>' + txt.count + '</td>'+
+                '<td>案件数量</td><td>' + txt.count + '</td>'+
                 '</tr>'+
                 '<tr>' +
-                '<td>地址</td><td>' + txt.name + '</td>'+
+                '<td>详细地址</td><td>' + txt.name + '</td>'+
                 '</tr>'+
                 '</table>'+
                 '</div>';
