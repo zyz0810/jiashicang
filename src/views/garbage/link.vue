@@ -1598,20 +1598,28 @@
                 '</table>'+
                 '</div>';
             }else{
+              let carType;
+              if(txt.type == 0){
+                carType = '其他'
+              }else if(txt.type == 1){
+                carType = '洒水车'
+              }else if(txt.type == 2){
+                carType = '机扫车'
+              }
               sContent =
                 '<div class="point_info">' +
                 '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
                 '<tr>' +
                 '<td class="txt_6">车牌号</td><td>' + txt.Vehicle + '</td>' +
                 '</tr>'+
+                // '<tr>' +
+                // '<td>车型</td><td>' + '（没接口）' + '</td>'+
+                // '</tr>'+
+                // '<tr>' +
+                // '<td>品牌类型</td><td>' + '（没接口）' + '</td>'+
+                // '</tr>'+
                 '<tr>' +
-                '<td>车型</td><td>' + '（没接口）' + '</td>'+
-                '</tr>'+
-                '<tr>' +
-                '<td>品牌类型</td><td>' + '（没接口）' + '</td>'+
-                '</tr>'+
-                '<tr>' +
-                '<td>车辆类型</td><td>' + '（没接口）' + '</td>'+
+                '<td>车辆类型</td><td>' + carType + '</td>'+
                 '</tr>'+
                 '<tr>' +
                 '<td>地址</td><td>' + txt.Address + '</td>'+

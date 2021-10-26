@@ -830,6 +830,9 @@
         });
       },
       handlePageType(val){
+        clearInterval(this.timer);
+        this.timer = null;
+        this.map.closeInfoWindow();
         this.map.clearOverLays();
         heatmapOverlay = '';
         this.activeIndex = val;
@@ -858,6 +861,9 @@
         }
       },
       changeMap(){
+        clearInterval(this.timer);
+        this.timer = null;
+        this.map.closeInfoWindow();
         this.map.clearOverLays();
         if(this.mapType == 1){
           this.mapType  = 2;
@@ -884,7 +890,7 @@
           let points  = res.data.map (item=>{
             return {
               name: item.description,
-              type:item.type?item.type:'',
+              type:item.small_category?item.small_category:'',
               lat:  Number(item.y_line),
               lng:  Number(item.x_line),
               count: Number(item.num)
@@ -917,7 +923,7 @@
           ];
           let points  = res.data.map (item=>{
             return {
-              name: item.name?item.name:'',
+              name: item.point?item.point:'',
               type:item.type?item.type:'',
               lat:  Number(item.lat),
               lng:  Number(item.lon),
