@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
    <div class="index_cont">
-     <p class="txt_linear f50 text-center bold">滨江区城市管理局指挥一体化</p>
+     <p class="txt_linear f50 text-center bold">滨江区城市管理局主分平台一体化</p>
      <div class="index_title text-center">
        <div class="title_line_left"></div>
        <div class="title_line_right"></div>
@@ -27,7 +27,7 @@
          <!--         <a href="http://jsc.susongzhijia.com/#/general/overview" target="_blank">-->
          <a href="/zhuanxiang/index.html#/electron/map">
            <!--         <a href=" http://192.168.2.3:8090/">-->
-           <img src="./../../assets/image/index_icon01.png"/>
+           <img src="./../../assets/image/index_icon19.png"/>
            <p class="mt_10">电子地图</p>
          </a>
          <!--         </a>-->
@@ -61,7 +61,7 @@
          </a>
        </li>
        <li>
-         <a href="http://114.55.98.237:8081/index" target="_blank">
+         <a href="http://218.108.205.60:8085/login?redirect=%2Findex" target="_blank">
          <img src="./../../assets/image/index_icon17.png"/>
          <p class="mt_10">共享单车</p>
          </a>
