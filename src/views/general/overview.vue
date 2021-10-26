@@ -157,7 +157,7 @@
                       </div>
                       <div class="weui-cell__ft f12">
                         <p><span class="ml_10">{{item.wz_status}}</span></p>
-                        <p>{{$moment(Number(item.day_time)*1000).format("YYYY-MM-DD HH:mm:ss")}}</p>
+                        <p>{{item.day_time}}</p>
                       </div>
                     </div>
                   </vueSeamlessScroll>
