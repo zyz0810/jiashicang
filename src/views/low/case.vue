@@ -950,13 +950,13 @@
           '<div class="point_info">' +
           '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
           '<tr>' +
-          '<td style="white-space:nowrap;">类型</td><td>' + list[0].type + '</td>' +
+          '<td style="white-space:nowrap;">案件类型</td><td>' + list[0].type + '</td>' +
           '</tr>'+
           '<tr>' +
-          '<td>数量</td><td>' + list[0].count + '</td>'+
+          '<td>案件数量</td><td>' + list[0].count + '</td>'+
           '</tr>'+
           '<tr>' +
-          '<td>地址</td><td>' + list[0].name + '</td>'+
+          '<td>详细地址</td><td>' + list[0].name + '</td>'+
           '</tr>'+
           '</table>'+
           '</div>';
