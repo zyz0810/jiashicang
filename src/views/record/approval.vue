@@ -107,30 +107,30 @@
       <!--<p class="text-right baseColor f16 bold mt_20">说明</p>-->
     </div>
     <div class="top_div flex clr_white text-center f16 bold">
-      <div class="flex f16 bold mr_20 border shadow" @click="showMapType(1)">
+      <div class="flex f20 bold mr_20 border shadow" @click="showMapType(1)">
         <div class="baseColor">备案审批</div>
         <div class="">
           广告审批
-          <span class="txt_linear">{{formData.guanggao}}</span>
+          <span class="txt_linear f22">{{formData.guanggao}}</span>
         </div>
         <div class="">
           犬只审批
-          <span class="txt_linear">{{formData.quanzi}}</span>
+          <span class="txt_linear f22">{{formData.quanzi}}</span>
         </div>
         <div class="">
           工程渣土
-          <span class="txt_linear">{{formData.gongcheng}}</span>
+          <span class="txt_linear f22">{{formData.gongcheng}}</span>
         </div>
         <div class="">
           其他审批
-          <span class="txt_linear">{{formData.qita}}</span>
+          <span class="txt_linear f22">{{formData.qita}}</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" @click="showMapType(2)">
+      <div class="flex f20 bold border shadow" @click="showMapType(2)">
         <div class="baseColor">视频</div>
         <div class="">
           普通视频
-          <span class="txt_linear">{{commonVideo_num}}</span>
+          <span class="txt_linear f22">{{commonVideo_num}}</span>
         </div>
       </div>
 

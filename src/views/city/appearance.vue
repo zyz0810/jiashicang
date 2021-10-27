@@ -203,18 +203,18 @@
     </div>
 
     <div class="top_div flex clr_white text-center" v-if="activeIndex == 0">
-      <div class="flex f16 bold mr_20 border shadow">
+      <div class="flex f20 bold mr_20 border shadow">
         <div class="baseColor">案件情况</div>
         <div class="">
           案件总数
-          <span class="txt_linear">1323</span>
+          <span class="txt_linear f22">1323</span>
         </div>
         <div class="">
           立案数
-          <span class="txt_linear">823</span>
+          <span class="txt_linear f22">823</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow">
+      <div class="flex f20 bold border shadow">
         <div class="baseColor">视频</div>
         <div class="">
           AI视频
@@ -223,58 +223,58 @@
       </div>
     </div>
     <div class="top_div flex clr_white text-center" v-if="activeIndex == 1">
-      <div class="flex f16 bold mr_20 border shadow" @click="getYyPoint(1)">
+      <div class="flex f20 bold mr_20 border shadow" @click="getYyPoint(1)">
         <div class="baseColor">设备管理</div>
         <div class="">
           报警数
-          <span class="txt_linear">{{yyFacilityNum.super}}</span>
+          <span class="txt_linear f22">{{yyFacilityNum.super}}</span>
         </div>
         <div class="">
           正常数
-          <span class="txt_linear">{{yyFacilityNum.normal}}</span>
+          <span class="txt_linear f22">{{yyFacilityNum.normal}}</span>
         </div>
         <div class="">
           离线数
-          <span class="txt_linear">{{yyFacilityNum.off}}</span>
+          <span class="txt_linear f22">{{yyFacilityNum.off}}</span>
         </div>
         <div class="">
           故障数
-          <span class="txt_linear">{{yyFacilityNum.trouble}}</span>
+          <span class="txt_linear f22">{{yyFacilityNum.trouble}}</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" @click="getYyPoint(2)">
+      <div class="flex f20 bold border shadow" @click="getYyPoint(2)">
         <div class="baseColor">视频</div>
         <div class="">
           普通视频
-          <span class="txt_linear">{{commonVideo_num}}</span>
+          <span class="txt_linear f22">{{commonVideo_num}}</span>
         </div>
       </div>
     </div>
     <div class="top_div flex clr_white text-center" v-if="activeIndex == 2">
-      <div class="flex f16 bold mr_20 border shadow" @click="getGdPoint(1)">
+      <div class="flex f20 bold mr_20 border shadow" @click="getGdPoint(1)">
         <div class=" baseColor">工地概览</div>
         <div class="">
           总数
-          <span class="txt_linear">22</span>
+          <span class="txt_linear f22">22</span>
         </div>
         <div class="">
           准备阶段
-          <span class="txt_linear">12</span>
+          <span class="txt_linear f22">12</span>
         </div>
         <div class="">
           施工阶段
-          <span class="txt_linear">10</span>
+          <span class="txt_linear f22">10</span>
         </div>
         <div class="">
           竣工阶段
-          <span class="txt_linear">10</span>
+          <span class="txt_linear f22">10</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" @click="getGdPoint(2)">
+      <div class="flex f20 bold border shadow" @click="getGdPoint(2)">
         <div class="baseColor">视频</div>
         <div class="">
           普通视频
-          <span class="txt_linear">{{commonVideo_num}}</span>
+          <span class="txt_linear f22">{{commonVideo_num}}</span>
         </div>
       </div>
     </div>

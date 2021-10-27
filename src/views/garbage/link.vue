@@ -90,22 +90,22 @@
 
     </div>
     <div class="top_div flex clr_white text-center f16 bold">
-      <div class="flex f16 bold mr_20 border shadow" @click="showMapType(1)">
+      <div class="flex f20 bold mr_20 border shadow" @click="showMapType(1)">
         <div class="baseColor">车辆管理</div>
         <div class="">
           总车辆
-          <span class="txt_linear">{{carData.total}}</span>
+          <span class="txt_linear f22">{{carData.total}}</span>
         </div>
         <div class="">
           在线车辆
-          <span class="txt_linear">{{carData.onlineNum}}</span>
+          <span class="txt_linear f22">{{carData.onlineNum}}</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" @click="showMapType(2)">
+      <div class="flex f20 bold border shadow" @click="showMapType(2)">
         <div class=" baseColor">视频</div>
         <div class="">
           普通视频
-          <span class="txt_linear">{{commonVideo_num}}</span>
+          <span class="txt_linear f22">{{commonVideo_num}}</span>
         </div>
       </div>
 

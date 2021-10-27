@@ -194,86 +194,86 @@
 <!--      </div>-->
 <!--    </div>-->
         <div class="top_div flex clr_white text-center f16" v-if="activeIndex == 0">
-          <div class="flex f16 bold mr_20 border shadow" @click="handlePointType(1)">
+          <div class="flex f20 bold mr_20 border shadow" @click="handlePointType(1)">
             <div class="baseColor">
               泊位概况
             </div>
             <div class="flex-item">
               总泊位数
-              <span class="txt_linear">{{parkData.total}}</span>
+              <span class="txt_linear f22">{{parkData.total}}</span>
             </div>
-            <div class="">占用泊位数<span class="txt_linear">{{parkData.useNum}}</span></div>
-            <div class="">占用率<span class="txt_linear">{{parkData.useRate}}%</span></div>
+            <div class="">占用泊位数<span class="txt_linear f22">{{parkData.useNum}}</span></div>
+            <div class="">占用率<span class="txt_linear f22">{{parkData.useRate}}%</span></div>
           </div>
-          <div class="flex f16 bold mr_20 border shadow" @click="handlePointType(2)">
+          <div class="flex f20 bold mr_20 border shadow" @click="handlePointType(2)">
             <div class="baseColor">
               视频
             </div>
             <div class="">
               停车场视频
-              <span class="txt_linear">{{parkNum}}</span>
+              <span class="txt_linear f22">{{parkNum}}</span>
             </div>
           </div>
         </div>
     <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 1">
-      <div class="flex f16 bold mr_20 border shadow" @click="handleTwoPointType(1)">
+      <div class="flex f20 bold mr_20 border shadow" @click="handleTwoPointType(1)">
         <div class="baseColor">
           泊位概况
         </div>
         <div class="">
           总泊位数（没接口）
-          <span class="txt_linear">{{carData.shangBao}}</span>
+          <span class="txt_linear f22">{{carData.shangBao}}</span>
         </div>
         <div class="">
           允许投放数（没接口）
-          <span class="txt_linear">{{carData.chuLi}}</span>
+          <span class="txt_linear f22">{{carData.chuLi}}</span>
         </div>
         <div class="">
           车辆总数（没接口）
-          <span class="txt_linear">{{carData.undisposed}}</span>
+          <span class="txt_linear f22">{{carData.undisposed}}</span>
         </div>
       </div>
-      <div class="flex f16 bold mr_20 border shadow" @click="handleTwoPointType(2)">
+      <div class="flex f20 bold mr_20 border shadow" @click="handleTwoPointType(2)">
         <div class="baseColor">
           人员
         </div>
         <div class="">
           运维人员（没接口）
-          <span class="txt_linear">{{carData.user_num}}</span>
+          <span class="txt_linear f22">{{carData.user_num}}</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" @click="handleTwoPointType(3)">
+      <div class="flex f20 bold border shadow" @click="handleTwoPointType(3)">
         <div class="baseColor">
           视频
         </div>
         <div class="">
           普通视频
-          <span class="txt_linear">{{carData.commonVideo_num}}</span>
+          <span class="txt_linear f22">{{carData.commonVideo_num}}</span>
         </div>
       </div>
 
     </div>
     <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 2">
-      <div class="flex f16 bold mr_20 border shadow" @click="handleTypeLight(2)">
+      <div class="flex f20 bold mr_20 border shadow" @click="handleTypeLight(2)">
         <div class="baseColor">
           控制柜
         </div>
         <div class="">
           总数
-          <span class="txt_linear">{{lightData.cabinetCount}}</span>
+          <span class="txt_linear f22">{{lightData.cabinetCount}}</span>
         </div>
         <div class="">
           故障数
-          <span class="txt_linear">{{lightData.cabinetTrouble}}</span>
+          <span class="txt_linear f22">{{lightData.cabinetTrouble}}</span>
         </div>
       </div>
-      <div class="flex f16 bold mr_20 border shadow" @click="handleTypeLight(1)">
+      <div class="flex f20 bold mr_20 border shadow" @click="handleTypeLight(1)">
         <div class="baseColor">
           亮灯设备
         </div>
         <div class="">
           总数
-          <span class="txt_linear">{{lightData.lightCount}}</span>
+          <span class="txt_linear f22">{{lightData.lightCount}}</span>
         </div>
       </div>
     </div>

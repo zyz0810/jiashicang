@@ -16,26 +16,26 @@
 <!--        </div>-->
 <!--    </div>-->
     <div class="top_div flex clr_white text-center">
-      <div class="flex f16 bold mr_20 border shadow" @click="handleMapType(1)">
+      <div class="flex f20 bold mr_20 border shadow" @click="handleMapType(1)">
         <div class="baseColor">违法建筑</div>
         <div class="">
           违法建筑总宗数
-          <span class="txt_linear">2881</span>
+          <span class="txt_linear f22">2881</span>
         </div>
         <div class="">
           违法占地总面积
-          <span class="txt_linear">194246.83</span>
+          <span class="txt_linear f22">194246.83</span>
         </div>
         <div class="">
           违法建筑总面积
-          <span class="txt_linear">285742.53</span>
+          <span class="txt_linear f22">285742.53</span>
         </div>
       </div>
-      <div class="flex f16 bold border shadow" @click="handleMapType(2)">
+      <div class="flex f20 bold border shadow" @click="handleMapType(2)">
         <div class="baseColor">视频</div>
         <div class="">
           普通视频
-          <span class="txt_linear">{{commonVideo_num}}</span>
+          <span class="txt_linear f22">{{commonVideo_num}}</span>
         </div>
       </div>
     </div>

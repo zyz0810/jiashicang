@@ -61,29 +61,29 @@
       </div>
       <!--<p class="text-right baseColor f16 bold mt_20">说明</p>-->
     </div>
-    <div class="top_div flex clr_white text-center f16 bold">
+    <div class="top_div flex clr_white text-center f20 bold">
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           AI视频
-          <span class="txt_linear">{{formData.ai}}</span>
+          <span class="txt_linear f22">{{formData.ai}}</span>
         </div>
       </div>
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           停车场视频
-          <span class="txt_linear">{{formData.parking}}</span>
+          <span class="txt_linear f22">{{formData.parking}}</span>
         </div>
       </div>
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           普通视频
-          <span class="txt_linear">{{formData.putong}}</span>
+          <span class="txt_linear f22">{{formData.putong}}</span>
         </div>
       </div>
       <div class="flex border shadow">
         <div class="flex-item">
           河道视频
-          <span class="txt_linear">{{formData.hedao}}</span>
+          <span class="txt_linear f22">{{formData.hedao}}</span>
         </div>
       </div>
     </div>

@@ -125,27 +125,27 @@
 
     </div>
     <div class="top_div flex clr_white text-center">
-      <div class="flex f16 bold mr_20 border shadow" @click="handleMapType(1)">
+      <div class="flex f20 bold mr_20 border shadow" @click="handleMapType(1)">
         <div class=" baseColor">设备管理</div>
         <div class="">
           总数
-          <span class="txt_linear">66</span>
+          <span class="txt_linear f22">66</span>
         </div>
         <div class="">
           离线
-          <span class="txt_linear">4</span>
+          <span class="txt_linear f22">4</span>
         </div>
         <div class="">
           故障
-          <span class="txt_linear">4</span>
+          <span class="txt_linear f22">4</span>
         </div>
 
       </div>
-      <div class="flex f16 bold border shadow" @click="handleMapType(2)">
+      <div class="flex f20 bold border shadow" @click="handleMapType(2)">
         <div class="baseColor">视频</div>
         <div class="">
           河道视频
-          <span class="txt_linear">18</span>
+          <span class="txt_linear f22">18</span>
         </div>
       </div>
     </div>

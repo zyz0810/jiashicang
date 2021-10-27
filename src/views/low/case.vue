@@ -37,124 +37,124 @@
       </div>
 
     </div>
-    <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 0">
+    <div class="top_div top_one flex clr_white text-center f20 bold" v-if="activeIndex == 0">
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           周上报量
-          <span class="txt_linear">{{formData.shangBao}}</span>
+          <span class="txt_linear f22">{{formData.shangBao}}</span>
         </div>
       </div>
       <div class="flex border shadow mr_20">
       <div class="flex-item">
         周处理量
-        <span class="txt_linear">{{formData.chuLi}}</span>
+        <span class="txt_linear f22">{{formData.chuLi}}</span>
       </div>
       </div>
       <div class="flex border shadow mr_20">
       <div class="flex-item">
         周未处理量
-        <span class="txt_linear">{{formData.undisposed}}</span>
+        <span class="txt_linear f22">{{formData.undisposed}}</span>
       </div>
       </div>
       <div class="flex border shadow mr_20">
       <div class="flex-item">
         周黄灯件
-        <span class="txt_linear">{{formData.yellow_num}}</span>
+        <span class="txt_linear f22">{{formData.yellow_num}}</span>
       </div>
       </div>
       <div class="flex border shadow">
       <div class="flex-item">
         周红灯件
-        <span class="txt_linear">{{formData.red_num}}</span>
+        <span class="txt_linear f22">{{formData.red_num}}</span>
       </div>
     </div>
     </div>
-    <div class="top_div flex clr_white text-center f16 bold" v-if="activeIndex == 1">
+    <div class="top_div flex clr_white text-center f20 bold" v-if="activeIndex == 1">
       <div class="flex border shadow mr_20">
         <div class="">
           受理量
-          <span class="txt_linear">{{formData.month_deal_num}}</span>
+          <span class="txt_linear f22">{{formData.month_deal_num}}</span>
         </div>
         <div class="">
           同比{{formData.basis_direction == 1?'上升':'下降'}}
-          <span class="txt_linear">{{formData.basis_num}}%</span>
+          <span class="txt_linear f22">{{formData.basis_num}}%</span>
         </div>
         <div class="">
           环比{{formData.comparative_direction == 1?'上升':'下降'}}
-          <span class="txt_linear">{{formData.comparative_num}}%</span>
+          <span class="txt_linear f22">{{formData.comparative_num}}%</span>
         </div>
         <div class="">
           满意率
-          <span class="txt_linear">{{formData.satisfaction_rate}}%</span>
+          <span class="txt_linear f22">{{formData.satisfaction_rate}}%</span>
         </div>
       </div>
       <div class="flex border shadow">
         <div class="">
           重复投诉件
-          <span class="txt_linear">{{formData.rep_num}}</span>
+          <span class="txt_linear f22">{{formData.rep_num}}</span>
         </div>
       </div>
 
     </div>
-    <div class="top_div flex clr_white text-center f16 bold" v-if="activeIndex == 2 && directType == 0">
+    <div class="top_div flex clr_white text-center f20 bold" v-if="activeIndex == 2 && directType == 0">
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           今日上报量
-          <span class="txt_linear">{{Number(directData.count) + Number(AIData.count)}}</span>
+          <span class="txt_linear f22">{{Number(directData.count) + Number(AIData.count)}}</span>
         </div>
       </div>
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           今日受理量
-          <span class="txt_linear">{{Number(directData.chuli) + Number(AIData.chuli)}}</span>
+          <span class="txt_linear f22">{{Number(directData.chuli) + Number(AIData.chuli)}}</span>
         </div>
       </div>
       <div class="flex border shadow">
         <div class="flex-item">
           今日结案量
-          <span class="txt_linear">{{Number(directData.end) + Number(AIData.end)}}</span>
+          <span class="txt_linear f22">{{Number(directData.end) + Number(AIData.end)}}</span>
         </div>
       </div>
 
     </div>
-    <div class="top_div flex clr_white text-center f16 bold" v-if="activeIndex == 2 && directType == 1">
+    <div class="top_div flex clr_white text-center f20 bold" v-if="activeIndex == 2 && directType == 1">
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           今日上报量
-          <span class="txt_linear">{{AIData.count}}</span>
+          <span class="txt_linear f22">{{AIData.count}}</span>
         </div>
       </div>
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           今日受理量
-          <span class="txt_linear">{{AIData.chuli}}</span>
+          <span class="txt_linear f22">{{AIData.chuli}}</span>
         </div>
       </div>
       <div class="flex border shadow">
         <div class="flex-item">
           今日结案量
-          <span class="txt_linear">{{AIData.end}}</span>
+          <span class="txt_linear f22">{{AIData.end}}</span>
         </div>
       </div>
 
     </div>
-    <div class="top_div flex clr_white text-center f16 bold" v-if="activeIndex == 2 && directType == 2">
+    <div class="top_div flex clr_white text-center f20 bold" v-if="activeIndex == 2 && directType == 2">
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           今日上报量
-          <span class="txt_linear">{{directData.count}}</span>
+          <span class="txt_linear f22">{{directData.count}}</span>
         </div>
       </div>
       <div class="flex border shadow mr_20">
         <div class="flex-item">
           今日受理量
-          <span class="txt_linear">{{directData.chuli}}</span>
+          <span class="txt_linear f22">{{directData.chuli}}</span>
         </div>
       </div>
       <div class="flex border shadow">
         <div class="flex-item">
           今日结案量
-          <span class="txt_linear">{{directData.end}}</span>
+          <span class="txt_linear f22">{{directData.end}}</span>
         </div>
       </div>
 
@@ -949,13 +949,13 @@
           '<div class="point_info">' +
           '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
           '<tr>' +
-          '<td style="white-space:nowrap;">案件类型</td><td>' + list[0].type + '</td>' +
+          '<td style="white-space:nowrap;padding:20px 10px;">案件类型</td><td>' + list[0].type + '</td>' +
           '</tr>'+
           '<tr>' +
-          '<td>案件数量</td><td>' + list[0].count + '</td>'+
+          '<td style="white-space:nowrap;padding:20px 10px;">案件数量</td><td>' + list[0].count + '</td>'+
           '</tr>'+
           '<tr>' +
-          '<td>详细地址</td><td>' + list[0].name + '</td>'+
+          '<td style="white-space:nowrap;padding:20px 10px;">发生地址</td><td>' + list[0].name + '</td>'+
           '</tr>'+
           '</table>'+
           '</div>';
@@ -969,13 +969,13 @@
             '<div class="point_info">' +
             '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
             '<tr>' +
-            '<td style="white-space:nowrap;">案件类型</td><td>' + list[i].type + '</td>' +
+            '<td style="white-space:nowrap;padding:20px 10px;">案件类型</td><td>' + list[i].type + '</td>' +
             '</tr>'+
             '<tr>' +
-            '<td>案件数量</td><td>' + list[i].count + '</td>'+
+            '<td style="white-space:nowrap;padding:20px 10px;">案件数量</td><td>' + list[i].count + '</td>'+
             '</tr>'+
             '<tr>' +
-            '<td>详细地址</td><td>' + list[i].name + '</td>'+
+            '<td style="white-space:nowrap;padding:20px 10px;">发生地址</td><td>' + list[i].name + '</td>'+
             '</tr>'+
             '</table>'+
             '</div>';
@@ -1237,13 +1237,13 @@
                 '<div class="point_info">' +
                 '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
                 '<tr>' +
-                '<td style="white-space:nowrap;">案件类型</td><td>' + txt.type + '</td>' +
+                '<td style="white-space:nowrap;padding:20px 10px;">案件类型</td><td>' + txt.type + '</td>' +
                 '</tr>'+
                 '<tr>' +
-                '<td>案件数量</td><td>' + txt.count + '</td>'+
+                '<td style="white-space:nowrap;padding:20px 10px;">案件数量</td><td>' + txt.count + '</td>'+
                 '</tr>'+
                 '<tr>' +
-                '<td>详细地址</td><td>' + txt.name + '</td>'+
+                '<td style="white-space:nowrap;padding:20px 10px;">发生地址</td><td>' + txt.name + '</td>'+
                 '</tr>'+
                 '</table>'+
                 '</div>';
