@@ -2,7 +2,7 @@
   <div class="login-container flex flex-vertical">
     <div class="login_content">
 <!--      <img src="../../assets/image/login_title.png" class="login_title"/>-->
-      <p class="txt_linear f50 text-center bold" style="margin-bottom: 50px;">滨江区城市管理局指挥一体化</p>
+      <p class="txt_linear f50 text-center bold" style="margin-bottom: 50px;">滨江区城市管理局主分平台一体化</p>
       <div class="login_div mt_20">
         <img src="../../assets/image/login_txt.png" class="login_txt"/>
         <div class="flex">

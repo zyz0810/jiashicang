@@ -776,9 +776,6 @@
           ]
         },
         map: '', // 对象
-        zoom: 14, // 地图的初始化级别，及放大比例
-        centerLatitude:'30.2099178915',//中心纬度
-        centerLongitude:'120.2372328407',//中心经度
         pointOne:[],
         pointTwo:[],
         AIData:{},
@@ -882,6 +879,7 @@
         }
       },
       getHeatMap(){
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         heatmapOverlay='';
         this.map.clearOverLays();
         console.log('热力图1')
@@ -908,6 +906,7 @@
 
       },
       getHeatMapTwo(){
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         heatmapOverlay='';
         console.log('热力图2')
         this.map.clearOverLays();

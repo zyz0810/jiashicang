@@ -61,6 +61,7 @@
             <li class="flex-item">{{item.status}}</li>
             <li class="flex-item">{{item.createTime}}</li>
           </ul>
+          <div style="margin-bottom: 300px;"></div>
         </vueSeamlessScroll>
 
 <!--        <el-table v-loading="listLoading" :data="list" :height="280" stripe element-loading-text="拼命加载中" fit ref="tableList2" v-show="abnormalIndex == 1" class="f14 mt_20">-->
@@ -109,7 +110,7 @@
           <li class="flex-item">告警级别</li>
           <li class="flex-item">告警时间</li>
         </ul>
-        <vueSeamlessScroll :data="warnList" class="seamless-warp text-center" :class-option="classOption">
+        <vueSeamlessScroll :data="warnList" class="seamless-warp text-center" :class-option="classOptionTwo">
           <ul class="flex table_ul" v-for="item in warnList" :key="item.id">
             <li class="flex-item">{{item.stnm}}</li>
 <!--            <li class="flex-item">{{item.type | formatType}}</li>-->
@@ -117,6 +118,7 @@
             <li class="flex-item">{{item.alarmLevel | formatLevel}}</li>
             <li class="flex-item">{{item.alarmTime}}</li>
           </ul>
+          <div style="margin-bottom: 300px;"></div>
         </vueSeamlessScroll>
 
       </div>
@@ -648,6 +650,18 @@
       classOption () {
         return {
           step: 0.2, // 数值越大速度滚动越快
+          limitMoveNum: this.abnormalList.length, // 开始无缝滚动的数据量 this.dataList.length
+          hoverStop: true, // 是否开启鼠标悬停stop
+          direction: 1, // 0向下 1向上 2向左 3向右
+          openWatch: false, // 开启数据实时监控刷新dom
+          singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+          singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+          waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
+        }
+      },
+      classOptionTwo () {
+        return {
+          step: 0.2, // 数值越大速度滚动越快
           limitMoveNum: this.warnList.length, // 开始无缝滚动的数据量 this.dataList.length
           hoverStop: true, // 是否开启鼠标悬停stop
           direction: 1, // 0向下 1向上 2向左 3向右
@@ -656,6 +670,7 @@
           singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
           waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
         }
+        // abnormalList
       }
     },
     filters: {
