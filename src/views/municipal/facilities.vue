@@ -32,7 +32,7 @@
           <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left01_active.png"></div>
           <div class="weui-cell__bd">
             <p class="clr_white">桥梁(江虹桥)</p>
-            <p class="bold clr01"><span class="f26">1</span>个</p>
+            <p class="bold clr01"><span class="f26">1</span>座</p>
           </div>
         </div>
         <div class="weui-cell facilities_weui">
@@ -46,21 +46,21 @@
           <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left03.png"></div>
           <div class="weui-cell__bd">
             <p class="clr_white">养护道路</p>
-            <p class="bold clr03"><span class="f26">103</span>个</p>
+            <p class="bold clr03"><span class="f26">103</span>条</p>
           </div>
         </div>
         <div class="weui-cell facilities_weui">
           <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left04.png"></div>
           <div class="weui-cell__bd">
             <p class="clr_white">排水管线长度</p>
-            <p class="bold clr04"><span class="f26">1</span>个</p>
+            <p class="bold clr04"><span class="f26">1</span>千米</p>
           </div>
         </div>
         <div class="weui-cell facilities_weui">
           <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left05.png"></div>
           <div class="weui-cell__bd">
             <p class="clr_white">养护单位</p>
-            <p class="bold clr05"><span class="f26">14</span>个</p>
+            <p class="bold clr05"><span class="f26">14</span>家</p>
           </div>
         </div>
 <!--        <div class="f14 bold flex mt_20 facilities_intro ml_10">-->

@@ -107,7 +107,7 @@ export const asyncRoutes = [
     name: '综合概览',
     hidden: false,
     meta: {
-      title: '在线监测',
+      title: '综合概览',
       icon: '0',
       roles: ['admin'],
     },

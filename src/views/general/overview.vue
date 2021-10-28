@@ -111,7 +111,7 @@
         <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10">
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">执法办案</span></div>
-            <div class="flex mt_10 ml_10" style=" align-items: stretch;">
+            <div class="flex mt_20 ml_10" style=" align-items: stretch;">
               <ul class="clr_white bold anjian_cegory mr_20">
                 <li class="flex">
                   <span class="block f26 text-center">
@@ -220,7 +220,7 @@
               <countTo :startVal="0" :endVal="formData.letter.month_deal_num" :duration="5000" ref="countOne"></countTo>
               <!--<animate-number from="0" :to="formData.letter.month_deal_num" :key="formData.letter.month_deal_num" :duration="3000" class="f20"></animate-number>-->
             </p>
-            <div class="flex bold text-center clr_white mt_10 mb_10 bg_blue03" style="padding: 10px 0; border-radius: 10px;">
+            <div class="flex bold text-center clr_white mt_20 mb_20 bg_blue03" style="padding: 10px 0; border-radius: 10px;">
               <div class="flex-item">
                 <p class="f26">{{formData.letter.basis_num}}%<i v-if="formData.letter.basis_direction == 1" class="iconfont icon-shangsheng clr_blue03 ml_10"></i><i v-else class="iconfont icon-xiajiang clr_yellow ml_10"></i> </p>
                 <p class="mt_5">同比
@@ -784,19 +784,19 @@
         width: 35%;
       }
       &.monitor_num_AI{
-        left: 20%;
-        top: 39%;
+        left: 13.5%;
+        top: 36.5%;
       }
       &.monitor_num_common{
-        right: 20%;
-        top: 39%;
+        right: 13.5%;
+        top: 36.5%;
       }
       &.monitor_num_water{
-        left: 20%;
+        left: 13.5%;
         top: 58.5%;
       }
       &.monitor_num_park{
-        right: 20%;
+        right: 13.5%;
         top: 58.5%;
       }
     }
@@ -811,7 +811,7 @@
     }
   }
   .cityAdmin_cell{
-    padding: 0;
+    padding: 20px 0 0;
     &>.weui-cell__hd{
       width: 120px;
       /*height: 66px;*/

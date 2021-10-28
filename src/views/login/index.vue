@@ -256,7 +256,8 @@ $light_gray:#eee;
 $txt:#3f35cf;
 
 .login_div{
-  width: 100%;
+  width: 700px;
+  margin: 0 auto;
   padding: 70px 0 30px;
   background: url("../../assets/image/login_bg.png") no-repeat;
   background-position: 0 0;
@@ -285,7 +286,7 @@ $txt:#3f35cf;
     /*width: 90%;*/
     /*margin: 0 auto;*/
     /*height: 100vh;*/
-    width: 700px;
+    width: 800px;
     margin-bottom: 100px;
   }
 
