@@ -115,6 +115,7 @@
   import point04 from "@/assets/image/point42.png"; // 引入刚才的map.js 注意路径
   import {getAllVideoPoint, getNowurl} from '@/api/system'
   import {collectList} from '@/api/overView'
+  import global from "@/utils/common";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -126,9 +127,9 @@
         formData:{},
         AIList:[],
         map: '', // 对象
-        zoom: 14, // 地图的初始化级别，及放大比例
-        centerLatitude:'30.2099178915',//中心纬度
-        centerLongitude:'120.2372328407',//中心经度
+        showVideoDialog:false,
+        playVideoUri:'',
+        player: null
       }
     },
 
@@ -164,7 +165,7 @@
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        this.map.centerAndZoom(new T.LngLat(this.centerLongitude, this.centerLatitude), this.zoom) // 设置显示地图的中心点和级别
+        this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
         this.map.setStyle('indigo');

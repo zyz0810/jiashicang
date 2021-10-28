@@ -40,6 +40,7 @@ module.exports = {
     proxy:{
       '/api':{
         target:'http://erp.susongzhijia.com',
+        // target:'http://10.32.49.115:8081',
         changeOrigin: true,
         // pathRewrite:{
         //   '^/api':'/api'

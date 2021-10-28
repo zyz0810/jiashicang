@@ -169,7 +169,7 @@
         <el-col :xs="24" :sm="7" :md="7" :lg="7" :xl="7">
           <div class="content_index">
             <div class="title_index f18 bold text-center"><span class="txt_linear">实时监控</span></div>
-            <div class="monitor_content text-center bold">
+            <div class="monitor_content text-center f16 bold">
               <img src="./../../assets/image/index_img01.gif" class=""/>
               <div class="monitor_num clr_white f26"><router-link :to="{path:'/general/overview/view'}">{{videoData.total}}</router-link></div>
               <div class="weui-cell monitor_num_AI">
@@ -182,7 +182,7 @@
               </div>
               <div class="weui-cell monitor_num_water">
                 <div class="weui-cell__hd txtColor f14 text-center">{{videoData.hedao}}</div>
-                <div class="weui-cell__bd f12 clr_white">河道</div>
+                <div class="weui-cell__bd clr_white">河道</div>
               </div>
               <div class="weui-cell monitor_num_park">
                 <div class="weui-cell__bd clr_white">停车场</div>
