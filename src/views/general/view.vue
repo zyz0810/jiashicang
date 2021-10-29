@@ -190,22 +190,22 @@
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon02 = new T.Icon({
           iconUrl: point02,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon03 = new T.Icon({
           iconUrl: point03,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let icon04 = new T.Icon({
           iconUrl: point04,
           iconSize: new T.Point(30, 51),
-          iconAnchor: new T.Point(34, 59)
+          // iconAnchor: new T.Point(34, 59)
         });
         let markers = []
 
@@ -348,8 +348,8 @@
       padding: 20px;
     }
     .left_content{
-      width: 15%;
-      min-width: 260px;
+      /*width: 15%;*/
+      min-width: 350px;
       padding-right: 20px;
       left: 20px;
       .AI_list{

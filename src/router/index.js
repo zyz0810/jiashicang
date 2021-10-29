@@ -217,34 +217,34 @@ export const asyncRoutes = [
       },
     ]
   },
-  {
-    path: '/demonstration',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: '示范小区',
-    hidden: false,
-    meta: {
-      title: '示范小区',
-      icon: '4',
-      roles: [
-        'admin',
-      ]
-    },
-    children: [
-      {
-        path: 'community',
-        component: () => import('@/views/demonstration/community'),
-        name: 'community',
-        hidden: false,
-        meta: {
-          title: '示范小区',
-          roles: [
-            'admin',
-          ]
-        }
-      },
-    ]
-  },
+  // {
+  //   path: '/demonstration',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   name: '示范小区',
+  //   hidden: false,
+  //   meta: {
+  //     title: '示范小区',
+  //     icon: '4',
+  //     roles: [
+  //       'admin',
+  //     ]
+  //   },
+  //   children: [
+  //     {
+  //       path: 'community',
+  //       component: () => import('@/views/demonstration/community'),
+  //       name: 'community',
+  //       hidden: false,
+  //       meta: {
+  //         title: '示范小区',
+  //         roles: [
+  //           'admin',
+  //         ]
+  //       }
+  //     },
+  //   ]
+  // },
   {
     path: '/city/appearance',
     component: Layout,
@@ -273,34 +273,34 @@ export const asyncRoutes = [
       },
     ]
   },
-  {
-    path: '/law',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: '执法单兵',
-    hidden: false,
-    meta: {
-      title: '执法单兵',
-      icon: '6',
-      roles: [
-        'admin',
-      ]
-    },
-    children: [
-      {
-        path: 'soldier',
-        component: () => import('@/views/law/soldier'),
-        name: 'soldier',
-        hidden: false,
-        meta: {
-          title: '执法单兵',
-          roles: [
-            'admin',
-          ]
-        }
-      },
-    ]
-  },
+  // {
+  //   path: '/law',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   name: '执法单兵',
+  //   hidden: false,
+  //   meta: {
+  //     title: '执法单兵',
+  //     icon: '6',
+  //     roles: [
+  //       'admin',
+  //     ]
+  //   },
+  //   children: [
+  //     {
+  //       path: 'soldier',
+  //       component: () => import('@/views/law/soldier'),
+  //       name: 'soldier',
+  //       hidden: false,
+  //       meta: {
+  //         title: '执法单兵',
+  //         roles: [
+  //           'admin',
+  //         ]
+  //       }
+  //     },
+  //   ]
+  // },
   {
     path: '/illegal',
     component: Layout,
