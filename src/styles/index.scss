@@ -1137,29 +1137,31 @@ iframe{
   cursor: pointer;
 }
 //视频弹窗
-.dashboard-video-player {
-  position: absolute;
-  width: 900px;
-  height: 600px;
-  background: #000;
-  top: 50%;
-  left: 50%;
-  z-index:999;
-  margin-left: -450px;
-  margin-top: -300px;
-
-  .video-js {
-    height: 100%;
-    width: 100%;
-  }
-}
+//.dashboard-video-player {
+//  position: absolute;
+//  width: 900px;
+//  height: 600px;
+//  background: #000;
+//  top: 50%;
+//  left: 50%;
+//  z-index:999;
+//  margin-left: -450px;
+//  margin-top: -300px;
+//
+//  .video-js {
+//    height: 100%;
+//    width: 100%;
+//  }
+//}
 .dashboard-video-player-box {
   position: fixed;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  background-color: rgba(50, 50, 50, 0.2);
+  /*width: 100vw;*/
+  /*height: 100vh;*/
+  /*width: 450px;*/
+  /*height: 320px;*/
+  top: 20px;
+  left: 20px;
+  background-color: rgba(50, 50, 50, 0.8);
   z-index: 9999;
 
   .el-icon-error {
@@ -1178,15 +1180,19 @@ iframe{
   }
 
   .dashboard-video-player {
-    position: absolute;
-    width: 900px;
-    height: 600px;
-    background: #fff;
-    top: 50%;
-    left: 50%;
-    margin-left: -450px;
-    margin-top: -300px;
-    z-index:999;
+    /*position: absolute;*/
+    /*width: 900px;*/
+    /*height: 600px;*/
+    /*width: 450px;*/
+    /*height: 300px;*/
+    /*background: #fff;*/
+    /*<!--top: 50%;-->*/
+    /*<!--left: 50%;-->*/
+    /*margin-left: -450px;*/
+    /*margin-top: -300px;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*z-index:999;*/
     .video-js {
       height: 100%;
       width: 100%;

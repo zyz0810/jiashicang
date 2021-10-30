@@ -62,3 +62,21 @@ export function historicalData(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+/* 获取养护单位的列表数据和数量
+ */
+export function getConserve(data) {
+  return request({
+    url: `/api/General/getConserve`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
+/* 获取井盖列表数据和数量
+ */
+export function getWellLid(data) {
+  return request({
+    url: `/api/General/getWellLid`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}

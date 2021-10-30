@@ -28,39 +28,54 @@
 
       <div class="clr_white">
         <p class="f20 bold txt_linear">市政管理信息总览</p>
-        <div class="weui-cell facilities_weui">
-          <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left01_active.png"></div>
+        <div class="weui-cell facilities_weui" @click="handlePage(1)">
+          <div class="weui-cell__hd">
+            <img src="./../../assets/image/facilities_left01.png" v-if="pageType != 1">
+            <img src="./../../assets/image/facilities_left01_active.png" v-else>
+          </div>
           <div class="weui-cell__bd">
             <p class="clr_white">桥梁(江虹桥)</p>
             <p class="bold clr01"><span class="f26">1</span>座</p>
           </div>
         </div>
-        <div class="weui-cell facilities_weui">
-          <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left02.png"></div>
+        <div class="weui-cell facilities_weui" @click="handlePage(2)">
+          <div class="weui-cell__hd">
+            <img src="./../../assets/image/facilities_left02.png" v-if="pageType != 2">
+            <img src="./../../assets/image/facilities_left02_active.png" v-else>
+          </div>
           <div class="weui-cell__bd">
             <p class="clr_white">智能感应井盖</p>
-            <p class="bold clr02"><span class="f26">103</span>个</p>
+            <p class="bold clr02"><span class="f26">{{wellLidNum}}</span>个</p>
           </div>
         </div>
-        <div class="weui-cell facilities_weui">
-          <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left03.png"></div>
+        <div class="weui-cell facilities_weui" @click="handlePage(3)">
+          <div class="weui-cell__hd">
+            <img src="./../../assets/image/facilities_left03.png" v-if="pageType != 3">
+            <img src="./../../assets/image/facilities_left03_active.png" v-else>
+          </div>
           <div class="weui-cell__bd">
             <p class="clr_white">养护道路</p>
             <p class="bold clr03"><span class="f26">103</span>条</p>
           </div>
         </div>
-        <div class="weui-cell facilities_weui">
-          <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left04.png"></div>
+        <div class="weui-cell facilities_weui" @click="handlePage(4)">
+          <div class="weui-cell__hd">
+            <img src="./../../assets/image/facilities_left04.png" v-if="pageType != 4">
+            <img src="./../../assets/image/facilities_left04_active.png" v-else>
+          </div>
           <div class="weui-cell__bd">
             <p class="clr_white">排水管线长度</p>
             <p class="bold clr04"><span class="f26">1</span>千米</p>
           </div>
         </div>
-        <div class="weui-cell facilities_weui">
-          <div class="weui-cell__hd"><img src="./../../assets/image/facilities_left05.png"></div>
+        <div class="weui-cell facilities_weui" @click="handlePage(5)">
+          <div class="weui-cell__hd">
+            <img src="./../../assets/image/facilities_left05.png" v-if="pageType != 5">
+            <img src="./../../assets/image/facilities_left05_active.png" v-else>
+          </div>
           <div class="weui-cell__bd">
             <p class="clr_white">养护单位</p>
-            <p class="bold clr05"><span class="f26">14</span>家</p>
+            <p class="bold clr05"><span class="f26">{{conserveNum}}</span>家</p>
           </div>
         </div>
 <!--        <div class="f14 bold flex mt_20 facilities_intro ml_10">-->
@@ -94,7 +109,7 @@
       </div>
 
     </div>
-    <div class="right_content base_bg_right">
+    <div class="right_content base_bg_right" v-show="pageType == 1">
 <!--      <div class="clr_white">-->
 <!--        <p class="f20 bold txt_linear">江虹桥异常情况</p>-->
 <!--        <div class="flex bold text-center mt_10">-->
@@ -268,6 +283,52 @@
         </div>
       </div>
     </div>
+    <div class="center_content no_right clr_white text-center" v-if="pageType == 2">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',wellLidType==0?'active':'']" @click="handleWellLidType(0)">
+        <div class="weui-cell__hd flex">
+          <img v-if="wellLidType!=0" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd f12',wellLidType==0?'clr_white':'']">全部</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',wellLidType==1?'active':'']" @click="handleWellLidType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="wellLidType!=1" src="./../../assets/image/point61.png"/>
+          <img v-else src="./../../assets/image/point61_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd f12',wellLidType==1?'clr_white':'']">正常</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',wellLidType==2?'active':'']" @click="handleWellLidType(2)">
+        <div class="weui-cell__hd flex">
+          <img v-if="wellLidType!=2" src="./../../assets/image/point62.png"/>
+          <img v-else src="./../../assets/image/point61_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd f12',wellLidType==2?'clr_white':'']">异常</div>
+      </div>
+    </div>
+    <div class="center_content no_right clr_white text-center" v-if="pageType == 5">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',conserveType==0?'active':'']" @click="handleConserveType(0)">
+        <div class="weui-cell__hd flex">
+          <img v-if="conserveType!=0" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd f12',conserveType==0?'clr_white':'']">全部</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',conserveType==2?'active':'']" @click="handleConserveType(2)">
+        <div class="weui-cell__hd flex">
+          <img v-if="conserveType!=2" src="./../../assets/image/point59.png"/>
+          <img v-else src="./../../assets/image/point59_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd f12',conserveType==2?'clr_white':'']">道路保洁单位</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',conserveType==1?'active':'']" @click="handleConserveType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="conserveType!=1" src="./../../assets/image/point60.png"/>
+          <img v-else src="./../../assets/image/point59_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd f12',conserveType==1?'clr_white':'']">河道养护单位</div>
+      </div>
+    </div>
     <div v-show="showVideoDialog" class="dashboard-video-player-box">
       <div id="dashboardVideoPlayer" class="dashboard-video-player">
         <!--<video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls data-setup="{}">-->
@@ -292,7 +353,11 @@
   import map from '@/components/Map/map.js'; // 引入刚才的map.js 注意路径
   import point01 from '@/assets/image/point10.png'; // 引入刚才的map.js 注意路径
   import point02 from '@/assets/image/point38.png'; // 引入刚才的map.js 注意路径
-  import {warring,typeData,dataLine,dataPoint,currentData,historicalData} from '@/api/municipalFacilities'
+  import point03 from '@/assets/image/point59.png'; // 引入刚才的map.js 注意路径
+  import point04 from '@/assets/image/point60.png'; // 引入刚才的map.js 注意路径
+  import point05 from '@/assets/image/point61.png'; // 引入刚才的map.js 注意路径
+  import point06 from '@/assets/image/point62.png'; // 引入刚才的map.js 注意路径
+  import {warring,typeData,dataLine,dataPoint,currentData,historicalData,getConserve,getWellLid} from '@/api/municipalFacilities'
   import {getAllVideoPoint, getNowurl} from "@/api/system";
   import global from "@/utils/common";
   export default {
@@ -302,6 +367,8 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo},
     data() {
       return {
+        conserveType:0,
+        wellLidType:0,
         videoList:[],
         percentageNum:0,
         showOption:0,
@@ -751,195 +818,6 @@
             type: 'line'
             }]
         },
-        BarData:{
-          title: {},
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
-          },
-          grid: {
-            left: '0',
-            right: '0',
-            bottom: '40',
-            top: '20',
-            containLabel: true
-          },
-          //----------------   图例 legend  -----------------
-          legend: {
-            type:'plain',				//----图例类型，默认为'plain'，当图例很多时可使用'scroll'
-            bottom:'5',					//----图例相对容器位置,top\bottom\left\right
-            data:[						//----图例内容
-              {
-                name:'应处置案件',
-                textStyle:{
-                  color:'#fff',		//----单独设置某一个图例的颜色
-                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
-                }
-              },
-              {
-                name:'已处置案件',
-                textStyle:{
-                  color:'#fff',		//----单独设置某一个图例的颜色
-                  //backgroundColor:'black',//---单独设置某一个图例的字体背景色
-                }
-              }
-            ],
-          },
-
-          xAxis: [
-            {
-
-
-              axisTick: {
-                show:false,
-                alignWithLabel: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'category',
-              data: ['浦沿中队', '西兴中队', '长河中队']
-            }
-          ],
-          yAxis: [
-            {
-              axisTick: {
-                show:false,
-                alignWithLabel: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'value'
-            }
-          ],
-          series: [
-            {
-              name:'应处置案件',
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'50%',
-              // barCategoryGap:'50%',/*多个并排柱子设置柱子之间的间距*/
-              itemStyle: {
-                normal: {
-                  color:'#2FB26B'
-                }
-              },
-              data: [320, 332, 301]
-            },
-            {
-              name:'已处置案件',
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'50%',
-              // barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
-              itemStyle: {
-                normal: {
-                  color:'#00A0EB'
-
-                }
-              },
-              data: [220, 182, 191]
-            }
-          ]
-        },
-        BarDataTwo:{
-          title: {},
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'shadow'
-            }
-          },
-          grid: {
-            left: '0',
-            right: '0',
-            bottom: '-20',
-            top: '20',
-            containLabel: true
-          },
-          xAxis: [
-            {
-              show:false,
-              axisTick: {
-                alignWithLabel: false
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'value',
-            }
-          ],
-          yAxis: [
-            {
-              axisTick: {
-                show: false
-              },
-              axisLine: {
-                show: false
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#fff',
-                  fontSize:'15',
-                  fontWeight:'bold'
-                }
-              },
-              splitLine: { show: false },//去除网格线
-              type: 'category',
-              data:['滨河路','秋溢路','江虹路','江陵路','长河路','滨文路']
-            }
-          ],
-          series: [
-            {
-              type: 'bar',
-              barWidth: 20,//柱图宽度
-              barGap:'180%',
-              barCategoryGap:'100%',/*多个并排柱子设置柱子之间的间距*/
-              // label: {
-              //   normal: {
-              //     color: 'red',
-              //     show: true,
-              //     position: 'top'
-              //   }
-              // },
-              itemStyle: {
-                normal: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 1, 0,
-                    [
-                      { offset: 0, color: '#006FFF' },
-                      { offset: 1, color: '#9D4EE8' }
-                    ]
-                  ),
-                  label: {
-                    show : true,
-                    position : 'right',
-                    textStyle : {
-                      color: '#fff',
-                      fontSize:'16',
-                      fontWeight:'bold'
-                    }
-                  }
-
-                }
-              },
-              data: [320, 332, 301,230,56,963]
-            },
-          ]
-        },
         map: '', // 对象
         typeList:[],
         dataLine:[],
@@ -947,7 +825,12 @@
         commonVideo_num:'',
         showVideoDialog:false,
         playVideoUri:'',
-        player: null
+        player: null,
+        pageType:1,
+        wellLidNum:'',
+        conserveNum:'',
+        wellLidList:[],
+        conserveList:[],
       }
     },
 
@@ -969,14 +852,70 @@
       window.handleVideo = this.handleVideo;
       window.closeVideoDialog = () => {
         this.handleVideoClose()
-      }
-      this.initPlayer()
+      };
+      this.initPlayer();
+      this.getConserveNum();//获取养护单位数量
+      this.getWellLidNum();//获取井盖数量
     },
     beforeDestroy() {
       clearInterval(this.timerTwo);
       this.timerTwo = null;
     },
     methods: {
+      handleWellLidType(type){
+        this.wellLidType = type;
+        if(type == 0){
+          this.getWellLidList('');
+        }else{
+          this.getWellLidList(type);
+        }
+      },
+      handleConserveType(type){//养护单位不同状态点位切换
+        this.conserveType = type;
+        if(type == 0){
+          this.getConserveList('');
+        }else{
+          this.getConserveList(type);
+        }
+      },
+      handlePage(type){
+        this.pageType = type;
+        if(type == 1){
+          this.mapPoint('facilities',[]);
+        }else if(type == 2){
+          this.wellLidType = 0;
+          this.getWellLidList('');
+        }else if(type == 5){
+          this.conserveType = 0;
+          this.getConserveList('');
+        }else{
+          this.mapPoint('',[]);
+        }
+      },
+      getWellLidNum(){
+        getWellLid().then(res=>{
+          this.wellLidNum = res.data.count;
+        });
+      },
+      getWellLidList(type){
+        getWellLid({status:type}).then(res=>{
+          this.wellLidNum = res.data.count;
+          this.wellLidList = res.data.list;
+          this.mapPoint('wellLid',this.wellLidList);
+        });
+      },
+      getConserveNum(){
+        getConserve().then(res=>{
+          this.conserveNum = res.data.count;
+        });
+      },
+      getConserveList(type){
+        getConserve({type:type}).then(res=>{
+          this.conserveNum = res.data.count;
+          this.conserveList = res.data.list;
+          this.mapPoint('conserve',this.conserveList);
+        });
+      },
       //播放视频
       handleVideo(txt){
         console.log(txt)
@@ -1079,7 +1018,7 @@
       },
       mapPoint(type,list){
         //创建图片对象
-        // this.map.clearOverLays();
+        this.map.clearOverLays();
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
@@ -1090,14 +1029,54 @@
           iconSize: new T.Point(30, 51),
           // iconAnchor: new T.Point(34, 59)
         });
+        let icon03 = new T.Icon({
+          iconUrl: point03,
+          iconSize: new T.Point(30, 51),
+          // iconAnchor: new T.Point(34, 59)
+        });
+        let icon04 = new T.Icon({
+          iconUrl: point04,
+          iconSize: new T.Point(30, 51),
+          // iconAnchor: new T.Point(34, 59)
+        });
+        let icon05 = new T.Icon({
+          iconUrl: point05,
+          iconSize: new T.Point(30, 51),
+          // iconAnchor: new T.Point(34, 59)
+        });
+        let icon06 = new T.Icon({
+          iconUrl: point06,
+          iconSize: new T.Point(30, 51),
+          // iconAnchor: new T.Point(34, 59)
+        });
         let markers = []
 
         if(type == 'facilities'){
           let point = new T.LngLat(120.208896,30.203874);
           markers[0] = drawTMaker(point, icon01,this,{name:'江虹桥',address:'江虹桥位于杭州市滨江区江虹路和滨河路交叉口以北处'});
+        }else if(type == 'conserve'){//养护单位
+          for (let i = 0; i < list.length; i++) {
+            let point = new T.LngLat(list[i].log,list[i].lat);
+            if(list[i].type == '道路保洁单位'){
+              markers[i]  = drawTMaker(point, icon03,this,list[i]);
+            }else {
+              markers[i]  = drawTMaker(point, icon04,this,list[i]);
+            }
+
+          }
+        }else if(type == 'wellLid'){
+          for (let i = 0; i < list.length; i++) {
+            let point = new T.LngLat(list[i].log,list[i].lat);
+            if(list[i].status == 1){
+              markers[i]  = drawTMaker(point, icon05,this,list[i]);
+            }else {
+              markers[i]  = drawTMaker(point, icon06,this,list[i]);
+            }
+
+          }
         }else{
           for (let i = 0; i < list.length; i++) {
-            let point = new T.LngLat(list[i].longitude,list[i].latitude);
+            let point = new T.LngLat(list[i].log,list[i].lat);
             markers[i]  = drawTMaker(point, icon02,this,list[i]);
           }
         }
@@ -1128,6 +1107,63 @@
                 '</tr>'+
                 '<tr>' +
                 '<td></td><td class="text-right baseColor pointer" onClick="handleVideo('+ aa +')">查看视频</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+            }else if(type == 'wellLid'){
+              let statusOne;
+              if(txt.status == 1){
+                statusOne = '正常'
+              }else if(txt.status == 2){
+                statusOne = '异常'
+              }
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">井盖编号</td><td>' + txt.number_no + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>IMEI号</td><td>' + txt.imei + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>井盖状态</td><td>' + statusOne + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>井盖运行状态</td><td>' + txt.install_status + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>最后更新时间</td><td>' + txt.update_at + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>自检时间</td><td>' + txt.create_at + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>井盖地址</td><td>' + txt.address + '</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+            }else if(type == 'conserve'){
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">名称</td><td>' + txt.company + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>类型</td><td>' + txt.type + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>联系人</td><td>' + txt.link_man + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>电话</td><td>' + txt.mobile + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>养护范围</td><td>' + txt.content + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>地址</td><td>' + txt.address + '</td>'+
                 '</tr>'+
                 '</table>'+
                 '</div>';

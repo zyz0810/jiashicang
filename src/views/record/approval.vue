@@ -850,6 +850,41 @@
         });
       },
       mapPoint(type,list){
+        let countries = [];
+        let countriesOverlay = new T.D3Overlay(init,redraw);
+        let that = this;
+        d3.json("https://geo.datav.aliyun.com/areas_v3/bound/330108.json", function (data) {
+          countries = data.features;
+          that.map.addOverLay(countriesOverlay)
+          countriesOverlay.bringToBack();
+          countriesOverlay.bringToBack();
+        });
+
+        function init(sel, transform) {
+          let upd = sel.selectAll('path.geojson').data(countries);
+          upd.enter()
+            .append('path')
+            .attr("class", "geojson")
+            .attr('stroke', '#0c14b8')
+            .attr('stroke-width', function (d) {
+              return 2
+            })
+            .attr('fill', function (d, i) {
+              return d3.hsl(Math.random() * 360, 0.9, 0.5)
+            })
+            .attr('fill-opacity', '0')
+        }
+        function redraw(sel, transform) {
+          sel.selectAll('path.geojson').each(
+            function (d, i) {
+              d3.select(this).attr('d', transform.pathFromGeojson)
+                .on("mouseover",function(){
+                  console.log('这是点击了',);
+                })
+            }
+          )
+
+        }
         //创建图片对象
         let icon01 = new T.Icon({
           iconUrl: point01,

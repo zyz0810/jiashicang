@@ -15,9 +15,15 @@
           <!--          <span class="f14 fr">更多</span>-->
         </p>
         <ul class="AI_list">
-          <li class="mt_20" v-for="item in AIList" :key="item.id" @click="handleVideo(item)">
-            <div class="img_txt f14 bold">{{item.camera_name}}</div>
-            <img :src="item.pic_url">
+          <!--<li class="mt_20" v-for="item in AIList" :key="item.id" @click="handleVideo(item)">-->
+          <li class="mt_20" v-for="item in AIList" :key="item.id">
+            <div class="img_txt f14 bold">{{item.camera_name}}{{item.item.videoUrl}}</div>
+            <!--<img :src="item.pic_url">-->
+            <div style="width: 100%;height: 16vh;">
+              <video :id="'myVideo'+item.id" class="video-js vjs-default-skin vjs-big-play-centered" autoplay="autoplay" controls muted style="width: 100%; height: 100%;" data-setup="{}">
+                <source id="source" :src="item.videoUrl" type="application/x-mpegURL">
+              </video>
+            </div>
           </li>
         </ul>
       </div>
@@ -129,7 +135,8 @@
         map: '', // 对象
         showVideoDialog:false,
         playVideoUri:'',
-        player: null
+        player: null,
+        offectNum:1,
       }
     },
 
@@ -145,10 +152,8 @@
       // })
       this.onLoad();
       window.handleVideo = this.handleVideo;
-      window.closeVideoDialog = () => {
-        this.handleVideoClose()
-      }
-      this.initPlayer()
+      window.closeVideoDialog = this.handleVideoClose();
+      this.initPlayer();
       this.getPoint('');
       this.getAIList();
     },
@@ -182,7 +187,40 @@
       },
       getAIList(){
         collectList({is_important:1}).then((res) => {
-          this.AIList = res.data.data
+          this.AIList = res.data.data;
+
+          for(let i=0;i<this.AIList.length;i++){
+            // this.AIList[i].videoUrl = 'https://vd3.bdstatic.com/mda-mi6yu6w39518uykg/cae_h264/1631056499817188563/mda-mi6yu6w39518uykg.mp4';
+            getNowurl({camera_index_code:this.AIList[i].index_code,protocol:'hls'}).then(res=>{
+              this.AIList[i].videoUrl = res.data.data.url;
+              setTimeout(function() {
+                var myPlayer = videojs('myVideo'+this.AIList[i].id);
+                videojs('myVideo'+this.AIList[i].id).ready(function() {
+                  var myPlayer = this;
+                  myPlayer.play();
+                });
+              }, 5000);
+            });
+            // window.setTimeout(() => {
+            //   this.player = videojs('myVideo'+this.AIList[i].id, {
+            //     muted: true,
+            //     controls: true,
+            //     preload: 'auto',
+            //   });
+            //   // <source id="source" src="${this.playVideoUri}" type="video/mp4">
+            //   // <source id="source" src="${this.playVideoUri}" type="rtsp/flv">
+            //   //   <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+            //   // <!--rtsp://10.32.54.38:554/openUrl/ePBOw6I-->
+            //   this.player.click()
+            //   this.player.play()
+            //   console.log('获取视频')
+            //   console.log(this.player)
+            //
+            // }, 2000)
+
+          }
+
+
         });
       },
       getPoint(type){
@@ -212,7 +250,7 @@
           upd.enter()
             .append('path')
             .attr("class", "geojson")
-            .attr('stroke', '#00beff')
+            .attr('stroke', '#0c14b8')
             .attr('stroke-width', function (d) {
               return 2
             })
@@ -312,16 +350,27 @@
       getNow(txt){
         getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
           this.showVideoDialog = true;
-          this.playVideo(res.data.data.url);
+          this.playVideo(res.data.data.url,txt);
         });
       },
-      handleVideoClose() {
-        this.player.dispose()
-        $('#myVideo').remove()
-        $('#dashboardVideoPlayer').html('')
-        this.player = null
-        this.showVideoDialog = false
-        this.playVideoUri = ''
+      handleVideoClose(id) {
+        // this.player.dispose()
+        $('#myVideo'+id).remove()
+        $('#myVideoContent'+id).remove()
+        console.log('#myVideo'+id)
+        console.log('#myVideoContent'+id)
+        console.log($('#dashboardVideoPlayer').children().length)
+        if($('#dashboardVideoPlayer').children().length < 1){
+          this.player.dispose()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+        // $('#dashboardVideoPlayer').html('')
+        // this.player = null
+        // this.showVideoDialog = false
+        // this.playVideoUri = ''
       },
       initPlayer() {
         this.$nextTick(() => {
@@ -335,20 +384,40 @@
       handleCloseKeyDown(e) {
         if (this.dialogVisible && e.keyCode === 27) {
           this.player.dispose()
-          $('#myVideo').remove()
-          $('#dashboardVideoPlayer').html('')
-          this.player = null
-          this.showVideoDialog = false
-          this.playVideoUri = ''
+          // $('#myVideo').remove()
+          // $('#dashboardVideoPlayer').html('')
+          $('#myVideo'+id).remove()
+          $('#myVideoContent'+id).remove()
+
+          if($('#dashboardVideoPlayer').children().length < 1){
+            this.player.dispose()
+            $('#dashboardVideoPlayer').html('')
+            this.player = null
+            this.showVideoDialog = false
+            this.playVideoUri = ''
+          }
+          // this.player = null
+          // this.showVideoDialog = false
+          // this.playVideoUri = ''
         }
       },
-      playVideo(uri) {
+      playVideo(uri,txt) {
+
+        // let videoPlayer = $("#myVideo").get(0);
+        // if (typeof (videoPlayer) != "undefined") {
+        //   let myPlayer = videojs('myVideo');
+        //   myPlayer.dispose();
+        // }
+
         this.playVideoUri = uri;
         // this.dialogVisible = true
+        let id = "myVideo"+txt.id;
+        let divId = "myVideoContent"+txt.id;
+
         $('#dashboardVideoPlayer').append(
-          `<div style="position: relative;width: 100%;height: 100%;">
+          `<div id="`+ divId +`" style="position: fixed;width: 450px;height: 300px; padding-top: 20px;left:`+ Number(20)*this.offectNum +`px;top:`+ Number(20)*this.offectNum +`px;" class="my_drag">
               <i class="el-icon-error"
-                 onclick="closeVideoDialog()"
+                 onclick="closeVideoDialog(`+ txt.id +`)"
                  style="position: absolute;
                  right: 10px;
                  top: 10px;
@@ -357,21 +426,61 @@
                  cursor: pointer;
                  font-size: 28px;
               "></i>
-              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
-            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+              <video id="`+ id +`" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+     <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
             </video></div>`
         )
+        this.offectNum++;
+        $('#'+divId).mousedown(function (e) {
+          console.log(e)
+          console.log('狂口高：'+e.clientY)
+          let dragBox =  $('#'+divId)[0];
+          console.log(' 元素')
+          console.log('元素高：'+dragBox.offsetTop)
+          //算出鼠标相对元素的位置
+          let disX = e.clientX - dragBox.offsetLeft;
+          let disY = e.clientY - dragBox.offsetTop;
+          document.onmousemove = e => {
+            //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+            let left = e.clientX - disX;
+            let top = e.clientY - disY;
+            //移动当前元素
+            dragBox.style.left = left + "px";
+            dragBox.style.top = top + "px";
+          };
+          document.onmouseup = e => {
+            //鼠标弹起来的时候不再移动
+            document.onmousemove = null;
+            //预防鼠标弹起来后还会循环（即预防鼠标放上去的时候还会移动）
+            document.onmouseup = null;
+          };
+        })
         window.setTimeout(() => {
-          this.player = videojs('myVideo', {
+          this.player = videojs(id, {
             muted: true,
             controls: true,
             preload: 'auto',
           })
+          // <source id="source" src="${this.playVideoUri}" type="video/mp4">
+          // <source id="source" src="${this.playVideoUri}" type="rtsp/flv">
+          //   <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+          // <!--rtsp://10.32.54.38:554/openUrl/ePBOw6I-->
           this.player.play()
           console.log('获取视频')
           console.log(this.player)
 
         }, 1000)
+
+
+
+
+        /* this.player.src({
+          src: this.videos[0].url,
+          type: 'application/x-mpegURL',
+          withCredentials: false
+        })*/
+
+        // this.player.play()
       },
     }
   }
@@ -435,7 +544,7 @@
           }
           img{
             width: 100%;
-            height: 13vh;
+            height: 16vh;
             border-radius: 20px;
           }
         }
