@@ -162,6 +162,15 @@
         }
 
       },
+      // onLoad() {
+      //   let T = window.T
+      //   this.map = new T.Map('mapDiv')
+      //   this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
+      //   // 添加地图类型控件
+      //   // this.addCtrl()
+      //   this.map.setStyle('indigo');
+      //   document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
+      // },
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
@@ -187,6 +196,42 @@
       mapPoint(list){
         //创建图片对象
         this.map.clearOverLays();
+        // this.map.removeOverLay(markers);
+        let countries = [];
+        let countriesOverlay = new T.D3Overlay(init,redraw);
+        let that = this;
+        d3.json("https://geo.datav.aliyun.com/areas_v3/bound/330108.json", function (data) {
+          countries = data.features;
+          that.map.addOverLay(countriesOverlay)
+          countriesOverlay.bringToBack();
+          countriesOverlay.bringToBack();
+        });
+
+        function init(sel, transform) {
+          let upd = sel.selectAll('path.geojson').data(countries);
+          upd.enter()
+            .append('path')
+            .attr("class", "geojson")
+            .attr('stroke', '#00beff')
+            .attr('stroke-width', function (d) {
+              return 5
+            })
+            .attr('fill', function (d, i) {
+              return d3.hsl(Math.random() * 360, 0.9, 0.5)
+            })
+            .attr('fill-opacity', '0')
+        }
+        function redraw(sel, transform) {
+          sel.selectAll('path.geojson').each(
+            function (d, i) {
+              d3.select(this).attr('d', transform.pathFromGeojson)
+                .on("mouseover",function(){
+                  console.log('这是点击了',);
+                })
+            }
+          )
+
+        }
         let icon01 = new T.Icon({
           iconUrl: point01,
           iconSize: new T.Point(30, 51),
