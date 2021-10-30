@@ -214,7 +214,7 @@
             .attr("class", "geojson")
             .attr('stroke', '#00beff')
             .attr('stroke-width', function (d) {
-              return 5
+              return 2
             })
             .attr('fill', function (d, i) {
               return d3.hsl(Math.random() * 360, 0.9, 0.5)
