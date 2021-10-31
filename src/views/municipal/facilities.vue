@@ -259,7 +259,7 @@
         <!--</div>-->
       <!--</div>-->
     <!--</div>-->
-    <div class="top_div flex clr_white text-center">
+    <div class="top_div flex clr_white text-center" v-if="pageType == 1">
       <div class="flex f20 bold mr_20 border shadow" @click="getPoint(1)">
         <div class="baseColor">设备管理</div>
         <div class="">
@@ -273,6 +273,46 @@
         <div class="">
           异常率
           <span class="txt_linear f22">823</span>
+        </div>
+      </div>
+      <div class="flex f20 bold border shadow" @click="getPoint(2)">
+        <div class="baseColor">视频</div>
+        <div class="">
+          普通视频
+          <span class="txt_linear f22">{{commonVideo_num}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="top_div flex clr_white text-center" v-if="pageType == 2">
+      <div class="flex f20 bold mr_20 border shadow" @click="getPoint(1)">
+        <div class="baseColor">智能井盖</div>
+        <div class="">
+          正常
+          <span class="txt_linear f22">{{wellLidNormalNum}}</span>
+        </div>
+        <div class="">
+          异常
+          <span class="txt_linear f22">{{wellLidAbnormalNum}}</span>
+        </div>
+        <div class="">
+          异常率
+          <span class="txt_linear f22">{{(Number(wellLidAbnormalNum / wellLidNormalNum)*100).toFixed(2)}}%</span>
+        </div>
+      </div>
+      <div class="flex f20 bold border shadow" @click="getPoint(2)">
+        <div class="baseColor">视频</div>
+        <div class="">
+          普通视频
+          <span class="txt_linear f22">{{commonVideo_num}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="top_div flex clr_white text-center" v-if="pageType == 5">
+      <div class="flex f20 bold mr_20 border shadow" @click="getPoint(1)">
+        <div class="baseColor">养护单位</div>
+        <div class="">
+          总数
+          <span class="txt_linear f22">{{conserveNum}}</span>
         </div>
       </div>
       <div class="flex f20 bold border shadow" @click="getPoint(2)">
@@ -828,6 +868,8 @@
         player: null,
         pageType:1,
         wellLidNum:'',
+        wellLidNormalNum:'',
+        wellLidAbnormalNum:'',
         conserveNum:'',
         wellLidList:[],
         conserveList:[],
@@ -893,19 +935,23 @@
       },
       getWellLidNum(){
         getWellLid().then(res=>{
-          this.wellLidNum = res.data.count;
+          this.wellLidNum = Number(res.data.zhengCount) + Number(res.data.yiCount);
+          this.wellLidNormalNum =  Number(res.data.zhengCount);
+          this.wellLidAbnormalNum =  Number(res.data.yiCount);
         });
       },
       getWellLidList(type){
         getWellLid({status:type}).then(res=>{
-          this.wellLidNum = res.data.count;
+          this.wellLidNum = Number(res.data.yiCount) + Number(res.data.zhengCount);
+           this.wellLidNormalNum =  Number(res.data.zhengCount);
+          this.wellLidAbnormalNum =  Number(res.data.yiCount);
           this.wellLidList = res.data.list;
           this.mapPoint('wellLid',this.wellLidList);
         });
       },
       getConserveNum(){
         getConserve().then(res=>{
-          this.conserveNum = res.data.count;
+          this.conserveNum = Number(res.data.daoCount) + Number(res.data.heCount);
         });
       },
       getConserveList(type){
