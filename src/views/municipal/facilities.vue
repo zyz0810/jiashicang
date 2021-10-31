@@ -956,7 +956,7 @@
       },
       getConserveList(type){
         getConserve({type:type}).then(res=>{
-          this.conserveNum = res.data.count;
+          this.conserveNum = Number(res.data.daoCount) + Number(res.data.heCount);
           this.conserveList = res.data.list;
           this.mapPoint('conserve',this.conserveList);
         });
