@@ -253,7 +253,7 @@
   import point03 from "@/assets/image/point38.png";
   import {getAllVideoPoint, getNowurl} from "@/api/system";
   import global from "@/utils/common";
-
+  var _CarTrack;
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -969,10 +969,11 @@
         },
         open1:false,
         open2:false,
-        _CarTrack:'',
+        carTrackOne:'',
         showVideoDialog:false,
         playVideoUri:'',
-        player: null
+        player: null,
+        offectNum:1,
       }
     },
 
@@ -1028,9 +1029,7 @@
       });
 
       window.handleVideo = this.handleVideo;
-      window.closeVideoDialog = () => {
-        this.handleVideoClose()
-      }
+      window.closeVideoDialog = this.handleVideoClose;
       this.initPlayer()
     },
     beforeDestroy() {
@@ -1042,22 +1041,30 @@
     methods: {
       //播放视频
       handleVideo(txt){
-        console.log(txt)
         this.getNow(txt);
       },
       getNow(txt){
         getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
           this.showVideoDialog = true;
-          this.playVideo(res.data.data.url);
+          this.playVideo(res.data.data.url,txt);
         });
       },
-      handleVideoClose() {
-        this.player.dispose()
-        $('#myVideo').remove()
-        $('#dashboardVideoPlayer').html('')
-        this.player = null
-        this.showVideoDialog = false
-        this.playVideoUri = ''
+
+      handleVideoClose(id) {
+        // this.player.dispose()
+        $('#myVideo'+id).remove()
+        $('#myVideoContent'+id).remove()
+        if($('#dashboardVideoPlayer').children().length < 1){
+          this.player.dispose()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+        // $('#dashboardVideoPlayer').html('')
+        // this.player = null
+        // this.showVideoDialog = false
+        // this.playVideoUri = ''
       },
       initPlayer() {
         this.$nextTick(() => {
@@ -1071,20 +1078,40 @@
       handleCloseKeyDown(e) {
         if (this.dialogVisible && e.keyCode === 27) {
           this.player.dispose()
-          $('#myVideo').remove()
-          $('#dashboardVideoPlayer').html('')
-          this.player = null
-          this.showVideoDialog = false
-          this.playVideoUri = ''
+          // $('#myVideo').remove()
+          // $('#dashboardVideoPlayer').html('')
+          $('#myVideo'+id).remove()
+          $('#myVideoContent'+id).remove()
+
+          if($('#dashboardVideoPlayer').children().length < 1){
+            this.player.dispose()
+            $('#dashboardVideoPlayer').html('')
+            this.player = null
+            this.showVideoDialog = false
+            this.playVideoUri = ''
+          }
+          // this.player = null
+          // this.showVideoDialog = false
+          // this.playVideoUri = ''
         }
       },
-      playVideo(uri) {
+      playVideo(uri,txt) {
+
+        // let videoPlayer = $("#myVideo").get(0);
+        // if (typeof (videoPlayer) != "undefined") {
+        //   let myPlayer = videojs('myVideo');
+        //   myPlayer.dispose();
+        // }
+
         this.playVideoUri = uri;
         // this.dialogVisible = true
+        let id = "myVideo"+txt.id;
+        let divId = "myVideoContent"+txt.id;
+
         $('#dashboardVideoPlayer').append(
-          `<div style="position: relative;width: 100%;height: 100%;">
+          `<div id="`+ divId +`" style="position: fixed;width: 450px;height: 300px; padding-top: 20px;left:`+ Number(20)*this.offectNum +`px;top:`+ Number(20)*this.offectNum +`px;" class="my_drag">
               <i class="el-icon-error"
-                 onclick="closeVideoDialog()"
+                 onclick="closeVideoDialog(`+ txt.id +`)"
                  style="position: absolute;
                  right: 10px;
                  top: 10px;
@@ -1093,21 +1120,54 @@
                  cursor: pointer;
                  font-size: 28px;
               "></i>
-              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
-            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+              <video id="`+ id +`" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+     <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
             </video></div>`
         )
+        this.offectNum++;
+        $('#'+divId).mousedown(function (e) {
+          let dragBox =  $('#'+divId)[0];
+          //算出鼠标相对元素的位置
+          let disX = e.clientX - dragBox.offsetLeft;
+          let disY = e.clientY - dragBox.offsetTop;
+          document.onmousemove = e => {
+            //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+            let left = e.clientX - disX;
+            let top = e.clientY - disY;
+            //移动当前元素
+            dragBox.style.left = left + "px";
+            dragBox.style.top = top + "px";
+          };
+          document.onmouseup = e => {
+            //鼠标弹起来的时候不再移动
+            document.onmousemove = null;
+            //预防鼠标弹起来后还会循环（即预防鼠标放上去的时候还会移动）
+            document.onmouseup = null;
+          };
+        })
         window.setTimeout(() => {
-          this.player = videojs('myVideo', {
+          this.player = videojs(id, {
             muted: true,
             controls: true,
             preload: 'auto',
           })
+          // <source id="source" src="${this.playVideoUri}" type="video/mp4">
+          // <source id="source" src="${this.playVideoUri}" type="rtsp/flv">
+          //   <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+          // <!--rtsp://10.32.54.38:554/openUrl/ePBOw6I-->
           this.player.play()
-          console.log('获取视频')
-          console.log(this.player)
-
         }, 1000)
+
+
+
+
+        /* this.player.src({
+          src: this.videos[0].url,
+          type: 'application/x-mpegURL',
+          withCredentials: false
+        })*/
+
+        // this.player.play()
       },
       carTrackReturn() {
         this.showMapDiv = true;
@@ -1117,7 +1177,6 @@
         clearInterval(this.state.timename);
       },
       clickCar(v, k) {
-        console.log(v);
         let map1 = this.state.map;
         // this.map1.panTo(v["TLngLat"]);
         this.state.startgj = true;
@@ -1138,7 +1197,6 @@
           icon: icon01,
         });
         map1.addOverLay(this.state.markercarline);
-        console.log(this.state.markercarline)
         this.timelabel(
           this.$moment(v.time).format("HH:mm:ss"),
           this.state.markercarline.getLngLat()
@@ -1200,6 +1258,43 @@
             endTime: end_time,
           };
         }
+
+        let countries = [];
+        let countriesOverlay = new T.D3Overlay(init,redraw);
+        let that = this;
+        d3.json("https://geo.datav.aliyun.com/areas_v3/bound/330108.json", function (data) {
+          countries = data.features;
+          that.state.map.addOverLay(countriesOverlay)
+          countriesOverlay.bringToBack();
+          countriesOverlay.bringToBack();
+        });
+
+        function init(sel, transform) {
+          let upd = sel.selectAll('path.geojson').data(countries);
+          upd.enter()
+            .append('path')
+            .attr("class", "geojson")
+            .attr('stroke', '#0c14b8')
+            .attr('stroke-width', function (d) {
+              return 2
+            })
+            .attr('fill', function (d, i) {
+              return d3.hsl(Math.random() * 360, 0.9, 0.5)
+            })
+            .attr('fill-opacity', '0')
+        }
+        function redraw(sel, transform) {
+          sel.selectAll('path.geojson').each(
+            function (d, i) {
+              d3.select(this).attr('d', transform.pathFromGeojson)
+                .on("mouseover",function(){
+
+                })
+            }
+          )
+
+        }
+
         getGps(fields).then((res) => {
           if (res.code == 1) {
             var linebottom = [];
@@ -1219,9 +1314,6 @@
                   knum++;
                 // }
               });
-              console.log('时间列表')
-              console.log(this.state.timeList)
-              console.log(linebottompoint)
               this.state.linebottom = linebottom;
               let icon02 = new T.Icon({
                 iconUrl: pointCar,
@@ -1249,7 +1341,7 @@
              //    this.$moment(linebottom[0]["time"]).format("HH:mm:ss"),
              //    this.state.markercarline.getLngLat()
              //  );
-              this._CarTrack = new T.CarTrack(this.state.map, {
+              _CarTrack = new T.CarTrack(this.state.map, {
                 interval: 5,
                 speed: 10,
                 dynamicLine: true,
@@ -1273,7 +1365,6 @@
         // })
       },
       timelabel(timehms, position) {
-        console.log('时间：'+timehms)
         var config = {
           text:
             '<div style="font-size:14px;background-color:#000;color:#fff;border-radius:4px !important;padding:3px 10px;box-shadow:3px 3px 6px 0 rgba(0,0,0,0.5);">' +
@@ -1339,26 +1430,19 @@
         }
       },
       startTrack() {
-        // console.log("start");
         // var map1 = this.state.map;
         // var linebottom = this.state.linebottom;
         this.state.startgj = false;
         // clearInterval(this.state.timename);
         // this.state.timename = setInterval(()=> {
         //
-        //   console.log(11111)
-        //   console.log(this.state.setCarTnterTime)
-        //   console.log('；；；'+this.state.startGTime)
         //   var st = Math.ceil(this.state.timeDate.rangeValue / 9);
         //   var timehms = this.$moment(this.state.startGTime).subtract(-st, "second").format("HH:mm:ss");
         //   this.state.startGTime = this.$moment(this.state.startGTime).subtract(-st, "second");
         //   if (this.state.markercaruserlinelabel != null)
         //     map1.removeOverLay(this.state.markercaruserlinelabel);
         //   this.timelabel(timehms, this.state.markercarline.getLngLat());
-        //   console.log(this.state.startGTime)
-        //   console.log(linebottom[this.state.iguiji]["time"])
         //   if (this.state.startGTime >= linebottom[this.state.iguiji]["time"]) {
-        //     console.log('斤斤计较军军军军军军')
         //     //当前时间车辆所在位置
         //     if (this.state.markercarline != null)
         //       map1.removeOverLay(this.state.markercarline);
@@ -1380,7 +1464,6 @@
         //     this.timelabel(timehms, this.state.markercarline.getLngLat());
         //     this.state.iguiji++;
         //     if (this.state.iguiji == linebottom.length) {
-        //       console.log(123);
         //       clearInterval(this.state.timename);
         //       this.state.startgj = true;
         //       this.state.iguiji = 0;
@@ -1391,20 +1474,18 @@
         // }, this.state.setCarTnterTime);
         // this.state.closetimeinter = 1;
         // //添加起始车辆位置点标注
-        // console.log("end");
-
-        this._CarTrack.start();
+        _CarTrack.start();
       },
 
       pauseTrack() {
         // clearInterval(this.state.timename);
         this.state.startgj = true;
         // this.state.closetimeinter = 0;
-        this._CarTrack.pause();
+        _CarTrack.pause();
       },
 
       stopTrack() {
-        this._CarTrack.stop();
+        _CarTrack.stop();
         // this.state.iguiji = 0;
         // this.state.closetimeinter = 0;
         // this.state.startGTime = this.state.linebottom[0]["time"];
@@ -1520,6 +1601,41 @@
         this.state.map.clearOverLays();
       },
       mapPoint(type,list){
+        let countries = [];
+        let countriesOverlay = new T.D3Overlay(init,redraw);
+        let that = this;
+        d3.json("https://geo.datav.aliyun.com/areas_v3/bound/330108.json", function (data) {
+          countries = data.features;
+          that.map.addOverLay(countriesOverlay)
+          countriesOverlay.bringToBack();
+          countriesOverlay.bringToBack();
+        });
+
+        function init(sel, transform) {
+          let upd = sel.selectAll('path.geojson').data(countries);
+          upd.enter()
+            .append('path')
+            .attr("class", "geojson")
+            .attr('stroke', '#0c14b8')
+            .attr('stroke-width', function (d) {
+              return 2
+            })
+            .attr('fill', function (d, i) {
+              return d3.hsl(Math.random() * 360, 0.9, 0.5)
+            })
+            .attr('fill-opacity', '0')
+        }
+        function redraw(sel, transform) {
+          sel.selectAll('path.geojson').each(
+            function (d, i) {
+              d3.select(this).attr('d', transform.pathFromGeojson)
+                .on("mouseover",function(){
+
+                })
+            }
+          )
+
+        }
         //创建图片对象
         let icon01 = new T.Icon({
           iconUrl: point01,
@@ -1556,7 +1672,6 @@
             }else if(list[i].type == 2){
               markers[i]  = drawTMaker(point, icon02,this,list[i]);
             }else{
-              // console.log('22222222')
               // markers[i]  = drawTMaker(point, icon04,this,list[i]);
             }
             // let point = new T.LngLat(list[i].PACK.longitude1,list[i].PACK.latitude1);
@@ -1640,6 +1755,9 @@
       },
       //查看轨迹
       handleTrail(txt){
+        if(_CarTrack !=  undefined){
+          _CarTrack.clear();
+        }
         this.showcarguiji(txt)
         // if(this.line != ''){
         //   this.map.removeOverLay(this.line);
@@ -1651,7 +1769,6 @@
         //     let json = new T.LngLat(item.longitude1, item.latitude1)
         //     return json;
         //   });
-        //   console.log(points)
         //   //创建线对象
         //   this.line = new T.Polyline(points,{color:'#00fd71',weight:5,opacity:1});
         //   //向地图上添加线

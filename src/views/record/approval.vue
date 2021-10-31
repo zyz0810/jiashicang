@@ -326,7 +326,6 @@
               },
               animationDuration:30000,
               animationDurationUpdate: function (idx) {
-                console.log('数据更新'+idx)
                 // 越往后的数据时长越大
                 return idx * 500;
               },
@@ -529,7 +528,8 @@
         commonVideo_num:'',
         showVideoDialog:false,
         playVideoUri:'',
-        player: null
+        player: null,
+        offectNum:1,
       }
     },
 
@@ -564,9 +564,7 @@
       this.getListData();
       this.getPieData('');//获取顶部及饼图数据
       window.handleVideo = this.handleVideo;
-      window.closeVideoDialog = () => {
-        this.handleVideoClose()
-      }
+      window.closeVideoDialog = this.handleVideoClose;
       this.initPlayer()
 
 
@@ -580,22 +578,30 @@
     methods: {
       //播放视频
       handleVideo(txt){
-        console.log(txt)
         this.getNow(txt);
       },
       getNow(txt){
         getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
           this.showVideoDialog = true;
-          this.playVideo(res.data.data.url);
+          this.playVideo(res.data.data.url,txt);
         });
       },
-      handleVideoClose() {
-        this.player.dispose()
-        $('#myVideo').remove()
-        $('#dashboardVideoPlayer').html('')
-        this.player = null
-        this.showVideoDialog = false
-        this.playVideoUri = ''
+
+      handleVideoClose(id) {
+        // this.player.dispose()
+        $('#myVideo'+id).remove()
+        $('#myVideoContent'+id).remove()
+        if($('#dashboardVideoPlayer').children().length < 1){
+          this.player.dispose()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+        // $('#dashboardVideoPlayer').html('')
+        // this.player = null
+        // this.showVideoDialog = false
+        // this.playVideoUri = ''
       },
       initPlayer() {
         this.$nextTick(() => {
@@ -609,20 +615,40 @@
       handleCloseKeyDown(e) {
         if (this.dialogVisible && e.keyCode === 27) {
           this.player.dispose()
-          $('#myVideo').remove()
-          $('#dashboardVideoPlayer').html('')
-          this.player = null
-          this.showVideoDialog = false
-          this.playVideoUri = ''
+          // $('#myVideo').remove()
+          // $('#dashboardVideoPlayer').html('')
+          $('#myVideo'+id).remove()
+          $('#myVideoContent'+id).remove()
+
+          if($('#dashboardVideoPlayer').children().length < 1){
+            this.player.dispose()
+            $('#dashboardVideoPlayer').html('')
+            this.player = null
+            this.showVideoDialog = false
+            this.playVideoUri = ''
+          }
+          // this.player = null
+          // this.showVideoDialog = false
+          // this.playVideoUri = ''
         }
       },
-      playVideo(uri) {
+      playVideo(uri,txt) {
+
+        // let videoPlayer = $("#myVideo").get(0);
+        // if (typeof (videoPlayer) != "undefined") {
+        //   let myPlayer = videojs('myVideo');
+        //   myPlayer.dispose();
+        // }
+
         this.playVideoUri = uri;
         // this.dialogVisible = true
+        let id = "myVideo"+txt.id;
+        let divId = "myVideoContent"+txt.id;
+
         $('#dashboardVideoPlayer').append(
-          `<div style="position: relative;width: 100%;height: 100%;">
+          `<div id="`+ divId +`" style="position: fixed;width: 450px;height: 300px; padding-top: 20px;left:`+ Number(20)*this.offectNum +`px;top:`+ Number(20)*this.offectNum +`px;" class="my_drag">
               <i class="el-icon-error"
-                 onclick="closeVideoDialog()"
+                 onclick="closeVideoDialog(`+ txt.id +`)"
                  style="position: absolute;
                  right: 10px;
                  top: 10px;
@@ -631,21 +657,54 @@
                  cursor: pointer;
                  font-size: 28px;
               "></i>
-              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
-            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+              <video id="`+ id +`" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+     <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
             </video></div>`
         )
+        this.offectNum++;
+        $('#'+divId).mousedown(function (e) {
+          let dragBox =  $('#'+divId)[0];
+          //算出鼠标相对元素的位置
+          let disX = e.clientX - dragBox.offsetLeft;
+          let disY = e.clientY - dragBox.offsetTop;
+          document.onmousemove = e => {
+            //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+            let left = e.clientX - disX;
+            let top = e.clientY - disY;
+            //移动当前元素
+            dragBox.style.left = left + "px";
+            dragBox.style.top = top + "px";
+          };
+          document.onmouseup = e => {
+            //鼠标弹起来的时候不再移动
+            document.onmousemove = null;
+            //预防鼠标弹起来后还会循环（即预防鼠标放上去的时候还会移动）
+            document.onmouseup = null;
+          };
+        })
         window.setTimeout(() => {
-          this.player = videojs('myVideo', {
+          this.player = videojs(id, {
             muted: true,
             controls: true,
             preload: 'auto',
           })
+          // <source id="source" src="${this.playVideoUri}" type="video/mp4">
+          // <source id="source" src="${this.playVideoUri}" type="rtsp/flv">
+          //   <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+          // <!--rtsp://10.32.54.38:554/openUrl/ePBOw6I-->
           this.player.play()
-          console.log('获取视频')
-          console.log(this.player)
-
         }, 1000)
+
+
+
+
+        /* this.player.src({
+          src: this.videos[0].url,
+          type: 'application/x-mpegURL',
+          withCredentials: false
+        })*/
+
+        // this.player.play()
       },
 
       //点击顶部备案审批、视频
@@ -683,7 +742,6 @@
       onLoad() {
         let T = window.T
         this.map = new T.Map('mapDiv')
-        console.log(global.latlog)
         this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         // 添加地图类型控件
         // this.addCtrl()
@@ -745,14 +803,11 @@
           arr.sort((old,New)=>{
             return old.apply_name_count -New.apply_name_count
           })
-          console.log(arr)
 
           let x = arr.map(item=>{return item.apply_name});
           let y = arr.map(item=>{return item.apply_name_count});
           this.BarDataTwo.yAxis[0].data = x;
           this.BarDataTwo.series[0].data = y;
-          console.log( this.BarDataTwo.yAxis.data)
-          console.log(y)
         });
       },
       getListData(){
@@ -784,7 +839,6 @@
               this.timer = setInterval(function () {
                 if(i == 1){
                   that.chartDataThree.color=['rgb(48,171,241)','rgb(146,117,243)','rgb(255,81,52)','rgb(255,213,84)'];
-                  console.log('22222dianjidainji')
                   that.chartDataThree.series[0].data = [{
                     name:'工程渣土',value:res.data.gongcheng
                   },{
@@ -797,7 +851,6 @@
                   i = 2;
                 }else if(i==2){
                   that.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(146,117,243)','rgb(255,81,52)',];
-                  console.log('22222dianjidainji')
                   that.chartDataThree.series[0].data = [{
                     name:'犬只审批',value:res.data.quanzi
                   },{
@@ -810,7 +863,6 @@
                   i = 3;
                 }else if(i==3){
                   that.chartDataThree.color=['rgb(255,81,52)','rgb(255,213,84)','rgb(48,171,241)','rgb(146,117,243)',];
-                  console.log('22222dianjidainji')
                   that.chartDataThree.series[0].data = [{
                     name:'广告审批',value:res.data.guanggao
                   },{
@@ -823,7 +875,6 @@
                   i = 4;
                 }else if(i==4){
                   that.chartDataThree.color=['rgb(146,117,243)','rgb(255,81,52)','rgb(255,213,84)','rgb(48,171,241)',];
-                  console.log('22222dianjidainji')
                   that.chartDataThree.series[0].data = [{
                     name:'其他审批',value:res.data.qita
                   },{
@@ -879,7 +930,7 @@
             function (d, i) {
               d3.select(this).attr('d', transform.pathFromGeojson)
                 .on("mouseover",function(){
-                  console.log('这是点击了',);
+
                 })
             }
           )

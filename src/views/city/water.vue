@@ -640,7 +640,8 @@
         pointList:[],
         showVideoDialog:false,
         playVideoUri:'',
-        player: null
+        player: null,
+        offectNum:1,
       }
     },
     computed: {
@@ -689,30 +690,35 @@
       this.getAbnormal(3);
       this.getWarn(2);
       window.handleVideo = this.handleVideo;
-      window.closeVideoDialog = () => {
-        this.handleVideoClose()
-      }
+      window.closeVideoDialog = this.handleVideoClose;
       this.initPlayer()
     },
     methods: {
       //播放视频
       handleVideo(txt){
-        console.log(txt)
         this.getNow(txt);
       },
       getNow(txt){
         getNowurl({camera_index_code:txt.index_code,protocol:'hls'}).then(res=>{
           this.showVideoDialog = true;
-          this.playVideo(res.data.data.url);
+          this.playVideo(res.data.data.url,txt);
         });
       },
-      handleVideoClose() {
-        this.player.dispose()
-        $('#myVideo').remove()
-        $('#dashboardVideoPlayer').html('')
-        this.player = null
-        this.showVideoDialog = false
-        this.playVideoUri = ''
+      handleVideoClose(id) {
+        // this.player.dispose()
+        $('#myVideo'+id).remove()
+        $('#myVideoContent'+id).remove()
+        if($('#dashboardVideoPlayer').children().length < 1){
+          this.player.dispose()
+          $('#dashboardVideoPlayer').html('')
+          this.player = null
+          this.showVideoDialog = false
+          this.playVideoUri = ''
+        }
+        // $('#dashboardVideoPlayer').html('')
+        // this.player = null
+        // this.showVideoDialog = false
+        // this.playVideoUri = ''
       },
       initPlayer() {
         this.$nextTick(() => {
@@ -726,20 +732,40 @@
       handleCloseKeyDown(e) {
         if (this.dialogVisible && e.keyCode === 27) {
           this.player.dispose()
-          $('#myVideo').remove()
-          $('#dashboardVideoPlayer').html('')
-          this.player = null
-          this.showVideoDialog = false
-          this.playVideoUri = ''
+          // $('#myVideo').remove()
+          // $('#dashboardVideoPlayer').html('')
+          $('#myVideo'+id).remove()
+          $('#myVideoContent'+id).remove()
+
+          if($('#dashboardVideoPlayer').children().length < 1){
+            this.player.dispose()
+            $('#dashboardVideoPlayer').html('')
+            this.player = null
+            this.showVideoDialog = false
+            this.playVideoUri = ''
+          }
+          // this.player = null
+          // this.showVideoDialog = false
+          // this.playVideoUri = ''
         }
       },
-      playVideo(uri) {
+      playVideo(uri,txt) {
+
+        // let videoPlayer = $("#myVideo").get(0);
+        // if (typeof (videoPlayer) != "undefined") {
+        //   let myPlayer = videojs('myVideo');
+        //   myPlayer.dispose();
+        // }
+
         this.playVideoUri = uri;
         // this.dialogVisible = true
+        let id = "myVideo"+txt.id;
+        let divId = "myVideoContent"+txt.id;
+
         $('#dashboardVideoPlayer').append(
-          `<div style="position: relative;width: 100%;height: 100%;">
+          `<div id="`+ divId +`" style="position: fixed;width: 450px;height: 300px; padding-top: 20px;left:`+ Number(20)*this.offectNum +`px;top:`+ Number(20)*this.offectNum +`px;" class="my_drag">
               <i class="el-icon-error"
-                 onclick="closeVideoDialog()"
+                 onclick="closeVideoDialog(`+ txt.id +`)"
                  style="position: absolute;
                  right: 10px;
                  top: 10px;
@@ -748,21 +774,55 @@
                  cursor: pointer;
                  font-size: 28px;
               "></i>
-              <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
-            <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+              <video id="`+ id +`" class="video-js vjs-default-skin vjs-big-play-centered" style="width: 100%; height: 100%;" data-setup="{}">
+     <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
             </video></div>`
         )
+        this.offectNum++;
+        $('#'+divId).mousedown(function (e) {
+          let dragBox =  $('#'+divId)[0];
+          //算出鼠标相对元素的位置
+          let disX = e.clientX - dragBox.offsetLeft;
+          let disY = e.clientY - dragBox.offsetTop;
+          document.onmousemove = e => {
+            //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+            let left = e.clientX - disX;
+            let top = e.clientY - disY;
+            //移动当前元素
+            dragBox.style.left = left + "px";
+            dragBox.style.top = top + "px";
+          };
+          document.onmouseup = e => {
+            //鼠标弹起来的时候不再移动
+            document.onmousemove = null;
+            //预防鼠标弹起来后还会循环（即预防鼠标放上去的时候还会移动）
+            document.onmouseup = null;
+          };
+        })
         window.setTimeout(() => {
-          this.player = videojs('myVideo', {
+          this.player = videojs(id, {
             muted: true,
             controls: true,
             preload: 'auto',
           })
+          // <source id="source" src="${this.playVideoUri}" type="video/mp4">
+          // <source id="source" src="${this.playVideoUri}" type="rtsp/flv">
+          //   <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
+          // <!--rtsp://10.32.54.38:554/openUrl/ePBOw6I-->
           this.player.play()
-          console.log('获取视频')
-          console.log(this.player)
 
         }, 1000)
+
+
+
+
+        /* this.player.src({
+          src: this.videos[0].url,
+          type: 'application/x-mpegURL',
+          withCredentials: false
+        })*/
+
+        // this.player.play()
       },
 
       handleMapType(type){
@@ -821,7 +881,41 @@
 
       },
       mapPoint(type,list){
-        console.log('点位')
+        let countries = [];
+        let countriesOverlay = new T.D3Overlay(init,redraw);
+        let that = this;
+        d3.json("https://geo.datav.aliyun.com/areas_v3/bound/330108.json", function (data) {
+          countries = data.features;
+          that.map.addOverLay(countriesOverlay)
+          countriesOverlay.bringToBack();
+          countriesOverlay.bringToBack();
+        });
+
+        function init(sel, transform) {
+          let upd = sel.selectAll('path.geojson').data(countries);
+          upd.enter()
+            .append('path')
+            .attr("class", "geojson")
+            .attr('stroke', '#0c14b8')
+            .attr('stroke-width', function (d) {
+              return 2
+            })
+            .attr('fill', function (d, i) {
+              return d3.hsl(Math.random() * 360, 0.9, 0.5)
+            })
+            .attr('fill-opacity', '0')
+        }
+        function redraw(sel, transform) {
+          sel.selectAll('path.geojson').each(
+            function (d, i) {
+              d3.select(this).attr('d', transform.pathFromGeojson)
+                .on("mouseover",function(){
+
+                })
+            }
+          )
+
+        }
         //创建图片对象
         // this.map.clearOverLays();
         let icon01 = new T.Icon({
@@ -845,8 +939,6 @@
           // iconAnchor: new T.Point(34, 59)
         });
         let markers = []
-
-        console.log(list)
         if(type == 'video'){
           for (let i = 0; i < list.length; i++) {
             // var marker
@@ -870,17 +962,12 @@
           }
         }
 
-
-
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){
-          console.log('获取')
           var marker =  new T.Marker(lnglat, {icon: icon});
           that.map.addOverLay(marker);
           marker.addEventListener("click", function (m) {
-            console.log(m)
             let infoWin1 = new T.InfoWindow();
-            console.log(txt)
             let typeTxt = '';
             let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
             let sContent='';

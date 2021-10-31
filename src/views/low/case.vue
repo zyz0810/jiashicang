@@ -784,6 +784,7 @@
         pointFour:[],
         showImgDialog:false,
         timer:'',
+        offectNum:1,
       }
     },
 
@@ -882,8 +883,6 @@
         this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         heatmapOverlay='';
         this.map.clearOverLays();
-        console.log('热力图1')
-
         reManagePic().then((res) => {
           let points  = res.data.map (item=>{
             return {
@@ -897,7 +896,6 @@
           heatmapOverlay = new T.HeatmapOverlay({
             "radius": 50,
           });
-          console.log(points)
           this.map.addOverLay(heatmapOverlay);
           heatmapOverlay.setDataSet({data: points, max: 6});
           this.mapPoint('hot',points);
@@ -908,7 +906,6 @@
       getHeatMapTwo(){
         this.map.centerAndZoom(new T.LngLat(global.latlog.centerLongitude, global.latlog.centerLatitude), global.latlog.zoom) // 设置显示地图的中心点和级别
         heatmapOverlay='';
-        console.log('热力图2')
         this.map.clearOverLays();
         reLetterPic().then((res) => {
           let HotArr = [
@@ -964,7 +961,6 @@
 
 
         this.timer = setInterval(() => {
-          console.log('幻灯片播放')
           let sContent =
             '<div class="point_info">' +
             '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
@@ -1019,7 +1015,6 @@
           }else if(this.activeIndex == 0 && this.mapType == 2) {
             this.mapPoint(0, this.pointOne)
           } else{
-            console.log('第二个列表第二个列表第二个列表第二个列表')
             this.mapPoint(1,this.pointTwo)
           }
 
@@ -1048,6 +1043,41 @@
         });
       },
       mapPoint(type,list){
+        let countries = [];
+        let countriesOverlay = new T.D3Overlay(init,redraw);
+        let that = this;
+        d3.json("https://geo.datav.aliyun.com/areas_v3/bound/330108.json", function (data) {
+          countries = data.features;
+          that.map.addOverLay(countriesOverlay)
+          countriesOverlay.bringToBack();
+          countriesOverlay.bringToBack();
+        });
+
+        function init(sel, transform) {
+          let upd = sel.selectAll('path.geojson').data(countries);
+          upd.enter()
+            .append('path')
+            .attr("class", "geojson")
+            .attr('stroke', '#0c14b8')
+            .attr('stroke-width', function (d) {
+              return 2
+            })
+            .attr('fill', function (d, i) {
+              return d3.hsl(Math.random() * 360, 0.9, 0.5)
+            })
+            .attr('fill-opacity', '0')
+        }
+        function redraw(sel, transform) {
+          sel.selectAll('path.geojson').each(
+            function (d, i) {
+              d3.select(this).attr('d', transform.pathFromGeojson)
+                .on("mouseover",function(){
+
+                })
+            }
+          )
+
+        }
         //创建图片对象
         // this.map.clearOverLays();
         let icon01 = new T.Icon({
@@ -1078,7 +1108,6 @@
         });
         let markers = [];
 
-        console.log(list);
         for (let i = 0; i < list.length; i++) {
           // var marker
           // 0：关  1：开
@@ -1096,7 +1125,6 @@
             markers[i]  = drawTMaker(point, icon04,this,list[i]);
           }
           if(type == 'hot'){
-            console.log('三生三世')
             let point = new T.LngLat(list[i].lng,list[i].lat);
             markers[i]  = drawTMaker(point, iconNull,this,list[i]);
           }
@@ -1109,10 +1137,7 @@
           that.map.addOverLay(marker);
 
           marker.addEventListener("click", function (m) {
-            console.log(m)
             let infoWin1 = new T.InfoWindow();
-            console.log(txt)
-            console.log(infoWin1)
             let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
             // 数字城管：任务号、问题来源、问题状态、小类名称、上报时间、问题描述、所属区域；
             // 信访投诉：受理单编号、工单状态、投诉来源、详细类型、反映内容、违法地址

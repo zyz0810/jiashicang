@@ -17,11 +17,13 @@
         <ul class="AI_list">
           <!--<li class="mt_20" v-for="item in AIList" :key="item.id" @click="handleVideo(item)">-->
           <li class="mt_20" v-for="item in AIList" :key="item.id">
-            <div class="img_txt f14 bold">{{item.camera_name}}{{item.item.videoUrl}}</div>
+            <div class="img_txt f14 bold">{{item.camera_name}}</div>
             <!--<img :src="item.pic_url">-->
             <div style="width: 100%;height: 16vh;">
               <video :id="'myVideo'+item.id" class="video-js vjs-default-skin vjs-big-play-centered" autoplay="autoplay" controls muted style="width: 100%; height: 100%;" data-setup="{}">
                 <source id="source" :src="item.videoUrl" type="application/x-mpegURL">
+                <!--<source id="source" :src="item.videoUrl" type="video/mp4">-->
+
               </video>
             </div>
           </li>
@@ -152,7 +154,7 @@
       // })
       this.onLoad();
       window.handleVideo = this.handleVideo;
-      window.closeVideoDialog = this.handleVideoClose();
+      window.closeVideoDialog = this.handleVideoClose;
       this.initPlayer();
       this.getPoint('');
       this.getAIList();
@@ -190,35 +192,38 @@
           this.AIList = res.data.data;
 
           for(let i=0;i<this.AIList.length;i++){
+            this.$set(this.AIList[i],'videoUrl','https://vd3.bdstatic.com/mda-mi6yu6w39518uykg/cae_h264/1631056499817188563/mda-mi6yu6w39518uykg.mp4')
             // this.AIList[i].videoUrl = 'https://vd3.bdstatic.com/mda-mi6yu6w39518uykg/cae_h264/1631056499817188563/mda-mi6yu6w39518uykg.mp4';
-            getNowurl({camera_index_code:this.AIList[i].index_code,protocol:'hls'}).then(res=>{
-              this.AIList[i].videoUrl = res.data.data.url;
-              setTimeout(function() {
-                var myPlayer = videojs('myVideo'+this.AIList[i].id);
-                videojs('myVideo'+this.AIList[i].id).ready(function() {
-                  var myPlayer = this;
-                  myPlayer.play();
-                });
-              }, 5000);
-            });
-            // window.setTimeout(() => {
-            //   this.player = videojs('myVideo'+this.AIList[i].id, {
-            //     muted: true,
-            //     controls: true,
-            //     preload: 'auto',
+            // setTimeout(()=> {
+            //   let myPlayer = videojs('myVideo'+this.AIList[i].id);
+            //   videojs('myVideo'+this.AIList[i].id).ready(function() {
+            //     let myPlayer = this;
+            //     myPlayer.play();
             //   });
-            //   // <source id="source" src="${this.playVideoUri}" type="video/mp4">
-            //   // <source id="source" src="${this.playVideoUri}" type="rtsp/flv">
-            //   //   <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
-            //   // <!--rtsp://10.32.54.38:554/openUrl/ePBOw6I-->
-            //   this.player.click()
-            //   this.player.play()
-            //   console.log('获取视频')
-            //   console.log(this.player)
-            //
-            // }, 2000)
+            // }, 5000);
+            getNowurl({camera_index_code:this.AIList[i].index_code,protocol:'hls'}).then(res=>{
+             //  this.AIList[i].videoUrl = res.data.data.url;
+            this.$set(this.AIList[i],'videoUrl',res.data.data.url);
+              // setTimeout(()=> {
+              //   let myPlayer = videojs('myVideo'+this.AIList[i].id);
+              //   videojs('myVideo'+this.AIList[i].id).ready(function() {
+              //     let myPlayer = this;
+              //     myPlayer.play();
+              //   });
+              // }, 2000);
+            });
+
 
           }
+          setTimeout(()=>{
+            for(let i=0;i<this.AIList.length;i++){
+              let myPlayer = videojs('myVideo'+this.AIList[i].id);
+              videojs('myVideo'+this.AIList[i].id).ready(function() {
+                let myPlayer = this;
+                myPlayer.play();
+              });
+            }
+          },3000)
 
 
         });
@@ -264,7 +269,7 @@
             function (d, i) {
               d3.select(this).attr('d', transform.pathFromGeojson)
                 .on("mouseover",function(){
-                  console.log('这是点击了',);
+
                 })
             }
           )
@@ -344,7 +349,6 @@
 
       //播放视频
       handleVideo(txt){
-        console.log(txt)
         this.getNow(txt);
       },
       getNow(txt){
@@ -357,9 +361,6 @@
         // this.player.dispose()
         $('#myVideo'+id).remove()
         $('#myVideoContent'+id).remove()
-        console.log('#myVideo'+id)
-        console.log('#myVideoContent'+id)
-        console.log($('#dashboardVideoPlayer').children().length)
         if($('#dashboardVideoPlayer').children().length < 1){
           this.player.dispose()
           $('#dashboardVideoPlayer').html('')
@@ -432,11 +433,7 @@
         )
         this.offectNum++;
         $('#'+divId).mousedown(function (e) {
-          console.log(e)
-          console.log('狂口高：'+e.clientY)
           let dragBox =  $('#'+divId)[0];
-          console.log(' 元素')
-          console.log('元素高：'+dragBox.offsetTop)
           //算出鼠标相对元素的位置
           let disX = e.clientX - dragBox.offsetLeft;
           let disY = e.clientY - dragBox.offsetTop;
@@ -466,9 +463,6 @@
           //   <source id="source" src="${this.playVideoUri}" type="application/x-mpegURL">
           // <!--rtsp://10.32.54.38:554/openUrl/ePBOw6I-->
           this.player.play()
-          console.log('获取视频')
-          console.log(this.player)
-
         }, 1000)
 
 
