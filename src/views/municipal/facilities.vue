@@ -380,6 +380,7 @@
 </template>
 
 <script>
+  import wgs84_to_gcj02 from "@/utils/gcj02towgs84";
   import echarts from 'echarts';
   import 'echarts-liquidfill';
   import RingChart from '@/components/Charts/RingChart';
@@ -1127,7 +1128,13 @@
         let countriesOverlay = new T.D3Overlay(init,redraw);
         let that = this;
         d3.json("https://geo.datav.aliyun.com/areas_v3/bound/330108.json", function (data) {
-          countries = data.features;
+          // countries = data.features;
+          let a = data.features;
+          let brr = a[0].geometry.coordinates[0][0].map(item=>{
+            return wgs84_to_gcj02(item[0],item[1])
+          })
+          a[0].geometry.coordinates[0][0] = brr
+          countries = a;
           that.map.addOverLay(countriesOverlay)
           countriesOverlay.bringToBack();
           countriesOverlay.bringToBack();
