@@ -207,11 +207,11 @@
         <div class="baseColor">案件情况</div>
         <div class="">
           案件总数
-          <span class="txt_linear f22">1323</span>
+          <span class="txt_linear f22">{{totalData.count}}</span>
         </div>
         <div class="">
           立案数
-          <span class="txt_linear f22">823</span>
+          <span class="txt_linear f22">{{totalData.isAudited}}</span>
         </div>
       </div>
       <div class="flex f20 bold border shadow">
@@ -1049,6 +1049,7 @@
         playVideoUri:'',
         player: null,
         offectNum:1,
+        totalData:{},
       }
     },
 
