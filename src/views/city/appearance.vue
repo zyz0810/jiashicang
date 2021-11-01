@@ -506,14 +506,15 @@
            {
              name: '',
              type: 'pie',
-             radius: '60%',
+             radius: '75%',
              // radius: [30, 110],
              center: ['50%', '50%'],
              roseType: 'radius',
+             color:['rgb(61,253,206)','rgb(206,171,255)','rgb(0,242,254)'],
              label: {
                normal: {
                  show: true,
-                 formatter: "{b}{d}%",
+                 formatter: "{b} {d}%",
                  textStyle: {
                    fontSize: 14,
                    color: "#fff"
@@ -1109,14 +1110,14 @@
           //今日识别统计
           this.totalData = res.data.total;
           this.pieChartOne.series[0].data = [{
-            name:'审核通过',value:res.data.isAudited
-            // name:'审核通过',value:2
+            name:'未审核',value:res.data.total.audited
+            // name:'未审核',value:356
           },{
-            name:'未审核',value:res.data.audited
-            // name:'未审核',value:44
+            name:'审核未通过',value:res.data.total.isNotAudited
+            // name:'审核未通过',value:0
           },{
-            name:'审核不通过',value:res.data.isNotAudited
-            // name:'审核不通过',value:6
+            name:'审核通过',value:res.data.total.isAudited
+            // name:'审核通过',value:1
           }];
           //违规类型分析
           let category_x = [];
