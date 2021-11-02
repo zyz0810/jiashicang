@@ -168,13 +168,11 @@ export default {
           city:"滨江区",
         }
       }).then((data)=>{
-        console.log(data)
        this.weatherData={
          weather:data.data.lives[0].weather,
          temperature:data.data.lives[0].temperature
        }
       }).catch((err) => {
-        console.log(err)
         // alert("获取失败");
       })
     },
@@ -281,9 +279,7 @@ export default {
   },
   mounted() {
     // this.addDate();
-    console.log('111111')
     this.getWeather();
-    console.log( this.$route.path)
   },
 }
 </script>

@@ -48,7 +48,8 @@
       <RingChart :chartData="chartDataFour" :PieChartLegend="PieChartLegend" height="250px"></RingChart>
       <div class="mt_20">
         <p class="f20 bold txt_linear">餐企油烟超标时长分析</p>
-        <BarChartFive :chartData="BarData" height="30vh" divwidth="100%"></BarChartFive>
+<!--        <BarChartFour :chartData="BarData" height="30vh" divwidth="100%"></BarChartFour>-->
+        <BarChartFour :chartData="BarData" :BarChartLegend="PieChartLegend" height="35vh" divwidth="100%"></BarChartFour>
       </div>
 
     </div>
@@ -869,7 +870,7 @@
             {
               name: '访问来源',
               type: 'pie',
-              radius: ['45%', '70%'],
+              radius: ['40%', '60%'],
               avoidLabelOverlap: false,
               // label: {
               //   show: false,
@@ -898,7 +899,7 @@
                     color: '#fff'
                   },
                   length:10,
-                  length2 :35,
+                  length2 :30,
                 }
               },
               label :{
@@ -907,7 +908,7 @@
                 //   '{b}',
                 //   '{d}'
                 // ].join('\n'),
-                formatter: '{c}\n{b}{d}%',
+                formatter: '{c} ({d}%)\n{b}',
                 verticalAlign :'bottom',
                 position:'outside',
                 textShadowOffsetY :10,
@@ -1069,7 +1070,7 @@
       this.getAIData();
       window.handleVideo = this.handleVideo;
       window.closeVideoDialog = this.handleVideoClose;
-      this.initPlayer()
+      this.initPlayer();
     },
     methods: {
       // 辖区报警次数占比分析
@@ -1089,7 +1090,7 @@
           let barArrData = res.data.map(item=>{
             return item.y_count;
           });
-          this.BarData.xAxis.data = barArrName;
+          this.BarData.xAxis[0].data = barArrName;
           this.BarData.series[0].data = barArrData;
         });
       },
