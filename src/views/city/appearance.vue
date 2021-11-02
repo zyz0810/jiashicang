@@ -1084,10 +1084,14 @@
       },
       getYyBar(){
         timesOfWarn({ start_time:'', end_time:'',}).then(res => {
-          let barArrName = res.data.map(item=>{
+          let arr = res.data;
+          arr.sort((old,New)=>{
+            return New.y_count-old.y_count
+          })
+          let barArrName = arr.map(item=>{
             return item.x_name;
           });
-          let barArrData = res.data.map(item=>{
+          let barArrData = arr.map(item=>{
             return item.y_count;
           });
           this.BarData.xAxis[0].data = barArrName;
