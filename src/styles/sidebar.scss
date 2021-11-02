@@ -52,15 +52,16 @@
         position: relative;
 
         &:nth-child(2){
-          margin-right: 130px;
+          //margin-right: 130px;
+          margin-right: 60px;
           img{
             width: 110px;
           }
           .line{
             //width: 160px;
-            width: 180px;
+            width: 100px;
             top: 40px;
-            left: 110px;
+            left: 120px;
           }
         }
         &:last-child{

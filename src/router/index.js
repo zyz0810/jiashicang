@@ -193,10 +193,10 @@ export const asyncRoutes = [
     path: '/digital',
     component: Layout,
     redirect: 'noRedirect',
-    name: '数字服务',
+    name: '便民服务',
     hidden: false,
     meta: {
-      title: '数字服务',
+      title: '便民服务',
       icon: '3',
       roles: [
         'admin',
@@ -209,7 +209,7 @@ export const asyncRoutes = [
         name: 'services',
         hidden: false,
         meta: {
-          title: '数字服务',
+          title: '便民服务',
           roles: [
             'admin',
           ]
@@ -301,35 +301,35 @@ export const asyncRoutes = [
   //     },
   //   ]
   // },
-  {
-    path: '/illegal',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: '违法建筑',
-    hidden: false,
-    meta: {
-      title: '违法建筑',
-      icon: '7',
-      roles: [
-        'admin',
-      ]
-    },
-    children: [
-      {
-        path: 'construction',
-        component: () => import('@/views/illegal/construction'),
-        name: 'construction',
-        hidden: false,
-        meta: {
-          title: '违法建筑',
-          roles: [
-            'admin',
-          ]
-        }
-      },
-
-    ]
-  },
+  // {
+  //   path: '/illegal',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   name: '违法建筑',
+  //   hidden: false,
+  //   meta: {
+  //     title: '违法建筑',
+  //     icon: '7',
+  //     roles: [
+  //       'admin',
+  //     ]
+  //   },
+  //   children: [
+  //     {
+  //       path: 'construction',
+  //       component: () => import('@/views/illegal/construction'),
+  //       name: 'construction',
+  //       hidden: false,
+  //       meta: {
+  //         title: '违法建筑',
+  //         roles: [
+  //           'admin',
+  //         ]
+  //       }
+  //     },
+  //
+  //   ]
+  // },
   {
     path: '/city',
     component: Layout,

@@ -15,7 +15,7 @@
                   <!--<span>{{formData.city.shangbao[2]}}</span>-->
                   <!--<span>{{formData.city.shangbao[1]}}</span>-->
                   <!--<span>{{formData.city.shangbao[0]}}</span>-->
-                  <countTo :startVal="0" :endVal="formData.city.shangbao" :duration="5000" ref="countSix" class="block text-right"></countTo>
+                  <countTo :startVal="0" :endVal="formData.city.shangbao" :duration="12000" ref="countSix" class="block text-right"></countTo>
                 </div>
               </div>
               <div class="flex-item">
@@ -26,7 +26,7 @@
                   <!--<span>{{formData.city.chuli[2]}}</span>-->
                   <!--<span>{{formData.city.chuli[1]}}</span>-->
                   <!--<span>{{formData.city.chuli[0]}}</span>-->
-                  <countTo :startVal="0" :endVal="formData.city.chuli" :duration="5000" ref="countSeven" class="block text-right"></countTo>
+                  <countTo :startVal="0" :endVal="formData.city.chuli" :duration="12000" ref="countSeven" class="block text-right"></countTo>
                 </div>
               </div>
               <div class="flex-item">
@@ -37,7 +37,7 @@
                   <!--<span>{{formData.city.undisposed[2]}}</span>-->
                   <!--<span>{{formData.city.undisposed[1]}}</span>-->
                   <!--<span>{{formData.city.undisposed[0]}}</span>-->
-                  <countTo :startVal="0" :endVal="formData.city.undisposed" :duration="5000" ref="countEight" class="block text-right"></countTo>
+                  <countTo :startVal="0" :endVal="formData.city.undisposed" :duration="12000" ref="countEight" class="block text-right"></countTo>
                 </div>
               </div>
             </div>
@@ -115,21 +115,21 @@
               <ul class="clr_white bold anjian_cegory mr_20">
                 <li class="flex">
                   <span class="block f26 text-center">
-                    <countTo :startVal="0" :endVal="formData.case.count" :duration="5000" ref="countThree"></countTo>
+                    <countTo :startVal="0" :endVal="formData.case.count" :duration="12000" ref="countThree"></countTo>
                     <!--<animate-number from="0" :to="formData.case.count" :key="formData.case.count" :duration="3000" ></animate-number>-->
                   </span>
                   <p class="f14 txtColor">今日上报案件</p>
                 </li>
                 <li class="flex mt_10">
                   <span class="block f26 text-center">
-                     <countTo :startVal="0" :endVal="formData.case.chuli" :duration="5000" ref="countFour"></countTo>
+                     <countTo :startVal="0" :endVal="formData.case.chuli" :duration="12000" ref="countFour"></countTo>
                     <!--<animate-number from="0" :to="formData.case.chuli" :key="formData.case.chuli" :duration="3000"></animate-number>-->
                   </span>
                   <p class="f14 txtColor">今日受理案件</p>
                 </li>
                 <li class="flex mt_10">
                   <span class="block f26 text-center">
-                     <countTo :startVal="0" :endVal="formData.case.end" :duration="5000" ref="countFive"></countTo>
+                     <countTo :startVal="0" :endVal="formData.case.end" :duration="12000" ref="countFive"></countTo>
                     <!--<animate-number from="0" :to="formData.case.end" :key="formData.case.end" :duration="3000"></animate-number>-->
                   </span>
                   <p class="f14 txtColor">今日结案案件</p>
@@ -171,7 +171,7 @@
             <div class="title_index f18 bold text-center"><span class="txt_linear">实时监控</span></div>
             <div class="monitor_content text-center f16 bold">
               <img src="./../../assets/image/index_img01.gif" class=""/>
-              <div class="monitor_num clr_white f26"><router-link :to="{path:'/general/overview/view'}">{{videoData.total}}</router-link></div>
+              <div class="monitor_num clr_white f26 text-center"><router-link :to="{path:'/general/overview/view'}">{{videoData.total}}</router-link></div>
               <div class="weui-cell monitor_num_AI">
                 <div class="weui-cell__hd txtColor">{{videoData.ai}}</div>
                 <div class="weui-cell__bd clr_white">AI</div>
@@ -217,7 +217,7 @@
 <!--            </div>-->
             <p class="f18 txtColor bold text-center mt_20">
               {{formData.letter.input_time}}受理件
-              <countTo :startVal="0" :endVal="formData.letter.month_deal_num" :duration="5000" ref="countOne"></countTo>
+              <countTo :startVal="0" :endVal="formData.letter.month_deal_num" :duration="12000" ref="countOne"></countTo>
               <!--<animate-number from="0" :to="formData.letter.month_deal_num" :key="formData.letter.month_deal_num" :duration="3000" class="f20"></animate-number>-->
             </p>
             <div class="flex bold text-center clr_white mt_20 mb_20 bg_blue03" style="padding: 10px 0; border-radius: 10px;">
@@ -260,7 +260,7 @@
             <div class="clr_white mt_20">
               <div class="f18 bold text-center txtColor approval_num">
                 周审批总量：
-                <countTo :startVal="0" :endVal="formData.check.count" :duration="5000" ref="countTwo"></countTo>
+                <countTo :startVal="0" :endVal="formData.check.count" :duration="12000" ref="countTwo"></countTo>
                 <!--<animate-number from="0" :to="formData.check.count" :key="formData.check.count" :duration="3000" class="f20"></animate-number>-->
               </div>
               <div class="circle_num text-center">
@@ -692,7 +692,7 @@
           this.$refs.countEight.reset();
           this.$refs.countEight.start();
 
-        }, 16000);
+        }, 25000);
       },
       getData(){
         this.formData = {}
@@ -771,9 +771,10 @@
     }
     .monitor_num{
       position: absolute;
-      bottom: 44%;
-      left:44%;
+      bottom: 45%;
+      left:25%;
       z-index: 999;
+      width: 50%;
     }
     .weui-cell{
       padding: 0;

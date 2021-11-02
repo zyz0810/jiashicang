@@ -17,7 +17,7 @@
 
 <!--    <div class="line"></div>-->
     <div class="flex baseColor nav">
-      <div class="flex clr_white bold warning_num">
+      <div class="flex clr_white bold warning_num" style="display: none;">
         <div class="flex-item">
           <span class="yellow_bg f16 block"><i class="el-icon-message-solid clr_white"></i> 5</span>
           <p class="f14">黄色预警</p>

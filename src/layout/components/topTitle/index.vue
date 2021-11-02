@@ -133,7 +133,7 @@ export default {
       } else if(route.path == '/garbage/link'){
         this.title = '环卫作业数字驾驶舱'
       } else if(route.path == '/digital/services'){
-        this.title = '数字服务驾驶舱'
+        this.title = '便民服务驾驶舱'
       } else if(route.path == '/demonstration/community'){
         this.title = '示范小区数字驾驶舱'
       } else if(route.path == '/city/appearance/index'){
