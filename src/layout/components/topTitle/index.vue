@@ -147,7 +147,7 @@ export default {
       } else if(route.path == '/municipal/facilities'){
         this.title = '市政设施数字驾驶舱'
       } else if(route.path == '/low/case'){
-        this.title = '案件归集数字驾驶舱'
+        this.title = '数字城管数字驾驶舱'
       }
     }
   },

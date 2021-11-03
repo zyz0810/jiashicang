@@ -229,7 +229,7 @@
                 </p>
               </div>
               <div class="flex-item">
-                <p class="f26">{{formData.letter.comparative_num}}%<i v-if="formData.letter.basis_direction == 1" class="iconfont icon-shangsheng clr_blue03 ml_10"></i><i v-else class="iconfont icon-xiajiang clr_yellow ml_10"></i></p>
+                <p class="f26">{{formData.letter.comparative_num}}%<i v-if="formData.letter.comparative_direction == 1" class="iconfont icon-shangsheng clr_blue03 ml_10"></i><i v-else class="iconfont icon-xiajiang clr_yellow ml_10"></i></p>
                 <p class="mt_5">环比
 <!--                  <span>{{formData.letter.comparative_direction == 1?'上升':'下降'}}</span>-->
                 </p>

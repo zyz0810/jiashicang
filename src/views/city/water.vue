@@ -961,9 +961,9 @@
             if(list[i].type == 0){
               markers[i]  = drawTMaker(point, icon01,this,list[i]);
             }else if(list[i].type == 2){
-              markers[i]  = drawTMaker(point, icon02,this,list[i]);
-            }else if(list[i].type == 3){
               markers[i]  = drawTMaker(point, icon03,this,list[i]);
+            }else if(list[i].type == 3){
+              markers[i]  = drawTMaker(point, icon02,this,list[i]);
             }
 
           }
@@ -1007,18 +1007,25 @@
               }else if(txt.type == 0){
                 typeTxt = '河道水位'
               }
+              let address;
+              if(txt.address == null){
+                address = '';
+              }else {
+                address = txt.address;
+              }
+
               sContent ='<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
 
                 '<div class="point_info">' +
                 '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
                 '<tr>' +
-                '<td class="txt_6">站点名称</td><td>' + txt.stnm + '</td>' +
+                '<td class="txt_6">站点名称</td><td style="white-space:nowrap;">' + txt.stnm + '</td>' +
                 '</tr>'+
                 '<tr>' +
                 '<td>站点类型</td><td>' + typeTxt + '</td>'+
                 '</tr>'+
                 '<tr>' +
-                '<td>地址</td><td>' + txt.address + '</td>'+
+                '<td>地址</td><td >' + address + '</td>'+
                 '</tr>'+
                 '</table>'+
                 '</div>';

@@ -231,7 +231,7 @@
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
   import {abnormalSite} from "@/api/water"; // 引入刚才的map.js 注意路径
-  import {caseCount,commandCase,collectData,reLetterPic,reManagePic} from "@/api/lowCase";
+  import {caseCount,commandCase,collectData,reLetterPic,reManagePic,getManageList,getLetterList} from "@/api/lowCase";
   import point01 from '@/assets/image/point24.png'
   import point02 from "@/assets/image/point56.png";
   import point03 from "@/assets/image/point57.png";
@@ -786,6 +786,8 @@
         showImgDialog:false,
         timer:'',
         offectNum:1,
+        manageNum:0,
+        letterNum:0
       }
     },
 
@@ -804,6 +806,9 @@
       this.getPointOne();
       window.handleVideo = this.handleVideo;
       this.getDirectChart();
+
+      this.getManageNum();
+      this.getLetterNum();
     },
     beforeDestroy() {
       clearInterval(this.timer);
@@ -997,13 +1002,55 @@
         this.map.setStyle('indigo')
 
       },
+      getManageNum(){
+        getManageList().then((res) => {
+            this.manageNum = res.data.total;
+            this.getManage();
+        });
+
+      },
+      getManage(){
+        this.pointOne = [];
+        for(let i = 1; i<=Math.ceil(Number(this.manageNum)/Number(500));i++){
+          getManageList({page:i,pageSize:500}).then((res) => {
+            if(i == 1){
+              this.manageNum = res.data.total;
+            }
+            this.pointOne = this.pointOne.concat(res.data.data);
+            if(i == Math.ceil(Number(this.manageNum)/Number(500))){
+              this.mapPoint(0, this.pointOne)
+            }
+          });
+        }
+
+      },
+      getLetterNum(){
+        getLetterList().then((res) => {
+          this.letterNum = res.data.total;
+        });
+      },
+      getLetter(){
+        // letterNum
+        this.pointTwo = [];
+        for(let i = 1; i<=Math.ceil(Number(this.letterNum)/Number(500));i++){
+          getLetterList({page:i,pageSize:500}).then((res) => {
+            if(i == 1){
+              this.letterNum = res.data.total;
+            }
+            this.pointTwo = this.pointOne.concat(res.data.data);
+            if(i == Math.ceil(Number(this.letterNum)/Number(500))){
+              this.mapPoint(1, this.pointTwo)
+            }
+          });
+        }
+      },
       getPointOne(){
         caseCount().then((res) => {
           const {chuLi,shangBao,undisposed,yellow_detail,yellow_num,red_num}=res.data.city
           const {basis_direction,basis_num,comparative_direction,comparative_num,satisfaction_rate,rep_num,month_deal_num}=res.data.letter.data
           this.formData = {chuLi,shangBao,undisposed,yellow_detail,yellow_num,red_num,basis_direction,basis_num,comparative_direction,comparative_num,satisfaction_rate,rep_num,month_deal_num}
-          this.pointOne = res.data.city.list;
-          this.pointTwo = res.data.letter.list;
+          // this.pointOne = res.data.city.list;
+          // this.pointTwo = res.data.letter.list;
           if((this.activeIndex == 0 || this.activeIndex == 1) && this.mapType == 1){
             // this.mapPoint(0,this.pointOne)
             // 热力图
@@ -1014,9 +1061,11 @@
               this.getHeatMapTwo();
             }
           }else if(this.activeIndex == 0 && this.mapType == 2) {
-            this.mapPoint(0, this.pointOne)
+            // this.mapPoint(0, this.pointOne)
+            this.getManage();
           } else{
-            this.mapPoint(1,this.pointTwo)
+            // this.mapPoint(1,this.pointTwo)
+            this.getLetter();
           }
 
         });

@@ -291,26 +291,26 @@
 <!--    </div>-->
     <div class="center_content clr_white text-center" v-if="activeIndex == 1 && pointTwoType == 1">
 
-      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showOneType==1?'active':'']" @click="handleParkPointType(1)">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showOneType==0?'active':'']" @click="handleParkPointType(0)">
         <div class="weui-cell__hd flex">
-          <img v-if="showOneType!=1" src="./../../assets/image/point44.png"/>
+          <img v-if="showOneType!=0" src="./../../assets/image/point44.png"/>
           <img v-else src="./../../assets/image/point44_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showOneType==1?'clr_white':'']">全部区域</div>
+        <div :class="['weui-cell__bd',showOneType==0?'clr_white':'']">全部区域</div>
+      </div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showOneType==1?'active':'']" @click="handleParkPointType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showOneType!=1" src="./../../assets/image/point69.png"/>
+          <img v-else src="./../../assets/image/point66_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showOneType==1?'clr_white':'']">重点区域</div>
       </div>
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showOneType==2?'active':'']" @click="handleParkPointType(2)">
         <div class="weui-cell__hd flex">
-          <img v-if="showOneType!=2" src="./../../assets/image/point69.png"/>
-          <img v-else src="./../../assets/image/point66_active.png"/>
-        </div>
-        <div :class="['weui-cell__bd',showOneType==2?'clr_white':'']">重点区域</div>
-      </div>
-      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showOneType==3?'active':'']" @click="handleParkPointType(3)">
-        <div class="weui-cell__hd flex">
-          <img v-if="showOneType!=3" src="./../../assets/image/point70.png"/>
+          <img v-if="showOneType!=2" src="./../../assets/image/point70.png"/>
           <img v-else src="./../../assets/image/point63_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showOneType==3?'clr_white':'']">停车区域</div>
+        <div :class="['weui-cell__bd',showOneType==2?'clr_white':'']">停车区域</div>
       </div>
 
 <!--      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==1?'active':'']" @click="handleParkPointType(1)">-->
@@ -431,11 +431,17 @@
   import point08 from '@/assets/image/point36.png' // AI视频
   import point09 from '@/assets/image/point38.png' // 普通视频
   import point10 from '@/assets/image/point43.png' // 运维人员
+  import point11 from '@/assets/image/point63.png' //
+  import point12 from '@/assets/image/point64.png' //
+  import point13 from '@/assets/image/point65.png' //
+  import point14 from '@/assets/image/point66.png' //
+  import point15 from '@/assets/image/point67.png' //
+  import point16 from '@/assets/image/point68.png' //
   import toolTipBg from '@/assets/image/digital-bg.png' // 引入刚才的map.js 注意路径
   import videoView from "./videoView";
   import {getAllVideoPoint, getNowurl, pointList} from '@/api/system'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
-  import {getLampPostList,getcontrolcabinetlist,getevaluate,parkList,getAllPark} from '@/api/digitalServices'
+  import {getLampPostList,getcontrolcabinetlist,getevaluate,parkList,getAllPark,getShareCar} from '@/api/digitalServices'
   import {generalIndex} from "@/api/overView";
   import global from "@/utils/common";
   export default {
@@ -447,7 +453,7 @@
       return {
         showThreeType:0,
         showTwoType:0,
-        showOneType:1,
+        showOneType:0,
         parkData:{},
         percentageNum:0,
         pointType:1,
@@ -1296,7 +1302,7 @@
           //获取共享单车泊车位
           this.pointTwoType = 1;
           this.getCommonVideoNum();
-          this.getBikePartList();
+          this.getBikePartList(0);
         }else if(val == 2){
           this.showType = 2;
 
@@ -1449,6 +1455,36 @@
           iconSize: new T.Point(30, 51),
           // iconAnchor: new T.Point(34, 59)
         });
+        let icon11= new T.Icon({
+          iconUrl: point11,
+          iconSize: new T.Point(30, 51),
+          // iconAnchor: new T.Point(34, 59)
+        });
+        let icon12 = new T.Icon({
+          iconUrl: point12,
+          iconSize: new T.Point(30, 51),
+          // iconAnchor: new T.Point(34, 59)
+        });
+        let icon13 = new T.Icon({
+          iconUrl: point13,
+          iconSize: new T.Point(30, 51),
+          // iconAnchor: new T.Point(34, 59)
+        });
+        let icon14= new T.Icon({
+          iconUrl: point14,
+          iconSize: new T.Point(30, 51),
+          // iconAnchor: new T.Point(34, 59)
+        });
+        let icon15 = new T.Icon({
+          iconUrl: point15,
+          iconSize: new T.Point(30, 51),
+          // iconAnchor: new T.Point(34, 59)
+        });
+        let icon16 = new T.Icon({
+          iconUrl: point16,
+          iconSize: new T.Point(30, 51),
+          // iconAnchor: new T.Point(34, 59)
+        });
         let markers = []
         if(type == 'control'){
           for (let i = 0; i < list.length; i++) {
@@ -1497,6 +1533,29 @@
             }else if(list[i].class==3){
               let point = new T.LngLat(list[i].longitude,list[i].latitude);
               markers[i]  = drawTMaker(point, icon09,this,list[i]);
+            }
+
+          }
+        }else if(type == 'bike'){
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            let point = new T.LngLat(list[i].log,list[i].lat);
+            if(list[i].type == '停车区域'){
+              if(list[i].status == 1){
+                markers[i]  = drawTMaker(point, icon11,this,list[i]);
+              }else if(list[i].status == 2){
+                markers[i]  = drawTMaker(point, icon12,this,list[i]);
+              }else if(list[i].status == 3){
+                markers[i]  = drawTMaker(point, icon13,this,list[i]);
+              }
+            }else if(list[i].type == '重点监管区域'){
+              if(list[i].status == 1){
+                markers[i]  = drawTMaker(point, icon14,this,list[i]);
+              }else if(list[i].status == 2){
+                markers[i]  = drawTMaker(point, icon15,this,list[i]);
+              }else if(list[i].status == 3){
+                markers[i]  = drawTMaker(point, icon16,this,list[i]);
+              }
             }
 
           }
@@ -1620,6 +1679,37 @@
                   '</tr>'+
                   '</table>'+
                   '</div>';
+              }else if(type == 'bike'){
+                // '<p class="f14 time">监控名称：' + txt.name + '</p>' +
+                // '<p class="f14 time">状态：' + status + '</p>' +
+                let bikeStatus;
+                if(txt.status == 1){
+                  bikeStatus = '异常'
+                }else if(txt.status == 2){
+                  bikeStatus = '警报'
+                }else if(txt.status == 3){
+                  bikeStatus = '正常'
+                }
+                sContent =
+                  '<div class="point_info">' +
+                  '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                  '<tr>' +
+                  '<td>区域名称</td><td>' + txt.company + '</td>' +
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>区域类型</td><td>' + txt.type + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>允许投放数</td><td>' + txt.allow_num + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>当前投放数</td><td>' + txt.now_num + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>状态</td><td>' + bikeStatus + '</td>'+
+                  '</tr>'+
+                  '</table>'+
+                  '</div>';
               }else{
                 // '<p class="f14 time">监控名称：' + txt.name + '</p>' +
                 // '<p class="f14 time">状态：' + status + '</p>' +
@@ -1657,13 +1747,17 @@
       },
       handleParkPointType(type){
         this.showOneType = type;
+        this.map.clearOverLays();
+        this.getBikePartList(type);
       },
       handleLightPointType(type){
+        this.map.clearOverLays();
         this.showTwoType = type;
         if(type == 0){
           this.getLampPostList('')
+        }else{
+          this.getLampPostList(type)
         }
-        this.getLampPostList(type)
       },
       //亮灯杆数字
       getLampPostNum(status){
@@ -1673,11 +1767,21 @@
       },
       //亮灯杆列表
       getLampPostList(status){
-        getLampPostList({status:status}).then((res) => {
-          this.lightData.lightCount = res.data.count;
-          this.lampPostList = res.data.data;
-          this.mapPoint('lamp',this.lampPostList,this)
-        });
+        this.lampPostList = [];
+        let that = this
+        for(let i = 1; i<=Math.ceil(Number(this.lightData.lightCount)/Number(500));i++){
+          getLampPostList({page:i,pageSize:500,status:status}).then((res) => {
+            if(i == 1){
+              this.lightData.lightCount = res.data.count;
+            }
+            this.lampPostList = this.lampPostList.concat(res.data.data.data);
+            if(i == Math.ceil(Number(this.lightData.lightCount)/Number(500))){
+              this.mapPoint('lamp',that.lampPostList,that)
+            }
+
+          });
+        }
+
       },
       //控制柜列表
       getControlCabinetlist(status){
@@ -1743,9 +1847,12 @@
         });
       },
       //获取共享单车泊车位点位
-      getBikePartList(){
-        this.bikePartList = [];
-        this.mapPoint('park',this.bikePartList,this)
+      getBikePartList(val){
+      // class:0  全部   1、重点   2  停车      status  1、异常   2、警报  3、正常
+        getShareCar({class:val}).then((res) => {
+          this.bikePartList = res.data.list;
+          this.mapPoint('bike',this.bikePartList,this)
+        });
       },
       //获取停车场点位及视频点位
       getParkList(){

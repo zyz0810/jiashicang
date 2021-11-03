@@ -1317,6 +1317,16 @@
             let infoWin1 = new T.InfoWindow();
             let sContent;
             if(type == 'yy'){
+              let yyStstus;
+              if(txt.status ==1){
+                yyStstus = '正常';
+              }else if(txt.status ==4){
+                yyStstus = '报警';
+              }else if(txt.status ==3){
+                yyStstus = '故障';
+              }else if(txt.status ==4){
+                yyStstus = '离线';
+              }
               // '<p class="f14 time">名称：' + txt.name + '</p>' +
               // '<p class="f14 time">状态：' + txt.status + '</p>' +
               // '<p class="f14 time">地址：' + txt.address + '</p>' +
@@ -1324,10 +1334,10 @@
                 '<div class="point_info">' +
                 '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
                 '<tr>' +
-                '<td class="txt_6">名称</td><td>' + txt.name + '</td>' +
+                '<td class="txt_6">名称</td><td style="white-space:nowrap;">' + txt.name + '</td>' +
                 '</tr>'+
                 '<tr>' +
-                '<td>状态</td><td>' + txt.status + '</td>'+
+                '<td>状态</td><td>' + yyStstus + '</td>'+
                 '</tr>'+
                 '<tr>' +
                 '<td>地址</td><td>' + txt.address + '</td>'+

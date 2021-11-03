@@ -45,3 +45,22 @@ export function reManagePic(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+
+/*   点位
+ */
+export function getManageList(data) {
+  return request({
+    url: `/api/General/getManageList`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
+/*   点位
+ */
+export function getLetterList(data) {
+  return request({
+    url: `/api/General/getLetterList`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}

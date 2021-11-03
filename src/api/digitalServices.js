@@ -48,3 +48,12 @@ export function getAllPark(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+/* 获取共享单车的列表数据和数量
+ */
+export function getShareCar(data) {
+  return request({
+    url: `/api/General/getShareCar`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
