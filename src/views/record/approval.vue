@@ -65,6 +65,7 @@
             <li class="flex-item ellipsisOne">{{item.apply_name}}</li>
             <li style="width: 80px;" class="ellipsisOne">{{item.result}}</li>
           </ul>
+          <div style="margin-bottom: 300px;"></div>
         </vueSeamlessScroll>
       </div>
     </div>

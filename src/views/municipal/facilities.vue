@@ -65,7 +65,7 @@
           </div>
           <div class="weui-cell__bd">
             <p class="clr_white">排水管线长度</p>
-            <p class="bold clr04"><span class="f26">54368</span>千米</p>
+            <p class="bold clr04"><span class="f26">683</span>千米</p>
           </div>
         </div>
         <div class="weui-cell facilities_weui" @click="handlePage(5)">
@@ -1376,7 +1376,7 @@
           // this.dataLine = res.data;
           let that = this;
           let i = 1;
-          this.timerTwo = setInterval(function () {
+          // this.timerTwo = setInterval(function () {
             if(i==1){
               that.percentageNum = 100;
               i = 2;
@@ -1384,7 +1384,7 @@
               that.percentageNum = 0;
               i = 1;
             }
-          }, 1000);
+          // }, 1000);
         });
       },
 

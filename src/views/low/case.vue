@@ -10,13 +10,13 @@
           <p class="nav_txt">数字城管</p>
         </div>
         <div :class="['mb_20',activeIndex == 1 ? 'baseColor':'']" @click="handlePageType(1)">
-          <img v-if="activeIndex == 1" src="./../../assets/image/case_nav01_active.png" class="nav_img"/>
-          <img v-else src="./../../assets/image/case_nav01.png" class="nav_img"/>
+          <img v-if="activeIndex == 1" src="./../../assets/image/case_nav02_active.png" class="nav_img"/>
+          <img v-else src="./../../assets/image/case_nav02.png" class="nav_img"/>
           <p class="nav_txt">信访投诉</p>
         </div>
         <div :class="[activeIndex == 2 ? 'baseColor':'']" @click="handlePageType(2)">
-          <img v-if="activeIndex == 2" src="./../../assets/image/case_nav01_active.png" class="nav_img"/>
-          <img v-else src="./../../assets/image/case_nav01.png" class="nav_img"/>
+          <img v-if="activeIndex == 2" src="./../../assets/image/case_nav03_active.png" class="nav_img"/>
+          <img v-else src="./../../assets/image/case_nav03.png" class="nav_img"/>
           <p class="nav_txt">指挥平台</p>
         </div>
       </div>

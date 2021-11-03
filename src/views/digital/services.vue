@@ -218,19 +218,19 @@
     <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 1">
       <div class="flex f20 bold mr_20 border shadow" @click="handleTwoPointType(1)">
         <div class="baseColor">
-          泊位概况
+          单车概况
         </div>
         <div class="">
-          总泊位数
-          <span class="txt_linear f22">12800</span>
+          总停车区域
+          <span class="txt_linear f22">1280</span>
         </div>
         <div class="">
-          允许投放数
+          允许投放
           <span class="txt_linear f22">20000</span>
         </div>
         <div class="">
-          车辆总数
-          <span class="txt_linear f22">24660</span>
+          目前总车辆
+          <span class="txt_linear f22">24600</span>
         </div>
       </div>
       <div class="flex f20 bold mr_20 border shadow" @click="handleTwoPointType(2)">
@@ -290,18 +290,41 @@
 <!--      </div>-->
 <!--    </div>-->
     <div class="center_content clr_white text-center" v-if="activeIndex == 1 && pointTwoType == 1">
-      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==1?'active':'']" @click="handleParkPointType(1)">
-        <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point30.png"/></div>-->
+
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showOneType==1?'active':'']" @click="handleParkPointType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showOneType!=1" src="./../../assets/image/point44.png"/>
+          <img v-else src="./../../assets/image/point44_active.png"/>
+        </div>
         <div :class="['weui-cell__bd',showOneType==1?'clr_white':'']">全部区域</div>
       </div>
-      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==2?'active':'']" @click="handleParkPointType(2)">
-        <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point30.png"/></div>-->
-        <div :class="['weui-cell__bd',showOneType==2?'clr_white':'']">重点监控区域</div>
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showOneType==2?'active':'']" @click="handleParkPointType(2)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showOneType!=2" src="./../../assets/image/point69.png"/>
+          <img v-else src="./../../assets/image/point66_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showOneType==2?'clr_white':'']">重点区域</div>
       </div>
-      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==3?'active':'']" @click="handleParkPointType(3)">
-        <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>-->
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showOneType==3?'active':'']" @click="handleParkPointType(3)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showOneType!=3" src="./../../assets/image/point70.png"/>
+          <img v-else src="./../../assets/image/point63_active.png"/>
+        </div>
         <div :class="['weui-cell__bd',showOneType==3?'clr_white':'']">停车区域</div>
       </div>
+
+<!--      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==1?'active':'']" @click="handleParkPointType(1)">-->
+<!--        &lt;!&ndash;<div class="weui-cell__hd flex"><img src="./../../assets/image/point30.png"/></div>&ndash;&gt;-->
+<!--        <div :class="['weui-cell__bd',showOneType==1?'clr_white':'']">全部区域</div>-->
+<!--      </div>-->
+<!--      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==2?'active':'']" @click="handleParkPointType(2)">-->
+<!--        &lt;!&ndash;<div class="weui-cell__hd flex"><img src="./../../assets/image/point30.png"/></div>&ndash;&gt;-->
+<!--        <div :class="['weui-cell__bd',showOneType==2?'clr_white':'']">重点区域</div>-->
+<!--      </div>-->
+<!--      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==3?'active':'']" @click="handleParkPointType(3)">-->
+<!--        &lt;!&ndash;<div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>&ndash;&gt;-->
+<!--        <div :class="['weui-cell__bd',showOneType==3?'clr_white':'']">停车区域</div>-->
+<!--      </div>-->
 <!--      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==4?'active':'']" @click="handleParkPointType(4)">-->
 <!--        &lt;!&ndash;<div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>&ndash;&gt;-->
 <!--        <div :class="['weui-cell__bd',showOneType==4?'clr_white':'']">禁停区域</div>-->

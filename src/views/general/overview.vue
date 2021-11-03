@@ -118,21 +118,21 @@
                     <countTo :startVal="0" :endVal="formData.case.count" :duration="12000" separator="" ref="countThree"></countTo>
                     <!--<animate-number from="0" :to="formData.case.count" :key="formData.case.count" :duration="3000" ></animate-number>-->
                   </span>
-                  <p class="f14 txtColor">日上报案件</p>
+                  <p class="f14 txtColor">日上报</p>
                 </li>
                 <li class="flex mt_10">
                   <span class="block f26 text-center">
                      <countTo :startVal="0" :endVal="formData.case.chuli" :duration="12000" separator="" ref="countFour"></countTo>
                     <!--<animate-number from="0" :to="formData.case.chuli" :key="formData.case.chuli" :duration="3000"></animate-number>-->
                   </span>
-                  <p class="f14 txtColor">日受理案件</p>
+                  <p class="f14 txtColor">日受理</p>
                 </li>
                 <li class="flex mt_10">
                   <span class="block f26 text-center">
                      <countTo :startVal="0" :endVal="formData.case.end" :duration="12000" separator="" ref="countFive"></countTo>
                     <!--<animate-number from="0" :to="formData.case.end" :key="formData.case.end" :duration="3000"></animate-number>-->
                   </span>
-                  <p class="f14 txtColor">日结案案件</p>
+                  <p class="f14 txtColor">日结案</p>
                 </li>
               </ul>
 <!--              <div class="map_echart text-center">-->

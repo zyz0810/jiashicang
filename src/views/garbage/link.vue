@@ -3,51 +3,51 @@
     <!--创建容器-->
     <div id='mapDiv' class="mapDiv" v-show="showMapDiv"></div>
     <div id="guijimap" :class="['mapDiv',showguijiDiv?'z99':'z-1']" ref="guijimap"></div>
-    <div class="left_rate bold clr_white text-center">
-      <div class="clean_rate">
-        <!--<p class="f20">95.6%</p>-->
-        <!--<shui-qiu-chart :chartData="ShuiDataOne" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></shui-qiu-chart>-->
-        <GaugeChart :chartData="gaugeOne" :PieChartLegend="PieChartLegend" height="15vh" ></GaugeChart>
-      </div>
-      <p class="mb_10">清扫完成</p>
-      <div class="watering_rate">
-        <div>
-          <!--<p class="f20">95.6%</p>-->
-          <GaugeChart :chartData="gaugeTwo" :PieChartLegend="PieChartLegend" height="15vh" ></GaugeChart>
-        </div>
-      </div>
-      <p class="mb_10">洒水完成</p>
-<!--      <ul class="f16 clr_white bold text-center mt_20 link_intro">-->
-<!--        <li>-->
-<!--          <p>0次</p>-->
-<!--          <span class="block color_bg01"></span>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--          <p>1次</p>-->
-<!--          <span class="block color_bg02"></span>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--          <p>2次</p>-->
-<!--          <span class="block color_bg03"></span>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--          <p>3次</p>-->
-<!--          <span class="block color_bg04"></span>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--          <p>4次</p>-->
-<!--          <span class="block color_bg05"></span>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--          <p>5次</p>-->
-<!--          <span class="block color_bg06"></span>-->
-<!--        </li>-->
-<!--        <li>-->
-<!--          <p>完成</p>-->
-<!--          <span class="block color_bg07"></span>-->
-<!--        </li>-->
-<!--      </ul>-->
-    </div>
+<!--    <div class="left_rate bold clr_white text-center">-->
+<!--      <div class="clean_rate">-->
+<!--        &lt;!&ndash;<p class="f20">95.6%</p>&ndash;&gt;-->
+<!--        &lt;!&ndash;<shui-qiu-chart :chartData="ShuiDataOne" :PieChartLegend="PieChartLegend" height="10vh" :divwidth="divwidth"></shui-qiu-chart>&ndash;&gt;-->
+<!--        <GaugeChart :chartData="gaugeOne" :PieChartLegend="PieChartLegend" height="15vh" ></GaugeChart>-->
+<!--      </div>-->
+<!--      <p class="mb_10">清扫完成</p>-->
+<!--      <div class="watering_rate">-->
+<!--        <div>-->
+<!--          &lt;!&ndash;<p class="f20">95.6%</p>&ndash;&gt;-->
+<!--          <GaugeChart :chartData="gaugeTwo" :PieChartLegend="PieChartLegend" height="15vh" ></GaugeChart>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <p class="mb_10">洒水完成</p>-->
+<!--&lt;!&ndash;      <ul class="f16 clr_white bold text-center mt_20 link_intro">&ndash;&gt;-->
+<!--&lt;!&ndash;        <li>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p>0次</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <span class="block color_bg01"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </li>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p>1次</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <span class="block color_bg02"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </li>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p>2次</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <span class="block color_bg03"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </li>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p>3次</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <span class="block color_bg04"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </li>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p>4次</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <span class="block color_bg05"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </li>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p>5次</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <span class="block color_bg06"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </li>&ndash;&gt;-->
+<!--&lt;!&ndash;        <li>&ndash;&gt;-->
+<!--&lt;!&ndash;          <p>完成</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          <span class="block color_bg07"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </li>&ndash;&gt;-->
+<!--&lt;!&ndash;      </ul>&ndash;&gt;-->
+<!--    </div>-->
     <div class="right_content clr_white base_bg_right">
       <div class="top clr_white ">
         <p class="f20 bold txt_linear">
