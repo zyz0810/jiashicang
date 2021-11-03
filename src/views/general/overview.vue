@@ -256,7 +256,7 @@
         </el-col>
         <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10">
           <div class="content_index">
-            <div class="title_index f18 bold text-center"><span class="txt_linear">行政审批</span></div>
+            <div class="title_index f18 bold text-center"><span class="txt_linear">备案审批</span></div>
             <div class="clr_white mt_20">
               <div class="f18 bold text-center txtColor approval_num">
                 周审批总量：

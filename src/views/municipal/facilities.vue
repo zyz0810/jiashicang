@@ -55,7 +55,7 @@
           </div>
           <div class="weui-cell__bd">
             <p class="clr_white">养护道路</p>
-            <p class="bold clr03"><span class="f26">103</span>条</p>
+            <p class="bold clr03"><span class="f26">139</span>条</p>
           </div>
         </div>
         <div class="weui-cell facilities_weui" @click="handlePage(4)">
@@ -65,7 +65,7 @@
           </div>
           <div class="weui-cell__bd">
             <p class="clr_white">排水管线长度</p>
-            <p class="bold clr04"><span class="f26">1</span>千米</p>
+            <p class="bold clr04"><span class="f26">54368</span>千米</p>
           </div>
         </div>
         <div class="weui-cell facilities_weui" @click="handlePage(5)">

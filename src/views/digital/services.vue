@@ -106,13 +106,13 @@
 <!--          <p class="clr_yellow f26 mt_10">1887</p>-->
 <!--        </div>-->
 <!--      </div>-->
-      <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="300px" divwidth="100%"></BarChartFour>
+      <BarChartFour :chartData="BarDataTwo" :BarChartLegend="PieChartLegend" height="250px" divwidth="100%"></BarChartFour>
 <!--      <div class="top clr_white mt_20 ">-->
 <!--        <p class="f20 bold txt_linear">区域统计</p>-->
 <!--        <RingChart :chartData="chartDataTwo" :PieChartLegend="PieChartLegend" height="200px" divwidth="100%"></RingChart>-->
 <!--      </div>-->
-      <div class="left_bottom mt_20">
-        <p class="f20 bold txt_linear">违规次数</p>
+      <div class="left_bottom mt_40">
+        <p class="f20 bold txt_linear">违停次数</p>
         <PieChartTwo :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="28vh" divwidth="100%"></PieChartTwo>
       </div>
 
@@ -221,16 +221,16 @@
           泊位概况
         </div>
         <div class="">
-          总泊位数（没接口）
-          <span class="txt_linear f22">{{carData.shangBao}}</span>
+          总泊位数
+          <span class="txt_linear f22">12800</span>
         </div>
         <div class="">
-          允许投放数（没接口）
-          <span class="txt_linear f22">{{carData.chuLi}}</span>
+          允许投放数
+          <span class="txt_linear f22">20000</span>
         </div>
         <div class="">
-          车辆总数（没接口）
-          <span class="txt_linear f22">{{carData.undisposed}}</span>
+          车辆总数
+          <span class="txt_linear f22">24660</span>
         </div>
       </div>
       <div class="flex f20 bold mr_20 border shadow" @click="handleTwoPointType(2)">
@@ -238,8 +238,8 @@
           人员
         </div>
         <div class="">
-          运维人员（没接口）
-          <span class="txt_linear f22">{{carData.user_num}}</span>
+          运维人员
+          <span class="txt_linear f22">54</span>
         </div>
       </div>
       <div class="flex f20 bold border shadow" @click="handleTwoPointType(3)">
@@ -302,14 +302,14 @@
         <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>-->
         <div :class="['weui-cell__bd',showOneType==3?'clr_white':'']">停车区域</div>
       </div>
-      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==4?'active':'']" @click="handleParkPointType(4)">
-        <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>-->
-        <div :class="['weui-cell__bd',showOneType==4?'clr_white':'']">禁停区域</div>
-      </div>
-      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==5?'active':'']" @click="handleParkPointType(5)">
-        <!--<div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>-->
-        <div :class="['weui-cell__bd',showOneType==5?'clr_white':'']">禁行区域</div>
-      </div>
+<!--      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==4?'active':'']" @click="handleParkPointType(4)">-->
+<!--        &lt;!&ndash;<div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>&ndash;&gt;-->
+<!--        <div :class="['weui-cell__bd',showOneType==4?'clr_white':'']">禁停区域</div>-->
+<!--      </div>-->
+<!--      <div :class="['map_intro', 'no_bg','border','shadow','f12','bold','flex','baseColor','weui-cell',showOneType==5?'active':'']" @click="handleParkPointType(5)">-->
+<!--        &lt;!&ndash;<div class="weui-cell__hd flex"><img src="./../../assets/image/point38.png"/></div>&ndash;&gt;-->
+<!--        <div :class="['weui-cell__bd',showOneType==5?'clr_white':'']">禁行区域</div>-->
+<!--      </div>-->
     </div>
     <div class="center_content clr_white text-center" v-if="activeIndex == 1 && pointTwoType == 2">
       <div class="map_intro f12 bold flex baseColor weui-cell">
@@ -737,7 +737,7 @@
               name: '访问来源',
               type: 'pie',
               // center: ['30%', '50%'],
-              radius: ['55%', '75%'],
+              radius: ['48%', '68%'],
               avoidLabelOverlap: true,
               emphasis: {
                 label: {
@@ -784,7 +784,7 @@
                   }
                 }
               },
-              data: [{name:'骑呗',value:1680},{name:'青桔',value:1180},{name:'摩拜',value:880},{name:'哈罗',value:880}]
+              data: [{name:'美团',value:24112},{name:'哈罗',value:15980},{name:'百姓快租',value:4909},]
             }
           ]
         },
@@ -912,7 +912,7 @@
           grid: {
             left: '0',
             right: '50',
-            bottom: '0',
+            bottom: '30',
             top: '0',
             containLabel: true
           },
@@ -944,7 +944,7 @@
               },
               splitLine: { show: false },//去除网格线
               type: 'category',
-              data:['哈罗','摩拜','青桔','骑呗',]
+              data:['百姓快租','哈罗','美团',]
             }
           ],
           series: [{
@@ -981,7 +981,8 @@
 
               }
             },
-            data: [141, 134, 332,332,]
+            // '百姓快租','哈罗','美团',
+            data: [ 2000, 8000,10000,]
           },
             {
              name:'目前投放数',
@@ -1016,7 +1017,8 @@
 
                 }
               },
-              data: [1680, 1180, 880,880,]
+              // '百姓快租','哈罗','美团',
+              data: [ 2000, 9838,12822,]
             },
           ]
         },
@@ -1216,16 +1218,18 @@
         let i = 1;
         this.timer = setInterval(function () {
           if(i==1){
-            that.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'];
-            that.chartDataThree.series[0].data =  [{name:'骑呗',value:1680},{name:'青桔',value:1180},{name:'摩拜',value:880},{name:'哈罗',value:880}];
+            that.chartDataThree.color=['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)'];
+            // color:['rgb(255,213,84)','rgb(48,171,241)','rgb(249,138,127)','rgb(146,117,243)'],
+            // [{name:'美团',value:24112},{name:'哈罗',value:15980},{name:'百姓快租',value:4909},]
+            that.chartDataThree.series[0].data =  [{name:'美团',value:24112},{name:'哈罗',value:15980},{name:'百姓快租',value:4909},];
             i = 2;
           }else{
-            that.chartDataThree.color=['rgb(48,171,241)','rgb(146,117,243)','rgb(249,138,127)','rgb(255,213,84)'];
-            that.chartDataThree.series[0].data =  [{name:'青桔',value:1180},{name:'哈罗',value:880},{name:'摩拜',value:880},{name:'骑呗',value:1680}];
+            that.chartDataThree.color=['rgb(48,171,241)','rgb(249,138,127)','rgb(255,213,84)'];
+            that.chartDataThree.series[0].data =  [{name:'哈罗',value:15980},{name:'百姓快租',value:4909},{name:'美团',value:24112},];
             i = 1;
           }
 
-        }, 2000);
+        }, 3000);
       },
       handlePointType(val){
         this.pointType = val;
