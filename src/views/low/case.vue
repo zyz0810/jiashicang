@@ -1011,13 +1011,13 @@
       },
       getManage(){
         this.pointOne = [];
-        for(let i = 1; i<=Math.ceil(Number(this.manageNum)/Number(500));i++){
-          getManageList({page:i,pageSize:500}).then((res) => {
+        for(let i = 1; i<=Math.ceil(Number(this.manageNum)/Number(100));i++){
+          getManageList({page:i,pageSize:100}).then((res) => {
             if(i == 1){
               this.manageNum = res.data.total;
             }
             this.pointOne = this.pointOne.concat(res.data.data);
-            if(i == Math.ceil(Number(this.manageNum)/Number(500))){
+            if(i == Math.ceil(Number(this.manageNum)/Number(100))){
               this.mapPoint(0, this.pointOne)
             }
           });
