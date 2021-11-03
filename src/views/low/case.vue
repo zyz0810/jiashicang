@@ -1000,7 +1000,7 @@
       getPointOne(){
         caseCount().then((res) => {
           const {chuLi,shangBao,undisposed,yellow_detail,yellow_num,red_num}=res.data.city
-          const {basis_direction,basis_num,comparative_direction,comparative_num,satisfaction_rate,rep_num,month_deal_num}=res.data.letter
+          const {basis_direction,basis_num,comparative_direction,comparative_num,satisfaction_rate,rep_num,month_deal_num}=res.data.letter.data
           this.formData = {chuLi,shangBao,undisposed,yellow_detail,yellow_num,red_num,basis_direction,basis_num,comparative_direction,comparative_num,satisfaction_rate,rep_num,month_deal_num}
           this.pointOne = res.data.city.list;
           this.pointTwo = res.data.letter.list;
