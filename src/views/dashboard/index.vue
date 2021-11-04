@@ -51,7 +51,7 @@
          <a href="/AI/index.html">
 <!--         <a href=" http://192.168.2.3:8091/">-->
            <img src="./../../assets/image/index_icon04.png"/>
-           <p class="mt_10">AI识别</p>
+           <p class="mt_10">市容监管</p>
          </a>
        </li>
        <li>

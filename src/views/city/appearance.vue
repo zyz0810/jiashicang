@@ -1346,6 +1346,12 @@
                 '<td>状态</td><td>' + yyStstus + '</td>'+
                 '</tr>'+
                 '<tr>' +
+                '<td>餐企名称</td><td>' + txt.company + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>所属辖区</td><td>' + txt.city_name  + '</td>'+
+                '</tr>'+
+                '<tr>' +
                 '<td>地址</td><td>' + txt.address + '</td>'+
                 '</tr>'+
                 '</table>'+

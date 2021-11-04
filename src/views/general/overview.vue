@@ -19,6 +19,7 @@
                 </div>
               </div>
               <div class="flex-item">
+<!--                周处理量=周上报量-周未处理量-->
                 <p class="f16 bold txtColor">周处理量</p>
                 <div class="num flex text-center f26 bold mt_10">
                   <!--<span>{{formData.city.chuli[4]}}</span>-->
@@ -26,7 +27,8 @@
                   <!--<span>{{formData.city.chuli[2]}}</span>-->
                   <!--<span>{{formData.city.chuli[1]}}</span>-->
                   <!--<span>{{formData.city.chuli[0]}}</span>-->
-                  <countTo :startVal="0" :endVal="formData.city.chuli" :duration="12000" ref="countSeven" separator="" class="block text-right"></countTo>
+<!--                  <countTo :startVal="0" :endVal="formData.city.chuli" :duration="12000" ref="countSeven" separator="" class="block text-right"></countTo>-->
+                  <countTo :startVal="0" :endVal="Number(formData.city.shangbao) - Number(formData.city.undisposed)" :duration="12000" ref="countSeven" separator="" class="block text-right"></countTo>
                 </div>
               </div>
               <div class="flex-item">

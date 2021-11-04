@@ -47,7 +47,8 @@
       <div class="flex border shadow mr_20">
       <div class="flex-item">
         周处理量
-        <span class="txt_linear f22">{{formData.chuLi}}</span>
+<!--        <span class="txt_linear f22">{{formData.chuLi}}</span>-->
+        <span class="txt_linear f22">{{Number(formData.shangBao) - Number(formData.undisposed)}}</span>
       </div>
       </div>
       <div class="flex border shadow mr_20">
