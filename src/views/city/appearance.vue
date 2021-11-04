@@ -1127,15 +1127,21 @@
             // name:'审核通过',value:1
           }];
           //违规类型分析
+          let  categoryArr = [];
           let category_x = [];
           let category_y = [];
           res.data.category.map((item,index)=>{
             if(index<10){
-              category_x.push(item.x_name);
-              category_y.push(item.y_count);
-              // category_y.push(6);
+              // category_x.push(item.x_name);
+              // category_y.push(item.y_count);
+              categoryArr.push(item);
             }
           })
+          categoryArr.sort((old,New)=>{
+            return old.y_count - New.y_count
+          })
+          category_x = categoryArr.map(item=>{return item.x_name});
+          category_y = categoryArr.map(item=>{return item.y_count});
           this.BarDataTwo.yAxis[0].data = category_x;
           this.BarDataTwo.series[0].data = category_y;
         });
