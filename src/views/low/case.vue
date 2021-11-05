@@ -1217,7 +1217,7 @@
                 '<td>小类名称</td><td>' + txt.small_category + '</td>'+
                 '</tr>'+
                 '<tr>' +
-                '<td>上报时间</td><td>' + txt.create_time + '</td>'+
+                '<td>上报时间</td><td>' + txt.create_at + '</td>'+
                 '</tr>'+
                 '<tr>' +
                 '<td>问题描述</td><td>' + txt.description + '</td>'+
