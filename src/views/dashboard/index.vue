@@ -8,12 +8,7 @@
        <span class="txtColor f26 title_txt">综合管理系统</span>
      </div>
      <ul class="f18 txtColor text-center index_ul">
-       <li>
-         <a href="/direct/index.html">
-           <img src="./../../assets/image/index_icon02.png"/>
-           <p class="mt_10">指挥平台</p>
-         </a>
-       </li>
+
        <li>
 <!--         <a href="http://jsc.susongzhijia.com/#/general/overview" target="_blank">-->
            <router-link :to="{path:'/general/overview'}">
@@ -23,15 +18,7 @@
            </router-link>
 <!--         </a>-->
        </li>
-       <li>
-         <!--         <a href="http://jsc.susongzhijia.com/#/general/overview" target="_blank">-->
-         <a href="/zhuanxiang/index.html#/electron/map">
-           <!--         <a href=" http://192.168.2.3:8090/">-->
-           <img src="./../../assets/image/index_icon19.png"/>
-           <p class="mt_10">电子地图</p>
-         </a>
-         <!--         </a>-->
-       </li>
+
      </ul>
      <div class="index_title text-center">
        <div class="title_line_left"></div>
@@ -44,6 +31,12 @@
          <a href="http://172.18.16.15/szcg/main.html" target="_blank">
          <img src="./../../assets/image/index_icon18.png"/>
          <p class="mt_10">数字城管</p>
+         </a>
+       </li>
+       <li>
+         <a href="/direct/index.html">
+           <img src="./../../assets/image/index_icon02.png"/>
+           <p class="mt_10">指挥平台</p>
          </a>
        </li>
        <li>
@@ -68,12 +61,7 @@
          <p class="mt_10">共享单车</p>
          </a>
        </li>
-       <li>
-         <a href="/keynote/index.html">
-           <img src="./../../assets/image/index_icon03.png"/>
-           <p class="mt_10">重点工作</p>
-         </a>
-       </li>
+
        <li>
          <a href="http://218.108.98.28/map/index.html?system=ZHZF" target="_blank">
          <img src="./../../assets/image/index_icon07.png"/>
@@ -102,7 +90,7 @@
      <div class="index_title text-center">
        <div class="title_line_left"></div>
        <div class="title_line_right"></div>
-       <span class="txtColor f26 title_txt">专项管理系统</span>
+       <span class="txtColor f26 title_txt">后台管理系统</span>
      </div>
      <ul class="f18 txtColor text-center index_ul">
        <li>
@@ -141,6 +129,21 @@
          <img src="./../../assets/image/index_icon16.png"/>
          <p class="mt_10">视频管理</p>
          </a>
+       </li>
+       <li>
+         <a href="/keynote/index.html">
+           <img src="./../../assets/image/index_icon03.png"/>
+           <p class="mt_10">重点工作</p>
+         </a>
+       </li>
+       <li>
+         <!--         <a href="http://jsc.susongzhijia.com/#/general/overview" target="_blank">-->
+         <a href="/zhuanxiang/index.html#/electron/map">
+           <!--         <a href=" http://192.168.2.3:8090/">-->
+           <img src="./../../assets/image/index_icon19.png"/>
+           <p class="mt_10">电子地图</p>
+         </a>
+         <!--         </a>-->
        </li>
      </ul>
    </div>

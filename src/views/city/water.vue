@@ -145,7 +145,7 @@
         <div class="baseColor">视频</div>
         <div class="">
           河道视频
-          <span class="txt_linear f22">18</span>
+          <span class="txt_linear f22">{{hedaoNum}}</span>
         </div>
       </div>
     </div>
@@ -209,7 +209,7 @@
   import {findSite,abnormalSite,warnSite} from "@/api/water"; // 引入刚才的map.js 注意路径
   import vueSeamlessScroll from 'vue-seamless-scroll'
   import global from "@/utils/common";
-  import {getNowurl} from "@/api/system";
+  import {getAllVideoPoint, getNowurl} from "@/api/system";
   export default {
     name: 'parameterList',
     directives: {waves},
@@ -643,6 +643,7 @@
         playVideoUri:'',
         player: null,
         offectNum:1,
+        hedaoNum:''
       }
     },
     computed: {
@@ -690,6 +691,7 @@
       this.getList();
       this.getAbnormal(3);
       this.getWarn(2);
+      this.getVideoNum();
       window.handleVideo = this.handleVideo;
       window.closeVideoDialog = this.handleVideoClose;
       this.initPlayer()
@@ -828,11 +830,10 @@
 
       handleMapType(type){
         this.showMapType = type;
+        this.map.clearOverLays();
         if(type == 1){//获取设备点位
-          this.map.clearOverLays();
           this.getList('');
         }else if(type == 2){//获取视频点位
-          this.map.clearOverLays();
           this.getList('');
           this.getVideo();
         }
@@ -1063,13 +1064,17 @@
           this.mapPoint('',this.waterList)
         });
       },
+      getVideoNum(type){
+        getAllVideoPoint({class:3}).then((res) => {
+          this.hedaoNum = res.data.hedao;
+        });
+      },
       getVideo(type){
-        // findSite({type:type}).then((res) => {
-        //   this.waterList = res.data;
-        //   this.mapPoint(type,this.waterList)
-        // });
-        this.pointList = [];
-        this.mapPoint('video',this.pointList)
+        getAllVideoPoint({class:3}).then((res) => {
+          this.hedaoNum = res.data.hedao;
+          this.pointList = res.data.list;
+          this.mapPoint('video',this.pointList)
+        });
       },
     }
   }
