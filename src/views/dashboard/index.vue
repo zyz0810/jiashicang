@@ -49,7 +49,8 @@
        </li>
        <li>
 <!--         <a href="http://yy-web.susongzhijia.com/" target="_blank">-->
-           <a href="http://yy-web.susongzhijia.com/#/testing/monitor?type=auth" target="_blank">
+<!--         <a href="http://yy-web.susongzhijia.com/#/testing/monitor?type=auth" target="_blank">-->
+         <a href="http://47.98.38.192:8087/#/testing/monitor?type=auth" target="_blank">
 <!--         <a href="http://yy-web.susongzhijia.com/">-->
            <img src="./../../assets/image/index_icon05.png"/>
            <p class="mt_10">油烟监测</p>
