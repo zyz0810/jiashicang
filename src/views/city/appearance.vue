@@ -541,7 +541,7 @@
               name: '访问来源',
               type: 'pie',
               radius: ['50%', '70%'],
-              avoidLabelOverlap: false,
+              avoidLabelOverlap: true,
               label: {
                 show: false,
                 position: 'center'
@@ -575,7 +575,7 @@
               name: '访问来源',
               type: 'pie',
               radius: ['70%', '90%'],
-              avoidLabelOverlap: false,
+              avoidLabelOverlap: true,
               label: {
                 show: false,
                 position: 'center',
@@ -871,7 +871,7 @@
               name: '访问来源',
               type: 'pie',
               radius: ['40%', '60%'],
-              avoidLabelOverlap: false,
+              avoidLabelOverlap: true,
               // label: {
               //   show: false,
               //   position: 'center',
@@ -994,7 +994,7 @@
               radius: ['45%', '65%'],
               center: ['50%', '43%'],
               stillShowZeroSum: false,
-              avoidLabelOverlap: false,
+              avoidLabelOverlap: true,
               zlevel: 1,
               label: {
                 labelLine:{
