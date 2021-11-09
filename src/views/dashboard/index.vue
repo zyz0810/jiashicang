@@ -57,7 +57,7 @@
          </a>
        </li>
        <li>
-         <a href="http://218.108.205.60:8085/" target="_blank">
+         <a href="http://218.108.205.60:8085/login?username=admin&password=123456" target="_blank">
          <img src="./../../assets/image/index_icon17.png"/>
          <p class="mt_10">共享单车</p>
          </a>
