@@ -185,7 +185,7 @@
     methods: {
       getList(){
         getInfo().then((res) => {
-          roleDetail({id:res.data.id}).then((res) => {
+          roleDetail({id:res.data.role_id}).then((res) => {
             this.menuList = res.data;
           });
         });
