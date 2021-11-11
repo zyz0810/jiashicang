@@ -5,146 +5,197 @@
      <div class="index_title text-center">
        <div class="title_line_left"></div>
        <div class="title_line_right"></div>
-       <span class="txtColor f26 title_txt">综合管理系统</span>
+       <span class="txtColor f26 title_txt">{{menuList.first.type}}</span>
      </div>
      <ul class="f18 txtColor text-center index_ul">
 
-       <li>
-<!--         <a href="http://jsc.susongzhijia.com/#/general/overview" target="_blank">-->
-           <router-link :to="{path:'/general/overview'}">
-<!--         <a href=" http://192.168.2.3:8090/">-->
-           <img src="./../../assets/image/index_icon01.png"/>
-           <p class="mt_10">驾驶舱</p>
-           </router-link>
-<!--         </a>-->
-       </li>
-
-     </ul>
-     <div class="index_title text-center">
-       <div class="title_line_left"></div>
-       <div class="title_line_right"></div>
-       <span class="txtColor f26 title_txt">业务管理系统</span>
-     </div>
-     <ul class="f18 txtColor text-center index_ul">
-
-       <li>
-         <a href="http://172.18.16.15/szcg/main.html" target="_blank">
-         <img src="./../../assets/image/index_icon18.png"/>
-         <p class="mt_10">数字城管</p>
+       <!--<li>-->
+<!--&lt;!&ndash;         <a href="http://jsc.susongzhijia.com/#/general/overview" target="_blank">&ndash;&gt;-->
+           <!--<router-link :to="{path:'/general/overview'}">-->
+<!--&lt;!&ndash;         <a href=" http://192.168.2.3:8090/">&ndash;&gt;-->
+           <!--<img src="./../../assets/image/index_icon01.png"/>-->
+           <!--<p class="mt_10">驾驶舱</p>-->
+           <!--</router-link>-->
+<!--&lt;!&ndash;         </a>&ndash;&gt;-->
+       <!--</li>-->
+       <li v-for="item in menuList.first.data" :key="item.id">
+         <a :href="item.url" v-if="urlTwo.includes(item.url)">
+           <img :src="item.ico_images_url"/>
+           <p class="mt_10">{{item.name}}</p>
          </a>
-       </li>
-       <li>
-         <a href="/direct/index.html">
-           <img src="./../../assets/image/index_icon02.png"/>
-           <p class="mt_10">指挥平台</p>
-         </a>
-       </li>
-       <li>
-<!--         <a href="http://ai.susongzhijia.com/" target="_blank">-->
-         <a href="/AI/index.html">
-<!--         <a href=" http://192.168.2.3:8091/">-->
-           <img src="./../../assets/image/index_icon04.png"/>
-           <p class="mt_10">市容监管</p>
-         </a>
-       </li>
-       <li>
-<!--         <a href="http://yy-web.susongzhijia.com/" target="_blank">-->
-<!--         <a href="http://yy-web.susongzhijia.com/#/testing/monitor?type=auth" target="_blank">-->
-         <a href="http://47.98.38.192:8087/#/testing/monitor?type=auth" target="_blank">
-<!--         <a href="http://yy-web.susongzhijia.com/">-->
-           <img src="./../../assets/image/index_icon05.png"/>
-           <p class="mt_10">油烟监测</p>
-         </a>
-       </li>
-       <li>
-         <a href="http://218.108.205.60:8085/login?username=admin&password=123456" target="_blank">
-         <img src="./../../assets/image/index_icon17.png"/>
-         <p class="mt_10">共享单车</p>
-         </a>
-       </li>
-
-       <li>
-         <a href="http://218.108.98.28/map/index.html?system=ZHZF" target="_blank">
-         <img src="./../../assets/image/index_icon07.png"/>
-         <p class="mt_10">数字执法</p>
-         </a>
-       </li>
-       <li>
-         <a href="http://218.108.98.28/map/index.html?system=ZHHW " target="_blank">
-         <img src="./../../assets/image/index_icon08.png"/>
-         <p class="mt_10">数字环卫</p>
-         </a>
-       </li>
-       <li>
-         <a href="http://218.108.98.28/map/index.html?system=ZHSZ" target="_blank">
-         <img src="./../../assets/image/index_icon09.png"/>
-         <p class="mt_10">数字市政</p>
-         </a>
-       </li>
-       <li>
-         <a href="http://10.32.43.156:7778/zhsnjsc/index.html#/Login" target="_blank">
-         <img src="./../../assets/image/index_icon10.png"/>
-         <p class="mt_10">数字治水</p>
-         </a>
-       </li>
-     </ul>
-     <div class="index_title text-center">
-       <div class="title_line_left"></div>
-       <div class="title_line_right"></div>
-       <span class="txtColor f26 title_txt">后台管理系统</span>
-     </div>
-     <ul class="f18 txtColor text-center index_ul">
-       <li>
-<!--         <a href="http://erp-web.susongzhijia.com/#/system/organization/manage" target="_blank">-->
-         <a href="/zhuanxiang/index.html#/system/organization/manage">
-           <img src="./../../assets/image/index_icon11.png"/>
-           <p class="mt_10">系统管理</p>
-         </a>
-       </li>
-       <li>
-         <a href="/zhuanxiang/index.html#/dataExchange/exchangeApi">
-         <img src="./../../assets/image/index_icon12.png"/>
-         <p class="mt_10">数据交换</p>
-       </a>
-       </li>
-       <li>
-         <a href="/zhuanxiang/index.html#/dataAcquisition/grid/index">
-         <img src="./../../assets/image/index_icon13.png"/>
-         <p class="mt_10">数据采集</p>
-         </a>
-       </li>
-       <li>
-         <a href="/zhuanxiang/index.html#/personnel/personnelList">
-         <img src="./../../assets/image/index_icon14.png"/>
-         <p class="mt_10">人员管理</p>
-         </a>
-       </li>
-       <li>
-         <a href="/zhuanxiang/index.html#/car/carList">
-         <img src="./../../assets/image/index_icon15.png"/>
-         <p class="mt_10">车辆管理</p>
-         </a>
-       </li>
-       <li>
-         <a href="/zhuanxiang/index.html#/video/videoList">
-         <img src="./../../assets/image/index_icon16.png"/>
-         <p class="mt_10">视频管理</p>
-         </a>
-       </li>
-       <li>
-         <a href="/keynote/index.html">
-           <img src="./../../assets/image/index_icon03.png"/>
-           <p class="mt_10">重点工作</p>
-         </a>
-       </li>
-       <li>
          <!--         <a href="http://jsc.susongzhijia.com/#/general/overview" target="_blank">-->
-         <a href="/zhuanxiang/index.html#/electron/map">
+         <router-link :to="{path:item.url}" v-if="item.url==urlOne">
            <!--         <a href=" http://192.168.2.3:8090/">-->
-           <img src="./../../assets/image/index_icon19.png"/>
-           <p class="mt_10">电子地图</p>
-         </a>
+           <img :src="item.ico_images_url"/>
+           <p class="mt_10">{{item.name}}</p>
+         </router-link>
          <!--         </a>-->
+         <a :href="item.url" target="_blank" v-if="!(item.url==urlOne || urlTwo.includes(item.url))">
+           <img :src="item.ico_images_url"/>
+           <p class="mt_10">{{item.name}}</p>
+         </a>
+       </li>
+     </ul>
+
+     <div class="index_title text-center">
+       <div class="title_line_left"></div>
+       <div class="title_line_right"></div>
+       <span class="txtColor f26 title_txt">{{menuList.two.type}}</span>
+     </div>
+     <ul class="f18 txtColor text-center index_ul">
+
+       <!--<li>-->
+         <!--<a href="http://172.18.16.15/szcg/main.html" target="_blank">-->
+         <!--<img src="./../../assets/image/index_icon18.png"/>-->
+         <!--<p class="mt_10">数字城管</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+         <!--<a href="/direct/index.html">-->
+           <!--<img src="./../../assets/image/index_icon02.png"/>-->
+           <!--<p class="mt_10">指挥平台</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+<!--&lt;!&ndash;         <a href="http://ai.susongzhijia.com/" target="_blank">&ndash;&gt;-->
+         <!--<a href="/AI/index.html">-->
+<!--&lt;!&ndash;         <a href=" http://192.168.2.3:8091/">&ndash;&gt;-->
+           <!--<img src="./../../assets/image/index_icon04.png"/>-->
+           <!--<p class="mt_10">市容监管</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+<!--&lt;!&ndash;         <a href="http://yy-web.susongzhijia.com/" target="_blank">&ndash;&gt;-->
+<!--&lt;!&ndash;         <a href="http://yy-web.susongzhijia.com/#/testing/monitor?type=auth" target="_blank">&ndash;&gt;-->
+         <!--<a href="http://47.98.38.192:8087/#/testing/monitor?type=auth" target="_blank">-->
+<!--&lt;!&ndash;         <a href="http://yy-web.susongzhijia.com/">&ndash;&gt;-->
+           <!--<img src="./../../assets/image/index_icon05.png"/>-->
+           <!--<p class="mt_10">油烟监测</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+         <!--<a href="http://218.108.205.60:8085/login?username=admin&password=123456" target="_blank">-->
+         <!--<img src="./../../assets/image/index_icon17.png"/>-->
+         <!--<p class="mt_10">共享单车</p>-->
+         <!--</a>-->
+       <!--</li>-->
+
+       <!--<li>-->
+         <!--<a href="http://218.108.98.28/map/index.html?system=ZHZF" target="_blank">-->
+         <!--<img src="./../../assets/image/index_icon07.png"/>-->
+         <!--<p class="mt_10">数字执法</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+         <!--<a href="http://218.108.98.28/map/index.html?system=ZHHW " target="_blank">-->
+         <!--<img src="./../../assets/image/index_icon08.png"/>-->
+         <!--<p class="mt_10">数字环卫</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+         <!--<a href="http://218.108.98.28/map/index.html?system=ZHSZ" target="_blank">-->
+         <!--<img src="./../../assets/image/index_icon09.png"/>-->
+         <!--<p class="mt_10">数字市政</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+         <!--<a href="http://10.32.43.156:7778/zhsnjsc/index.html#/Login" target="_blank">-->
+         <!--<img src="./../../assets/image/index_icon10.png"/>-->
+         <!--<p class="mt_10">数字治水</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <li v-for="item in menuList.two.data" :key="item.id">
+         <a :href="item.url" v-if="urlTwo.includes(item.url)">
+           <img :src="item.ico_images_url"/>
+           <p class="mt_10">{{item.name}}</p>
+         </a>
+         <!--         <a href="http://jsc.susongzhijia.com/#/general/overview" target="_blank">-->
+         <router-link :to="{path:item.url}" v-if="item.url==urlOne">
+           <!--         <a href=" http://192.168.2.3:8090/">-->
+           <img :src="item.ico_images_url"/>
+           <p class="mt_10">{{item.name}}</p>
+         </router-link>
+         <!--         </a>-->
+         <a :href="item.url" target="_blank" v-if="!(item.url==urlOne || urlTwo.includes(item.url))">
+           <img :src="item.ico_images_url"/>
+           <p class="mt_10">{{item.name}}</p>
+         </a>
+       </li>
+     </ul>
+     <div class="index_title text-center">
+       <div class="title_line_left"></div>
+       <div class="title_line_right"></div>
+       <span class="txtColor f26 title_txt">{{menuList.three.type}}</span>
+     </div>
+     <ul class="f18 txtColor text-center index_ul">
+       <!--<li>-->
+<!--&lt;!&ndash;         <a href="http://erp-web.susongzhijia.com/#/system/organization/manage" target="_blank">&ndash;&gt;-->
+         <!--<a href="/zhuanxiang/index.html#/system/organization/manage">-->
+           <!--<img src="./../../assets/image/index_icon11.png"/>-->
+           <!--<p class="mt_10">系统管理</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+         <!--<a href="/zhuanxiang/index.html#/dataExchange/exchangeApi">-->
+         <!--<img src="./../../assets/image/index_icon12.png"/>-->
+         <!--<p class="mt_10">数据交换</p>-->
+       <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+         <!--<a href="/zhuanxiang/index.html#/dataAcquisition/grid/index">-->
+         <!--<img src="./../../assets/image/index_icon13.png"/>-->
+         <!--<p class="mt_10">数据采集</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+         <!--<a href="/zhuanxiang/index.html#/personnel/personnelList">-->
+         <!--<img src="./../../assets/image/index_icon14.png"/>-->
+         <!--<p class="mt_10">人员管理</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+         <!--<a href="/zhuanxiang/index.html#/car/carList">-->
+         <!--<img src="./../../assets/image/index_icon15.png"/>-->
+         <!--<p class="mt_10">车辆管理</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+         <!--<a href="/zhuanxiang/index.html#/video/videoList">-->
+         <!--<img src="./../../assets/image/index_icon16.png"/>-->
+         <!--<p class="mt_10">视频管理</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+         <!--<a href="/keynote/index.html">-->
+           <!--<img src="./../../assets/image/index_icon03.png"/>-->
+           <!--<p class="mt_10">重点工作</p>-->
+         <!--</a>-->
+       <!--</li>-->
+       <!--<li>-->
+         <!--&lt;!&ndash;         <a href="http://jsc.susongzhijia.com/#/general/overview" target="_blank">&ndash;&gt;-->
+         <!--<a href="/zhuanxiang/index.html#/electron/map">-->
+           <!--&lt;!&ndash;         <a href=" http://192.168.2.3:8090/">&ndash;&gt;-->
+           <!--<img src="./../../assets/image/index_icon19.png"/>-->
+           <!--<p class="mt_10">电子地图</p>-->
+         <!--</a>-->
+         <!--&lt;!&ndash;         </a>&ndash;&gt;-->
+       <!--</li>-->
+       <li v-for="item in menuList.three.data" :key="item.id">
+         <a :href="item.url" v-if="urlTwo.includes(item.url)">
+           <img :src="item.ico_images_url"/>
+           <p class="mt_10">{{item.name}}</p>
+         </a>
+         <!--         <a href="http://jsc.susongzhijia.com/#/general/overview" target="_blank">-->
+         <router-link :to="{path:item.url}" v-if="item.url==urlOne">
+           <!--         <a href=" http://192.168.2.3:8090/">-->
+           <img :src="item.ico_images_url"/>
+           <p class="mt_10">{{item.name}}</p>
+         </router-link>
+         <!--         </a>-->
+         <a :href="item.url" target="_blank" v-if="!(item.url==urlOne || urlTwo.includes(item.url))">
+           <img :src="item.ico_images_url"/>
+           <p class="mt_10">{{item.name}}</p>
+         </a>
        </li>
      </ul>
    </div>
@@ -171,7 +222,12 @@
     },
     data() {
       return {
-        menuList:[]
+        menuList:{},
+        urlOne:'/general/overview',
+        urlTwo:['/direct/index.html','/AI/index.html','/zhuanxiang/index.html#/system/organization/manage',
+        '/zhuanxiang/index.html#/system/organization/manage','/zhuanxiang/index.html#/dataAcquisition/grid/index',
+        '/zhuanxiang/index.html#/dataAcquisition/grid/index','/zhuanxiang/index.html#/dataAcquisition/grid/index',
+        '/zhuanxiang/index.html#/video/videoList','/keynote/index.html','/zhuanxiang/index.html#/electron/map'],
       }
     },
     computed: {
