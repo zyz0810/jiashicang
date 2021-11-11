@@ -159,8 +159,11 @@
   import BarChartThree from '@/components/Charts/BarChartThree'
   import RingChart from '@/components/Charts/RingChart'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
-  import xinjiang from "echarts/map/js/province/xinjiang";//必须要导入
-
+  import xinjiang from "echarts/map/js/province/xinjiang";
+  import {getInfo} from "@/api/user";
+  import {roleDetail} from "@/api/system";
+  import { mapState } from "vuex";
+  //必须要导入
   export default {
     name: 'Dashboard',
     components: {
@@ -168,19 +171,25 @@
     },
     data() {
       return {
-
+        menuList:[]
       }
     },
-    created() {
-
+    computed: {
+      ...mapState({
+        id: (state) => state.user.id,
+      }),
     },
     mounted(){
-
+      this.getList();
     },
     methods: {
-      // handleDrive(){
-      //
-      // },
+      getList(){
+        getInfo().then((res) => {
+          roleDetail({id:res.data.id}).then((res) => {
+            this.menuList = res.data;
+          });
+        });
+      },
 
     }
   }

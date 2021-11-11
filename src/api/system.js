@@ -31,3 +31,13 @@ export function getNowurl(data) {
     data: data
   })
 }
+/* 获取首页菜单
+ * id  用户ID
+ */
+export function roleDetail(data) {
+  return request({
+    url:'/admin/role/detail',
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}

@@ -29,10 +29,11 @@ export function logout(data) {
 //     method: 'get'
 //   })
 // }
-export function getInfo() {
+export function getInfo(data) {
   return request({
-    url:'api-user/users/current',
-    method: 'get'
+    url: `/admin/user/current`,
+    method: 'post',
+    data: Qs.stringify(data)
   })
 }
 
