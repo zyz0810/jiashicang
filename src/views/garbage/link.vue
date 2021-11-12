@@ -464,7 +464,7 @@
                   label: {
                     show : true,
                     position : 'right',
-                    formatter: '{c}/180',
+                    formatter: '{c}/100',
                     textStyle : {
                       color: '#fff',
                       fontSize:'16',
@@ -538,7 +538,7 @@
               label: {
                 show : true,
                 position : 'right',
-                formatter: '{c}/180',
+                formatter: '{c}/100',
                 textStyle : {
                   color: '#fff',
                   fontSize:'16',
