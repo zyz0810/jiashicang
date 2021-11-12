@@ -264,15 +264,15 @@
         <div class="baseColor">设备管理</div>
         <div class="">
           正常
-          <span class="txt_linear f22">1323</span>
+          <span class="txt_linear f22">46</span>
         </div>
         <div class="">
           异常
-          <span class="txt_linear f22">823</span>
+          <span class="txt_linear f22">0</span>
         </div>
         <div class="">
           异常率
-          <span class="txt_linear f22">{{(Number(823)/(Number(823)+Number(1323))).toFixed(2)}}%</span>
+          <span class="txt_linear f22">0%</span>
         </div>
       </div>
       <div class="flex f20 bold border shadow" @click="getPoint(2)">

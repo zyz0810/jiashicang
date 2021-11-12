@@ -256,7 +256,7 @@
         <div class=" baseColor">工地概览</div>
         <div class="">
           总数
-          <span class="txt_linear f22">22</span>
+          <span class="txt_linear f22">32</span>
         </div>
         <div class="">
           准备阶段

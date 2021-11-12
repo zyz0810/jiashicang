@@ -36,7 +36,7 @@ export function getNowurl(data) {
  */
 export function roleDetail(data) {
   return request({
-    url:'/admin/role/detail',
+    url:'/admin/home_menu/index',
     method: 'post',
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })

@@ -131,10 +131,10 @@
           总数
           <span class="txt_linear f22">66</span>
         </div>
-        <div class="">
-          离线
-          <span class="txt_linear f22">4</span>
-        </div>
+<!--        <div class="">-->
+<!--          离线-->
+<!--          <span class="txt_linear f22">4</span>-->
+<!--        </div>-->
         <div class="">
           故障
           <span class="txt_linear f22">4</span>

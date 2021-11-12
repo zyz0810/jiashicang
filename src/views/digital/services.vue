@@ -222,15 +222,15 @@
         </div>
         <div class="">
           总停车区域
-          <span class="txt_linear f22">1280</span>
+          <span class="txt_linear f22">1290</span>
         </div>
         <div class="">
           允许投放
-          <span class="txt_linear f22">20000</span>
+          <span class="txt_linear f22">22000</span>
         </div>
         <div class="">
           目前总车辆
-          <span class="txt_linear f22">24600</span>
+          <span class="txt_linear f22">23515</span>
         </div>
       </div>
       <div class="flex f20 bold mr_20 border shadow" @click="handleTwoPointType(2)">
@@ -973,7 +973,7 @@
               },
               splitLine: { show: false },//去除网格线
               type: 'category',
-              data:['百姓快租','哈罗','美团',]
+              data:['百姓快租电单车','哈喽电单车','哈喽单车','美团单车',]
             }
           ],
           series: [{
@@ -1011,7 +1011,7 @@
               }
             },
             // '百姓快租','哈罗','美团',
-            data: [ 2000, 8000,10000,]
+            data: [ 1000,1000, 10000,10000,]
           },
             {
              name:'目前投放数',
@@ -1047,7 +1047,7 @@
                 }
               },
               // '百姓快租','哈罗','美团',
-              data: [ 2000, 9838,12822,]
+              data: [ 1000,1000, 8693,12822,]
             },
           ]
         },
