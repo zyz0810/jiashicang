@@ -657,7 +657,7 @@
           ],
           series: [
             {
-              name:'已处置案件',
+              name:'超标时长',
               type: 'bar',
               barWidth: 20,//柱图宽度
               barGap:'50%',
