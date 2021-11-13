@@ -46,21 +46,21 @@
         </div>
         <div :class="['weui-cell__bd',showPointType==1?'clr_white':'']">AI视频</div>
       </div>
-      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showPointType==2?'active':'']" @click="handlePointType(2)">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showPointType==2?'active':'']" @click="handlePointType(4)">
         <div class="weui-cell__hd flex">
           <img v-if="showPointType!=2" src="./../../assets/image/point37.png"/>
           <img v-else src="./../../assets/image/point51_active.png"/>
         </div>
         <div :class="['weui-cell__bd',showPointType==2?'clr_white':'']">普通视频</div>
       </div>
-      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showPointType==3?'active':'']" @click="handlePointType(3)">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showPointType==3?'active':'']" @click="handlePointType(2)">
         <div class="weui-cell__hd flex">
           <img v-if="showPointType!=3" src="./../../assets/image/point38.png"/>
           <img v-else src="./../../assets/image/point51_active.png"/>
         </div>
         <div :class="['weui-cell__bd',showPointType==3?'clr_white':'']">河道视频</div>
       </div>
-      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showPointType==4?'active':'']" @click="handlePointType(4)">
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showPointType==4?'active':'']" @click="handlePointType(3)">
         <div class="weui-cell__hd flex">
           <img v-if="showPointType!=4" src="./../../assets/image/point42.png"/>
           <img v-else src="./../../assets/image/point51_active.png"/>

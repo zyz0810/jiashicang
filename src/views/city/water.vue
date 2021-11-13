@@ -1065,12 +1065,12 @@
         });
       },
       getVideoNum(type){
-        getAllVideoPoint({class:3}).then((res) => {
+        getAllVideoPoint({class:2}).then((res) => {
           this.hedaoNum = res.data.hedao;
         });
       },
       getVideo(type){
-        getAllVideoPoint({class:3}).then((res) => {
+        getAllVideoPoint({class:2}).then((res) => {
           this.hedaoNum = res.data.hedao;
           this.pointList = res.data.list;
           this.mapPoint('video',this.pointList)

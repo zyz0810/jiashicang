@@ -1317,20 +1317,20 @@
       },
       //普通视频数量
       getCommonVideoNum(){
-        getAllVideoPoint({class:2}).then((res) => {
+        getAllVideoPoint({class:4}).then((res) => {
           this.carData.commonVideo_num = res.data.putong;
         });
       },
       //普通视频点位
       getCommonVideoList(){
-        getAllVideoPoint({class:2}).then((res) => {
+        getAllVideoPoint({class:4}).then((res) => {
           this.carData.commonVideo_num = res.data.putong;
           this.commonVideoList = res.data.list;
           this.mapPoint('point',this.commonVideoList,this)
         });
       },
       getParkNum(){
-        getAllVideoPoint({class:4}).then((res) => {
+        getAllVideoPoint({class:3}).then((res) => {
           this.parkNum = res.data.parking;
         });
       },
@@ -1345,7 +1345,7 @@
         });
       },
       getParkVideoList(){
-        getAllVideoPoint({class:4}).then((res) => {
+        getAllVideoPoint({class:3}).then((res) => {
           this.parkNum = res.data.parking;
           this.pointList = res.data.list;
           this.mapPoint('point',this.pointList,this);

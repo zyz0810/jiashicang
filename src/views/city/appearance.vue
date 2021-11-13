@@ -1534,13 +1534,13 @@
       },
       //获取油烟--普通视频数字
       getVideoNum(){
-        getAllVideoPoint({class:2}).then((res) => {
+        getAllVideoPoint({class:4}).then((res) => {
           this.commonVideo_num = res.data.putong;
         });
       },
       //获取油烟--普通视频
       getVideo(){
-        getAllVideoPoint({class:2}).then((res) => {
+        getAllVideoPoint({class:4}).then((res) => {
           this.commonVideo_num = res.data.putong;
           this.pointList = res.data.list;
           this.mapPoint(this.pointList,'video')

@@ -1102,13 +1102,13 @@
       },
       //获取普通视频数量
       getVideoNum(){
-        getAllVideoPoint({class:2}).then((res) => {
+        getAllVideoPoint({class:4}).then((res) => {
           this.commonVideo_num = res.data.putong;
         });
       },
       //获取普通视频点位
       getVideo(){
-        getAllVideoPoint({class:2}).then((res) => {
+        getAllVideoPoint({class:4}).then((res) => {
           this.commonVideo_num = res.data.putong;
           this.videoList = res.data.list;
           this.mapPoint('video',this.videoList);
