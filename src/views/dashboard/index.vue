@@ -225,8 +225,8 @@
         menuList:{},
         urlOne:'/general/overview',
         urlTwo:['/direct/index.html','/AI/index.html','/zhuanxiang/index.html#/system/organization/manage',
-        '/zhuanxiang/index.html#/system/organization/manage','/zhuanxiang/index.html#/dataAcquisition/grid/index',
-        '/zhuanxiang/index.html#/dataAcquisition/grid/index','/zhuanxiang/index.html#/dataAcquisition/grid/index',
+        '/zhuanxiang/index.html#/dataExchange/exchangeApi','/zhuanxiang/index.html#/dataAcquisition/grid/index',
+        '/zhuanxiang/index.html#/personnel/personnelList','/zhuanxiang/index.html#/car/carList',
         '/zhuanxiang/index.html#/video/videoList','/keynote/index.html','/zhuanxiang/index.html#/electron/map'],
       }
     },
