@@ -18,6 +18,11 @@
         <img v-else src="./../../assets/image/services_nav03.png" class="nav_img"/>
         <p class="nav_txt">城市亮灯</p>
       </div>
+      <div :class="[activeIndex == 3 ? 'baseColor':'']" @click="handlePageType(3)">
+        <img v-if="activeIndex == 3" src="./../../assets/image/services_nav04_active.png" class="nav_img"/>
+        <img v-else src="./../../assets/image/services_nav04.png" class="nav_img"/>
+        <p class="nav_txt">数字燃气</p>
+      </div>
     </div>
     <!--<ul class="f16 clr_white bold text-center link_intro" v-if="activeIndex == 0">-->
       <!--<li class="mb_20 f14">空闲泊位等级</li>-->
@@ -1309,6 +1314,9 @@
           this.getChartData();
           this.getLampPostNum();
           this.getControlCabinetlist();
+        }
+        else if(val == 3){
+          this.mapPoint('',[],this)
         }
       },
       //运维人员点位
