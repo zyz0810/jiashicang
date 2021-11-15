@@ -163,6 +163,7 @@
     methods: {
       handlePointType(type){
         this.showPointType = type;
+        this.map.clearOverLays();
         if(type == 0){
           this.getPoint('')
         }else{

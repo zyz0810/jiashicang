@@ -390,10 +390,10 @@ export const asyncRoutes = [
     path: '/low',
     component: Layout,
     redirect: 'noRedirect',
-    name: '数字城管',
+    name: '案件归集',
     hidden: false,
     meta: {
-      title: '数字城管',
+      title: '案件归集',
       icon: '10',
       roles: [
         'admin',
@@ -406,7 +406,7 @@ export const asyncRoutes = [
         name: 'underworld',
         hidden: false,
         meta: {
-          title: '数字城管',
+          title: '案件归集',
           roles: [
             'admin',
           ]
