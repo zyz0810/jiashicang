@@ -190,7 +190,7 @@
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
       },
       getAIList(){
-        collectList({is_important:1}).then((res) => {
+        collectList({is_important:1,page:1,pageSize:3}).then((res) => {
           this.AIList = res.data.data;
 
           for(let i=0;i<this.AIList.length;i++){
