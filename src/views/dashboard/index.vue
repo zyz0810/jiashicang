@@ -257,7 +257,9 @@
   .dashboard-container{
     width: 100%;
     height: 100%;
-    padding-top: 6vh;
+    /*padding-top: 6vh;*/
+    padding: 6vh 0 4vh;
+    overflow: auto;
     /*background: url("./../../assets/image/index_bg.png") rgb(2,9,41) left top no-repeat;*/
     background: rgb(2,9,41);
     background-size: 100% 100%;
@@ -269,7 +271,7 @@
 
   .index_title{
     position: relative;
-    margin: 40px 0;
+    margin: 35px 0;
     line-height: 2;
     .title_line{
       position: absolute;
