@@ -1,5 +1,5 @@
 module.exports = {
-  title: '管理后台',
+  title: '滨江区主分一体化',
 
   /**
    * @type {boolean} true | false
