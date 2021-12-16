@@ -19,16 +19,30 @@
               <p class="clr_blue02 mt_5"><span class="f26">24</span>个</p>
             </div>
           </div>
-          <div class="flex water_num02 f16 bold text-center mt_10">
-            <div class="flex_block_bg">
+          <div class="flex water_num01 f16 bold text-center mt_10">
+            <div class="flex-item flex_block_bg">
               <p class="f16 bold">河道水位站点</p>
               <p class="clr_yellow mt_5"><span class="f26">12</span>个</p>
             </div>
-            <div class="flex_block_bg">
+            <div class="flex-item flex_block_bg">
               <p class="f16 bold">河道视频控点</p>
               <p class="clr_yellow mt_5"><span class="f26">162</span>个</p>
             </div>
+            <div class="flex-item flex_block_bg" :class="riverType == 6?'active':''" @click="handleRiverType(6)">
+              <p class="f16 bold">河长制点位</p>
+              <p class="clr_blue01 mt_5"><span class="f26">{{riverTypeData.six}}</span>个</p>
+            </div>
           </div>
+<!--          <div class="flex water_num02 f16 bold text-center mt_10">-->
+<!--            <div class="flex_block_bg">-->
+<!--              <p class="f16 bold">河道水位站点</p>-->
+<!--              <p class="clr_yellow mt_5"><span class="f26">12</span>个</p>-->
+<!--            </div>-->
+<!--            <div class="flex_block_bg">-->
+<!--              <p class="f16 bold">河道视频控点</p>-->
+<!--              <p class="clr_yellow mt_5"><span class="f26">162</span>个</p>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
 
       <div class="mt_20">
@@ -206,7 +220,8 @@
   import point02 from "@/assets/image/point46.png";
   import point03 from "@/assets/image/point47.png";
   import point05 from "@/assets/image/point38.png";
-  import {findSite,abnormalSite,warnSite} from "@/api/water"; // 引入刚才的map.js 注意路径
+  import point06 from "@/assets/image/point71.png";//河长制点位图片
+  import {findSite,abnormalSite,warnSite,riverList} from "@/api/water"; // 引入刚才的map.js 注意路径
   import vueSeamlessScroll from 'vue-seamless-scroll'
   import global from "@/utils/common";
   import {getAllVideoPoint, getNowurl} from "@/api/system";
@@ -217,6 +232,8 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,vueSeamlessScroll,PieChartTwoHover},
     data() {
       return {
+        riverTypeData:{six:''},
+        riverType:'',
         showMapType:1,
         showOption:0,
         showType:1,
@@ -643,7 +660,8 @@
         playVideoUri:'',
         player: null,
         offectNum:1,
-        hedaoNum:''
+        hedaoNum:'',
+        riverTypeSix:[],
       }
     },
     computed: {
@@ -694,9 +712,34 @@
       this.getVideoNum();
       window.handleVideo = this.handleVideo;
       window.closeVideoDialog = this.handleVideoClose;
-      this.initPlayer()
+      this.initPlayer();
+      this.getRiverTypeData();
     },
     methods: {
+      handleRiverType(val){
+        if(this.riverType!=val){
+          this.riverType = val;
+          riverList().then(res=>{
+            this.riverTypeData.six = res.data.count
+            this.riverTypeSix = res.data.list;
+            this.mapPoint('riverChiefs',this.riverTypeSix)
+          });
+        }else{
+          this.riverType = '';
+          this.riverTypeSix = [];
+          this.map.clearOverLays();
+          if(this.showType == 1){
+            this.getList('');
+          }else{
+            this.getList(this.showType);
+          }
+        }
+      },
+      getRiverTypeData(){
+        riverList().then(res=>{
+          this.riverTypeData.six = res.data.count;
+        });
+      },
       //播放视频
       handleVideo(txt){
         this.getNow(txt);
@@ -946,6 +989,11 @@
           iconSize: new T.Point(30, 51),
           // iconAnchor: new T.Point(34, 59)
         });
+        let icon06 = new T.Icon({
+          iconUrl: point06,
+          iconSize: new T.Point(23, 40),
+          // iconAnchor: new T.Point(34, 59)
+        });
         let markers = []
         if(type == 'video'){
           for (let i = 0; i < list.length; i++) {
@@ -953,6 +1001,13 @@
             // 0：关  1：开
             let point = new T.LngLat(list[i].longitude,list[i].latitude);
             markers[i]  = drawTMaker(point, icon05,this,list[i]);
+          }
+        }else if(type == 'riverChiefs'){
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            // 0：关  1：开
+            let point = new T.LngLat(list[i].log,list[i].lat);
+            markers[i]  = drawTMaker(point, icon06,this,list[i]);
           }
         }else{
           for (let i = 0; i < list.length; i++) {
@@ -997,6 +1052,36 @@
                 '</tr>'+
                 '<tr>' +
                 '<td></td><td class="text-right baseColor pointer" onClick="handleVideo('+aa+')">查看视频</td>'+
+                '</tr>'+
+                '</table>'+
+                '</div>';
+            }else if(type == 'riverChiefs'){
+              sContent =
+                '<div class="point_info">' +
+                '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                '<tr>' +
+                '<td class="txt_6">河道名称</td><td>' + txt.river_name + '</td>' +
+                '</tr>'+
+                '<tr>' +
+                '<td>河长姓名</td><td>' + txt.user_name + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>联系电话</td><td>' + txt.mobile + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>联系部门</td><td>' + txt.department + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>河长级别</td><td>'+ txt.level +'</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>河长职务</td><td>' + txt.job + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>河长单位</td><td>' + txt.river_department + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td>所属区划</td><td>' + txt.space + '</td>'+
                 '</tr>'+
                 '</table>'+
                 '</div>';
@@ -1099,6 +1184,9 @@
       padding: 20px 0;
       &:nth-child(2){
         margin: 0 2%;
+      }
+      &.active{
+        background: #000;
       }
     }
   }

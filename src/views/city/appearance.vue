@@ -286,6 +286,171 @@
         <!--</video>-->
       </div>
     </div>
+<!--    <companyView :showDialog.sync="showViewDialog" :viewData="companyData"></companyView>-->
+
+
+    <div class="search_result" v-show="showViewDialog">
+      <i class="el-dialog__close el-icon el-icon-close f18 block fr close_search" @click="closeCompany"></i>
+      <div class="view_tab flex text-center">
+        <div :class="['flex-item',activeId == 0 ? 'active':'']" data-id="0" @click="handleTab(0)">实时工况</div>
+        <div :class="['flex-item',activeId == 1 ? 'active':'']" data-id="1" @click="handleTab(1)">趋势曲线</div>
+        <div :class="['flex-item',activeId == 2 ? 'active':'']" data-id="2" @click="handleTab(2)">企业信息</div>
+        <div :class="['flex-item',activeId == 3 ? 'active':'']" data-id="3" @click="handleTab(3)">设备信息</div>
+      </div>
+      <div v-show="activeId == 0">
+        <div class="flex baseColor">
+          <el-form style="flex: 3">
+            <el-form-item label="餐企名称：">{{companyInfo.company}}</el-form-item>
+            <el-form-item label="检测状态："><span :class="aaclass">{{companyStatus}}</span></el-form-item>
+            <el-form-item label="监测时间：">{{realTimeInfo?realTimeInfo.addtime:''}}</el-form-item>
+          </el-form>
+          <div style="flex: 5">
+            <div class="table_title text-center">污染物排放情况（mg/m3）</div>
+            <el-table v-loading="polluteListLoading" :data="polluteList" element-loading-text="拼命加载中" fit ref="tableList" border class="table_noBg table_tdNoBg">
+              <el-table-column label="污染物类型" align="center" prop="name"></el-table-column>
+              <el-table-column label="实测值" align="center" prop="val"></el-table-column>
+              <el-table-column label="状态" align="center" prop="status"></el-table-column>
+            </el-table>
+          </div>
+
+        </div>
+        <div class="flex mt_20">
+          <ul class="clr_white flex view_ul text-center" style="flex: 3">
+            <li class="flex-item">
+              <div class="bg_yellow">
+                <i class="iconfont icon-wendu f26"></i>
+                <p>温度</p>
+              </div>
+              <p class="num">{{realTimeInfo?realTimeInfo.temperature:''}}℃</p>
+            </li>
+            <!--           <li class="flex-item">-->
+            <!--             <div class="bg_blue">-->
+            <!--               <i class="iconfont icon-wenshidu1 f26"></i>-->
+            <!--               <p>湿度</p>-->
+            <!--             </div>-->
+            <!--             <p class="num">{{realTimeInfo?realTimeInfo.wind_speed:''}}rh</p>-->
+            <!--           </li>-->
+            <li class="flex-item">
+              <div class="bg_green">
+                <i class="iconfont icon-fengsu f26"></i>
+                <p>风速</p>
+              </div>
+              <p class="num">{{realTimeInfo?realTimeInfo.wind_speed:''}}m/s</p>
+            </li>
+            <li class="flex-item">
+              <div class="bg_purple">
+                <i class="iconfont icon-zaosheng f26"></i>
+                <p>噪声</p>
+              </div>
+              <p class="num">{{realTimeInfo?realTimeInfo.noise:''}}Hz</p>
+            </li>
+          </ul>
+          <div style="flex: 5">
+            <div class="table_title text-center">设备情况</div>
+            <el-table v-loading="polluteSListLoading" :data="polluteSList" element-loading-text="拼命加载中" fit border ref="tableList" class="table_tdNoBg">
+              <el-table-column label="设备类型" align="center" prop="name"></el-table-column>
+              <el-table-column label="状态" align="center" prop="status"></el-table-column>
+            </el-table>
+          </div>
+
+        </div>
+      </div>
+      <div v-if="activeId == 1">
+        <div class="f16 txtColor text-center">
+          <span class="m_r30">餐企名称：{{companyInfo.company}}</span>
+          <span>设备名称：{{facilityInfo.name}}</span>
+        </div>
+        <div class="bg_shadow mt_20 p20 line_chart">
+          <p class="f14 txtColor text-center mt_10 mb_10">最近24小时污染物排放情况</p>
+          <LineChart :chartData="lineData" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></LineChart>
+        </div>
+      </div>
+      <table v-if="activeId == 2" class="company_table f14">
+        <tr>
+          <td class="baseColor">餐企名称</td>
+          <td class="txtColor">{{companyInfo.company}}</td>
+          <td class="baseColor">餐企简称</td>
+          <td class="txtColor">{{companyInfo.simple_name}}</td>
+          <td class="baseColor">信用代码</td>
+          <td class="txtColor">{{companyInfo.credit_code}}</td>
+        </tr>
+        <tr>
+          <td class="baseColor">组织机构码</td>
+          <td class="txtColor">{{companyInfo.organization_code}}</td>
+          <td class="baseColor">企业状态</td>
+          <td class="txtColor">{{companyInfo.status | filtersCompanyStatus}}</td>
+          <td class="baseColor">企业编码</td>
+          <td class="txtColor">{{companyInfo.company_code}}</td>
+        </tr>
+        <tr>
+          <td class="baseColor">负责人</td>
+          <td class="txtColor">{{companyInfo.principal}}</td>
+          <td class="baseColor">手机号码</td>
+          <td class="txtColor">{{companyInfo.mobile}}</td>
+          <td class="baseColor">餐企电话</td>
+          <td class="txtColor">{{companyInfo.tel}}</td>
+        </tr>
+        <tr>
+          <td class="baseColor">餐企类型</td>
+          <!--          <td class="txtColor">{{ filterType(companyType,companyInfo.company_type)}}</td>-->
+          <td class="txtColor">{{companyInfo.company_type_name}}</td>
+          <td class="baseColor">菜系</td>
+          <!--          <td class="txtColor">{{filterType(cookList,companyInfo.cook_type)}}</td>-->
+          <td class="txtColor">{{companyInfo.cook_type_name}}</td>
+          <td class="baseColor">营业面积</td>
+          <td class="txtColor">{{companyInfo.area}}</td>
+        </tr>
+        <tr>
+          <td class="baseColor">灶头数量</td>
+          <td class="txtColor">{{companyInfo.kitchen_range_num}}</td>
+          <td class="baseColor">排口数量</td>
+          <td class="txtColor">{{companyInfo.outlet_num}}</td>
+          <td class="baseColor">餐企规模</td>
+          <!--          <td class="txtColor">{{filterType(scaleList,companyInfo.scale_type)}}</td>-->
+          <td class="txtColor">{{companyInfo.scale_type_name}}</td>
+        </tr>
+        <tr>
+          <td class="baseColor">所属辖区</td>
+          <!--          <td class="txtColor">{{filterType(cityList,companyInfo.city_id)}}</td>-->
+          <td class="txtColor">{{companyInfo.city_id_name}}</td>
+          <td class="baseColor">所属分组</td>
+          <td class="txtColor" colspan="3"></td>
+        </tr>
+        <tr>
+          <td class="baseColor">所属来源</td>
+          <td class="txtColor">{{companyInfo.depart_id | filtersCompanySource}}</td>
+          <td class="baseColor">中队负责人</td>
+          <td class="txtColor">{{companyInfo.zd_people}}</td>
+          <td class="baseColor">负责人电话</td>
+          <td class="txtColor">{{companyInfo.zd_mobile}}</td>
+        </tr>
+        <tr>
+          <td class="baseColor">详细地址</td>
+          <td class="txtColor" colspan="5">{{companyInfo.address}}</td>
+        </tr>
+      </table>
+      <table v-if="activeId == 3" class="company_table equipment_table f14 mb_20">
+        <tr>
+          <td class="baseColor">设备名称</td>
+          <td class="txtColor">{{facilityInfo.name}}</td>
+          <td class="baseColor">设备型号</td>
+          <td class="txtColor">{{facilityInfo.version}}</td>
+        </tr>
+        <tr>
+          <td class="baseColor">设备编号</td>
+          <td class="txtColor">{{facilityInfo.facility_no}}</td>
+          <td class="baseColor">设备IMEI</td>
+          <td class="txtColor">{{facilityInfo.imei}}</td>
+        </tr>
+        <tr>
+          <td class="baseColor">生产厂家</td>
+          <td class="txtColor">{{facilityInfo.product}}</td>
+          <td class="baseColor">安装日期</td>
+          <td class="txtColor">{{facilityInfo.start_time}}</td>
+        </tr>
+      </table>
+    </div>
+
   </div>
 </template>
 
@@ -308,7 +473,7 @@
   import point05 from '@/assets/image/point_yy_04.png' // 引入刚才的map.js 注意路径
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import {getAllVideoPoint, pointList,getNowurl} from '@/api/system'
-  import {analysisData,departOfWarn,timesOfWarn,getFacilityAll} from '@/api/appearance'
+  import {analysisData,departOfWarn,timesOfWarn,getFacilityAll,companyDetail,facilityDetail,realTime,trend} from '@/api/appearance'
   import global from "@/utils/common";
   export default {
     name: 'appearance',
@@ -317,6 +482,9 @@
     components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,RingChartHover},
     data() {
       return {
+        activeId:'',
+        showViewDialog:false,
+        companyData:{},
         yyMapType:1,
         gdMapType:1,
         showGdType:1,
@@ -860,7 +1028,7 @@
           title:{},
           tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b}: {c} ({d}%)'
+            formatter: '{b}: {c} ({d}%)'
           },
           legend: {
             show:false
@@ -868,7 +1036,7 @@
           color:['rgb(57,229,189)','rgba(206,171,255,1)','rgba(0,242,254,1)'],
           series: [
             {
-              name: '访问来源',
+              name: '',
               type: 'pie',
               radius: ['40%', '60%'],
               avoidLabelOverlap: true,
@@ -880,8 +1048,7 @@
               emphasis: {
                 label: {
                   show: true,
-                  fontSize: '30',
-                  fontWeight: 'bold'
+                  fontSize: '14',
                 }
               },
               // labelLine: {
@@ -899,7 +1066,7 @@
                     color: '#fff'
                   },
                   length:10,
-                  length2 :30,
+                  length2 :20,
                 }
               },
               label :{
@@ -908,18 +1075,19 @@
                 //   '{b}',
                 //   '{d}'
                 // ].join('\n'),
-                formatter: '{c} ({d}%)\n{b}',
+                // formatter: '{c} ({d}%)\n{b}',
+                formatter: '{b}：{c} ({d}%)',
                 verticalAlign :'bottom',
                 position:'outside',
                 textShadowOffsetY :10,
                 align :'right',
                 color:'white',
-                height :60,
-                lineHeight:30,
-                fontSize:'16',
+                // height :60,
+                // lineHeight:30,
+                fontSize:'14',
                 rich: {
                   a: {
-                    verticalAlign:'bottom',
+                    // verticalAlign:'bottom',
                     // 没有设置 `verticalAlign`，则 `verticalAlign` 为 bottom
                   }
                 }
@@ -1052,6 +1220,171 @@
         player: null,
         offectNum:1,
         totalData:{},
+        companyName:'',
+        realTimeInfo:{},
+        aaclass:'55',
+        companyStatus:"",
+        polluteSListLoading:false,
+        polluteSList:[{
+          name:'净化器',
+          val:'',
+        },{
+          name:'风机',
+          val:'',
+        }],
+        polluteListLoading:false,
+        polluteList:[{
+          name:'油烟浓度',
+          val:'',
+          status:''
+        }],
+        companyInfo:{},
+        lineData:{
+          title: {},
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '5',
+            top: '30',
+            containLabel: true
+          },
+          //----------------   图例 legend  -----------------
+          legend:{
+            textStyle:{
+              fontSize:15,
+              color: '#5EF4F9'
+            },
+            // data:['TVOC','油烟浓度']
+            data:['油烟浓度']
+          },
+          xAxis: {
+            splitArea : {show :  false }, //保留网格区域
+            // show:false,
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+              alignWithLabel: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#26CBE2',
+                fontSize:'16',
+                fontWeight:'bold'
+              }
+            },
+            splitLine: {
+              show: false,
+              textStyle: {
+                color: 'rgba(16,54,123,1)',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },//去除网格线
+            boundaryGap: false, // 不留白，从原点开始
+            type: 'category',
+            data: []
+          },
+          yAxis: {
+            splitArea : {show :  false }, //保留网格区域
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#26CBE2',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            splitLine: {
+              show: false,//去除网格线
+              textStyle: {
+                color: '#08245F',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            type: 'value'
+          },
+          series: [
+            //   {
+            //   name:'TVOC',
+            //   symbol:'circle',
+            //   symbolSize:8,
+            //   color:'#CC3275',
+            //   itemStyle : {
+            //     normal : {
+            //       lineStyle:{
+            //         color:'#CC3275',
+            //         borderColor:'#CC3275'
+            //       }
+            //     }
+            //   },
+            //   areaStyle:{
+            //     normal:{
+            //       //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+            //       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            //         offset: 0,
+            //         color: 'rgba(204,50,117,0.5)'
+            //       }, {
+            //         offset: .2,
+            //         color: 'rgba(204,50,117,0.5)'
+            //       },{
+            //         offset: 1,
+            //         color: 'rgba(204,50,117,0)'
+            //       }])
+            //
+            //     }
+            //   },//区域颜色渐变
+            //   data: [],
+            //   type: 'line'
+            // },
+            {
+              name:'油烟浓度',
+              symbol:'circle',
+              symbolSize:8,
+              color:'#E39915',
+              itemStyle : {
+                normal : {
+                  lineStyle:{
+                    color:'#E39915',
+                    borderColor:'#E39915'
+                  }
+                }
+              },
+              areaStyle:{
+                normal:{
+                  //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgba(227,153,21,0.5)'
+                  }, {
+                    offset: .2,
+                    color: 'rgba(227,153,21,0.5)'
+                  },{
+                    offset: 1,
+                    color: 'rgba(227,153,21,0)'
+                  }])
+
+                }
+              },//区域颜色渐变
+              data: [],
+              type: 'line'
+            }]
+        },
       }
     },
 
@@ -1059,6 +1392,20 @@
       ...mapState({
         roles: state => state.user.roles,
       }),
+    },
+    filters: {
+      filtersStatus: function (value) {
+        let StatusArr = {1: '正常', 2: '关闭'}
+        return StatusArr[value]
+      },
+      filtersCompanyStatus: function (value) {
+        let StatusArr = {1: '正常', 2: '禁用'}
+        return StatusArr[value]
+      },
+      filtersCompanySource: function (value) {
+        let StatusArr = {1: '浦沿中队', 2: '长河中队', 3: '西兴中队'}
+        return StatusArr[value]
+      },
     },
     mounted() {
       // 挂载完成后渲染地图
@@ -1071,8 +1418,12 @@
       window.handleVideo = this.handleVideo;
       window.closeVideoDialog = this.handleVideoClose;
       this.initPlayer();
+      window.handleView = this.handleView;
     },
     methods: {
+      handleTab(val){
+        this.activeId = val;
+      },
       // 辖区报警次数占比分析
       getYyPie(){
         departOfWarn({ start_time:'', end_time:'',}).then(res => {
@@ -1080,6 +1431,7 @@
             return {name:item.x_name,value:item.y_count}
           });
           this.chartDataFour.series[0].data = pieArr;
+          // this.chartDataFour.series[0].data = [{name:'西兴中队',value:2},{name:'西兴中队2',value:0},{name:'西兴中队3',value:0}];
         });
       },
       getYyBar(){
@@ -1300,11 +1652,11 @@
             let point = new T.LngLat(list[i].log,list[i].lat);
             if(list[i].status == 1){ // 正常
               markers[i]  = drawTMaker(point, icon02,this,list[i]);
-            }else if(list[i].status == 2){
+            }else if(list[i].status == 2){//离线
               markers[i]  = drawTMaker(point, icon03,this,list[i]);
-            }else if(list[i].status == 3){
+            }else if(list[i].status == 3){//故障
               markers[i]  = drawTMaker(point, icon04,this,list[i]);
-            }else if(list[i].status == 4){
+            }else if(list[i].status == 4){//报警
               markers[i]  = drawTMaker(point, icon05,this,list[i]);
             }
 
@@ -1330,9 +1682,10 @@
                 yyStstus = '报警';
               }else if(txt.status ==3){
                 yyStstus = '故障';
-              }else if(txt.status ==4){
+              }else if(txt.status ==2){
                 yyStstus = '离线';
               }
+              let aa = JSON.stringify(txt).replace(/"/g, '&quot;')
               // '<p class="f14 time">名称：' + txt.name + '</p>' +
               // '<p class="f14 time">状态：' + txt.status + '</p>' +
               // '<p class="f14 time">地址：' + txt.address + '</p>' +
@@ -1353,6 +1706,9 @@
                 '</tr>'+
                 '<tr>' +
                 '<td>地址</td><td>' + txt.address + '</td>'+
+                '</tr>'+
+                '<tr>' +
+                '<td></td><td class="text-right baseColor pointer" onClick="handleView('+ aa +')">查看详情</td>'+
                 '</tr>'+
                 '</table>'+
                 '</div>';
@@ -1392,8 +1748,242 @@
         }
 
       },
+      handleView(txt){
+        this.showViewDialog = true;
+        this.getCompanyView(txt.company_id);
+        this.getFacilityDetail(txt.facility_id);
+        this.getCompanyInfo(txt.facility_no);
+        this.getCompanyChart(txt.facility_no);
 
+      },
+      closeCompany(){
+        this.showViewDialog = false;
+        this.activeId='';
+        this.showViewDialog=false;
+        this.companyData={};
+        this.companyName='';
+        this.realTimeInfo={};
+        this.aaclass='55';
+        this.companyStatus="";
+        this.polluteSListLoading=false;
+        this. polluteSList=[{
+          name:'净化器',
+          val:'',
+        },{
+          name:'风机',
+          val:'',
+        }];
+        this.polluteListLoading=false;
+        this.polluteList=[{
+          name:'油烟浓度',
+          val:'',
+          status:''
+        }];
+        this. companyInfo={};
+        this.lineData={
+          title: {},
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          grid: {
+            left: '0',
+            right: '0',
+            bottom: '5',
+            top: '30',
+            containLabel: true
+          },
+          //----------------   图例 legend  -----------------
+          legend:{
+            textStyle:{
+              fontSize:15,
+              color: '#5EF4F9'
+            },
+            // data:['TVOC','油烟浓度']
+            data:['油烟浓度']
+          },
+          xAxis: {
+            splitArea : {show :  false }, //保留网格区域
+            // show:false,
+            axisLine: {
+              show: false,
+            },
+            axisTick: {
+              show: false,
+              alignWithLabel: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#26CBE2',
+                fontSize:'16',
+                fontWeight:'bold'
+              }
+            },
+            splitLine: {
+              show: false,
+              textStyle: {
+                color: 'rgba(16,54,123,1)',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },//去除网格线
+            boundaryGap: false, // 不留白，从原点开始
+            type: 'category',
+            data: []
+          },
+          yAxis: {
+            splitArea : {show :  false }, //保留网格区域
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              show: false
+            },
+            axisLabel: {
+              show: true,
+              textStyle: {
+                color: '#26CBE2',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            splitLine: {
+              show: false,//去除网格线
+              textStyle: {
+                color: '#08245F',
+                fontSize:'15',
+                fontWeight:'bold'
+              }
+            },
+            type: 'value'
+          },
+          series: [
+            //   {
+            //   name:'TVOC',
+            //   symbol:'circle',
+            //   symbolSize:8,
+            //   color:'#CC3275',
+            //   itemStyle : {
+            //     normal : {
+            //       lineStyle:{
+            //         color:'#CC3275',
+            //         borderColor:'#CC3275'
+            //       }
+            //     }
+            //   },
+            //   areaStyle:{
+            //     normal:{
+            //       //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+            //       color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            //         offset: 0,
+            //         color: 'rgba(204,50,117,0.5)'
+            //       }, {
+            //         offset: .2,
+            //         color: 'rgba(204,50,117,0.5)'
+            //       },{
+            //         offset: 1,
+            //         color: 'rgba(204,50,117,0)'
+            //       }])
+            //
+            //     }
+            //   },//区域颜色渐变
+            //   data: [],
+            //   type: 'line'
+            // },
+            {
+              name:'油烟浓度',
+              symbol:'circle',
+              symbolSize:8,
+              color:'#E39915',
+              itemStyle : {
+                normal : {
+                  lineStyle:{
+                    color:'#E39915',
+                    borderColor:'#E39915'
+                  }
+                }
+              },
+              areaStyle:{
+                normal:{
+                  //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: 'rgba(227,153,21,0.5)'
+                  }, {
+                    offset: .2,
+                    color: 'rgba(227,153,21,0.5)'
+                  },{
+                    offset: 1,
+                    color: 'rgba(227,153,21,0)'
+                  }])
 
+                }
+              },//区域颜色渐变
+              data: [],
+              type: 'line'
+            }]
+        };
+      },
+      getCompanyView(companyId){
+        companyDetail({id:companyId}).then(res=>{
+          if(res.data.status == 1){
+            // this.aaclass = 'red01'
+            console.log( this.aaclass)
+            this.companyStatus='正常'
+          }else if(res.data.status == 2){
+            // this.aaclass = 'red01'
+            this.companyStatus='离线'
+          }else if(res.data.status == 3){
+            this.aaclass = 'red01'
+            this.companyStatus='故障'
+          }else if(res.data.status == 4){
+            this.aaclass = 'red01'
+            this.companyStatus='异常'
+          }
+          this.polluteList[0].status = this.companyStatus
+          const {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
+            kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark,depart_id,zd_people,zd_mobile,company_type_name,cook_type_name,scale_type_name,city_id_name} = res.data;
+          this.companyInfo = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
+            kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark,depart_id,zd_people,zd_mobile,company_type_name,cook_type_name,scale_type_name,city_id_name};
+        });
+
+      },
+      getFacilityDetail(id){
+        facilityDetail({id:id}).then(res=>{
+          const { id,product, city_id,name, version,facility_no,imei,start_time,images,remark} = res.data
+          this.facilityInfo = { id,product, city_id,name, version,facility_no,imei,start_time,images,remark}
+        });
+      },
+      getCompanyInfo(id){
+        realTime({facility_id:id}).then(res=>{
+          this.realTimeInfo = res.data;
+          this.polluteSList=[{
+            name:'净化器',
+            status:res.data.cleansing == 1?'正常':'异常',
+          },{
+            name:'风机',
+            status:res.data.fan == 1?'开':'关',
+          }]
+          this.polluteList[0].val = res.data.concentration;
+          // this.polluteList[0].status = this.companyStatus
+        });
+      },
+      getCompanyChart(id){
+        trend({facility_id:id}).then(res=>{
+          // this.list = res.data.data;
+          // this.total = res.data.count
+          let a = res.data.map(item=>{return item.x_name})
+          this.lineData.xAxis.data = a;
+          console.log( a)
+          console.log(res.data.map(item=>{ return item.y_tvoc_num}))
+          // this.lineData.series[0].data = res.data.map(item=>{ return item.y_tvoc_num})
+          // this.lineData.series[1].data = res.data.map(item=>{return item.y_fume_num})
+          this.lineData.series[0].data = res.data.map(item=>{return item.y_fume_num})
+        });
+      },
       //播放视频
       handleVideo(txt){
         this.getNow(txt);
@@ -1550,7 +2140,96 @@
   }
 </script>
 <style lang="scss" scoped>
+  @import './../../styles/variables.scss';
+  .search_result{
+    position: fixed;
+    left: 10vw;
+    top: 18vh;
+    z-index: 20000;
+    width: 800px;
+    padding: 20px;
+    background: #0a275f;
+    .close_search{
+      position: absolute;
+      right: 20px;
+      top:20px;
+      z-index: 2001;
+    }
+    .view_tab{
+      width: 60%;
+      margin: 0 auto 30px;
+      line-height: 2.6;
+      color:$txtColor;
+      background: #0a275f !important;
+      box-shadow: $menuText 0 0 8px inset;
+      border-radius: 5px;
+      .active{
+        color: #fff;
+        background: #0a275f !important;
+        box-shadow: $menuText 0 0 18px inset;
+      }
+      .flex-item{
+        &:nth-child(1){
+          &.active{
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+          }
+        }
+        &:nth-child(4){
+          &.active{
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+          }
+        }
+      }
 
+
+    }
+    .table_title{
+      /*width: 60%;*/
+      line-height: 2.6;
+      color:$txtColor;
+      background: #0a275f !important;
+      box-shadow: $menuText 0 0 8px inset;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    .view_ul{
+      li{
+        margin: 0 5px;
+        border: 1px solid $txtColor;
+        border-radius: 5px;
+        & > div{
+          padding: 10px 0;
+          p{
+            margin-top: 5px;
+          }
+        }
+        .num{
+          line-height: 2.5;
+        }
+      }
+    }
+  }
+  .company_table{
+    width: 100%;
+    border-top: 1px solid #223492;
+    border-left: 1px solid #223492;
+    border-spacing: 0;
+    tr{
+      line-height: 2;
+
+      td{
+        padding: 0 5px;
+        border-right: 1px solid #223492;
+        border-bottom: 1px solid #223492;
+      }
+    }
+  }
+  .equipment_table{
+    width: 80% !important;
+    margin: 0 auto;
+  }
   .communityNum{
     /*width: 30%;*/
     li{

@@ -42,3 +42,44 @@ export function getFacilityAll(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+
+/* 油烟公司信息详情
+ * class
+ */
+export function companyDetail(data) {
+  return request({
+    url: `/api/Analyse/companyDetail`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
+/* 油烟设备信息详情
+ * class
+ */
+export function facilityDetail(data) {
+  return request({
+    url: `/api/Analyse/facilityDetail`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
+/* 油烟获取实时工况
+ * class
+ */
+export function realTime(data) {
+  return request({
+    url: `/api/Analyse/realTime`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
+/* 油烟趋势曲线
+ * class
+ */
+export function trend(data) {
+  return request({
+    url: `/api/Analyse/trend`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}

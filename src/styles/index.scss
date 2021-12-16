@@ -1202,3 +1202,15 @@ iframe{
     }
   }
 }
+.table_tdNoBg{
+  border: 1px solid #1362a0;
+  .el-table__body tr{
+    background: transparent!important;
+  }
+  td,th{
+    border-radius: 0 !important;
+    border-right: 1px solid #1362a0 !important;
+    border-bottom: 1px solid #1362a0 !important;
+    background: transparent!important;
+  }
+}

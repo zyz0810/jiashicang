@@ -30,3 +30,12 @@ export function warnSite(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+/* 河长接口
+ */
+export function riverList(data) {
+  return request({
+    url: `/api/river/riverList`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
