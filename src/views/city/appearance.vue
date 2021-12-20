@@ -1929,21 +1929,6 @@
       },
       getCompanyView(companyId){
         companyDetail({id:companyId}).then(res=>{
-          if(res.data.status == 1){
-            // this.aaclass = 'red01'
-            console.log( this.aaclass)
-            this.companyStatus='正常'
-          }else if(res.data.status == 2){
-            // this.aaclass = 'red01'
-            this.companyStatus='离线'
-          }else if(res.data.status == 3){
-            this.aaclass = 'red01'
-            this.companyStatus='故障'
-          }else if(res.data.status == 4){
-            this.aaclass = 'red01'
-            this.companyStatus='异常'
-          }
-          this.polluteList[0].status = this.companyStatus
           const {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
             kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark,depart_id,zd_people,zd_mobile,company_type_name,cook_type_name,scale_type_name,city_id_name} = res.data;
           this.companyInfo = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
@@ -1954,6 +1939,21 @@
       getFacilityDetail(id){
         facilityDetail({id:id}).then(res=>{
           const { id,product, city_id,name, version,facility_no,imei,start_time,images,remark} = res.data
+          if(res.data.status == 1){
+            this.aaclass = 'baseColor'
+            console.log( this.aaclass)
+            this.companyStatus='正常'
+          }else if(res.data.status == 2){
+            this.aaclass = 'baseColor'
+            this.companyStatus='离线'
+          }else if(res.data.status == 3){
+            this.aaclass = 'red01'
+            this.companyStatus='故障'
+          }else if(res.data.status == 4){
+            this.aaclass = 'red01'
+            this.companyStatus='报警'
+          }
+          this.polluteList[0].status = this.companyStatus;
           this.facilityInfo = { id,product, city_id,name, version,facility_no,imei,start_time,images,remark}
         });
       },
