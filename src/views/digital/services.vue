@@ -167,6 +167,59 @@
       </div>
 
     </div>
+    <div class="right_content clr_white base_bg_right" v-if="activeIndex == 3">
+      <p class="f20 bold txt_linear">钢瓶状态</p>
+      <div class="weui-cell">
+        <div class="weui-cell__hd" style="width: 40%">
+          <PieChartTwoHover :chartData="PieDataGas" :PieChartLegend="PieChartLegend" height="10vh" divwidth="10vh"></PieChartTwoHover>
+        </div>
+        <div class="weui-cell__bd bold">
+          <p class="f16">当前亮灯情况</p>
+          <p class="mt_10">
+            亮灯数<span class="clr_blue04 txt_shadow m_r30"> {{lightNum.num}}</span>
+            总灯数<span class="clr_blue04 txt_shadow"> {{lightNum.count}}</span>
+          </p>
+        </div>
+      </div>
+      <div class="left_bottom mt_20">
+        <p class="f20 bold txt_linear">钢品充装</p>
+        <ul class="flex table_ul text-center">
+          <li style="width: 50px;">充装站</li>
+          <li class="flex-item">钢瓶编码</li>
+          <li class="flex-item">芯片编码</li>
+          <li style="width: 80px;">充装时间</li>
+        </ul>
+        <vueSeamlessScroll :data="listOne" class="seamless-warp text-center" :class-option="classOption">
+          <ul class="flex table_ul" v-for="(item,index) in listOne" :key="item.id">
+            <li style="width: 50px;">{{index+1}}</li>
+            <li class="flex-item ellipsisOne">{{item.one}}</li>
+            <li class="flex-item ellipsisOne">{{item.two}}</li>
+            <li style="width: 80px;" class="ellipsisOne">{{item.three}}</li>
+          </ul>
+          <div style="margin-bottom: 100px;"></div>
+        </vueSeamlessScroll>
+      </div>
+      <div class="left_bottom mt_20">
+        <p class="f20 bold txt_linear">钢品签收</p>
+        <ul class="flex table_ul text-center">
+          <li style="width: 50px;">订单号</li>
+          <li class="flex-item">签收时间</li>
+          <li class="flex-item">客户名称</li>
+          <li class="flex-item">客户类型</li>
+          <li style="width: 80px;">商品总数</li>
+        </ul>
+        <vueSeamlessScroll :data="listTwo" class="seamless-warp text-center" :class-option="classTwoOption">
+          <ul class="flex table_ul" v-for="(item,index) in listTwo" :key="item.id">
+            <li style="width: 50px;">{{index+1}}</li>
+            <li class="flex-item ellipsisOne">{{item.one}}</li>
+            <li class="flex-item ellipsisOne">{{item.two}}</li>
+            <li class="flex-item ellipsisOne">{{item.two}}</li>
+            <li style="width: 80px;" class="ellipsisOne">{{item.three}}</li>
+          </ul>
+          <div style="margin-bottom: 100px;"></div>
+        </vueSeamlessScroll>
+      </div>
+    </div>
 <!--    <div class="top_div flex clr_white text-center f16" v-if="activeIndex == 2">-->
 <!--      <div class="flex f16 bold mr_20 border shadow" style="width: 300px;">-->
 <!--        <div class="flex-item txt_linear">控制柜</div>-->
@@ -198,7 +251,7 @@
 <!--        </div>-->
 <!--      </div>-->
 <!--    </div>-->
-        <div class="top_div flex clr_white text-center f16" v-if="activeIndex == 0">
+    <div class="top_div flex clr_white text-center f16" v-if="activeIndex == 0">
           <div class="flex f20 bold mr_20 border shadow" @click="handlePointType(1)">
             <div class="baseColor">
               泊位概况
@@ -279,6 +332,38 @@
         <div class="">
           总数
           <span class="txt_linear f22">{{lightData.lightCount}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 3">
+      <div class="flex f20 bold mr_20 border shadow" @click="handleTypeLight(2)">
+        <div class="baseColor">
+          钢瓶概览
+        </div>
+        <div class="">
+          钢瓶总数
+          <span class="txt_linear f22">{{lightData.cabinetCount}}</span>
+        </div>
+        <div class="">
+          客户占用数
+          <span class="txt_linear f22">{{lightData.cabinetTrouble}}</span>
+        </div>
+        <div class="">
+          今日充装数
+          <span class="txt_linear f22">{{lightData.cabinetTrouble}}</span>
+        </div>
+        <div class="">
+          今日签收数
+          <span class="txt_linear f22">{{lightData.cabinetTrouble}}</span>
+        </div>
+      </div>
+      <div class="flex f20 bold mr_20 border shadow" @click="handleTypeLight(1)">
+        <div class="baseColor">
+          视频
+        </div>
+        <div class="">
+          普通视频
+          <span class="txt_linear f22">{{carData.commonVideo_num}}</span>
         </div>
       </div>
     </div>
@@ -443,9 +528,11 @@
   import point15 from '@/assets/image/point67.png' //
   import point16 from '@/assets/image/point68.png' //
   import toolTipBg from '@/assets/image/digital-bg.png' // 引入刚才的map.js 注意路径
+  import vueSeamlessScroll from 'vue-seamless-scroll'
   import videoView from "./videoView";
   import {getAllVideoPoint, getNowurl, pointList} from '@/api/system'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
+  import PieChartTwoHover from '@/components/Charts/PieChartTwoHover'
   import {getLampPostList,getcontrolcabinetlist,getevaluate,parkList,getAllPark,getShareCar} from '@/api/digitalServices'
   import {generalIndex} from "@/api/overView";
   import global from "@/utils/common";
@@ -453,7 +540,7 @@
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,videoView},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,PieChartTwoHover,videoView,vueSeamlessScroll,},
     data() {
       return {
         showThreeType:0,
@@ -1078,6 +1165,159 @@
         playVideoUri:'',
         player: null,
         offectNum:1,
+        listOne:[{
+          one:'11',
+          two:'22',
+          three:'33'
+        }],
+        listTwo:[{
+          one:'11',
+          two:'22',
+          three:'33'
+        }],
+        PieDataGas:{
+          graphic: { // 这个属性可以在饼图内部填充图片,文字等
+            elements: [{
+              type: 'image',//需要填充图片,配置image,如果不需要图片可以配置其他的, text, circle, sector, ring, polygon, polyline, rect, line, bezierCurve, arc, group,
+              style: {
+                image: point01, //这里添加图片地址
+                width: 30,
+                height: 51
+              },
+              left: 'center',//
+              top: 'center' //配置图片居中
+            }]
+          },
+          tooltip: {
+            show: true,
+          },
+          title: [
+            {
+              show: false,
+              text: '哈哈哈好22',
+              left: '-1%',
+              textStyle: {
+                fontSize: 18,
+                fontFamily: "PingFang SC",
+                fontWeight: 500,
+                color: "#feffff",
+                lineHeight: 19,
+              },
+            },
+            {
+              show: false,
+              text: '哈哈哈好',
+              right: 0,
+              textStyle: {
+                fontSize: 12,
+                fontFamily: "PingFang SC",
+                left: 300,
+                fontWeight: 400,
+                color: "#FEFFFF",
+                lineHeight: 19,
+                opacity: 0.5,
+              },
+            },
+          ],
+          color: ['#EB4B4B', '#fff'],
+          series: [{
+            name:'一一',
+            center:['50%','50%'],
+            type:'pie',
+            radius : [45, 43],
+            label:{
+              show:false,
+              position:'center'
+            },
+            data:[
+              {
+                value:20,
+                itemStyle:{
+                  normal:{
+                    // color:'rgb(17,122,252)'
+                    color: new echarts.graphic.LinearGradient(
+                      0, 0, 0, 1,
+                      [
+                        {offset: 0, color: 'rgb(22,109,222)'},
+                        {offset: 1, color: 'rgb(21,202,243)'}
+                      ]
+                    )
+                  }
+                }
+              }, {
+                value:10,
+                itemStyle:{
+                  normal:{
+                    color: "rgba(255,255,255,0.1)",
+                  }
+                }
+              }
+            ]},{
+            name:'二二',
+            center:['50%','50%'],
+            type:'pie',
+            radius : [39, 37],
+            label:{
+              show:false,
+              position:'center'
+            },
+            data:[
+              {
+                value:80,
+                itemStyle:{
+                  normal:{
+                    // color:'green'
+                    color: new echarts.graphic.LinearGradient(
+                      0, 0, 0, 1,
+                      [
+                        {offset: 0, color: 'rgb(245,219,41)'},
+                        {offset: 1, color: 'rgb(240,57,1)'}
+                      ]
+                    )
+                  }
+                }
+              }, {
+                value:10,
+                itemStyle:{
+                  normal:{
+                    color: "rgba(255,255,255,0.1)",
+                  }
+                }
+              }]
+          },{
+            name:'三三',
+            center:['50%','50%'],
+            type:'pie',
+            radius : [34, 32],
+            label:{
+              show:false,
+              position:'center'
+            },
+            data:[
+              {
+                value:20,
+                itemStyle:{
+                  normal:{
+                    // color:'green'
+                    color: new echarts.graphic.LinearGradient(
+                      0, 0, 0, 1,
+                      [
+                        {offset: 0, color: 'rgb(195,125,229)'},
+                        {offset: 1, color: 'rgb(218,121,227)'}
+                      ]
+                    )
+                  }
+                }
+              }, {
+                value:10,
+                itemStyle:{
+                  normal:{
+                    color: "rgba(255,255,255,0.1)",
+                  }
+                }
+              }]
+          }]
+        },
       }
     },
 
@@ -1085,6 +1325,30 @@
       ...mapState({
         roles: state => state.user.roles,
       }),
+      classOption () {
+        return {
+          step: 0.2, // 数值越大速度滚动越快
+          limitMoveNum: this.listOne.length, // 开始无缝滚动的数据量 this.dataList.length
+          hoverStop: true, // 是否开启鼠标悬停stop
+          direction: 1, // 0向下 1向上 2向左 3向右
+          openWatch: true, // 开启数据实时监控刷新dom
+          singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+          singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+          waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
+        }
+      },
+      classTwoOption () {
+        return {
+          step: 0.2, // 数值越大速度滚动越快
+          limitMoveNum: this.listTwo.length, // 开始无缝滚动的数据量 this.dataList.length
+          hoverStop: true, // 是否开启鼠标悬停stop
+          direction: 1, // 0向下 1向上 2向左 3向右
+          openWatch: true, // 开启数据实时监控刷新dom
+          singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+          singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+          waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
+        }
+      }
     },
     mounted() {
       // 挂载完成后渲染地图
@@ -1880,6 +2144,9 @@
   }
 </script>
 <style lang="scss" scoped>
+  .seamless-warp{
+    height: 150px;
+  }
   /deep/.tdt-infowindow-content-wrapper{
     width: auto;
   }

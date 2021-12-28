@@ -114,8 +114,9 @@ export default {
       // this.tootipTimer = 0;
       // this.tootipTimer = autoHover(this.chart, this.chartData, this.chartData.series[0].data.length, 1000);
     },
-    setOptions({title,calculable,tooltip,color,polar,angleAxis,legend,radiusAxis,series } = {}) {
+    setOptions({title,calculable,tooltip,color,polar,angleAxis,legend,radiusAxis,series,graphic } = {}) {
       this.chart.setOption({
+        graphic:graphic,
         calculable:calculable,
         color:color,
         title: title,
