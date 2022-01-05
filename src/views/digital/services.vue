@@ -169,38 +169,43 @@
     </div>
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 3">
       <p class="f20 bold txt_linear">钢瓶状态</p>
-      <div class="weui-cell">
-        <div class="weui-cell__hd" style="width: 40%">
-          <PieChartTwoHover :chartData="PieDataGas" :PieChartLegend="PieChartLegend" height="10vh" divwidth="10vh"></PieChartTwoHover>
-        </div>
-        <div class="weui-cell__bd bold">
-          <p class="f16">当前亮灯情况</p>
-          <p class="mt_10">
-            亮灯数<span class="clr_blue04 txt_shadow m_r30"> {{lightNum.num}}</span>
-            总灯数<span class="clr_blue04 txt_shadow"> {{lightNum.count}}</span>
-          </p>
-        </div>
-      </div>
+<!--      <div class="weui-cell">-->
+<!--        <div class="weui-cell__hd" style="width: 40%">-->
+<!--          <PieChartLinkage :chartData="PieDataGas" :PieChartLegend="PieChartLegend" height="10vh" divwidth="10vh"></PieChartLinkage>-->
+<!--        </div>-->
+<!--        <div class="weui-cell__bd">-->
+<!--          <vueSeamlessScroll :data="PieDataGasList" class="seamless-warp text-center" :class-option="classThreeOption">-->
+<!--            <ul class="flex table_ul" v-for="(item,index) in PieDataGasList" :key="item.id">-->
+<!--              <li style="width: 50px;">{{index+1}}</li>-->
+<!--              <li class="flex-item ellipsisOne">{{item.one}}</li>-->
+<!--              <li class="flex-item ellipsisOne">{{item.two}}</li>-->
+<!--              <li style="width: 80px;" class="ellipsisOne">{{item.three}}</li>-->
+<!--            </ul>-->
+<!--            <div style="margin-bottom: 50px;"></div>-->
+<!--          </vueSeamlessScroll>-->
+<!--        </div>-->
+<!--      </div>-->
+      <PieChartLinkage :chartData="PieDataGas" :PieChartLegend="PieChartLegend" height="10vh" divwidth="10vh" :PieDataGasList="PieDataGasList"></PieChartLinkage>
       <div class="left_bottom mt_20">
-        <p class="f20 bold txt_linear">钢品充装</p>
+        <p class="f20 bold txt_linear">钢瓶充装</p>
         <ul class="flex table_ul text-center">
-          <li style="width: 50px;">充装站</li>
+          <li style="width: 100px;" class="ellipsisOne">充装站</li>
           <li class="flex-item">钢瓶编码</li>
           <li class="flex-item">芯片编码</li>
-          <li style="width: 80px;">充装时间</li>
+          <li style="width: 120px;" class="ellipsisOne">充装时间</li>
         </ul>
         <vueSeamlessScroll :data="listOne" class="seamless-warp text-center" :class-option="classOption">
           <ul class="flex table_ul" v-for="(item,index) in listOne" :key="item.id">
-            <li style="width: 50px;">{{index+1}}</li>
-            <li class="flex-item ellipsisOne">{{item.one}}</li>
-            <li class="flex-item ellipsisOne">{{item.two}}</li>
-            <li style="width: 80px;" class="ellipsisOne">{{item.three}}</li>
+            <li style="width: 100px;" class="ellipsisOne">{{item.point}}</li>
+            <li class="flex-item ellipsisOne">{{item.code}}</li>
+            <li class="flex-item ellipsisOne">{{item.gas_code}}</li>
+            <li style="width: 120px;" class="ellipsisOne">{{$moment(Number(item.fill_date)).format('YYYY-MM-DD HH:mm:ss')}}</li>
           </ul>
           <div style="margin-bottom: 100px;"></div>
         </vueSeamlessScroll>
       </div>
       <div class="left_bottom mt_20">
-        <p class="f20 bold txt_linear">钢品签收</p>
+        <p class="f20 bold txt_linear">钢瓶签收</p>
         <ul class="flex table_ul text-center">
           <li style="width: 50px;">订单号</li>
           <li class="flex-item">签收时间</li>
@@ -210,11 +215,11 @@
         </ul>
         <vueSeamlessScroll :data="listTwo" class="seamless-warp text-center" :class-option="classTwoOption">
           <ul class="flex table_ul" v-for="(item,index) in listTwo" :key="item.id">
-            <li style="width: 50px;">{{index+1}}</li>
-            <li class="flex-item ellipsisOne">{{item.one}}</li>
-            <li class="flex-item ellipsisOne">{{item.two}}</li>
-            <li class="flex-item ellipsisOne">{{item.two}}</li>
-            <li style="width: 80px;" class="ellipsisOne">{{item.three}}</li>
+            <li style="width: 50px;" class="ellipsisOne">{{item.id}}</li>
+            <li class="flex-item ellipsisOne">{{item.sign_date}}</li>
+            <li class="flex-item ellipsisOne">{{item.client_name}}</li>
+            <li class="flex-item ellipsisOne">{{item.client_type}}</li>
+            <li style="width: 80px;" class="ellipsisOne">{{item.goods_num}}</li>
           </ul>
           <div style="margin-bottom: 100px;"></div>
         </vueSeamlessScroll>
@@ -336,28 +341,28 @@
       </div>
     </div>
     <div class="top_div top_one flex clr_white text-center f16 bold" v-if="activeIndex == 3">
-      <div class="flex f20 bold mr_20 border shadow" @click="handleTypeLight(2)">
+      <div class="flex f20 bold mr_20 border shadow" @click="handleTypeGas(0)">
         <div class="baseColor">
           钢瓶概览
         </div>
         <div class="">
           钢瓶总数
-          <span class="txt_linear f22">{{lightData.cabinetCount}}</span>
+          <span class="txt_linear f22">{{gasData.file_num}}</span>
         </div>
         <div class="">
           客户占用数
-          <span class="txt_linear f22">{{lightData.cabinetTrouble}}</span>
+          <span class="txt_linear f22">{{gasData.client_num}}</span>
         </div>
         <div class="">
           今日充装数
-          <span class="txt_linear f22">{{lightData.cabinetTrouble}}</span>
+          <span class="txt_linear f22">{{gasData.record_num}}</span>
         </div>
         <div class="">
           今日签收数
-          <span class="txt_linear f22">{{lightData.cabinetTrouble}}</span>
+          <span class="txt_linear f22">{{gasData.sign_num}}</span>
         </div>
       </div>
-      <div class="flex f20 bold mr_20 border shadow" @click="handleTypeLight(1)">
+      <div class="flex f20 bold mr_20 border shadow" @click="handleTypeGas(1)">
         <div class="baseColor">
           视频
         </div>
@@ -489,6 +494,23 @@
         <div :class="['weui-cell__bd f12',showThreeType==3?'clr_white':'']">控制柜故障</div>
       </div>
     </div>
+
+    <div class="center_content clr_white text-center" v-if="activeIndex == 3">
+<!--      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showFourType==0?'active':'']" @click="handleGasPointType(0)">-->
+<!--        <div class="weui-cell__hd flex">-->
+<!--          <img v-if="showFourType!=0" src="./../../assets/image/point44.png"/>-->
+<!--          <img v-else src="./../../assets/image/point44_active.png"/>-->
+<!--        </div>-->
+<!--        <div :class="['weui-cell__bd',showFourType==0?'clr_white':'']">全部设备</div>-->
+<!--      </div>-->
+      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showFourType==1?'active':'']" @click="handleGasPointType(1)">
+        <div class="weui-cell__hd flex">
+          <img v-if="showFourType!=1" src="./../../assets/image/point72.png"/>
+          <img v-else src="./../../assets/image/point72_active.png"/>
+        </div>
+        <div :class="['weui-cell__bd',showFourType==1?'clr_white':'']">客户信息</div>
+      </div>
+    </div>
 <!--        <videoView :showDialog.sync="showVideoDialog" :caseData={}></videoView>-->
     <div v-show="showVideoDialog" class="dashboard-video-player-box">
       <div id="dashboardVideoPlayer" class="dashboard-video-player">
@@ -508,6 +530,7 @@
   import BarChartTwo from '@/components/Charts/BarChartTwo'
   import BarChartThree from '@/components/Charts/BarChartThree'
   import BarChartFour from '@/components/Charts/BarChartFour'
+  import PieChartLinkage from '@/components/Charts/PieChartLinkage'
   import waves from '@/directive/waves'
   import { mapState } from 'vuex'
   import map from '@/components/Map/map.js' // 引入刚才的map.js 注意路径
@@ -527,22 +550,26 @@
   import point14 from '@/assets/image/point66.png' //
   import point15 from '@/assets/image/point67.png' //
   import point16 from '@/assets/image/point68.png' //
+  import point17 from '@/assets/image/point72.png' //客户信息
+  import gas_img from '@/assets/image/gas01.png' //燃气图表背景图片
   import toolTipBg from '@/assets/image/digital-bg.png' // 引入刚才的map.js 注意路径
   import vueSeamlessScroll from 'vue-seamless-scroll'
   import videoView from "./videoView";
   import {getAllVideoPoint, getNowurl, pointList} from '@/api/system'
   import PieChartTwo from '@/components/Charts/PieChartTwo'
   import PieChartTwoHover from '@/components/Charts/PieChartTwoHover'
-  import {getLampPostList,getcontrolcabinetlist,getevaluate,parkList,getAllPark,getShareCar} from '@/api/digitalServices'
+  import {getLampPostList,getcontrolcabinetlist,getevaluate,parkList,getAllPark,getShareCar,dataAnalysis,fileStatus,listRecord,listSign,listAllSign,listClient} from '@/api/digitalServices'
   import {generalIndex} from "@/api/overView";
   import global from "@/utils/common";
+  let gasPieData = {};
   export default {
     name: 'parameterList',
     directives: {waves},
     mixins: [map],
-    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,PieChartTwoHover,videoView,vueSeamlessScroll,},
+    components:{RingChart,BarChartTwo,BarChartThree,BarChartFour,BarChartFive,PieChartTwo,PieChartTwoHover,videoView,vueSeamlessScroll,PieChartLinkage},
     data() {
       return {
+        showFourType:1,
         showThreeType:0,
         showTwoType:0,
         showOneType:0,
@@ -1165,24 +1192,17 @@
         playVideoUri:'',
         player: null,
         offectNum:1,
-        listOne:[{
-          one:'11',
-          two:'22',
-          three:'33'
-        }],
-        listTwo:[{
-          one:'11',
-          two:'22',
-          three:'33'
-        }],
+        gasData:{},
+        listOne:[],
+        listTwo:[],
         PieDataGas:{
           graphic: { // 这个属性可以在饼图内部填充图片,文字等
             elements: [{
               type: 'image',//需要填充图片,配置image,如果不需要图片可以配置其他的, text, circle, sector, ring, polygon, polyline, rect, line, bezierCurve, arc, group,
               style: {
-                image: point01, //这里添加图片地址
-                width: 30,
-                height: 51
+                image: gas_img, //这里添加图片地址
+                width: 26,
+                height: 32
               },
               left: 'center',//
               top: 'center' //配置图片居中
@@ -1190,6 +1210,26 @@
           },
           tooltip: {
             show: true,
+            // formatter: '{b}: {c}',
+            formatter: function(params) {
+              let i = params.seriesIndex;
+              let color = ['rgba(23,149,231,0.6)','rgba(244,181,32,0.6)','rgba(216,122,228,0.6)'];
+              let str = '';
+              if(i == 1 && params.dataIndex == 1){
+                 str = '<div class="tooltip" style="padding:5px 10px;background: '+ color[i] +'">\
+                 <span class="tooltip-title">钢瓶需报废数：</span> <sapn class="tooltip-val"> ' + gasPieData.scrap_count + ' </sapn>\
+               </div>';
+              }else if(i == 2 && params.dataIndex == 1){
+                 str = '<div class="tooltip" style="padding:5px 10px;background: '+ color[i] +'">\
+                 <span class="tooltip-title">钢瓶需检验数</span> <sapn class="tooltip-val"> ' + gasPieData.status_count + ' </sapn>\
+               </div>';
+              }else{
+                str = '<div class="tooltip" style="padding:5px 10px;background: '+ color[i] +'">\
+                 <span class="tooltip-title">' + params.data.name + '：</span> <sapn class="tooltip-val"> ' + params.data.value + ' </sapn>\
+               </div>';
+              }
+              return str;
+            },
           },
           title: [
             {
@@ -1221,17 +1261,19 @@
           ],
           color: ['#EB4B4B', '#fff'],
           series: [{
-            name:'一一',
+            name:'钢瓶数',
             center:['50%','50%'],
             type:'pie',
-            radius : [45, 43],
+            radius : [45, 41],
             label:{
               show:false,
               position:'center'
             },
+            hoverAnimation:false,
             data:[
               {
-                value:20,
+                name:'全部钢瓶数',
+                value:0,
                 itemStyle:{
                   normal:{
                     // color:'rgb(17,122,252)'
@@ -1243,27 +1285,22 @@
                       ]
                     )
                   }
-                }
-              }, {
-                value:10,
-                itemStyle:{
-                  normal:{
-                    color: "rgba(255,255,255,0.1)",
-                  }
-                }
+                },
               }
             ]},{
-            name:'二二',
+            name:'钢瓶需报废数',
             center:['50%','50%'],
             type:'pie',
-            radius : [39, 37],
+            radius : [37, 33],
             label:{
               show:false,
               position:'center'
             },
+            hoverAnimation:false,
             data:[
               {
-                value:80,
+                name:'钢瓶需报废数',
+                value:0,
                 itemStyle:{
                   normal:{
                     // color:'green'
@@ -1277,25 +1314,27 @@
                   }
                 }
               }, {
-                value:10,
+                value:0,
                 itemStyle:{
                   normal:{
-                    color: "rgba(255,255,255,0.1)",
+                    color: "rgba(255,255,255,0.2)",
                   }
                 }
               }]
           },{
-            name:'三三',
+            name:'钢瓶需检验数',
             center:['50%','50%'],
             type:'pie',
-            radius : [34, 32],
+            radius : [29, 25],
             label:{
               show:false,
               position:'center'
             },
+            hoverAnimation:false,
             data:[
               {
-                value:20,
+                name:'钢瓶需检验数',
+                value:0,
                 itemStyle:{
                   normal:{
                     // color:'green'
@@ -1309,15 +1348,19 @@
                   }
                 }
               }, {
-                value:10,
+                value:0,
                 itemStyle:{
                   normal:{
-                    color: "rgba(255,255,255,0.1)",
+                    color: "rgba(255,255,255,0.2)",
                   }
                 }
               }]
           }]
         },
+        PieDataGasList:[],
+        gasList:[],
+        gasClientList:[],
+        gasPieData:{},
       }
     },
 
@@ -1341,6 +1384,18 @@
         return {
           step: 0.2, // 数值越大速度滚动越快
           limitMoveNum: this.listTwo.length, // 开始无缝滚动的数据量 this.dataList.length
+          hoverStop: true, // 是否开启鼠标悬停stop
+          direction: 1, // 0向下 1向上 2向左 3向右
+          openWatch: true, // 开启数据实时监控刷新dom
+          singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+          singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+          waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
+        }
+      },
+      classThreeOption () {
+        return {
+          step: 0.2, // 数值越大速度滚动越快
+          limitMoveNum: this.PieDataGasList.length, // 开始无缝滚动的数据量 this.dataList.length
           hoverStop: true, // 是否开启鼠标悬停stop
           direction: 1, // 0向下 1向上 2向左 3向右
           openWatch: true, // 开启数据实时监控刷新dom
@@ -1580,8 +1635,70 @@
           this.getControlCabinetlist();
         }
         else if(val == 3){
-          this.mapPoint('',[],this)
+          this.getCommonVideoNum();
+          this.getGasNum();
+          // this.mapPoint('',[],this)
+          this.getGasListOne();
+          this.getGasListTwo();
+          // this.getGasAllSign();
+          this.getGasClientList();
+          this.getGasStatus();
         }
+      },
+      handleGasPointType(type){
+        this.showFourType = type;
+        if(type == 0){
+          this.getGasAllSign();
+        }else{
+          this.getGasClientList();
+        }
+      },
+      //燃气全部信息点位
+      getGasAllSign(){
+        listAllSign().then((res) => {
+          this.map.clearOverLays();
+          this.gasList = res.data;
+          this.mapPoint('gas',this.gasList,this)
+        });
+      },
+      //燃气客户信息点位
+      getGasClientList(){
+        listClient().then((res) => {
+          this.map.clearOverLays();
+          this.gasClientList = res.data;
+          this.mapPoint('gasClient',this.gasClientList,this)
+        });
+      },
+      //燃气数量
+      getGasNum(){
+        dataAnalysis().then((res) => {
+          const {client_num,file_num,record_num,sign_num} = res.data
+          this.gasData = {client_num,file_num,record_num,sign_num};
+        });
+      },
+      //燃气钢瓶状态
+      getGasStatus(){
+        fileStatus().then((res) => {
+          this.PieDataGas.series[0].data[0].value = res.data.count;//全部
+          this.PieDataGas.series[1].data[0].value = res.data.scrap_count;//需要报废
+          this.PieDataGas.series[2].data[0].value = res.data.status_count;//需要检验
+          this.PieDataGas.series[1].data[1].value = Number(res.data.count) - Number(res.data.scrap_count);//不需要报废
+          this.PieDataGas.series[2].data[1].value = Number(res.data.count) - Number(res.data.status_count);//不需要检验
+          this.PieDataGasList = [res.data.scrap_list,res.data.list];
+          gasPieData = {count:res.data.count,scrap_count:res.data.scrap_count,status_count:res.data.status_count,}
+        });
+      },
+      //燃气重装列表
+      getGasListOne(){
+        listRecord().then((res) => {
+          this.listOne = res.data.data;
+        });
+      },
+      //燃气签收列表
+      getGasListTwo(){
+        listSign().then((res) => {
+          this.listTwo = res.data.data;
+        });
       },
       //运维人员点位
       getUser(){
@@ -1757,6 +1874,11 @@
           iconSize: new T.Point(30, 51),
           // iconAnchor: new T.Point(34, 59)
         });
+        let icon17 = new T.Icon({
+          iconUrl: point17,
+          iconSize: new T.Point(30, 51),
+          // iconAnchor: new T.Point(34, 59)
+        });
         let markers = []
         if(type == 'control'){
           for (let i = 0; i < list.length; i++) {
@@ -1830,6 +1952,18 @@
               }
             }
 
+          }
+        }else if(type == 'gas'){
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            let point = new T.LngLat(list[i].log, list[i].lat);
+            markers[i] = drawTMaker(point, icon17, this, list[i]);
+          }
+        }else if(type == 'gasClient'){
+          for (let i = 0; i < list.length; i++) {
+            // var marker
+            let point = new T.LngLat(list[i].log, list[i].lat);
+            markers[i] = drawTMaker(point, icon17, this, list[i]);
           }
         }else{
 
@@ -1982,6 +2116,47 @@
                   '</tr>'+
                   '</table>'+
                   '</div>';
+              }else if(type == 'gas' || type == 'gasClient'){
+                // let bikeStatus;
+                // if(txt.status == 1){
+                //   bikeStatus = '异常'
+                // }else if(txt.status == 2){
+                //   bikeStatus = '警报'
+                // }else if(txt.status == 3){
+                //   bikeStatus = '正常'
+                // }
+                sContent =
+                  '<div class="point_info">' +
+                  '<table class="f14 point_detail_table" border="0" cellspacing="0" cellpadding="0">' +
+                  '<tr>' +
+                  '<td class="txt_6">客户编号</td><td>' + txt.client_no + '</td>' +
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>客户名称</td><td>' + txt.client_name + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>状态</td><td>' + txt.status + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>电话</td><td>' + txt.client_mobile + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>使用瓶数</td><td>' + txt.use_bottle + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>占用瓶数</td><td>' + txt.occupy_bottle + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>自提客户</td><td>' + txt.send_type + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>客户类型</td><td>' + txt.client_type + '</td>'+
+                  '</tr>'+
+                  '<tr>' +
+                  '<td>所属机构</td><td>' + txt.organization + '</td>'+
+                  '</tr>'+
+                  '</table>'+
+                  '</div>';
               }else{
                 // '<p class="f14 time">监控名称：' + txt.name + '</p>' +
                 // '<p class="f14 time">状态：' + status + '</p>' +
@@ -2007,6 +2182,14 @@
             return marker;
           }
 
+      },
+      handleTypeGas(val){
+        if(val == 0){
+          this.map.clearOverLays();
+          this.getGasClientList();
+        }else{
+          this.getCommonVideoList();
+        }
       },
       handleTypeLight(val){
         this.map.clearOverLays();

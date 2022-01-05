@@ -57,3 +57,58 @@ export function getShareCar(data) {
     data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
   })
 }
+
+/* 获取燃气顶部数量
+ */
+export function dataAnalysis(data) {
+  return request({
+    url: `/api/gas/dataAnalysis`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
+/* 获取燃气钢瓶状态
+ */
+export function fileStatus(data) {
+  return request({
+    url: `/api/gas/fileStatus`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
+/* 获取燃气钢瓶充装
+ */
+export function listRecord(data) {
+  return request({
+    url: `/api/gas/listRecord`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
+/* 获取燃气钢瓶签收
+ */
+export function listSign(data) {
+  return request({
+    url: `/api/gas/listSign`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
+/* 获取全部信息点位列表
+ */
+export function listAllSign(data) {
+  return request({
+    url: `/api/gas/listAllSign`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
+/* 获取客户信息点位列表
+ */
+export function listClient(data) {
+  return request({
+    url: `/api/gas/listClient`,
+    method: 'post',
+    data: Qs.stringify(data,{ arrayFormat: 'indices', allowDots: true })
+  })
+}
