@@ -1361,6 +1361,7 @@
         gasList:[],
         gasClientList:[],
         gasPieData:{},
+        gasClientListTotal:0,
       }
     },
 
@@ -1392,18 +1393,18 @@
           waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
         }
       },
-      classThreeOption () {
-        return {
-          step: 0.2, // 数值越大速度滚动越快
-          limitMoveNum: this.PieDataGasList.length, // 开始无缝滚动的数据量 this.dataList.length
-          hoverStop: true, // 是否开启鼠标悬停stop
-          direction: 1, // 0向下 1向上 2向左 3向右
-          openWatch: true, // 开启数据实时监控刷新dom
-          singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
-          singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
-          waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
-        }
-      }
+      // classThreeOption () {
+      //   return {
+      //     step: 0.2, // 数值越大速度滚动越快
+      //     limitMoveNum: this.PieDataGasList.length, // 开始无缝滚动的数据量 this.dataList.length
+      //     hoverStop: true, // 是否开启鼠标悬停stop
+      //     direction: 1, // 0向下 1向上 2向左 3向右
+      //     openWatch: true, // 开启数据实时监控刷新dom
+      //     singleHeight: 0, // 单步运动停止的高度(默认值0是无缝不停止的滚动) direction => 0/1
+      //     singleWidth: 0, // 单步运动停止的宽度(默认值0是无缝不停止的滚动) direction => 2/3
+      //     waitTime: 1000 // 单步运动停止的时间(默认值1000ms)
+      //   }
+      // }
     },
     mounted() {
       // 挂载完成后渲染地图
@@ -1422,7 +1423,8 @@
       this.getAllPark();
       window.handleVideo = this.handleVideo;
       window.closeVideoDialog = this.handleVideoClose;
-      this.initPlayer()
+      this.initPlayer();
+      this.getGasClientListTotal();
     },
     beforeDestroy() {
       clearInterval(this.timer);
@@ -1653,7 +1655,7 @@
           this.getGasClientList();
         }
       },
-      //燃气全部信息点位
+      //燃气全部信息点位--废弃
       getGasAllSign(){
         listAllSign().then((res) => {
           this.map.clearOverLays();
@@ -1661,13 +1663,33 @@
           this.mapPoint('gas',this.gasList,this)
         });
       },
-      //燃气客户信息点位
-      getGasClientList(){
+      //燃气客户信息点位总数
+      getGasClientListTotal() {
         listClient().then((res) => {
-          this.map.clearOverLays();
-          this.gasClientList = res.data;
-          this.mapPoint('gasClient',this.gasClientList,this)
+          this.gasClientListTotal = res.data.total;
         });
+      },
+      //燃气客户信息点位
+      async getGasClientList(){
+        // listClient().then((res) => {
+        //   this.map.clearOverLays();
+        //   this.gasClientList = res.data;
+        //   this.mapPoint('gasClient',this.gasClientList,this)
+        // });
+        this.map.clearOverLays();
+        this.gasClientList = [];
+        let that = this
+        for(let i = 1; i<=Math.ceil(Number(that.gasClientListTotal)/Number(200));i++){
+          await listClient({page:i,pageSize:200}).then((res) => {
+            that.gasClientList = that.gasClientList.concat(res.data.data);
+            if(i == 1){
+              that.gasClientListTotal = res.data.total;
+            }
+            if(i == Math.ceil(Number(that.gasClientListTotal)/Number(200))){
+              that.mapPoint('gasClient',that.gasClientList,that)
+            }
+          });
+        }
       },
       //燃气数量
       getGasNum(){
@@ -1684,9 +1706,44 @@
           this.PieDataGas.series[2].data[0].value = res.data.status_count;//需要检验
           this.PieDataGas.series[1].data[1].value = Number(res.data.count) - Number(res.data.scrap_count);//不需要报废
           this.PieDataGas.series[2].data[1].value = Number(res.data.count) - Number(res.data.status_count);//不需要检验
-          this.PieDataGasList = [res.data.scrap_list,res.data.list];
+          // this.PieDataGasList = [res.data.scrap_list,res.data.list];
           gasPieData = {count:res.data.count,scrap_count:res.data.scrap_count,status_count:res.data.status_count,}
+          this.getGasStatusList();
         });
+      },
+      async getGasStatusList(){
+        this.PieDataGasList = [[],[]];
+        let listOne = [];
+        let listTwo = [];
+        let that = this
+        if(Number(this.PieDataGas.series[1].data[0].value)>Number(this.PieDataGas.series[2].data[0].value)){
+          for(let i = 1; i<=Math.ceil(Number(this.PieDataGas.series[1].data[0].value)/Number(200));i++){
+            await fileStatus({page:i,pageSize:200}).then((res) => {
+              listOne = listOne.concat(res.data.scrap_list);
+              listTwo = listTwo.concat(res.data.list);
+              if(i == Math.ceil(Number(that.PieDataGas.series[1].data[0].value)/Number(200))){
+                that.PieDataGasList = [listOne,listTwo];
+              }
+            });
+          }
+        } else{
+          for(let i = 1; i<=Math.ceil(Number(this.PieDataGas.series[2].data[0].value)/Number(200));i++){
+            await fileStatus({page:i,pageSize:200}).then((res) => {
+              listOne = listOne.concat(res.data.scrap_list);
+              listTwo = listTwo.concat(res.data.list);
+              if(i == Math.ceil(Number(that.PieDataGas.series[2].data[0].value)/Number(200))){
+                that.PieDataGasList = [listOne,listTwo];
+              }
+            });
+          }
+        }
+
+
+        // fileStatus().then((res) => {
+        //
+        //   this.PieDataGasList = [res.data.scrap_list,res.data.list];
+        //
+        // });
       },
       //燃气重装列表
       getGasListOne(){

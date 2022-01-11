@@ -20,7 +20,7 @@
       </div>
       <div class="weui-cell__bd">
         <vueSeamlessScroll :data="PieDataGasListOne" class="seamless-warp text-center" :class-option="classThreeOption" v-show="pieIndex == 0">
-          <div style="margin-bottom: 50px;"></div>
+          <div style="margin-bottom: 150px;"></div>
         </vueSeamlessScroll>
         <vueSeamlessScroll :data="PieDataGasListTwo" class="seamless-warp text-center" :class-option="classTwoOption" v-show="pieIndex == 1">
           <div class="weui-cell gas_scroll" v-for="(item,index) in PieDataGasListTwo" :key="item.id">
@@ -32,7 +32,7 @@
               <p class="orange">{{item.scrap_date}} 报废</p>
             </div>
           </div>
-          <div style="margin-bottom: 50px;"></div>
+          <div style="margin-bottom: 150px;"></div>
         </vueSeamlessScroll>
         <vueSeamlessScroll :data="PieDataGasListThree" class="seamless-warp text-center" :class-option="classThreeOption" v-show="pieIndex == 2">
           <div class="weui-cell gas_scroll" v-for="(item,index) in PieDataGasListThree" :key="item.id">
@@ -44,7 +44,7 @@
               <p class="purple">{{item.next_check_date}} 检验</p>
             </div>
           </div>
-          <div style="margin-bottom: 50px;"></div>
+          <div style="margin-bottom: 150px;"></div>
         </vueSeamlessScroll>
 
       </div>
@@ -118,39 +118,45 @@ export default {
         this.setOptions(val)
       }
     },
-    PieChartLegend: {
-      deep: true,
-      handler(val) {
-        if(val.length >0){
-          this.setOptions(val)
-        }
-
-      }
-    },
-    height: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val)
-      }
-    },
-    divWidth: {
-      deep: true,
-      handler(val) {
-        this.setOptions(val)
-      }
-    },
+    // PieChartLegend: {
+    //   deep: true,
+    //   handler(val) {
+    //     if(val.length >0){
+    //       this.setOptions(val)
+    //     }
+    //
+    //   }
+    // },
+    // height: {
+    //   deep: true,
+    //   handler(val) {
+    //     this.setOptions(val)
+    //   }
+    // },
+    // divWidth: {
+    //   deep: true,
+    //   handler(val) {
+    //     this.setOptions(val)
+    //   }
+    // },
     PieDataGasList: {
       deep: true,
       handler(val) {
-        this.setOptions(val)
+        console.log('jjjjjjj')
+        console.log(val)
+        this.setScroll(val)
       }
     },
   },
   computed: {
     classTwoOption () {
+      console.log('第二个')
+      console.log(this.PieDataGasList)
+      console.log(this.PieDataGasListTwo.length)
       return {
         step: 0.2, // 数值越大速度滚动越快
-        limitMoveNum: this.PieDataGasListTwo.length, // 开始无缝滚动的数据量 this.dataList.length
+        limitMoveNum: 1, // 开始无缝滚动的数据量 this.dataList.length
+        // limitMoveNum: this.PieDataGasListTwo.length, // 开始无缝滚动的数据量 this.dataList.length
         hoverStop: true, // 是否开启鼠标悬停stop
         direction: 1, // 0向下 1向上 2向左 3向右
         openWatch: true, // 开启数据实时监控刷新dom
@@ -160,9 +166,12 @@ export default {
       }
     },
     classThreeOption () {
+      console.log('第三个')
+      console.log(this.PieDataGasListThree.length)
       return {
         step: 0.2, // 数值越大速度滚动越快
-        limitMoveNum: this.PieDataGasListThree.length, // 开始无缝滚动的数据量 this.dataList.length
+        limitMoveNum: 1, // 开始无缝滚动的数据量 this.dataList.length
+        // limitMoveNum: this.PieDataGasListThree.length, // 开始无缝滚动的数据量 this.dataList.length
         hoverStop: true, // 是否开启鼠标悬停stop
         direction: 1, // 0向下 1向上 2向左 3向右
         openWatch: true, // 开启数据实时监控刷新dom
@@ -240,19 +249,22 @@ export default {
         radiusAxis:radiusAxis,
         series: series
       })
-      this.PieDataGasListTwo = this.PieDataGasList[0];
-      this.PieDataGasListThree = this.PieDataGasList[1];
     },
-    editLegend(){
-
-      var selectOption = {};
-      var options = this.chartData;
-      this.$refs.pieCheckbox.forEach(function (c) {
-        c.checked?selectOption[c.value]=true:selectOption[c.value]=false;
-      });
-      options.legend.selected = selectOption;
-      this.setOptions(options);
-    }
+    setScroll(val) {
+      console.log('获取之后')
+      console.log(val)
+      this.PieDataGasListTwo = val[0];
+      this.PieDataGasListThree = val[1];
+    },
+    // editLegend(){
+    //   let selectOption = {};
+    //   let options = this.chartData;
+    //   this.$refs.pieCheckbox.forEach(function (c) {
+    //     c.checked?selectOption[c.value]=true:selectOption[c.value]=false;
+    //   });
+    //   options.legend.selected = selectOption;
+    //   this.setOptions(options);
+    // }
   }
 }
 </script>
