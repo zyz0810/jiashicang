@@ -54,7 +54,35 @@
 
     </div>
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 2">
-      <p class="f20 bold txt_linear">工地五色治理</p>
+
+      <div class="">
+        <p class="f20 bold txt_linear">执法一体化</p>
+        <div class="flex bg_blue01 mt_20">
+          <div class="flex-item weui-cell">
+            <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+            <div class="weui-cell__bd">
+              <p>累计检查</p>
+              <p><span class="f20">1542</span>次</p>
+            </div>
+          </div>
+          <div class="flex-item weui-cell">
+            <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+            <div class="weui-cell__bd">
+              <p>行政处罚</p>
+              <p><span class="f20">1542</span>次</p>
+            </div>
+          </div>
+          <div class="flex-item weui-cell">
+            <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+            <div class="weui-cell__bd">
+              <p>信用惩戒</p>
+              <p><span class="f20">1542</span>次</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="f20 bold txt_linear mt_20">工地五色治理</p>
       <div class="flex bold enforcement_num text-center mt_20">
         <div class="flex-item bg_blue01 weui-cell">
           <div class="weui-cell__hd ml_10"><img src="./../../assets/image/appearance_icon01.png"></div>
@@ -96,8 +124,64 @@
       </div>
       <div class="clr_white mt_20">
         <p class="f20 bold txt_linear">工地一件事</p>
-<!--        <BarChartFour :chartData="BarDataThree" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></BarChartFour>-->
-        <RingChartHover :chartData="chartDataFive" :PieChartLegend="PieChartLegend" height="300px"></RingChartHover>
+<!--        <RingChartHover :chartData="chartDataFive" :PieChartLegend="PieChartLegend" height="300px"></RingChartHover>-->
+        <div class="flex mt_20 flex_statistics">
+          <div class="flex-item">
+            <p class="txtColor">申请事项</p>
+            <ul class="circle_ul">
+              <li>累计申请 1478件</li>
+              <li>今日申请 23件</li>
+            </ul>
+<!--            <p class="circle_p">累计申请 1478件</p>-->
+<!--            <p class="circle_p">今日申请 23件</p>-->
+          </div>
+          <div class="flex-item">
+            <p class="txtColor">登记事项</p>
+            <ul class="circle_ul">
+              <li>累计登记 1478件</li>
+              <li>今日登记 23件</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="clr_white mt_20">
+        <p class="f20 bold txt_linear">社会监督</p>
+        <!--        <RingChartHover :chartData="chartDataFive" :PieChartLegend="PieChartLegend" height="300px"></RingChartHover>-->
+        <div class="border shadow mt_20">
+          <div class="flex">
+            <div class="flex-item weui-cell">
+              <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+              <div class="weui-cell__bd">
+                <p class="txtColor">社会关注度</p>
+                <p>45452人次</p>
+              </div>
+            </div>
+            <div class="flex-item weui-cell">
+              <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+              <div class="weui-cell__bd">
+                <p class="txtColor">信件投诉</p>
+                <p>1021件 已办结1016件</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex">
+            <div class="flex-item weui-cell">
+              <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+              <div class="weui-cell__bd">
+                <p class="txtColor">综合评价</p>
+                <p>45452次</p>
+              </div>
+            </div>
+            <div class="flex-item weui-cell">
+              <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+              <div class="weui-cell__bd">
+                <p class="txtColor">平安问答</p>
+                <p>21人次</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 <!--      <div class="mt_20">-->
 <!--        <p class="f20 bold txt_linear">社会监督</p>-->
@@ -178,28 +262,21 @@
           <img v-if="showGdType!=1" src="./../../assets/image/point44.png"/>
           <img v-else src="./../../assets/image/point44_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showGdType==1?'clr_white':'']">全部阶段</div>
+        <div :class="['weui-cell__bd',showGdType==1?'clr_white':'']">全部项目</div>
       </div>
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showGdType==2?'active':'']" @click="handleGdPointType(2)">
         <div class="weui-cell__hd flex">
           <img v-if="showGdType!=2" src="./../../assets/image/point53.png"/>
           <img v-else src="./../../assets/image/point53_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showGdType==2?'clr_white':'']">竣工阶段</div>
+        <div :class="['weui-cell__bd',showGdType==2?'clr_white':'']">在建房建</div>
       </div>
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showGdType==3?'active':'']" @click="handleGdPointType(3)">
         <div class="weui-cell__hd flex">
           <img v-if="showGdType!=3" src="./../../assets/image/point54.png"/>
           <img v-else src="./../../assets/image/point53_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showGdType==3?'clr_white':'']">施工阶段</div>
-      </div>
-      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showGdType==4?'active':'']" @click="handleGdPointType(4)">
-        <div class="weui-cell__hd flex">
-          <img v-if="showGdType!=4" src="./../../assets/image/point55.png"/>
-          <img v-else src="./../../assets/image/point53_active.png"/>
-        </div>
-        <div :class="['weui-cell__bd',showGdType==4?'clr_white':'']">准备阶段</div>
+        <div :class="['weui-cell__bd',showGdType==3?'clr_white':'']">在建市政</div>
       </div>
     </div>
 
@@ -259,22 +336,18 @@
           <span class="txt_linear f22">32</span>
         </div>
         <div class="">
-          准备阶段
+          在建房建项目
           <span class="txt_linear f22">12</span>
         </div>
         <div class="">
-          施工阶段
-          <span class="txt_linear f22">10</span>
-        </div>
-        <div class="">
-          竣工阶段
+          在建市政项目
           <span class="txt_linear f22">10</span>
         </div>
       </div>
       <div class="flex f20 bold border shadow" @click="getGdPoint(2)">
         <div class="baseColor">视频</div>
         <div class="">
-          普通视频
+          工地视频
           <span class="txt_linear f22">{{commonVideo_num}}</span>
         </div>
       </div>
@@ -2141,6 +2214,29 @@
 </script>
 <style lang="scss" scoped>
   @import './../../styles/variables.scss';
+  .circle_ul{
+    /*padding-left: 20px;*/
+    li{
+      list-style: disc;
+      list-style-position: inside;
+      &::marker {
+        color: #3860f4;
+      }
+      /*list-style: none;*/
+      /*&::before{*/
+      /*  content:".";*/
+      /*  color: red;*/
+      /*}*/
+    }
+  }
+  .flex_statistics{
+    line-height: 2;
+    .flex-item{
+      margin: 0 10px;
+      padding: 5px;
+      background: #000000;
+    }
+  }
   .search_result{
     position: fixed;
     left: 10vw;
