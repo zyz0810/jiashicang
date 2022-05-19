@@ -24,16 +24,16 @@
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 0">
       <p class="f20 bold txt_linear">智能识别概况（日）</p>
       <div class="text-center">
-        <!--        <ul class="bold communityNum flex mt_10" style="width: 160px;margin-left: 20px;">-->
-        <!--          <li class="flex flex-item">-->
-        <!--            <span class="f26 baseColor block">186</span>-->
-        <!--            <span class="f16 clr_white block">监控点位</span>-->
-        <!--          </li>-->
-        <!--          &lt;!&ndash;<li class="flex flex-item">&ndash;&gt;-->
-        <!--            &lt;!&ndash;<span class="f26 baseColor block">1</span>&ndash;&gt;-->
-        <!--            &lt;!&ndash;<span class="f16 clr_white block">监控路段</span>&ndash;&gt;-->
-        <!--          &lt;!&ndash;</li>&ndash;&gt;-->
-        <!--        </ul>-->
+<!--        <ul class="bold communityNum flex mt_10" style="width: 160px;margin-left: 20px;">-->
+<!--          <li class="flex flex-item">-->
+<!--            <span class="f26 baseColor block">186</span>-->
+<!--            <span class="f16 clr_white block">监控点位</span>-->
+<!--          </li>-->
+<!--          &lt;!&ndash;<li class="flex flex-item">&ndash;&gt;-->
+<!--            &lt;!&ndash;<span class="f26 baseColor block">1</span>&ndash;&gt;-->
+<!--            &lt;!&ndash;<span class="f16 clr_white block">监控路段</span>&ndash;&gt;-->
+<!--          &lt;!&ndash;</li>&ndash;&gt;-->
+<!--        </ul>-->
         <div class="pieChart mt_10">
           <!--              <RingChart :chartData="chartDataThree" :PieChartLegend="PieChartLegend" height="16vh"></RingChart>-->
           <PieChartTwo :chartData="pieChartOne" :PieChartLegend="PieChartLegend" height="25vh" :divwidth="'50%'"></PieChartTwo>
@@ -48,13 +48,41 @@
       <RingChart :chartData="chartDataFour" :PieChartLegend="PieChartLegend" height="250px"></RingChart>
       <div class="mt_20">
         <p class="f20 bold txt_linear">餐企油烟超标时长分析</p>
-        <!--        <BarChartFour :chartData="BarData" height="30vh" divwidth="100%"></BarChartFour>-->
+<!--        <BarChartFour :chartData="BarData" height="30vh" divwidth="100%"></BarChartFour>-->
         <BarChartFour :chartData="BarData" :BarChartLegend="PieChartLegend" height="35vh" divwidth="100%"></BarChartFour>
       </div>
 
     </div>
     <div class="right_content clr_white base_bg_right" v-if="activeIndex == 2">
-      <p class="f20 bold txt_linear">工地五色治理</p>
+
+      <div class="">
+        <p class="f20 bold txt_linear">执法一体化</p>
+        <div class="flex bg_blue01 mt_20">
+          <div class="flex-item weui-cell">
+            <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+            <div class="weui-cell__bd">
+              <p>累计检查</p>
+              <p><span class="f20">1542</span>次</p>
+            </div>
+          </div>
+          <div class="flex-item weui-cell">
+            <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+            <div class="weui-cell__bd">
+              <p>行政处罚</p>
+              <p><span class="f20">1542</span>次</p>
+            </div>
+          </div>
+          <div class="flex-item weui-cell">
+            <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+            <div class="weui-cell__bd">
+              <p>信用惩戒</p>
+              <p><span class="f20">1542</span>次</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="f20 bold txt_linear mt_20">工地五色治理</p>
       <div class="flex bold enforcement_num text-center mt_20">
         <div class="flex-item bg_blue01 weui-cell">
           <div class="weui-cell__hd ml_10"><img src="./../../assets/image/appearance_icon01.png"></div>
@@ -96,45 +124,101 @@
       </div>
       <div class="clr_white mt_20">
         <p class="f20 bold txt_linear">工地一件事</p>
-        <!--        <BarChartFour :chartData="BarDataThree" :BarChartLegend="PieChartLegend" height="25vh" divwidth="100%"></BarChartFour>-->
-        <RingChartHover :chartData="chartDataFive" :PieChartLegend="PieChartLegend" height="300px"></RingChartHover>
+<!--        <RingChartHover :chartData="chartDataFive" :PieChartLegend="PieChartLegend" height="300px"></RingChartHover>-->
+        <div class="flex mt_20 flex_statistics">
+          <div class="flex-item">
+            <p class="txtColor">申请事项</p>
+            <ul class="circle_ul">
+              <li>累计申请 1478件</li>
+              <li>今日申请 23件</li>
+            </ul>
+<!--            <p class="circle_p">累计申请 1478件</p>-->
+<!--            <p class="circle_p">今日申请 23件</p>-->
+          </div>
+          <div class="flex-item">
+            <p class="txtColor">登记事项</p>
+            <ul class="circle_ul">
+              <li>累计登记 1478件</li>
+              <li>今日登记 23件</li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <!--      <div class="mt_20">-->
-      <!--        <p class="f20 bold txt_linear">社会监督</p>-->
-      <!--        <div class="bg_blue01 text-center p20 mt_10">-->
-      <!--          <div class="flex">-->
-      <!--            <div class="flex-item">-->
-      <!--              <p>社会关注度</p>-->
-      <!--              <p class="f26 bold txt_linear LH_2">65562</p>-->
-      <!--              <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>-->
-      <!--            </div>-->
-      <!--            <div class="flex-item">-->
-      <!--              <p>投诉建议</p>-->
-      <!--              <p class="f26 bold txt_linear LH_2">699</p>-->
-      <!--              <p class="baseColor">已处理596</p>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--          <div class="flex mt_20">-->
-      <!--            <div class="flex-item">-->
-      <!--              <p>信访统计</p>-->
-      <!--              <p class="f26 bold txt_linear LH_2">337</p>-->
-      <!--            </div>-->
-      <!--            <div class="flex-item">-->
-      <!--              <p>平安问答</p>-->
-      <!--              <p class="f26 bold txt_linear LH_2">65562</p>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
+      <div class="clr_white mt_20">
+        <p class="f20 bold txt_linear">社会监督</p>
+        <!--        <RingChartHover :chartData="chartDataFive" :PieChartLegend="PieChartLegend" height="300px"></RingChartHover>-->
+        <div class="border shadow mt_20">
+          <div class="flex">
+            <div class="flex-item weui-cell">
+              <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+              <div class="weui-cell__bd">
+                <p class="txtColor">社会关注度</p>
+                <p>45452人次</p>
+              </div>
+            </div>
+            <div class="flex-item weui-cell">
+              <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+              <div class="weui-cell__bd">
+                <p class="txtColor">信件投诉</p>
+                <p>1021件 已办结1016件</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex">
+            <div class="flex-item weui-cell">
+              <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+              <div class="weui-cell__bd">
+                <p class="txtColor">综合评价</p>
+                <p>45452次</p>
+              </div>
+            </div>
+            <div class="flex-item weui-cell">
+              <div class="weui-cell__hd"><img src="./../../assets/image/appearance_icon01.png"></div>
+              <div class="weui-cell__bd">
+                <p class="txtColor">平安问答</p>
+                <p>21人次</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+<!--      <div class="mt_20">-->
+<!--        <p class="f20 bold txt_linear">社会监督</p>-->
+<!--        <div class="bg_blue01 text-center p20 mt_10">-->
+<!--          <div class="flex">-->
+<!--            <div class="flex-item">-->
+<!--              <p>社会关注度</p>-->
+<!--              <p class="f26 bold txt_linear LH_2">65562</p>-->
+<!--              <p class="baseColor">较昨日 <i class="el-icon-bottom"></i>6.6%</p>-->
+<!--            </div>-->
+<!--            <div class="flex-item">-->
+<!--              <p>投诉建议</p>-->
+<!--              <p class="f26 bold txt_linear LH_2">699</p>-->
+<!--              <p class="baseColor">已处理596</p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="flex mt_20">-->
+<!--            <div class="flex-item">-->
+<!--              <p>信访统计</p>-->
+<!--              <p class="f26 bold txt_linear LH_2">337</p>-->
+<!--            </div>-->
+<!--            <div class="flex-item">-->
+<!--              <p>平安问答</p>-->
+<!--              <p class="f26 bold txt_linear LH_2">65562</p>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
 
     </div>
 
-    <!--    <div class="center_content clr_white text-center" v-if="activeIndex == 0">-->
-    <!--      <div class="map_intro f14 bold flex baseColor weui-cell">-->
-    <!--        <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>-->
-    <!--        <div class="weui-cell__bd">AI视频</div>-->
-    <!--      </div>-->
-    <!--    </div>-->
+<!--    <div class="center_content clr_white text-center" v-if="activeIndex == 0">-->
+<!--      <div class="map_intro f14 bold flex baseColor weui-cell">-->
+<!--        <div class="weui-cell__hd flex"><img src="./../../assets/image/point36.png"/></div>-->
+<!--        <div class="weui-cell__bd">AI视频</div>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="center_content clr_white text-center" v-if="activeIndex == 1&&yyMapType == 1">
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showYyType==0?'active':'']" @click="handleYyPointType(0)">
         <div class="weui-cell__hd flex">
@@ -147,7 +231,7 @@
         <div class="weui-cell__hd flex">
           <img v-if="showYyType!=1" src="./../../assets/image/point_yy_01.png"/>
           <img v-else src="./../../assets/image/point_yy_active.png"/>
-        </div>
+          </div>
         <div :class="['weui-cell__bd',showYyType==1?'clr_white':'']">正常</div>
       </div>
       <div :class="['map_intro','map_intro_yy','f14','bold','flex','baseColor','weui-cell',showYyType==4?'active':'']" @click="handleYyPointType(4)">
@@ -178,28 +262,21 @@
           <img v-if="showGdType!=1" src="./../../assets/image/point44.png"/>
           <img v-else src="./../../assets/image/point44_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showGdType==1?'clr_white':'']">全部阶段</div>
+        <div :class="['weui-cell__bd',showGdType==1?'clr_white':'']">全部项目</div>
       </div>
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showGdType==2?'active':'']" @click="handleGdPointType(2)">
         <div class="weui-cell__hd flex">
           <img v-if="showGdType!=2" src="./../../assets/image/point53.png"/>
           <img v-else src="./../../assets/image/point53_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showGdType==2?'clr_white':'']">竣工阶段</div>
+        <div :class="['weui-cell__bd',showGdType==2?'clr_white':'']">在建房建</div>
       </div>
       <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showGdType==3?'active':'']" @click="handleGdPointType(3)">
         <div class="weui-cell__hd flex">
           <img v-if="showGdType!=3" src="./../../assets/image/point54.png"/>
           <img v-else src="./../../assets/image/point53_active.png"/>
         </div>
-        <div :class="['weui-cell__bd',showGdType==3?'clr_white':'']">施工阶段</div>
-      </div>
-      <div :class="['map_intro','f14','bold','flex','baseColor','weui-cell',showGdType==4?'active':'']" @click="handleGdPointType(4)">
-        <div class="weui-cell__hd flex">
-          <img v-if="showGdType!=4" src="./../../assets/image/point55.png"/>
-          <img v-else src="./../../assets/image/point53_active.png"/>
-        </div>
-        <div :class="['weui-cell__bd',showGdType==4?'clr_white':'']">准备阶段</div>
+        <div :class="['weui-cell__bd',showGdType==3?'clr_white':'']">在建市政</div>
       </div>
     </div>
 
@@ -259,22 +336,18 @@
           <span class="txt_linear f22">32</span>
         </div>
         <div class="">
-          准备阶段
+          在建房建项目
           <span class="txt_linear f22">12</span>
         </div>
         <div class="">
-          施工阶段
-          <span class="txt_linear f22">10</span>
-        </div>
-        <div class="">
-          竣工阶段
+          在建市政项目
           <span class="txt_linear f22">10</span>
         </div>
       </div>
       <div class="flex f20 bold border shadow" @click="getGdPoint(2)">
         <div class="baseColor">视频</div>
         <div class="">
-          普通视频
+          工地视频
           <span class="txt_linear f22">{{commonVideo_num}}</span>
         </div>
       </div>
@@ -286,7 +359,7 @@
         <!--</video>-->
       </div>
     </div>
-    <!--    <companyView :showDialog.sync="showViewDialog" :viewData="companyData"></companyView>-->
+<!--    <companyView :showDialog.sync="showViewDialog" :viewData="companyData"></companyView>-->
 
 
     <div class="search_result" v-show="showViewDialog">
@@ -648,53 +721,53 @@
         //     }
         //   ],
         // },
-        pieChartOne:{
-          title: {},
-          tooltip: {
-            trigger: 'item',
-            formatter: '{b} : {c} ({d}%)'
-          },
-          // legend: {
-          //   left: 'center',
-          //   top: 'bottom',
-          //   data: ['未审核', '审核未通过', '审核通过',]
-          // },
-          toolbox: {
-            show: true,
-            feature: {
-              mark: {show: true},
-              dataView: {show: true, readOnly: false},
-              magicType: {
-                show: true,
-                type: ['pie', 'funnel']
-              },
-              restore: {show: true},
-              saveAsImage: {show: true}
-            }
-          },
-          series: [
-            {
-              name: '',
-              type: 'pie',
-              radius: '75%',
-              // radius: [30, 110],
-              center: ['50%', '50%'],
-              roseType: 'radius',
-              color:['rgb(61,253,206)','rgb(206,171,255)','rgb(0,242,254)'],
-              label: {
-                normal: {
-                  show: true,
-                  formatter: "{b} {d}%",
-                  textStyle: {
-                    fontSize: 14,
-                    color: "#fff"
-                  },
-                },
-              },
-              data: []
-            }
-          ]
-        },
+       pieChartOne:{
+         title: {},
+         tooltip: {
+           trigger: 'item',
+           formatter: '{b} : {c} ({d}%)'
+         },
+         // legend: {
+         //   left: 'center',
+         //   top: 'bottom',
+         //   data: ['未审核', '审核未通过', '审核通过',]
+         // },
+         toolbox: {
+           show: true,
+           feature: {
+             mark: {show: true},
+             dataView: {show: true, readOnly: false},
+             magicType: {
+               show: true,
+               type: ['pie', 'funnel']
+             },
+             restore: {show: true},
+             saveAsImage: {show: true}
+           }
+         },
+         series: [
+           {
+             name: '',
+             type: 'pie',
+             radius: '75%',
+             // radius: [30, 110],
+             center: ['50%', '50%'],
+             roseType: 'radius',
+             color:['rgb(61,253,206)','rgb(206,171,255)','rgb(0,242,254)'],
+             label: {
+               normal: {
+                 show: true,
+                 formatter: "{b} {d}%",
+                 textStyle: {
+                   fontSize: 14,
+                   color: "#fff"
+                 },
+               },
+             },
+             data: []
+           }
+         ]
+       },
         chartData: {
           title:{},
           tooltip: {
@@ -747,6 +820,7 @@
               label: {
                 show: false,
                 position: 'center',
+
               },
               emphasis: {
                 label: {
@@ -783,6 +857,7 @@
           },
           //----------------   图例 legend  -----------------
           legend: {show:false},
+
           xAxis: [
             {
               axisTick: {
@@ -932,6 +1007,7 @@
                       fontWeight:'bold'
                     }
                   }
+
                 }
               },
               data: [ ]
@@ -1014,6 +1090,7 @@
                       fontWeight:'bold'
                     }
                   }
+
                 }
               },
               data: [320, 332, 301,230,56,]
@@ -1165,33 +1242,33 @@
                   show:false
                 },
                 normal: {
-                  //     padding: [30, 30, 30, 30],
-                  //     backgroundColor: '#fff',
+              //     padding: [30, 30, 30, 30],
+              //     backgroundColor: '#fff',
                   show: false,
-                  //     position: 'center',
-                  //     formatter: [
-                  //       '{value|￥{c}}',
-                  //       '{name|{b}}'
-                  //     ].join('\n'),
-                  //     rich: {
-                  //       value: {
-                  //         color: '#303133',
-                  //         fontSize: 40,
-                  //         fontWeight: 'bold',
-                  //         lineHeight: 40,
-                  //       },
-                  //       name: {
-                  //         color: '#909399',
-                  //         lineHeight: 20
-                  //       },
-                  //     },
-                  //   },
-                  //   emphasis: {
-                  //     show: true,
-                  //     textStyle: {
-                  //       fontSize: '16',
-                  //       fontWeight: 'bold'
-                  //     }
+              //     position: 'center',
+              //     formatter: [
+              //       '{value|￥{c}}',
+              //       '{name|{b}}'
+              //     ].join('\n'),
+              //     rich: {
+              //       value: {
+              //         color: '#303133',
+              //         fontSize: 40,
+              //         fontWeight: 'bold',
+              //         lineHeight: 40,
+              //       },
+              //       name: {
+              //         color: '#909399',
+              //         lineHeight: 20
+              //       },
+              //     },
+              //   },
+              //   emphasis: {
+              //     show: true,
+              //     textStyle: {
+              //       fontSize: '16',
+              //       fontWeight: 'bold'
+              //     }
                 }
               },
               // ['过程验收','工验收','安全考评','完工评价','危大备案','机械登记','拆卸告知'],
@@ -1374,6 +1451,7 @@
                     offset: 1,
                     color: 'rgba(227,153,21,0)'
                   }])
+
                 }
               },//区域颜色渐变
               data: [],
@@ -1382,6 +1460,7 @@
         },
       }
     },
+
     computed: {
       ...mapState({
         roles: state => state.user.roles,
@@ -1456,6 +1535,7 @@
           this.mapPoint(this.yyList,'yy');
         });
       },
+
       //AI图表数据
       getAIData(){
         analysisData({day_time:''}).then(res => {
@@ -1507,7 +1587,7 @@
         this.yyMapType = val;
         if(val == 1){
           this.map.clearOverLays();
-          this.getYyPointList('');
+         this.getYyPointList('');
         }else{
           this.map.clearOverLays();
           this.getYyPointList('');
@@ -1556,6 +1636,7 @@
             this.getYyPointList('');
             this.getVideo();
           }
+
         }
       },
       onLoad() {
@@ -1566,6 +1647,7 @@
         // this.addCtrl()
         this.map.setStyle('indigo');
         document.getElementsByClassName("tdt-control-copyright tdt-control")[0].style.display = 'none';
+
       },
       mapPoint(list,type){
         let countries = [];
@@ -1583,6 +1665,7 @@
           countriesOverlay.bringToBack();
           countriesOverlay.bringToBack();
         });
+
         function init(sel, transform) {
           let upd = sel.selectAll('path.geojson').data(countries);
           upd.enter()
@@ -1602,9 +1685,11 @@
             function (d, i) {
               d3.select(this).attr('d', transform.pathFromGeojson)
                 .on("mouseover",function(){
+
                 })
             }
           )
+
         }
         //创建图片对象
         // this.map.clearOverLays();
@@ -1647,10 +1732,13 @@
             }else if(list[i].status == 4){//报警
               markers[i]  = drawTMaker(point, icon05,this,list[i]);
             }
+
           }else{
+
             let point = new T.LngLat(list[i].longitude,list[i].latitude);
             markers[i]  = drawTMaker(point, icon01,this,list[i]);
           }
+
         }
         //往地图上添加一个marker。传入参数坐标信息lnglat。传入参数图标信息。
         function drawTMaker(lnglat,icon,that,txt){
@@ -1727,9 +1815,11 @@
             }
             infoWin1.setContent(sContent);
             marker.openInfoWindow(infoWin1);
+
           });// 将标注添加到地图中
           return marker;
         }
+
       },
       handleView(txt){
         this.showViewDialog = true;
@@ -1737,6 +1827,7 @@
         this.getFacilityDetail(txt.facility_id);
         this.getCompanyInfo(txt.facility_no);
         this.getCompanyChart(txt.facility_no);
+
       },
       closeCompany(){
         this.showViewDialog = false;
@@ -1901,6 +1992,7 @@
                     offset: 1,
                     color: 'rgba(227,153,21,0)'
                   }])
+
                 }
               },//区域颜色渐变
               data: [],
@@ -1915,6 +2007,7 @@
           this.companyInfo = {id,company, simple_name, organization_code, status, company_code, principal, mobile, tel, company_type, cook_type, area,
             kitchen_range_num, outlet_num, scale_type, city, street, address, images, remark,depart_id,zd_people,zd_mobile,company_type_name,cook_type_name,scale_type_name,city_id_name};
         });
+
       },
       getFacilityDetail(id){
         facilityDetail({id:id}).then(res=>{
@@ -2006,6 +2099,7 @@
           // $('#dashboardVideoPlayer').html('')
           $('#myVideo'+id).remove()
           $('#myVideoContent'+id).remove()
+
           if($('#dashboardVideoPlayer').children().length < 1){
             this.player.dispose()
             $('#dashboardVideoPlayer').html('')
@@ -2019,15 +2113,18 @@
         }
       },
       playVideo(uri,txt) {
+
         // let videoPlayer = $("#myVideo").get(0);
         // if (typeof (videoPlayer) != "undefined") {
         //   let myPlayer = videojs('myVideo');
         //   myPlayer.dispose();
         // }
+
         this.playVideoUri = uri;
         // this.dialogVisible = true
         let id = "myVideo"+txt.id;
         let divId = "myVideoContent"+txt.id;
+
         $('#dashboardVideoPlayer').append(
           `<div id="`+ divId +`" style="position: fixed;width: 450px;height: 300px; padding-top: 20px;left:`+ Number(20)*this.offectNum +`px;top:`+ Number(20)*this.offectNum +`px;" class="my_drag">
               <i class="el-icon-error"
@@ -2077,13 +2174,19 @@
           // <!--rtsp://10.32.54.38:554/openUrl/ePBOw6I-->
           this.player.play()
         }, 1000)
+
+
+
+
         /* this.player.src({
           src: this.videos[0].url,
           type: 'application/x-mpegURL',
           withCredentials: false
         })*/
+
         // this.player.play()
       },
+
       //获取AI视频
       getList(){
         getAllVideoPoint({class:1}).then((res) => {
@@ -2111,6 +2214,29 @@
 </script>
 <style lang="scss" scoped>
   @import './../../styles/variables.scss';
+  .circle_ul{
+    /*padding-left: 20px;*/
+    li{
+      list-style: disc;
+      list-style-position: inside;
+      &::marker {
+        color: #3860f4;
+      }
+      /*list-style: none;*/
+      /*&::before{*/
+      /*  content:".";*/
+      /*  color: red;*/
+      /*}*/
+    }
+  }
+  .flex_statistics{
+    line-height: 2;
+    .flex-item{
+      margin: 0 10px;
+      padding: 5px;
+      background: #000000;
+    }
+  }
   .search_result{
     position: fixed;
     left: 10vw;
@@ -2152,6 +2278,8 @@
           }
         }
       }
+
+
     }
     .table_title{
       /*width: 60%;*/
@@ -2186,6 +2314,7 @@
     border-spacing: 0;
     tr{
       line-height: 2;
+
       td{
         padding: 0 5px;
         border-right: 1px solid #223492;
@@ -2217,6 +2346,7 @@
       }
     }
   }
+
   .enforcement_num{
     &.reset_w{
       width: 67%;
@@ -2234,4 +2364,6 @@
       }
     }
   }
+
+
 </style>

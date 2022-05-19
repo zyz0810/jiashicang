@@ -16,6 +16,7 @@
                   <!--<span>{{formData.city.shangbao[1]}}</span>-->
                   <!--<span>{{formData.city.shangbao[0]}}</span>-->
                   <countTo :startVal="0" :endVal="formData.city.shangbao" :duration="12000" ref="countSix" separator="" class="block text-right"></countTo>
+<!--                  <span  class="block text-right">1839</span>-->
                 </div>
               </div>
               <div class="flex-item">
@@ -861,15 +862,16 @@
   }
   .anjian_num{
     .num{
-      width: 117px;
+      width: 100%;
+      max-width: 149px;
       height: 37px;
       justify-content: flex-start;
-      background: url("./../../assets/image/index-num-bg2.png") left top no-repeat;
+      background: url("./../../assets/image/index-num-bg3.png") left top repeat-x;
       span{
         width: 100%;
         height: 37px;
-        line-height: 37px;
-        letter-spacing: 10px;
+        line-height: 45px;
+        letter-spacing: 8px;
       }
       /*span{*/
         /*width: 25px;*/
