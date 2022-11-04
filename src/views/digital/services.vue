@@ -2320,13 +2320,13 @@
       getChartData(){
         getevaluate({year:this.$moment().format('YYYY')}).then((res) => {
           this.formData = res.data;
-          this.PieData2.series[0].data = [((Number(res.data.powerRate))*100).toFixed(2)];
-          this.PieData2.title[0].text = ((Number(res.data.powerRate))*100).toFixed(2)+'%';
-          this.PieData.title[0].text = ((Number(res.data.lightRate))*100).toFixed(2)+'%';
+          this.PieData2.series[0].data = [(Number(res.data.powerRate)).toFixed(2)];
+          this.PieData2.title[0].text = (Number(res.data.powerRate)).toFixed(2)+'%';
+          this.PieData.title[0].text = (Number(res.data.lightRate)).toFixed(2)+'%';
           generalIndex().then((ress) => {
             this.lightNum={
               // 亮灯数=亮灯率*总灯数
-              num:Number(Number(res.data.lightRate)*Number(ress.data.light.count)).toFixed(0),
+              num:Number(Number(res.data.lightRate)*Number(ress.data.light.count)/100).toFixed(0),
               count:ress.data.light.count
             };
           });
@@ -2335,8 +2335,8 @@
           this.timerTwo = setInterval(function () {
             if(i==1){
               that.percentageNum = 80;
-              that.PieData2.series[0].data = [((Number(res.data.powerRate))*100).toFixed(2)];
-              that.PieData.series[0].data = [((Number(res.data.lightRate))*100).toFixed(2)];
+              that.PieData2.series[0].data = [(Number(res.data.powerRate)).toFixed(2)];
+              that.PieData.series[0].data = [(Number(res.data.lightRate)).toFixed(2)];
               i = 2;
             }else{
               that.percentageNum = 0;
@@ -2353,7 +2353,7 @@
         generalIndex().then((res) => {
           this.lightNum={
             // 亮灯数=亮灯率*总灯数
-            num:Number(res.data.lightRate)*Number(res.data.light.count),
+            num:Number(res.data.lightRate)*Number(res.data.light.count)/100,
             count:res.data.light.count
           };
         });

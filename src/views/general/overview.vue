@@ -711,15 +711,15 @@
           // this.PieDataThree.title[0].text = '100%';
 
           getevaluate({year:this.$moment().format('YYYY')}).then((ress) => {
-            this.PieDataThree.series[0].data = [Number((Number(ress.data.lightRate))*100).toFixed(2)];
-            this.PieDataThree.title[0].text = ((Number(ress.data.lightRate))*100).toFixed(2)+'%';
-            this.formData.light.num= Number(Number(ress.data.lightRate)*Number(res.data.light.count)).toFixed(0);
+            this.PieDataThree.series[0].data = [Number(ress.data.lightRate).toFixed(2)];
+            this.PieDataThree.title[0].text = (Number(ress.data.lightRate)).toFixed(2)+'%';
+            this.formData.light.num= Number(Number(ress.data.lightRate)*Number(res.data.light.count)/100).toFixed(0);
 
             let that = this;
             let i = 1;
             this.timerTwo = setInterval(function () {
               if(i==1){
-                that.PieDataThree.series[0].data = [Number((Number(ress.data.lightRate))*100).toFixed(2)];
+                that.PieDataThree.series[0].data = [Number(ress.data.lightRate).toFixed(2)];
                 that.PieDataTwo.series[0].data = [75];
                 i = 2;
               }else{
