@@ -15,8 +15,8 @@
       <el-col :span="6">
         <span class="f26 bold m_r30">滨江区</span>
         <span class="date f18 bold  m_r30">{{$moment().format('YYYY-MM-DD')}}</span>
-        <span class="f18 bold mr_20">{{weatherData.weather}}</span>
-        <span class="f18 bold">{{weatherData.temperature}}℃</span>
+<!--        <span class="f18 bold mr_20">{{weatherData.weather}}</span>-->
+<!--        <span class="f18 bold">{{weatherData.temperature}}℃</span>-->
       </el-col>
       <el-col :span="12" class="logo text-center">
 <!--        <img src="./../../../assets/image/logo.png"/>-->
@@ -279,7 +279,7 @@ export default {
   },
   mounted() {
     // this.addDate();
-    this.getWeather();
+    // this.getWeather();
   },
 }
 </script>
