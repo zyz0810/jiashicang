@@ -58,9 +58,22 @@ router.beforeEach(async(to, from, next) => {
       // in the free login whitelist, go directly
       next()
     } else {
-      // other pages that do not have permission to access are redirected to the login page.
-      // next(`/login?redirect=${to.path}`)
-      next(`/login?redirect=/dashboard`)
+      if(to.query.type == 'auth'){
+        console.log('登录自动自动')
+        store.dispatch('user/login',{ mobile: 'admin', password: 'Zfptyth123'})
+          .then(() => {
+            next(`/dashboard`)
+            // other pages that do not have permission to access are redirected to the login page.
+            // next(`/login?redirect=${to.path}`)
+            // this.$router.push({ path: this.redirect || '/' })
+          })
+          .catch((e) => {})
+      }else {
+        // other pages that do not have permission to access are redirected to the login page.
+        // next(`/login?redirect=${to.path}`)
+        next(`/login?redirect=/dashboard`)
+      }
+
       NProgress.done()
     }
   }
